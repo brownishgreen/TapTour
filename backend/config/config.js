@@ -1,3 +1,4 @@
+require('dotenv').config() //要連線個人資料庫，配置資料在env，所以暫時加這行
 module.exports = {
   development: {
     username: process.env.DATABASE_USERNAME,
