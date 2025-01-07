@@ -6,4 +6,8 @@ const userController = require('../controllers/user-controller')
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
+// 登入
+router.get('/signin', userController.signInPage)
+router.post('/signin', userController.signIn)
+
 module.exports = router
