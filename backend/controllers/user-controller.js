@@ -7,7 +7,7 @@ const EXPIRES = process.env.JWT_EXPIRES
 
 const userController = {
   signUpPage: (req, res) => {
-    res.json({ message: '這是註冊頁面的json' })
+    res.status(200).json({ message: '這是註冊頁面的json' })
   },
   signUp: (req, res, next) => {
     const { name, email, password } = req.body
@@ -37,7 +37,7 @@ const userController = {
   },
   // 登入
   signInPage: (req, res) => {
-    res.json({ message: '這是登入頁面的json' })
+    res.status(200).json({ message: '這是登入頁面的json' })
   },
   signIn: (req, res, next) => {
     const { email, password } = req.body
@@ -72,16 +72,20 @@ const userController = {
             { expiresIn: EXPIRES } // 讀取 .env 中的變數
           )
 
-          res.json({
+          res.status(200).json({
             message: '登入成功',
             token,
           })
         })
       })
       .catch((err) => {
-        err.status = 500
+        err.statusCode = 500
         next(err)
       })
+  },
+  // 登出
+  signOut: (req, res) => {
+    res.status(200).json({ message: '已成功登出' })
   },
 }
 

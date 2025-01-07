@@ -9,5 +9,7 @@ router.post('/signup', userController.signUp)
 // 登入
 router.get('/signin', userController.signInPage)
 router.post('/signin', userController.signIn)
+// 登出
+router.post('/signout', userController.signOut)
 
 module.exports = router
