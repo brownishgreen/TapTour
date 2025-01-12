@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import React from 'react'
+import Header from './components/Header'
 import RegisterForm from './components/RegisterForm'
 
 function App() {
   return (
-    <>
-      <div>
-        <RegisterForm />
-      </div>
-    </>
+    <div className="app">
+      <Header />
+      <RegisterForm />
+    </div>
   )
 }
 
