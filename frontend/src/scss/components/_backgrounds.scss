@@ -21,3 +21,23 @@
     z-index: 1;
   }
 }
+
+.signin-background {
+  height: 100vh;
+  background: url('../../../public/assets/images/backgrounds/taipei.jpg');
+  background-size: cover;
+  background-position: center;
+  @include flex-center();
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $background-overlay;
+    z-index: 1;
+  }
+}
