@@ -1,4 +1,4 @@
-@import '../abstracts/variables';
+@use '../abstracts/variables' as*;
 
 .header {
   position: fixed;
@@ -12,6 +12,7 @@
   padding: 1rem 2rem;
   background-color: $background-color;
   border-bottom: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
   &__logo {
     display: flex;
@@ -34,9 +35,10 @@
     gap: 1.5rem;
 
     .header__link {
-      color: #555;
+      color: $secondary-color;
       text-decoration: none;
-      font-size: 1rem;
+      font-size: $font-size-large;
+      font-weight: $font-weight-bold;
 
       &:hover {
         color: $primary-color;
@@ -52,9 +54,10 @@
       padding: 0.5rem 1rem;
       border: 1px solid transparent;
       border-radius: 4px;
-      font-size: 0.9rem;
+      font-size: $font-size-large;
+      font-weight: $font-weight-bold;
       text-decoration: none;
-      color: #555;
+      color: $secondary-color;
       background-color: transparent;
 
       &--primary {

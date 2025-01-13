@@ -1,0 +1,21 @@
+@use '../abstracts/_mixins' as *;
+
+.register-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  header {
+    flex-shrink: 0; // 固定 Header
+  }
+
+  main {
+    position: relative;
+    flex: 1;
+    @include flex-center();
+  }
+
+  footer {
+    flex-shrink: 0; // 固定 Footer
+  }
+}
