@@ -1,8 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import RegisterPage from './pages/RegisterPage'
-// import Header from './components/Header'
-// import Footer from './components/Footer'
+import LoginPage from './pages/LoginPage'
 
 function App() {
   return (
@@ -10,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<h1>首頁</h1>} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Router>
   )
