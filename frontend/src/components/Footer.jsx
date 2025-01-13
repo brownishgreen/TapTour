@@ -1,7 +1,11 @@
 import React from 'react'
 import '../scss/components/_footer.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInstagram, faFacebook, faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import {
+  faInstagram,
+  faFacebook,
+  faXTwitter,
+} from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => {
   return (
@@ -9,8 +13,9 @@ const Footer = () => {
       {/*左邊的連結區塊*/}
       <div className="footer__links">
         <ul>
-          <li><a href="#">關於 TapTour</a></li>
-          <li><a href="#">聯繫我們</a></li>
+          <li>
+            <a href="#">聯繫我們</a>
+          </li>
         </ul>
         <p>COPYRIGHT © TAPTOUR ALL RIGHT RESERVED.</p>
       </div>
