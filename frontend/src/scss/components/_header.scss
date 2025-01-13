@@ -1,3 +1,5 @@
+@import '../abstracts/variables';
+
 .header {
   position: fixed;
   top: 0;
@@ -8,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: white;
+  background-color: $background-color;
   border-bottom: 1px solid #ddd;
 
   &__logo {
@@ -37,7 +39,7 @@
       font-size: 1rem;
 
       &:hover {
-        color: #3498db;
+        color: $primary-color;
       }
     }
   }
@@ -56,18 +58,18 @@
       background-color: transparent;
 
       &--primary {
-        background-color: #3498db;
+        background-color: $primary-color;
         color: white;
-        border-color: #3498db;
+        border-color: $primary-color;
 
         &:hover {
-          background-color: #2874a6;
+          background-color: $tertiary-color
         }
       }
 
       &:hover {
-        color: #3498db;
-        border-color: #3498db;
+        color: $primary-color;
+        border-color: $primary-color;
       }
     }
   }

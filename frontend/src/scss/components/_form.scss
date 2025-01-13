@@ -3,7 +3,7 @@
 
 .form-container {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: $background-color;
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
@@ -35,7 +35,7 @@
   border: 1.5px solid $primary-color;
   border-radius: 5px;
   font-size: $font-size-base;
-
+  background-color: $background-color;
   &:focus {
     border-color: $tertiary-color;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
