@@ -223,6 +223,44 @@
   color: #54A2C0;
   border-color: #54A2C0;
 }
+.header .user-icon {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  color: #54A2C0;
+  border: 3px solid #54A2C0;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+.header .user-icon:hover {
+  color: #ffffff;
+  background-color: #54A2C0;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  min-width: 200px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #54A2C0;
+  border: none;
+}
+.dropdown-menu .dropdown-item {
+  font-size: 1rem;
+  padding: 10px 15px;
+  color: #ffffff;
+  background-color: #54A2C0;
+}
+.dropdown-menu .dropdown-item:hover {
+  color: #54A2C0;
+  background-color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-icon-btn {
+  border: none;
+  padding: 0;
+}
 
 .footer {
   display: flex;
@@ -302,6 +340,25 @@
   align-items: center;
 }
 .login-page footer {
+  flex-shrink: 0;
+}
+
+.homepage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.homepage header {
+  flex-shrink: 0;
+}
+.homepage main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.homepage footer {
   flex-shrink: 0;
 }
 
