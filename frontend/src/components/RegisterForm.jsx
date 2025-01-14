@@ -1,7 +1,49 @@
+import { useState } from 'react'
+import { Modal, Button } from 'react-bootstrap'
+import '../scss/components/_form.scss'
+
 const RegisterForm = () => {
+  const [showModal, setShowModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [formData, setFormData] = useState({ // 初始化表單資料 用來儲存表單資料
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target // 取得表單元素的 name 和 value
+    setFormData({ ...formData, [name]: value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    //驗證必填欄位
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      setErrorMessage('請填寫所有必填欄位')
+      setShowModal(true)
+      return
+    }
+    // 密碼長度驗證
+    if (formData.password.length < 8) {
+      setErrorMessage('密碼至少需要8個字元')
+      setShowModal(true)
+      return
+    }
+    // 密碼和確認密碼不相符
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage('密碼和確認密碼不相符')
+      setShowModal(true)
+      return
+    }
+    console.log(formData)
+    //這裡要寫註冊的API 發送API請求
+  }
+
   return (
     <div className="form-container">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name" className="form-label">
             名稱
@@ -12,6 +54,8 @@ const RegisterForm = () => {
             name="name"
             className="form-input"
             placeholder="請輸入您的名稱"
+            value={formData.name}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -24,6 +68,8 @@ const RegisterForm = () => {
             id="email"
             name="email"
             placeholder="請輸入您的信箱"
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -36,6 +82,8 @@ const RegisterForm = () => {
             id="password"
             name="password"
             placeholder="請輸入您的密碼"
+            value={formData.password}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -48,6 +96,8 @@ const RegisterForm = () => {
             id="confirmPassword"
             name="confirmPassword"
             placeholder="請再次輸入您的密碼"
+            value={formData.confirmPassword}
+            onChange={handleChange}
           />
         </div>
         <div>
@@ -72,6 +122,18 @@ const RegisterForm = () => {
           </button>
         </div>
       </form>
+      {/* 錯誤訊息彈窗 */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>TapTour 註冊流程提示</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{errorMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            確定
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }
