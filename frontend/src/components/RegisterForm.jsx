@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import '../scss/components/_form.scss'
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const RegisterForm = () => {
   const [showModal, setShowModal] = useState(false)
@@ -140,15 +142,29 @@ const RegisterForm = () => {
           </button>
         </div>
       </form>
-      {/* 錯誤訊息彈窗 */}
+      {/* 訊息彈窗 */}
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
         centered
-        className="modal-container"
+        dialogClassName="custom-modal"
       >
         <Modal.Header closeButton>
-          <Modal.Title>TapTour 註冊流程提示</Modal.Title>
+          <Modal.Title>
+            <div className="modal-title-container">
+              {successMessage ? (
+                <>
+                  <FontAwesomeIcon icon={faCheck} className="success-icon" />
+                  <span>操作成功</span>
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faXmark} className="error-icon" />
+                  <span>操作失敗</span>
+                </>
+              )}
+            </div>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className={successMessage ? 'modal-body-success' : 'modal-body-error'}>
           {successMessage || errorMessage}
