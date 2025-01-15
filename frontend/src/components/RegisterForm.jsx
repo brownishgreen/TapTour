@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import '../scss/components/_form.scss'
+import axios from 'axios'
 
 const RegisterForm = () => {
   const [showModal, setShowModal] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [formData, setFormData] = useState({ // 初始化表單資料 用來儲存表單資料
     name: '',
@@ -17,7 +19,7 @@ const RegisterForm = () => {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     //驗證必填欄位
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
@@ -39,6 +41,22 @@ const RegisterForm = () => {
     }
     console.log(formData)
     //這裡要寫註冊的API 發送API請求
+    try {
+      const response = await axios.post('http://localhost:3000/api/user/register', formData)
+      console.log(response.data)
+      setSuccessMessage('註冊成功！即將跳轉...')
+      setShowModal(true)
+      setTimeout(() => {
+        window.location.href = '/profile'
+      }, 2000) // 2 秒後跳轉個人檔案
+    } catch (error) {
+      if (error.response) {
+        setErrorMessage(error.response.data.message || '註冊失敗')
+      } else {
+        setErrorMessage('註冊失敗')
+      }
+      setShowModal(true)
+    }
   }
 
   return (
@@ -123,13 +141,24 @@ const RegisterForm = () => {
         </div>
       </form>
       {/* 錯誤訊息彈窗 */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        centered
+        className="modal-container"
+      >
         <Modal.Header closeButton>
           <Modal.Title>TapTour 註冊流程提示</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{errorMessage}</Modal.Body>
+        <Modal.Body className={successMessage ? 'modal-body-success' : 'modal-body-error'}>
+          {successMessage || errorMessage}
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowModal(false)}
+            className="modal-btn"
+          >
             確定
           </Button>
         </Modal.Footer>
