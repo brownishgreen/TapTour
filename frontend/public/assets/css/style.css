@@ -305,6 +305,76 @@
   color: #54A2C0;
 }
 
+.custom-modal .modal-content {
+  background: linear-gradient(120deg, #d3dbcf, #54A2C0);
+  color: #333333;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+/* 成功樣式 */
+.modal-body-success {
+  color: #333333;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* 錯誤樣式 */
+.modal-body-error {
+  color: #D04745;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* 自定義 Modal 標題區域 */
+.modal-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* 成功與錯誤圖標 */
+.success-icon,
+.error-icon {
+  font-size: 1.5rem;
+}
+
+.success-icon {
+  color: #333333;
+}
+
+.error-icon {
+  color: #D04745;
+}
+
+.custom-modal .modal-header,
+.custom-modal .modal-footer {
+  border: none; /* 移除分隔線 */
+  background: transparent; /* 保持與背景一致 */
+}
+
+/* 按鈕樣式 */
+.modal-btn {
+  background: linear-gradient(120deg, #ef9a9a, #e57373); /* 按鈕漸層 */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.modal-btn:hover {
+  background: linear-gradient(120deg, #e57373, #ef5350);
+}
+
 .register-page {
   display: flex;
   flex-direction: column;
