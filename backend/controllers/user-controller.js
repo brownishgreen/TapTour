@@ -9,31 +9,39 @@ const userController = {
   signUpPage: (req, res) => {
     res.status(200).json({ message: '這是註冊頁面的json' })
   },
-  signUp: (req, res, next) => {
-    const { name, email, password } = req.body
+  signUp: async (req, res, next) => {
+    try {
+      const { name, email, password } = req.body
 
-    if (!name || !email || !password) {
-      const err = new Error('請您必須填寫所有欄位')
-      err.statusCode = 400
-      return next(err) // 將錯誤傳遞給錯誤處理中介軟體
+      // 檢查必填欄位
+      if (!name || !email || !password) {
+        const err = new Error('請您必須填寫所有欄位')
+        err.statusCode = 400
+        throw err
+      }
+
+      // 檢查 email 是否已存在
+      const existingUser = await User.findOne({ where: { email } })
+      if (existingUser) {
+        const err = new Error('此 email 已經註冊過')
+        err.statusCode = 400
+        throw err
+      }
+
+      // 密碼加密並創建用戶
+      const hash = await bcrypt.hash(password, 10)
+      await User.create({
+        name,
+        email,
+        password: hash
+      })
+
+      res.status(201).json({ message: '註冊成功' })
+
+    } catch (err) {
+      err.statusCode = err.statusCode || 500
+      next(err)
     }
-
-    bcrypt
-      .hash(password, 10)
-      .then((hash) =>
-        User.create({
-          name,
-          email,
-          password: hash,
-        })
-      )
-      .then(() => {
-        res.status(201).json({ message: '註冊成功' })
-      })
-      .catch((err) => {
-        err.statusCode = 500
-        next(err) //傳遞錯誤
-      })
   },
   // 登入
   signInPage: (req, res) => {
