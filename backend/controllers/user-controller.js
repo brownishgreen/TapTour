@@ -42,7 +42,7 @@ const userController = {
   signIn: (req, res, next) => {
     const { email, password } = req.body
 
-    if ((!email, !password)) {
+    if (!email || !password) {
       const err = new Error('請輸入帳號密碼')
       err.statusCode = 400
       return next(err)
@@ -71,6 +71,14 @@ const userController = {
             SECRET,
             { expiresIn: EXPIRES } // 讀取 .env 中的變數
           )
+
+          // 設置 HttpOnly Cookie
+          res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 3600000,
+          })
 
           res.status(200).json({
             message: '登入成功',
