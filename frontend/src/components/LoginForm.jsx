@@ -1,15 +1,20 @@
 import { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
+import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [showModal, setShowModal] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setErrorMessage('')
+    setShowModal(false)
 
     if (!email || !password) {
       setErrorMessage('請填寫所有欄位')
@@ -17,30 +22,31 @@ const RegisterForm = () => {
       return
     }
     try {
-      const response = await fetch('http://localhost:3000/api/user/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        'http://localhost:3000/api/user/signin',
+        {
+          email,
+          password,
         },
-        body: JSON.stringify({ email, password }),
-        credentials: 'include', // 啟用 Cookie 傳輸
-      })
+        { withCredentials: true } // 啟用 Cookie 傳輸
+      )
+      setPassword('') // 清空密碼欄位，增加用戶安全性
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        setErrorMessage(errorData.message || '登入失敗')
-        setShowModal(true)
-        return
-      }
-
-      const data = await response.json()
-      console.log('登入成功', data)
-    } catch (error) {
-      setErrorMessage('伺服器錯誤，請稍後再試')
+      setSuccessMessage('登入成功！即將跳轉...')
       setShowModal(true)
-      console.error('錯誤：', error)
+      setTimeout(() => {
+        window.location.href = '/profile'
+      }, 2000) // 2 秒後跳轉個人檔案
+    } catch (err) {
+      if (err.response) {
+        setErrorMessage(err.response.data.message || '帳號或密碼錯誤')
+      } else {
+        setErrorMessage('伺服器錯誤，請稍後再試')
+      }
+      setShowModal(true)
     }
   }
+
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
@@ -81,7 +87,7 @@ const RegisterForm = () => {
         </div>
         <div className="form-actions">
           <p className="login-link">
-            尚未註冊帳戶？ <a href="/signup">由此註冊</a>
+            尚未註冊帳戶？ <a href="/register">由此註冊</a>
           </p>
           <div className="divider">
             <span>或</span>
@@ -96,14 +102,41 @@ const RegisterForm = () => {
           </button>
         </div>
       </form>
-      {/* 錯誤訊息彈窗 */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      {/* 登入提示訊息 */}
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        centered
+        dialogClassName="custom-modal"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>TapTour 登入流程提示</Modal.Title>
+          <Modal.Title>
+            <div className="modal-title-container">
+              {successMessage ? (
+                <>
+                  <FontAwesomeIcon icon={faCheck} className="success-icon" />
+                  <span>操作成功</span>
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faXmark} className="error-icon" />
+                  <span>操作失敗</span>
+                </>
+              )}
+            </div>
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>{errorMessage}</Modal.Body>
+        <Modal.Body
+          className={successMessage ? 'modal-body-success' : 'modal-body-error'}
+        >
+          {successMessage || errorMessage}
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowModal(false)}
+            className="modal-btn"
+          >
             確定
           </Button>
         </Modal.Footer>
@@ -111,5 +144,4 @@ const RegisterForm = () => {
     </div>
   )
 }
-
 export default RegisterForm
