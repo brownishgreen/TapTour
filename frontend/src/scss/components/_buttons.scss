@@ -17,3 +17,24 @@
     background-color: $tertiary-color;
   }
 }
+
+
+.primary-button {
+  width: 80%;
+  padding: 10px 15px;
+  background-color: $tertiary-color;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: block;
+  margin: 3rem auto 0 auto;
+
+  &:hover {
+    background-color: #A29552;
+    color: #fff;
+  }
+}
