@@ -1,0 +1,104 @@
+@use '../abstracts/_variables' as *;
+@use './_buttons' as *;
+
+.profile-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+
+  .profile-info {
+    max-width: 400px;
+    padding-left: 10rem;
+
+    .default-avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-details {
+      margin-top: 3rem;
+
+      p {
+        color: $gray-dark;
+        font-size: $font-size-base;
+        margin-bottom: $spacing-md;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+        border: 1px solid $gray-light;
+        border-radius: 10px;
+        padding: $spacing-sm;
+        font-size: $font-size-small;
+        resize: none;
+      }
+    }
+
+    .follow-btn {
+      @extend .primary-button;
+      background-color: $background-color;
+      color: $gray-dark;
+      border: 2px solid $tertiary-color;
+      font-weight: $font-weight-bold;
+      margin: 3rem auto 0 auto;
+    }
+
+    .profile-btn {
+      @extend .primary-button;
+      background-color: $background-color;
+      color: $gray-dark;
+      border: 2px solid $tertiary-color;
+      font-weight: $font-weight-bold;
+      margin: 1rem auto;
+    }
+  }
+
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 300px;
+
+    .profile-content__comment-box {
+      width: 700px;
+      height: 200px;
+      background-color: $background-color;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      color: $text-color;
+
+
+    }
+
+    .profile-content__activities {
+      margin-top: 5rem;
+      color: $text-color;
+
+    }
+
+    .profile-content__followers {
+      margin-top: 5rem;
+      display: flex;
+      flex-wrap: wrap; // 自動換行
+      gap: 1rem; // 使用 gap 調整間距
+      color: $text-color;
+
+      .profile-content__follower-items {
+        display: flex;
+        margin-top: 2rem;
+
+        .followers {
+        border-radius: 50%;
+        width: 100px;
+        margin: 1rem 2rem 3rem 0;
+      }     
+      }    
+    }
+}
+}
+
+.icon {
+  margin-left: 0.5rem;
+}
+
