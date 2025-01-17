@@ -99,6 +99,25 @@
   background-color: #3d8ca5;
 }
 
+.primary-button, .profile-wrapper .profile-info .follow-btn, .profile-wrapper .profile-info .profile-btn {
+  width: 80%;
+  padding: 10px 15px;
+  background-color: #3d8ca5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: block;
+  margin: 3rem auto 0 auto;
+}
+.primary-button:hover, .profile-wrapper .profile-info .follow-btn:hover, .profile-wrapper .profile-info .profile-btn:hover {
+  background-color: #A29552;
+  color: #fff;
+}
+
 .form-actions {
   text-align: center; /* 讓內容水平置中 */
   margin-top: 1rem;
@@ -375,6 +394,90 @@
   background: linear-gradient(120deg, #e57373, #ef5350);
 }
 
+.profile-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.profile-wrapper .profile-info {
+  max-width: 400px;
+  padding-left: 10rem;
+}
+.profile-wrapper .profile-info .default-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.profile-wrapper .profile-info .profile-details {
+  margin-top: 3rem;
+}
+.profile-wrapper .profile-info .profile-details p {
+  color: #333333;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.profile-wrapper .profile-info .profile-details textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #bababa;
+  border-radius: 10px;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  resize: none;
+}
+.profile-wrapper .profile-info .follow-btn {
+  background-color: #ffffff;
+  color: #333333;
+  border: 2px solid #3d8ca5;
+  font-weight: 700;
+  margin: 3rem auto 0 auto;
+}
+.profile-wrapper .profile-info .profile-btn {
+  background-color: #ffffff;
+  color: #333333;
+  border: 2px solid #3d8ca5;
+  font-weight: 700;
+  margin: 1rem auto;
+}
+.profile-wrapper .profile-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 300px;
+}
+.profile-wrapper .profile-content .profile-content__comment-box {
+  width: 700px;
+  height: 200px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  color: #444444;
+}
+.profile-wrapper .profile-content .profile-content__activities {
+  margin-top: 5rem;
+  color: #444444;
+}
+.profile-wrapper .profile-content .profile-content__followers {
+  margin-top: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: #444444;
+}
+.profile-wrapper .profile-content .profile-content__followers .profile-content__follower-items {
+  display: flex;
+  margin-top: 2rem;
+}
+.profile-wrapper .profile-content .profile-content__followers .profile-content__follower-items .followers {
+  border-radius: 50%;
+  width: 100px;
+  margin: 1rem 2rem 3rem 0;
+}
+
+.icon {
+  margin-left: 0.5rem;
+}
+
 .register-page {
   display: flex;
   flex-direction: column;
@@ -429,6 +532,31 @@
   align-items: center;
 }
 .homepage footer {
+  flex-shrink: 0;
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(140deg, #54A2C0, #d4dadf, #54A2C0);
+}
+.profile-page header {
+  flex-shrink: 0;
+}
+.profile-page main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
+  overflow-y: auto;
+  margin-top: 100px;
+  width: 100%;
+}
+.profile-page footer {
   flex-shrink: 0;
 }
 
