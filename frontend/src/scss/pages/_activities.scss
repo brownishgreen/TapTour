@@ -1,0 +1,15 @@
+@use '../abstracts/_variables' as*;
+
+.activities-page__main {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.activities-page__card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 10px;
+}

@@ -1,0 +1,36 @@
+@use '../abstracts/_variables' as*;
+
+
+// frontend/src/scss/components/_pagination.scss
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+
+  button {
+    padding: 5px 10px;
+    border: 1px solid $primary-color;
+    background-color: $background-color;
+    color: $primary-color;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: $font-size-base;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: $primary-color;
+      color: $background-color;
+    }
+  }
+
+  span {
+    font-size: $font-size-base;
+    color: $text-color;
+  }
+}
