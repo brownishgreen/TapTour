@@ -1,12 +1,12 @@
-@import '../abstracts/_variables.scss';
+@use '../abstracts/_variables' as*;
 
 .search-bar-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 2rem 1rem;
+  padding: 3rem 1rem;
   background-color: $background-color;
-  margin-top: 120px;
+  margin-top: 10px;
 }
 
 .search-bar-container {

@@ -10,7 +10,7 @@ const CardItem = () => {
         <Card.Title>Activity Title</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">Subtitle</Card.Subtitle>
         <Card.Text>Description</Card.Text>
-        <Button variant="secondary">更多資訊</Button>
+        <Button variant="secondary">深入瞭解</Button>
       </Card.Body>
     </Card>
   )

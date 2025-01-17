@@ -1,4 +1,4 @@
-@import '../abstracts/_variables.scss';
+@use '../abstracts/_variables' as*;
 
 .card-item {
   width: 250px;
@@ -6,6 +6,10 @@
   border: 1px solid $secondary-color;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.03);
+  }
 }
 
 .card-item__image {
