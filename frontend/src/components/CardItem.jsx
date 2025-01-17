@@ -1,6 +1,7 @@
 import React from 'react'
 import '../scss/components/_card-item.scss'
 import { Card, Button } from 'react-bootstrap'
+import '../scss/pages/_activities.scss'
 
 const CardItem = () => {
   return (

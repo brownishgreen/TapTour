@@ -1,4 +1,4 @@
-@import '../abstracts/_variables.scss';
+@use '../abstracts/_variables' as*;
 
 .activities-page__main {
   width: 60%;

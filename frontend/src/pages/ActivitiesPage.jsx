@@ -3,7 +3,8 @@ import Footer from '../components/Footer'
 import SearchBar from '../components/SearchBar'
 import CardItem from '../components/CardItem'
 import HeroBanner from '../components/HeroBanner'
-import '../scss/pages/_activities.scss'
+import Pagination from '../components/Pagination'
+
 const ActivitiesPage = () => {
   return (
     <div>
@@ -27,6 +28,7 @@ const ActivitiesPage = () => {
           <CardItem />
           <CardItem />
         </div>
+        <Pagination />
       </main>
       <Footer />
     </div>
