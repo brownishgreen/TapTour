@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 const ProfilePage = () => {
   return (
     <div className="profile-page">
-      <Header />
+      <Header isLoggedIn={true} />
       <main>
         <ProfileInfo />
       </main>

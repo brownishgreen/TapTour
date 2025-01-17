@@ -6,8 +6,9 @@ const port = 3000
 const routes = require('./routes')
 const errorHandler = require('./middleware/error-handler')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
-
+app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(
@@ -23,11 +24,6 @@ app.get('/', (req, res) => {
   res.send('hello world')
 })
 
-console.log(process.env.DB_USER, process.env.DB_PASSWORD)
-console.log('DB_USER:', process.env.DB_USER)
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD)
-
 app.listen(port, () => {
   console.log(`伺服器正運行在http://localhost:${port}`)
 })
-

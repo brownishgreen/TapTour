@@ -33,11 +33,10 @@ const userController = {
       await User.create({
         name,
         email,
-        password: hash
+        password: hash,
       })
 
       res.status(201).json({ message: '註冊成功' })
-
     } catch (err) {
       err.statusCode = err.statusCode || 500
       next(err)
@@ -82,7 +81,7 @@ const userController = {
 
           // 設置 HttpOnly Cookie
           res.cookie('token', token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             maxAge: 3600000,
@@ -102,6 +101,29 @@ const userController = {
   // 登出
   signOut: (req, res) => {
     res.status(200).json({ message: '已成功登出' })
+  },
+  // 個人檔案
+  profile: async (req, res, next) => {
+    try {
+      const user = await User.findByPk(req.user.id, {
+        attributes: ['id', 'name', 'email', 'bio'],
+      })
+
+      if (!user) {
+        return res.status(404).json({ message: '用戶不存在' })
+      }
+      res.json({
+        message: '這是受保護的個人檔案頁面',
+        user,
+      })
+    } catch (err) {
+      err.statusCode = err.statusCode || 500
+      next(err)
+    }
+  },
+  // 檢查用戶的登入狀態的 API 路由
+  verify: (req, res) => {
+    res.status(200).json({ message: '已登入' })
   },
 }
 
