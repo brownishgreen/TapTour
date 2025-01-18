@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
@@ -11,6 +11,7 @@ import ProductsPage from './pages/ProductsPage'
 import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   return (
     <Router>
       <Routes>
@@ -22,8 +23,8 @@ function App() {
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
-              <ProfilePage />
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <ProfilePage isLoggedIn={true} setIsLoggedIn={setIsLoggedIn} />
             </ProtectedRoute>
           }
         />

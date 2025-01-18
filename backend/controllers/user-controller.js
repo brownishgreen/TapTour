@@ -100,20 +100,21 @@ const userController = {
   },
   // 登出
   logout: (req, res) => {
+    res.clearCookie('token') // 清除 JWT
     res.status(200).json({ message: '已成功登出' })
   },
   // 個人檔案
   profile: async (req, res, next) => {
     try {
       const user = await User.findByPk(req.user.id, {
-        attributes: ['id', 'name', 'email', 'bio'],
+        attributes: ['id', 'image', 'name', 'email', 'bio', 'createdAt'],
       })
 
       if (!user) {
         return res.status(404).json({ message: '用戶不存在' })
       }
       res.json({
-        message: '這是受保護的個人檔案頁面',
+        message: '這是受保護的個人檔案頁面，你已成功獲取使用者資料',
         user,
       })
     } catch (err) {

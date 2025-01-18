@@ -1,11 +1,30 @@
 import React from 'react'
 import '../scss/components/_header.scss'
 import logo from '../assets/images/500.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios'
 
-const Header = ({ isLoggedIn, user }) => {
+const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        'http://localhost:3000/api/user/logout',
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      setIsLoggedIn(false)
+      navigate('/login')
+    } catch (err) {
+      alert('登出失敗，請稍後再試')
+    }
+  }
+
   return (
     <header className="header">
       <div className="header__logo">
@@ -52,7 +71,9 @@ const Header = ({ isLoggedIn, user }) => {
                 </Link>
               </li>
               <li>
-                <button className="dropdown-item">登出</button>
+                <button className="dropdown-item" onClick={handleLogout}>
+                  登出
+                </button>
               </li>
             </ul>
           </div>

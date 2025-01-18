@@ -3,10 +3,10 @@ import Header from '../components/Header'
 import ProfileInfo from '../components/ProfileInfo'
 import Footer from '../components/Footer'
 
-const ProfilePage = () => {
+const ProfilePage = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <div className="profile-page">
-      <Header isLoggedIn={true} />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <main>
         <ProfileInfo />
       </main>
