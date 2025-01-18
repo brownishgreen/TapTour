@@ -4,7 +4,7 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-const RegisterForm = () => {
+const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -23,7 +23,7 @@ const RegisterForm = () => {
     }
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/user/signin',
+        'http://localhost:3000/api/user/login',
         {
           email,
           password,
@@ -144,4 +144,4 @@ const RegisterForm = () => {
     </div>
   )
 }
-export default RegisterForm
+export default LoginForm
