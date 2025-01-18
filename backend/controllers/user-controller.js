@@ -46,62 +46,65 @@ const userController = {
   loginPage: (req, res) => {
     res.status(200).json({ message: '這是登入頁面的json' })
   },
-  login: (req, res, next) => {
-    const { email, password } = req.body
+  login: async (req, res, next) => {
+    try {
+      const { email, password } = req.body
 
-    if (!email || !password) {
-      const err = new Error('請輸入帳號密碼')
-      err.statusCode = 400
-      return next(err)
+      if (!email || !password) {
+        const err = new Error('請輸入帳號密碼')
+        err.statusCode = 400
+        throw err
+      }
+
+      // 驗證用戶是否存在
+      const user = await User.findOne({ where: { email } })
+      if (!user) {
+        const err = new Error('帳號或密碼錯誤')
+        err.statusCode = 401
+        throw err
+      }
+
+      // 驗證密碼是否正確
+      const isMatch = await bcrypt.compare(password, user.password)
+      if (!isMatch) {
+        const err = new Error('帳號或密碼錯誤')
+        err.statusCode = 401
+        throw err
+      }
+
+      // 生成 JWT
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        SECRET,
+        { expiresIn: EXPIRES } // 讀取 .env 中的變數
+      )
+
+      // 設置 HttpOnly Cookie
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 3600000,
+      })
+
+      res.status(200).json({
+        message: '登入成功',
+        token,
+      })
+    } catch (err) {
+      err.statusCode = 500
+      next(err)
     }
-
-    // 驗證用戶是否存在
-    User.findOne({ where: { email } })
-      .then((user) => {
-        if (!user) {
-          const err = new Error('帳號或密碼錯誤') // new Error建立一個新的錯誤，並附上錯誤訊息
-          err.statusCode = 401
-          return next(err)
-        }
-
-        // 驗證密碼是否正確
-        bcrypt.compare(password, user.password).then((isMatch) => {
-          if (!isMatch) {
-            const err = new Error('帳號或密碼錯誤')
-            err.statusCode = 401
-            return next(err)
-          }
-
-          // 生成 JWT
-          const token = jwt.sign(
-            { id: user.id, email: user.email },
-            SECRET,
-            { expiresIn: EXPIRES } // 讀取 .env 中的變數
-          )
-
-          // 設置 HttpOnly Cookie
-          res.cookie('token', token, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 3600000,
-          })
-
-          res.status(200).json({
-            message: '登入成功',
-            token,
-          })
-        })
-      })
-      .catch((err) => {
-        err.statusCode = 500
-        next(err)
-      })
   },
   // 登出
-  logout: (req, res) => {
-    res.clearCookie('token') // 清除 JWT
-    res.status(200).json({ message: '已成功登出' })
+  logout: async (req, res, next) => {
+    try {
+      res.clearCookie('token') // 清除 JWT
+      res.status(200).json({ message: '已成功登出' })
+    } catch (err) {
+      err.statusCode = err.statusCode || 500
+      next(err)
+    }
   },
   // 個人檔案
   profile: async (req, res, next) => {
@@ -111,7 +114,10 @@ const userController = {
       })
 
       if (!user) {
-        return res.status(404).json({ message: '用戶不存在' })
+        // return res.status(404).json({ message: '用戶不存在' })
+        const err = new Error('用戶不存在')
+        err.statusCode = 404
+        throw err
       }
       res.json({
         message: '這是受保護的個人檔案頁面，你已成功獲取使用者資料',
