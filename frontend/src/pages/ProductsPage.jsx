@@ -34,13 +34,12 @@ const ProductsPage = () => {
           ))}
         </div>
       </main>
-      <div className="products-page__pagination">
-        <Pagination>
-          <Pagination.Item>1</Pagination.Item>
-          <Pagination.Item>2</Pagination.Item>
-          <Pagination.Item>3</Pagination.Item>
-        </Pagination>
-      </div>
+      <Pagination />
+      <HeroBanner
+        imageURL="../src/assets/images/product-page-bottom-hero-banner.jpg"
+        title="以自己的方式探索世界"
+        description="利用「旅程」，探索世界，發現更多可能。"
+      />
       <Footer />
     </div>
   )
