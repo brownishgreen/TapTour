@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faHeart,
@@ -7,8 +7,39 @@ import {
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { Card, Button } from 'react-bootstrap'
+import axios from 'axios'
 
 const ProfileInfo = () => {
+  const [user, setUser] = useState(null)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const response = await axios.get(
+          'http://localhost:3000/api/user/profile',
+          {
+            withCredentials: true,
+          }
+        )
+        setUser(response.data.user)
+      } catch (err) {
+        setError('無法載入用戶資料')
+      } finally {
+        setLoading(false) // 加載完成
+      }
+    }
+    userData()
+  }, [])
+
+  if (loading) {
+    return <div>載入中...</div>
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
   const handleEditProfile = () => {
     window.location.href = '/profile/edit'
   }
@@ -24,10 +55,10 @@ const ProfileInfo = () => {
           />
         </div>
         <div className="profile-details">
-          <p>姓名:</p>
-          <p>信箱:</p>
-          <p>註冊日期:</p>
-          <p>個人簡介</p>
+          <p>姓名: {user.name}</p>
+          <p>信箱: {user.email}</p>
+          <p>註冊日期: {user.createdAt.split('T')[0]}</p>
+          <p>個人簡介 {user.bio}</p>
           <textarea name="" id=""></textarea>
           {/* <textarea value={bio} readOnly /> */}
         </div>
