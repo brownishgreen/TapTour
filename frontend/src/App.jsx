@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import Homepage from './pages/Homepage'
 import ActivitiesPage from './pages/ActivitiesPage'
+import ProductsPage from './pages/ProductsPage'
 import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/activities" element={<ActivitiesPage />} />
+        <Route path="/products" element={<ProductsPage />} />
         <Route
           path="/profile"
           element={
