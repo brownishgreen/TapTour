@@ -4,14 +4,14 @@ const userController = require('../controllers/user-controller')
 const verifyToken = require('../middleware/auth')
 
 // 定義路由
-router.get('/register', userController.signUpPage)
-router.post('/register', userController.signUp)
+router.get('/register', userController.registerPage)
+router.post('/register', userController.register)
 
 // 登入
-router.get('/signin', userController.signInPage)
-router.post('/signin', userController.signIn)
+router.get('/login', userController.loginPage)
+router.post('/login', userController.login)
 // 登出
-router.post('/signout', userController.signOut)
+router.post('/logout', userController.logout)
 
 router.get('/profile', verifyToken, userController.profile)
 

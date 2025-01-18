@@ -4,7 +4,6 @@ import '../scss/components/_form.scss'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
-
 const RegisterForm = () => {
   const [showModal, setShowModal] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')

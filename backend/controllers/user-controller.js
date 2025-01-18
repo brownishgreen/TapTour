@@ -6,10 +6,10 @@ const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 const EXPIRES = process.env.JWT_EXPIRES
 
 const userController = {
-  signUpPage: (req, res) => {
+  registerPage: (req, res) => {
     res.status(200).json({ message: '這是註冊頁面的json' })
   },
-  signUp: async (req, res, next) => {
+  register: async (req, res, next) => {
     try {
       const { name, email, password } = req.body
 
@@ -43,10 +43,10 @@ const userController = {
     }
   },
   // 登入
-  signInPage: (req, res) => {
+  loginPage: (req, res) => {
     res.status(200).json({ message: '這是登入頁面的json' })
   },
-  signIn: (req, res, next) => {
+  login: (req, res, next) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -99,7 +99,7 @@ const userController = {
       })
   },
   // 登出
-  signOut: (req, res) => {
+  logout: (req, res) => {
     res.status(200).json({ message: '已成功登出' })
   },
   // 個人檔案
