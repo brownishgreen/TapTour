@@ -6,19 +6,19 @@ import SearchBar from '../components/SearchBar'
 import CardItem from '../components/CardItem'
 import Pagination from '../components/Pagination'
 
-const ProductsPage = () => {
-
+const ProductsPage = ({ isLoggedIn, setIsLoggedIn }) => {
   const products = Array(12).fill({
-    buttonText: "立刻購買",
-    image: "https://plus.unsplash.com/premium_photo-1684407617372-106ebb96091e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Activity Title",
-    subtitle: "Subtitle",
-    description: "Description"
+    buttonText: '立刻購買',
+    image:
+      'https://plus.unsplash.com/premium_photo-1684407617372-106ebb96091e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Activity Title',
+    subtitle: 'Subtitle',
+    description: 'Description',
   })
 
   return (
     <div className="products-page">
-      <Header />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div className="products-page__hero-banner">
         <HeroBanner
           imageURL="../src/assets/images/product-page-hero-banner.jpg"
@@ -30,7 +30,14 @@ const ProductsPage = () => {
         <SearchBar />
         <div className="products-page__card-container">
           {products.map((product, index) => (
-            <CardItem key={index} buttonText={product.buttonText} image={product.image} title={product.title} subtitle={product.subtitle} description={product.description} />
+            <CardItem
+              key={index}
+              buttonText={product.buttonText}
+              image={product.image}
+              title={product.title}
+              subtitle={product.subtitle}
+              description={product.description}
+            />
           ))}
         </div>
       </main>
