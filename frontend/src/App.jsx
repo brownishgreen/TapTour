@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage'
 import Homepage from './pages/Homepage'
 import ActivitiesPage from './pages/ActivitiesPage'
 import ProductsPage from './pages/ProductsPage'
+import ProfileEditPage from './pages/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import axios from 'axios'
 
@@ -61,6 +62,17 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <ProfilePage
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/edit"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <ProfileEditPage
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
               />
