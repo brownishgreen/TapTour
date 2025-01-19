@@ -2,12 +2,14 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
+const path = require('path')
 const port = 3000
 const routes = require('./routes')
 const errorHandler = require('./middleware/error-handler')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
 const verifyToken = require('../middleware/auth')
+const upload = require('../utils/multer-config')
 
 // 定義路由
 router.get('/register', userController.registerPage)
@@ -17,5 +18,12 @@ router.get('/profile', verifyToken, userController.profile)
 
 // 檢查用戶的登入狀態的 API 路由
 router.get('/verify', verifyToken, userController.verify)
+
+router.put(
+  '/update-profile',
+  verifyToken,
+  upload.single('avatar'),
+  userController.updateProfile
+)
 
 module.exports = router
