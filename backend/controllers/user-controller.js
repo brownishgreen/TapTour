@@ -114,7 +114,6 @@ const userController = {
       })
 
       if (!user) {
-        // return res.status(404).json({ message: '用戶不存在' })
         const err = new Error('用戶不存在')
         err.statusCode = 404
         throw err
@@ -131,6 +130,49 @@ const userController = {
   // 檢查用戶的登入狀態的 API 路由
   verify: (req, res) => {
     res.status(200).json({ message: '已登入' })
+  },
+  updateProfile: async (req, res, next) => {
+    try {
+      const { name, email, password, confirmPassword } = req.body
+
+      if (email) {
+        const err = new Error('禁止修改email')
+        err.statusCode = 403
+        throw err
+      }
+
+      if (password && password !== confirmPassword) {
+        const err = new Error('密碼與確認密碼不一致')
+        err.statusCode = 400
+        throw err
+      }
+
+      const userId = req.user.id
+      const user = await User.findByPk(userId)
+      if (!user) {
+        const err = new Error('用戶不存在')
+        err.statusCode = 404
+        throw err
+      }
+
+      // 準備更新資料
+      const updates = {}
+      if (name) {
+        updates.name = name
+      }
+      if (password) {
+        updates.password = await bcrypt.hash(password, 10)
+      }
+      if (req.file) {
+        const avatarUrl = `/uploads/avatars/${req.file.filename}`
+        updates.image = avatarUrl
+      }
+      await user.update(updates)
+      res.status(200).json({ message: '資料更新成功' })
+    } catch (err) {
+      err.statusCode = err.statusCode || 500
+      next(err)
+    }
   },
 }
 
