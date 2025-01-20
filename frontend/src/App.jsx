@@ -9,6 +9,7 @@ import Homepage from './pages/Homepage'
 import ActivitiesPage from './pages/ActivitiesPage'
 import ActivityDetailPage from './pages/ActivityDetailPage'
 import ProductsPage from './pages/ProductsPage'
+import ProductDetailPage from './pages/ProductDetailPage'
 import ProfileEditPage from './pages/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import axios from 'axios'
@@ -62,6 +63,15 @@ function App() {
           path="/products"
           element={
             <ProductsPage
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+            />
+          }
+        />
+        <Route
+          path="/product-page"
+          element={
+            <ProductDetailPage
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
             />
