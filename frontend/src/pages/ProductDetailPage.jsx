@@ -1,6 +1,7 @@
 import React from 'react'
 import '../scss/pages/_product-detail-page.scss'
 import Header from '../components/Header'
+import SearchBar from '../components/SearchBar'
 import Footer from '../components/Footer'
 import ImageGallery from '../components/ImageGallery'
 import DetailPageTitle from '../components/DetailPageTitle'
@@ -20,6 +21,7 @@ const ProductDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <div className="product-detail-page">
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <SearchBar />
       <div className="product-detail-page__container">
         <ImageGallery images={images} />
         <div className="product-detail-page__title-wrapper">

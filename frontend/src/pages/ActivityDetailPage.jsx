@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../components/Header'
+import SearchBar from '../components/SearchBar'
 import ImageGallery from '../components/ImageGallery'
 import DetailPageTitle from '../components/DetailPageTitle'
 import DetailPageIntroduction from '../components/DetailPageIntroduction'
@@ -21,6 +22,7 @@ const ActivityDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <div className="activity-detail-page">
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <SearchBar />
       <div className="activity-detail-page__container">
         <ImageGallery images={images} />
         <div className="activity-detail-page-title-wrapper">
