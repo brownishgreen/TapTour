@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import ImageGallery from '../components/ImageGallery'
 import DetailPageTitle from '../components/DetailPageTitle'
 import DetailPageIntroduction from '../components/DetailPageIntroduction'
+import ActivityDetailIntroduction from '../components/ActivityDetailIntroduction.jsx'
 import PriceInformation from '../components/PriceInformation'
 import Footer from '../components/Footer'
 import '../scss/pages/_activity-detail-page.scss'
@@ -23,7 +24,7 @@ const ActivityDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
       <div className="activity-detail-page__container">
         <ImageGallery images={images} />
         <div className="activity-detail-page-title-wrapper">
-          <DetailPageTitle name="品味匈牙利布達佩斯：多瑙河沿岸古蹟巡禮" />
+          <DetailPageTitle name="品味匈牙利布達佩斯：多瑙河沿岸文化巡禮" />
         </div>
         <div className="activity-detail-page__wrapper">
           <main className="activity-detail-page__main">
@@ -34,6 +35,7 @@ const ActivityDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
               <br key="2" />,
               '從古老的城堡到壯觀的教堂，每一處都蘊含著豐富的歷史故事。',
             ]} />
+            <ActivityDetailIntroduction />
           </main>
           <aside className="activity-detail-page__aside">
             <PriceInformation price="6000" />
