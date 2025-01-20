@@ -1,0 +1,16 @@
+@use '../abstracts/variables' as *;
+
+.location-page-introduction {
+  background-color: $background-color;
+  
+  &__about {
+      margin-left: 15px;
+    }
+  
+    &__content {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      margin-left: 15px;
+    }
+}

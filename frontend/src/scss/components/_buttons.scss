@@ -38,3 +38,22 @@
     color: #fff;
   }
 }
+
+.small-button {
+      width: 100px;
+      padding: 5px 5px;
+      background-color: $tertiary-color;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: block;
+
+      &:hover {
+        background-color: #A29552;
+        color: #fff;
+      }
+    }

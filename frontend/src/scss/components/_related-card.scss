@@ -1,0 +1,46 @@
+@use '../abstracts/variables' as *;
+@use '../components/_buttons' as *;
+
+.related-card {
+  background-color: $background-color;
+  max-width: 750px;
+  height: 200px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  margin: 40px 0;
+  
+  &__image-wrapper {
+    flex: 1;
+
+    img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 20px;
+    }
+  }
+
+  &__content {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-right: 20px;
+
+    h3 {
+      font-size: 1.8rem;
+      font-weight: $font-weight-bold;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+  }
+
+
+}
