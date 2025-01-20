@@ -1,0 +1,35 @@
+@use '../abstracts/variables' as *;
+
+.detail-page-introduction {
+  max-width: 1150px;
+  margin-left: 15px;
+
+  &__about {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  &__content {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+
+  &__more {
+    margin-top: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-decoration-line: underline;
+    text-decoration-color: $gray-light;
+    &::after {
+      content: '';
+      display: block;
+      width: 720px;
+      height: 1px;
+      background-color: $gray-light;
+      margin-top: 20px;
+
+    }
+  }
+}

@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import Homepage from './pages/Homepage'
 import ActivitiesPage from './pages/ActivitiesPage'
+import ActivityDetailPage from './pages/ActivityDetailPage'
 import ProductsPage from './pages/ProductsPage'
 import ProfileEditPage from './pages/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -43,6 +44,15 @@ function App() {
           path="/activities"
           element={
             <ActivitiesPage
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+            />
+          }
+        />
+        <Route
+          path="/activity-page" //之後要改成動態 /activities/:id
+          element={
+            <ActivityDetailPage
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn}
             />
