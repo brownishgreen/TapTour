@@ -1,0 +1,38 @@
+@use '../abstracts/_variables' as*;
+
+.product-detail-page {
+  background-color: $background-color;
+  min-height: 100vh;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  &__title-wrapper {
+    margin-left: 15px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+  }
+
+  &__main {
+    max-width: 800px;
+    flex: 2;
+  }
+
+  &__aside {
+    flex: 1;
+    max-width: 400px;
+  }
+
+  &__button {
+    margin-top: 20px;
+  }
+}
