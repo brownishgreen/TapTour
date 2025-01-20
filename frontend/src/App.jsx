@@ -50,7 +50,7 @@ function App() {
           }
         />
         <Route
-          path="/activityPage" //之後要改成動態 /activities/:id
+          path="/activity-page" //之後要改成動態 /activities/:id
           element={
             <ActivityDetailPage
               isLoggedIn={isLoggedIn}

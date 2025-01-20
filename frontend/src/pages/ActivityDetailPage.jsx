@@ -1,7 +1,12 @@
 import React from 'react'
 import Header from '../components/Header'
-import Footer from '../components/Footer'
 import ImageGallery from '../components/ImageGallery'
+import DetailPageTitle from '../components/DetailPageTitle'
+import DetailPageIntroduction from '../components/DetailPageIntroduction'
+import PriceInformation from '../components/PriceInformation'
+import Footer from '../components/Footer'
+import '../scss/pages/_activity-detail-page.scss'
+
 const ActivityDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const images = [
@@ -15,9 +20,26 @@ const ActivityDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <div className="activity-detail-page">
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <main className="activity-detail-page__main">
+      <div className="activity-detail-page__container">
         <ImageGallery images={images} />
-      </main>
+        <div className="activity-detail-page-title-wrapper">
+          <DetailPageTitle name="品味匈牙利布達佩斯：多瑙河沿岸古蹟巡禮" />
+        </div>
+        <div className="activity-detail-page__wrapper">
+          <main className="activity-detail-page__main">
+            <DetailPageIntroduction introduction={[
+              '匈牙利布達佩斯，一個充滿歷史與文化魅力的城市，以其多瑙河沿岸的古蹟而聞名。',
+              <br key="1" />,
+              '這次旅行，我們將帶您深入探索這些令人驚嘆的古蹟，',
+              <br key="2" />,
+              '從古老的城堡到壯觀的教堂，每一處都蘊含著豐富的歷史故事。',
+            ]} />
+          </main>
+          <aside className="activity-detail-page__aside">
+            <PriceInformation price="6000" />
+          </aside>
+        </div>
+      </div>
       <Footer />
     </div>
   )
