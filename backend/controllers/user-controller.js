@@ -133,7 +133,7 @@ const userController = {
   },
   updateProfile: async (req, res, next) => {
     try {
-      const { name, email, password, confirmPassword } = req.body
+      const { name, email, password, confirmPassword, bio } = req.body
 
       if (email) {
         const err = new Error('禁止修改email')
@@ -163,12 +163,18 @@ const userController = {
       if (password) {
         updates.password = await bcrypt.hash(password, 10)
       }
+
+      if (bio !== undefined) {
+        updates.bio = bio // 即使 bio 為空字串也應更新
+      }
+
       if (req.file) {
-        const avatarUrl = `/uploads/avatars/${req.file.filename}`
+        const avatarUrl = `http://localhost:3000/uploads/avatars/${req.file.filename}`
         updates.image = avatarUrl
       }
       await user.update(updates)
-      res.status(200).json({ message: '資料更新成功' })
+      const updatedUser = await user.reload()
+      res.status(200).json({ message: '資料更新成功', user: updatedUser })
     } catch (err) {
       err.statusCode = err.statusCode || 500
       next(err)

@@ -22,7 +22,7 @@ router.get('/verify', verifyToken, userController.verify)
 router.put(
   '/update-profile',
   verifyToken,
-  upload.single('avatar'),
+  upload.single('image'),
   userController.updateProfile
 )
 

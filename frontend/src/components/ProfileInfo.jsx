@@ -47,9 +47,10 @@ const ProfileInfo = () => {
     <div className="profile-wrapper">
       <div className="profile-info">
         <div className="profile-avatar">
-          {/* 預設大頭貼 */}
           <img
-            src="../public/assets/images/others/default-avatar.jpg"
+            src={
+              user.image || '../public/assets/images/others/default-avatar.jpg'
+            }
             alt="預設大頭貼"
             className="default-avatar"
           />
@@ -58,9 +59,10 @@ const ProfileInfo = () => {
           <p>姓名: {user.name}</p>
           <p>信箱: {user.email}</p>
           <p>註冊日期: {user.createdAt.split('T')[0]}</p>
-          <p>個人簡介 {user.bio}</p>
-          <textarea name="" id=""></textarea>
-          {/* <textarea value={bio} readOnly /> */}
+          <p>個人簡介: </p>
+          <p className="profile-bio">
+            {user.bio || '請至編輯頁面輸入您的個人簡介...'}
+          </p>
         </div>
         <div>
           <button className="follow-btn">
