@@ -3,37 +3,60 @@
 @use './_buttons' as *;
 
 .profile-wrapper {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 2fr; // 左邊占1份寬度，右邊占2份寬度
+  align-items: start;
   gap: 2rem;
+  padding: 2rem;
 
   .profile-info {
-    max-width: 400px;
-    padding-left: 10rem;
+    flex: 1; // 固定佔用空間
+    max-width: 350px; // 限制最大寬度
+    margin-left: 8rem;
+    border-radius: 10px; // 美化外觀
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.15),
+      0 -4px 6px rgba(0, 0, 0, 0.1),
+      4px 0 6px rgba(0, 0, 0, 0.1),
+      -4px 0 6px rgba(0, 0, 0, 0.1); // 四周陰影
 
-    .default-avatar {
+    .profile-avatar {
+      display: flex;
+      justify-content: center;
+      .default-avatar {
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      &:hover {
+        transform: scale(1.1);
+      }
     }
-
+    }
     .profile-details {
       margin-top: 3rem;
-
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       p {
         color: $gray-dark;
-        font-size: $font-size-base;
+        font-size: $font-size-large;
         margin-bottom: $spacing-md;
       }
-      textarea {
-        width: 100%;
-        height: 100px;
-        border: 1px solid $gray-light;
-        border-radius: 10px;
-        padding: $spacing-sm;
-        font-size: $font-size-small;
-        resize: none;
+      .profile-bio {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        max-width: 250px;
+        font-size: $font-size-base;
+        color: $secondary-color;
+        white-space: pre-line;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        line-height: 2rem
       }
     }
 
@@ -54,51 +77,85 @@
       font-weight: $font-weight-bold;
       margin: 1rem auto;
     }
+
+    .icon {
+      margin-left: 0.5rem;
+    }
   }
 
   .profile-content {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    margin-left: 300px;
 
-    .profile-content__comment-box {
-      width: 700px;
-      height: 200px;
-      background-color: $background-color;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-      color: $text-color;
-
-
-    }
-
-    .profile-content__activities {
-      margin-top: 5rem;
-      color: $text-color;
-
-    }
-
+    .profile-content__activities,
     .profile-content__followers {
-      margin-top: 5rem;
-      display: flex;
-      flex-wrap: wrap; // 自動換行
-      gap: 1rem; // 使用 gap 調整間距
-      color: $text-color;
+      border-radius: 10px;
+      margin: 1.5rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.15),
+        0 -4px 6px rgba(0, 0, 0, 0.1),
+        4px 0 6px rgba(0, 0, 0, 0.1),
+        -4px 0 6px rgba(0, 0, 0, 0.1); // 四周陰影
+    }
 
-      .profile-content__follower-items {
+    .profile-content__comments {
+      margin: 0 1.5rem 1.5rem 1.5rem;
+      border-radius: 10px;
+      padding: 1.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.15),
+        0 -4px 6px rgba(0, 0, 0, 0.1),
+        4px 0 6px rgba(0, 0, 0, 0.1),
+        -4px 0 6px rgba(0, 0, 0, 0.1); // 四周陰影
+    }
+    .profile-content__comment-box,
+    .profile-content__activities-box
+     {
+      margin: 2rem 0 1rem 0;
+
+      .profile-content__comment-item {
+        display: flex;
+        background-color: none;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.02);
+        color: $text-color;
+        gap: 2rem;
+      }
+      .profile-content__activities-list {
+        display: flex;
+        gap: $spacing-lg;
+      }
+
+    }
+
+    .profile-content__follower-box {
         display: flex;
         margin-top: 2rem;
-
-        .followers {
+      .profile-content__follower-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        margin: 1rem;
+      .followers {
         border-radius: 50%;
         width: 100px;
-        margin: 1rem 2rem 3rem 0;
-      }     
-      }    
+        }
+      }
     }
-}
-}
 
+    .profile-content-title {
+      color: $secondary-color;
+      font-weight: $font-weight-bold;
+    }
+
+    .icon {
+      margin-left: 0.5rem;
+    }
+  }
+}
 
 .profile-edit-form-container {
   position: relative;
@@ -126,15 +183,10 @@
       font-size: $font-size-large;
       color: $gray-dark;
 
-    &:hover {
-      color: $primary-color;
-      scale: 1.5;
+      &:hover {
+        color: $primary-color;
+        scale: 1.5;
+      }
     }
-    }
-    
   }
-}
-
-.icon {
-  margin-left: 0.5rem;
 }
