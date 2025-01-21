@@ -3,8 +3,12 @@ import { Modal, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
+
 
 const LoginForm = () => {
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -35,8 +39,8 @@ const LoginForm = () => {
       setSuccessMessage('登入成功！即將跳轉...')
       setShowModal(true)
       setTimeout(() => {
-        window.location.href = '/profile'
-      }, 2000) // 2 秒後跳轉個人檔案
+        navigate('/profile')
+      }, 1000) // 2 秒後跳轉個人檔案
     } catch (err) {
       if (err.response) {
         setErrorMessage(err.response.data.message || '帳號或密碼錯誤')

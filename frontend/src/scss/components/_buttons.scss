@@ -34,10 +34,24 @@
   margin: 3rem auto 0 auto;
 
   &:hover {
-    background-color: #A29552;
+    background-color: $tertiary-color;
     color: #fff;
   }
 }
+
+
+.form-button-group {
+  display: flex; 
+  gap: 10px; 
+}
+
+.cancel-button {
+  background-color: $alert-color;
+  color: #fff;
+  &:hover {
+    background-color: $error-color
+  }
+  }
 
 .small-button {
       width: 100px;
