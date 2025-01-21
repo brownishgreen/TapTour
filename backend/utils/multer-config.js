@@ -3,11 +3,9 @@ const path = require('path')
 
 // 自訂儲存位置和檔案命名
 const storage = multer.diskStorage({
-  // 根據檔案類型存放到不同的資料夾
   destination: (req, file, cb) => {
-    // 依據路徑的用途設置不同的存放資料夾
-    const folder = file.fieldname === 'avatar' ? 'avatars' : 'others'
-    cb(null, path.join(__dirname, `../uploads/${folder}`))
+    const dirPath = path.join(__dirname, '../uploads/avatars')
+    cb(null, dirPath)
   },
   // 確保檔名唯一，避免覆蓋
   filename: (req, file, cb) => {
