@@ -6,6 +6,7 @@ import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import CreateActivityFormPage from './pages/CreateActivityPage'
+import EditActivityPage from './pages/EditActivityPage'
 import Homepage from './pages/Homepage'
 import ActivitiesPage from './pages/ActivitiesPage'
 import ActivityDetailPage from './pages/ActivityDetailPage'
@@ -114,6 +115,16 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <CreateActivityFormPage
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/edit-activity"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <EditActivityPage
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
               />
