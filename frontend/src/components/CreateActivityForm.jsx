@@ -39,7 +39,7 @@ const CreateActivityForm = () => {
             </div>
           </div>
           <div className="create-activity-form__form-item-button">
-            <button type="submit">建立活動</button>
+            <button type="submit">提交</button>
           </div>
         </div>
       </div>
