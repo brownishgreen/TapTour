@@ -1,5 +1,4 @@
 import React from 'react'
-import '../scss/components/_comment-card.scss'
 
 const CommentsBlock = ({ name, comment, avatar, timestamp }) => {
   return (

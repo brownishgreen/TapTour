@@ -1,5 +1,5 @@
 @use '../abstracts/variables' as *;
-@use '../components/_buttons' as *;
+@use './shared/_buttons' as *;
 
 .related-card {
   background-color: $background-color;

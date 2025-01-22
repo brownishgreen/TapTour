@@ -1,5 +1,5 @@
 import React from 'react'
-import '../scss/components/_detail-page-introduction.scss'
+
 const DetailPageIntroduction = ({ introduction }) => {
   return (
     <div className="detail-page-introduction">

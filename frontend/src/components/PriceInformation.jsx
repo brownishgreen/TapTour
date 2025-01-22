@@ -1,5 +1,4 @@
 import React from 'react'
-import '../scss/components/_price-information.scss'
 
 const PriceInformation = ({ price }) => {
   return <div className="price-information">

@@ -1,5 +1,4 @@
 import React from 'react'
-import '../scss/components/_detail-page-title.scss'
 
 const DetailPageTitle = ({ name }) => {
   return (

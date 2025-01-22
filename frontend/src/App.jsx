@@ -2,18 +2,18 @@ import { React, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import RegisterPage from './pages/RegisterPage'
-import LoginPage from './pages/LoginPage'
-import ProfilePage from './pages/ProfilePage'
-import CreateActivityFormPage from './pages/CreateActivityPage'
-import EditActivityPage from './pages/EditActivityPage'
+import RegisterPage from './pages/users/RegisterPage'
+import LoginPage from './pages/users/LoginPage'
+import ProfilePage from './pages/users/ProfilePage'
+import CreateActivityFormPage from './pages/activity/CreateActivityPage'
+import EditActivityPage from './pages/activity/EditActivityPage'
 import Homepage from './pages/Homepage'
-import ActivitiesPage from './pages/ActivitiesPage'
-import ActivityDetailPage from './pages/ActivityDetailPage'
-import ProductsPage from './pages/ProductsPage'
-import ProductDetailPage from './pages/ProductDetailPage'
-import LocationDetailPage from './pages/LocationDetailPage'
-import ProfileEditPage from './pages/ProfileEditPage'
+import ActivitiesPage from './pages/activity/ActivitiesPage'
+import ActivityDetailPage from './pages/activity/ActivityDetailPage'
+import ProductsPage from './pages/product/ProductsPage'
+import ProductDetailPage from './pages/product/ProductDetailPage'
+import LocationDetailPage from './pages/location/LocationDetailPage'
+import ProfileEditPage from './pages/users/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import axios from 'axios'
 
@@ -111,7 +111,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/create-activity"
+        <Route
+          path="/create-activity"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <CreateActivityFormPage
@@ -121,7 +122,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/edit-activity"
+        <Route
+          path="/edit-activity"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <EditActivityPage
