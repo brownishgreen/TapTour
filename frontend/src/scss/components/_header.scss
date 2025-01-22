@@ -24,7 +24,7 @@
     }
 
     span {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       font-weight: bold;
       color: #333;
     }
@@ -33,12 +33,14 @@
   &__nav {
     display: flex;
     gap: 1.5rem;
+    margin-left: 20px;
 
     .header__link {
       color: $secondary-color;
       text-decoration: none;
       font-size: $font-size-large;
       font-weight: $font-weight-bold;
+      margin-left: 20px;
 
       &:hover {
         color: $primary-color;
