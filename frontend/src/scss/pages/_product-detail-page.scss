@@ -1,4 +1,5 @@
 @use '../abstracts/_variables' as*;
+@use '../abstracts/_mixins' as *;
 
 .product-detail-page {
   background-color: $background-color;

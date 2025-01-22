@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
+import CreateActivityFormPage from './pages/CreateActivityPage'
 import Homepage from './pages/Homepage'
 import ActivitiesPage from './pages/ActivitiesPage'
 import ActivityDetailPage from './pages/ActivityDetailPage'
@@ -103,6 +104,16 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <ProfileEditPage
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/create-activity"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <CreateActivityFormPage
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
               />
