@@ -3,7 +3,7 @@ import '../scss/components/_header.scss'
 import logo from '../assets/images/500.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faCrosshairs, faShoppingCart, faComment } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -30,18 +30,18 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
       <div className="header__logo">
         <img src={logo} alt="TapTour Logo" />
         <span>TapTour</span>
+        <nav className="header__nav">
+          <Link to="/explore" className="header__link">
+            探索活動 <FontAwesomeIcon icon={faCrosshairs} />
+          </Link>
+          <Link to="/trips" className="header__link">
+            行旅通享 <FontAwesomeIcon icon={faShoppingCart} />
+          </Link>
+          <Link to="/reviews" className="header__link">
+            評論 <FontAwesomeIcon icon={faComment} />
+          </Link>
+        </nav>
       </div>
-      <nav className="header__nav">
-        <Link to="/explore" className="header__link">
-          探索
-        </Link>
-        <Link to="/trips" className="header__link">
-          旅程
-        </Link>
-        <Link to="/reviews" className="header__link">
-          評論
-        </Link>
-      </nav>
       <div className="header__actions">
         {isLoggedIn ? (
           <div className="dropdown">
