@@ -1,5 +1,4 @@
 import React from 'react';
-import '../scss/components/_related-card.scss';
 
 const RelatedCard = ({ image, title, description }) => {
   return (
