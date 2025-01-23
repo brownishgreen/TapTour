@@ -27,19 +27,19 @@ const LoginForm = () => {
     }
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/user/login',
+        'http://localhost:3000/api/users/login',
         {
           email,
           password,
         },
         { withCredentials: true } // 啟用 Cookie 傳輸
       )
+      const { userId } = response.data
       setPassword('') // 清空密碼欄位，增加用戶安全性
-
       setSuccessMessage('登入成功！即將跳轉...')
       setShowModal(true)
       setTimeout(() => {
-        navigate('/profile')
+        navigate(`/users/${userId}/profile`)
       }, 1000) // 2 秒後跳轉個人檔案
     } catch (err) {
       if (err.response) {

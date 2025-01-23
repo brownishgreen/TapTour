@@ -90,6 +90,7 @@ const userController = {
       res.status(200).json({
         message: '登入成功',
         token,
+        userId: user.id,
       })
     } catch (err) {
       err.statusCode = 500
@@ -109,7 +110,8 @@ const userController = {
   // 個人檔案
   profile: async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.user.id, {
+      const userId = req.params.userId
+      const user = await User.findByPk(userId, {
         attributes: ['id', 'image', 'name', 'email', 'bio', 'createdAt'],
       })
 
@@ -129,7 +131,12 @@ const userController = {
   },
   // 檢查用戶的登入狀態的 API 路由
   verify: (req, res) => {
-    res.status(200).json({ message: '已登入' })
+    const userId = req.user.id // 假設已從驗證中取得 user 資訊
+    if (userId) {
+      res.status(200).json({ message: '已登入', userId }) // 包含 userId
+    } else {
+      res.status(401).json({ message: '未登入' })
+    }
   },
   updateProfile: async (req, res, next) => {
     try {
@@ -147,7 +154,7 @@ const userController = {
         throw err
       }
 
-      const userId = req.user.id
+      const userId = req.params.userId
       const user = await User.findByPk(userId)
       if (!user) {
         const err = new Error('用戶不存在')

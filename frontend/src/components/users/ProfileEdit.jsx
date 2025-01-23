@@ -5,13 +5,13 @@ import {
   faCheck,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap'
 import axios from 'axios'
 
 const ProfileEdit = () => {
   const navigate = useNavigate()
-
+  const { userId } = useParams()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [image, setImage] = useState('')
@@ -27,7 +27,7 @@ const ProfileEdit = () => {
     const userData = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:3000/api/user/profile',
+          `http://localhost:3000/api/users/${userId}/profile`,
           {
             withCredentials: true, // 攜帶驗證資訊
           }
@@ -47,7 +47,7 @@ const ProfileEdit = () => {
       }
     }
     userData()
-  }, [])
+  }, [userId])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -100,7 +100,7 @@ const ProfileEdit = () => {
 
     try {
       const response = await axios.put(
-        'http://localhost:3000/api/user/update-profile',
+        `http://localhost:3000/api/users/${userId}/update-profile`,
         formData,
         {
           headers: {
@@ -113,7 +113,7 @@ const ProfileEdit = () => {
       setSuccessMessage('更新成功，即將跳轉...')
       setShowModal(true)
       setTimeout(() => {
-        navigate('/profile')
+        navigate(`/users/${userId}/profile`)
       }, 1000)
     } catch (error) {
       setErrorMessage('更新失敗')
@@ -225,7 +225,7 @@ const ProfileEdit = () => {
           <button
             type="button"
             className="form-button cancel-button"
-            onClick={() => navigate('/profile')} // 返回個人檔案頁面
+            onClick={() => navigate(`/users/${userId}/profile`)} // 返回個人檔案頁面
           >
             取消
           </button>

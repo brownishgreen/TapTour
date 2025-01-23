@@ -3,11 +3,15 @@ import { Modal, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
+
 const RegisterForm = () => {
+  const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const [formData, setFormData] = useState({ // 初始化表單資料 用來儲存表單資料
+  const [formData, setFormData] = useState({
+    // 初始化表單資料 用來儲存表單資料
     name: '',
     email: '',
     password: '',
@@ -22,7 +26,12 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     //驗證必填欄位
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       setErrorMessage('請填寫所有必填欄位')
       setShowModal(true)
       return
@@ -39,16 +48,16 @@ const RegisterForm = () => {
       setShowModal(true)
       return
     }
-    console.log(formData)
-    //這裡要寫註冊的API 發送API請求
     try {
-      const response = await axios.post('http://localhost:3000/api/user/register', formData)
-      console.log(response.data)
+      const response = await axios.post(
+        'http://localhost:3000/api/users/register',
+        formData
+      )
       setSuccessMessage('註冊成功！即將跳轉...')
       setShowModal(true)
       setTimeout(() => {
-        window.location.href = '/profile'
-      }, 2000) // 2 秒後跳轉個人檔案
+        navigate('/login')
+      }, 1000) // 2 秒後跳轉個人檔案
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message || '註冊失敗')
@@ -164,7 +173,9 @@ const RegisterForm = () => {
             </div>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className={successMessage ? 'modal-body-success' : 'modal-body-error'}>
+        <Modal.Body
+          className={successMessage ? 'modal-body-success' : 'modal-body-error'}
+        >
           {successMessage || errorMessage}
         </Modal.Body>
         <Modal.Footer>
