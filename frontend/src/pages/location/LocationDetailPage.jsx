@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import Header from '../../components/shared/Header'
 import SearchBar from '../../components/shared/SearchBar'
 import ImageGallery from '../../components/shared/ImageGallery'
@@ -8,8 +8,14 @@ import LocationMap from '../../components/location/LocationMap'
 import RelatedCard from '../../components/RelatedCard'
 import CommentsBlock from '../../components/CommentCard'
 import Footer from '../../components/shared/Footer'
+import { useAuth } from '../../components/context/AuthContext'
 
-const LocationDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
+
+const LocationDetailPage = () => {
+  const { verifyLogin } = useAuth()
+    useEffect(() => {
+      verifyLogin() // 在頁面加載時檢查登入狀態
+    }, [verifyLogin])
 
   const images = [
     'https://images.unsplash.com/photo-1603638710460-f20107e4ed47?q=80&w=3732&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -21,7 +27,7 @@ const LocationDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <div className="location-detail-page">
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Header />
       <SearchBar />
       <div className="location-detail-page__container">
         <ImageGallery images={images} />

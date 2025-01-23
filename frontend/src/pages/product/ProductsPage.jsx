@@ -1,11 +1,18 @@
+import { useEffect } from 'react'
 import Header from '../../components/shared/Header'
 import Footer from '../../components/shared/Footer'
 import HeroBanner from '../../components/shared/HeroBanner'
 import SearchBar from '../../components/shared/SearchBar'
 import CardItem from '../../components/shared/CardItem'
 import Pagination from '../../components/shared/Pagination'
+import { useAuth } from '../../components/context/AuthContext'
 
-const ProductsPage = ({ isLoggedIn, setIsLoggedIn }) => {
+const ProductsPage = () => {
+  const { verifyLogin } = useAuth()
+  useEffect(() => {
+    verifyLogin() // 在頁面加載時檢查登入狀態
+  }, [verifyLogin])
+
   const products = Array(12).fill({
     buttonText: '立刻購買',
     image:
@@ -17,7 +24,7 @@ const ProductsPage = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <div className="products-page">
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Header />
       <div className="products-page__hero-banner">
         <HeroBanner
           imageURL="../src/assets/images/product-page-hero-banner.jpg"

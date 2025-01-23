@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useEffect } from 'react'
 import Header from '../../components/shared/Header'
 import SearchBar from '../../components/shared/SearchBar'
 import Footer from '../../components/shared/Footer'
@@ -7,8 +7,13 @@ import DetailPageTitle from '../../components/DetailPageTitle'
 import DetailPageIntroduction from '../../components/DetailPageIntroduction'
 import ProductFeatureList from '../../components/product/ProductFeatureList'
 import PriceInformation from '../../components/PriceInformation'
+import { useAuth } from '../../components/context/AuthContext'
 
 const ProductDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
+  const { verifyLogin } = useAuth()
+  useEffect(() => {
+    verifyLogin() // 在頁面加載時檢查登入狀態
+  }, [verifyLogin])
   const images = [
     'https://images.unsplash.com/photo-1569789010436-421d71a9fc38?q=80&w=3685&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1596762779387-9c681b5e2818?q=80&w=5722&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',

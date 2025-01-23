@@ -8,8 +8,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Card, Button } from 'react-bootstrap'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ userId }) => {
+  const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
@@ -18,7 +20,7 @@ const ProfileInfo = () => {
     const userData = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:3000/api/user/profile',
+          `http://localhost:3000/api/users/${userId}/profile`,
           {
             withCredentials: true,
           }
@@ -31,7 +33,7 @@ const ProfileInfo = () => {
       }
     }
     userData()
-  }, [])
+  }, [userId])
 
   if (loading) {
     return <div>載入中...</div>
@@ -41,7 +43,7 @@ const ProfileInfo = () => {
     return <div>{error}</div>
   }
   const handleEditProfile = () => {
-    window.location.href = '/profile/edit'
+    navigate(`/users/${userId}/profile/edit`)
   }
   return (
     <div className="profile-wrapper">
@@ -49,7 +51,8 @@ const ProfileInfo = () => {
         <div className="profile-avatar">
           <img
             src={
-              user.image || '../public/assets/images/others/default-avatar.jpg'
+              user.image ||
+              '../../public/assets/images/others/default-avatar.jpg'
             }
             alt="預設大頭貼"
             className="default-avatar"
@@ -111,7 +114,7 @@ const ProfileInfo = () => {
               <Card style={{ width: '230px', height: '320px' }}>
                 <Card.Img
                   variant="top"
-                  src="../assets/images/backgrounds/taipei.jpg"
+                  src="../../assets/images/backgrounds/taipei.jpg"
                   style={{ width: '228px', height: '150px' }}
                 />
                 <Card.Body>
@@ -125,7 +128,7 @@ const ProfileInfo = () => {
               <Card style={{ width: '230px', height: '320px' }}>
                 <Card.Img
                   variant="top"
-                  src="../assets/images/others/korea.jpg"
+                  src="../../assets/images/others/korea.jpg"
                   style={{ width: '228px', height: '150px' }}
                 />
                 <Card.Body>
@@ -148,7 +151,7 @@ const ProfileInfo = () => {
           <div className="profile-content__follower-box">
             <div className="profile-content__follower-item">
               <img
-                src="../public/assets/images/others/default-avatar.jpg"
+                src="../../public/assets/images/others/default-avatar.jpg"
                 alt="預設追蹤者 1"
                 className="followers"
               />
@@ -156,7 +159,7 @@ const ProfileInfo = () => {
             </div>
             <div className="profile-content__follower-item">
               <img
-                src="../public/assets/images/others/default-avatar.jpg"
+                src="../../public/assets/images/others/default-avatar.jpg"
                 alt="預設追蹤者 2"
                 className="followers"
               />
@@ -164,7 +167,7 @@ const ProfileInfo = () => {
             </div>
             <div className="profile-content__follower-item">
               <img
-                src="../public/assets/images/others/default-avatar.jpg"
+                src="../../public/assets/images/others/default-avatar.jpg"
                 alt="預設追蹤者 3"
                 className="followers"
               />

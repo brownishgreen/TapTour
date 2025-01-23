@@ -249,19 +249,21 @@
   height: 40px;
 }
 .header__logo span {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: bold;
   color: #333;
 }
 .header__nav {
   display: flex;
   gap: 1.5rem;
+  margin-left: 20px;
 }
 .header__nav .header__link {
   color: #575757;
   text-decoration: none;
   font-size: 1.2rem;
   font-weight: 700;
+  margin-left: 20px;
 }
 .header__nav .header__link:hover {
   color: #54A2C0;
@@ -487,7 +489,7 @@
 .hero-banner__content {
   position: absolute;
   top: 78%;
-  left: 35%;
+  left: 38%;
   transform: translate(-50%, -50%);
   color: #ffffff;
 }
@@ -577,7 +579,7 @@
   justify-content: center;
   padding: 3rem 1rem;
   background-color: #ffffff;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 
 .search-bar-container {

@@ -2,22 +2,29 @@ import React from 'react'
 import logo from '../../assets/images/500.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faCrosshairs, faShoppingCart, faComment } from '@fortawesome/free-solid-svg-icons'
+import {
+  faUser,
+  faCrosshairs,
+  faShoppingCart,
+  faComment,
+} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
-const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+const Header = () => {
+  const { isLoggedIn, userId, handleAuthSuccess } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
       await axios.post(
-        'http://localhost:3000/api/user/logout',
+        `http://localhost:3000/api/users/logout`,
         {},
         {
           withCredentials: true,
         }
       )
-      setIsLoggedIn(false)
+      handleAuthSuccess(false, null)
       navigate('/login')
     } catch (err) {
       alert('登出失敗，請稍後再試')
@@ -55,7 +62,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             </button>
             <ul className="dropdown-menu" aria-labelledby="userMenuButton">
               <li>
-                <Link className="dropdown-item" to="/profile">
+                <Link className="dropdown-item" to={`/users/${userId}/profile`}>
                   個人資料
                 </Link>
               </li>

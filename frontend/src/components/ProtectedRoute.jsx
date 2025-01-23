@@ -2,33 +2,36 @@
 import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from './context/AuthContext'
 
 const ProtectedRoute = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { isLoggedIn, handleAuthSuccess } = useAuth()
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const verifyAuth = async () => {
       try {
-        await axios.get('http://localhost:3000/api/user/verify', {
-          withCredentials: true,
-        })
-        setIsAuthenticated(true)
+        const response = await axios.get(
+          'http://localhost:3000/api/users/verify',
+          {
+            withCredentials: true,
+          }
+        )
+        handleAuthSuccess(true, response.data.userId)
       } catch (error) {
-        setIsAuthenticated(false)
       } finally {
         setIsLoading(false)
       }
     }
 
-    checkAuth()
-  }, [])
+    verifyAuth()
+  }, [handleAuthSuccess])
 
   if (isLoading) {
     return <div>檢查登入狀態中...</div>
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" />
+  return isLoggedIn ? children : <Navigate to="/login" />
 }
 
 export default ProtectedRoute
