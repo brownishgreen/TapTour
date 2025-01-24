@@ -1,0 +1,29 @@
+// 基本顏色
+$primary-color:  #54A2C0;     // 主色
+$secondary-color:  #575757;   // 次色
+$tertiary-color: #3d8ca5;     // 第三種顏色
+$error-color: #D04745;        // 錯誤提示色
+$alert-color: #FF6B6B;
+$background-color: #ffffff;   // 背景色
+$background-overlay: rgba(200, 200, 200, 0.5);
+$text-color: #444444;
+$box-background-color: rgb(241, 222, 171);
+// 灰階色
+$gray-light: #bababa;
+$gray-dark: #333333;
+
+// 字體大小
+$font-size-base: 1rem;        // 預設字體大小
+$font-size-small: 0.875rem;   // 小字體
+$font-size-large: 1.2rem;     // 大字體
+
+// 字重
+$font-weight-regular: 400;    // 正常字重
+$font-weight-medium: 500;     // 中等字重
+$font-weight-bold: 700;       // 粗體字重
+
+// 間距
+$spacing-xs: 0.25rem;         // 4px
+$spacing-sm: 0.5rem;          // 8px
+$spacing-md: 1rem;            // 16px
+$spacing-lg: 2rem;            // 32px

@@ -1,0 +1,55 @@
+.image-gallery {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  &__container {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__main {
+    width: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+
+    &-top,
+    &-bottom {
+      display: flex;
+      gap: 10px;
+
+      img {
+        width: calc(50% - 5px);
+        height: auto;
+        border-radius: 12px;
+        object-fit: cover;
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    img {
+      width: calc(50% - 10px);
+      /* 右側圖片按比例排列 */
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+  }
+}

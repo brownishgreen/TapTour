@@ -7,18 +7,30 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "scss:watch": "npx sass src/scss/style.scss public/assets/css/style.css --watch",
+    "scss:build": "npx sass src/scss/style.scss public/assets/css/style.css"
+
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "axios": "^1.7.9",
+    "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
+    "normalize.css": "^8.0.1",
     "react": "^18.3.1",
+    "react-bootstrap": "^2.10.7",
     "react-dom": "^18.3.1",
-    "sass": "^1.83.1"
+    "react-router-dom": "^7.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "globals": "^15.14.0",
+    "sass": "^1.83.1",
     "vite": "^6.0.5"
   }
 }

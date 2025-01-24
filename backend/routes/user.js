@@ -1,15 +1,29 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
+const verifyToken = require('../middleware/auth')
+const upload = require('../utils/multer-config')
 
 // 定義路由
-router.get('/signup', userController.signUpPage)
-router.post('/signup', userController.signUp)
+router.get('/register', userController.registerPage)
+router.post('/register', userController.register)
 
 // 登入
-router.get('/signin', userController.signInPage)
-router.post('/signin', userController.signIn)
+router.get('/login', userController.loginPage)
+router.post('/login', userController.login)
 // 登出
-router.post('/signout', userController.signOut)
+router.post('/logout', userController.logout)
+
+router.get('/:userId/profile', verifyToken, userController.profile)
+
+// 檢查用戶的登入狀態的 API 路由
+router.get('/verify', verifyToken, userController.verify)
+
+router.put(
+  '/:userId/update-profile',
+  verifyToken,
+  upload.single('image'),
+  userController.updateProfile
+)
 
 module.exports = router
