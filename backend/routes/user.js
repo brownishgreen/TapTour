@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
-const verifyToken = require('../middleware/auth')
+const verifyToken = require('../middlewares/auth')
 const upload = require('../utils/multer-config')
 
 // 定義路由

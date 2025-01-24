@@ -3,7 +3,7 @@ const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 
 // JWT 驗證功能
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.token
+  const token = req.cookies.token // 從 Cookie 中提取 token
 
   if (!token) {
     return res.status(401).json({ message: '未授權的訪問' })
