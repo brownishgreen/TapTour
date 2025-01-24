@@ -60,6 +60,10 @@
   z-index: -1;
 }
 
+main {
+  margin-top: 100px;
+}
+
 .form-container {
   position: relative;
   background-color: #ffffff;
@@ -340,7 +344,6 @@
   background-color: #ffffff;
   width: 100%;
   bottom: 0;
-  margin-top: 100px;
 }
 .footer__links {
   margin-left: 4%;
@@ -611,6 +614,56 @@
     width: 90%;
   }
 }
+.table-wrapper {
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+  margin: 0 auto;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  border: none;
+}
+
+th {
+  background-color: #54A2C0;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+  line-height: 20px;
+}
+
+tr:hover {
+  background-color: #bababa;
+  color: #fff;
+}
+
+th, td {
+  line-height: 2;
+  padding: 14px;
+  text-align: left;
+}
+
+th:last-child, td:last-child {
+  text-align: center; /* 最後一列居中 */
+}
+
 .profile-wrapper {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -1023,41 +1076,22 @@
   margin-bottom: 10px;
 }
 
-.register-page {
+.page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-.register-page header {
+.page header {
   flex-shrink: 0;
 }
-.register-page main {
+.page main {
   position: relative;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.register-page footer {
-  flex-shrink: 0;
-}
-
-.login-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-.login-page header {
-  flex-shrink: 0;
-}
-.login-page main {
-  position: relative;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.login-page footer {
+.page footer {
   flex-shrink: 0;
 }
 

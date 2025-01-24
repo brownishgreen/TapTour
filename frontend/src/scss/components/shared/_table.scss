@@ -1,0 +1,52 @@
+@use '../../abstracts/_variables' as*;
+
+.table-wrapper {
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+  margin: 0 auto;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  border: none;
+}
+
+th {
+  background-color: $primary-color;
+  font-size: $font-size-base;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+  line-height: 20px;
+
+}
+
+tr:hover {
+  background-color: $gray-light;
+  color: #fff;
+}
+
+th, td {
+  line-height: 2;
+  padding: 14px; 
+  text-align: left;
+}
+
+th:last-child, td:last-child {
+  text-align: center; /* 最後一列居中 */
+}

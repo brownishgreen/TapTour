@@ -4,7 +4,7 @@ import LoginForm from '../../components/users/LoginForm'
 
 const LoginPage = () => {
   return (
-    <div className="login-page signin-background">
+    <div className="page signin-background">
       <Header />
       <main>
         <LoginForm />

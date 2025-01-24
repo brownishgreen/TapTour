@@ -13,6 +13,7 @@
 @use './components/shared/image-gallery';
 @use './components/shared/pagination';
 @use './components/shared/search-bar';
+@use './components/shared/table';
 
 @use './components/user/profile-info';
 @use './components/activity-detail-introduction';
@@ -25,8 +26,7 @@
 @use './components/price-information';
 @use './components/related-card';
 
-@use './pages/user/register';
-@use './pages/user/login';
+@use './pages/user/page';
 @use './pages/user/profile';
 
 @use './pages/activity/activities';

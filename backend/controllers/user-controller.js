@@ -74,7 +74,7 @@ const userController = {
 
       // 生成 JWT
       const token = jwt.sign(
-        { id: user.id, email: user.email },
+        { id: user.id, email: user.email, is_admin: user.is_admin },
         SECRET,
         { expiresIn: EXPIRES } // 讀取 .env 中的變數
       )
