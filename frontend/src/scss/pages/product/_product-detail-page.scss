@@ -10,6 +10,10 @@
     margin: 0 auto;
   }
 
+  &__search-bar-wrapper {
+    margin-top: 120px;
+  }
+
   &__wrapper {
     display: flex;
     flex-direction: row;
@@ -26,6 +30,7 @@
   &__main {
     max-width: 800px;
     flex: 2;
+    margin-top: 20px;
   }
 
   &__aside {
