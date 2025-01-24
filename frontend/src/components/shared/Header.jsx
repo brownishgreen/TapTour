@@ -6,7 +6,7 @@ import {
   faUser,
   faCrosshairs,
   faShoppingCart,
-  faComment,
+  faLocationDot,
 } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { useAuth } from '../context/AuthContext'
@@ -34,17 +34,20 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header__logo">
-        <img src={logo} alt="TapTour Logo" />
-        <span>TapTour</span>
+        <div className="header__logo-text">
+          <Link to="/home">
+            <img src={logo} alt="TapTour Logo" />
+            TapTour</Link>
+        </div>
         <nav className="header__nav">
-          <Link to="/explore" className="header__link">
+          <Link to="/activities" className="header__link">
             探索活動 <FontAwesomeIcon icon={faCrosshairs} />
           </Link>
-          <Link to="/trips" className="header__link">
+          <Link to="/products" className="header__link">
             行旅通享 <FontAwesomeIcon icon={faShoppingCart} />
           </Link>
-          <Link to="/reviews" className="header__link">
-            評論 <FontAwesomeIcon icon={faComment} />
+          <Link to="/location-page" className="header__link">
+            特色景點 <FontAwesomeIcon icon={faLocationDot} />
           </Link>
         </nav>
       </div>

@@ -28,7 +28,9 @@ const LocationDetailPage = () => {
   return (
     <div className="location-detail-page">
       <Header />
-      <SearchBar />
+      <div className="location-detail-page__search-bar-wrapper">
+        <SearchBar />
+      </div>
       <div className="location-detail-page__container">
         <ImageGallery images={images} />
         <div className="product-detail-page__title-wrapper">
