@@ -13,20 +13,19 @@ const adminController = {
     }
   },
   updateUserRole: async (req, res, next) => {
-    const { targetUserId } = req.params
-    const { is_admin } = req.body
+    const { userId } = req.params // 從 URL 參數中獲取用戶 ID
+    const { is_admin } = req.body // 從請求體中獲取新的角色
 
     try {
-      const targetUser = await User.findByPk(targetUserId)
-
-      if (!targetUser) {
-        return res.status(404).json({ message: 'User not found' })
+      const user = await User.findByPk(userId)
+      if (!user) {
+        return res.status(404).json({ message: '使用者不存在' })
       }
 
-      targetUser.is_admin = is_admin
-      await targetUser.save()
+      user.is_admin = is_admin
+      await user.save()
 
-      res.status(200).json({ message: 'User role updated successfully' })
+      res.status(200).json({ message: '角色更新成功', user })
     } catch (err) {
       res.status(500)
       next(err)

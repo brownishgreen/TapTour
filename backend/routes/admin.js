@@ -5,6 +5,11 @@ const verifyToken = require('../middlewares/auth')
 const isAdmin = require('../middlewares/isAdmin')
 
 router.get('/users', verifyToken, isAdmin, adminController.getAllUsers)
-router.put('/users/:targetUserId', adminController.updateUserRole)
+router.put(
+  '/users/:userId',
+  verifyToken,
+  isAdmin,
+  adminController.updateUserRole
+)
 
 module.exports = router
