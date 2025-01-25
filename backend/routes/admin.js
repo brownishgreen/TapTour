@@ -11,5 +11,11 @@ router.put(
   isAdmin,
   adminController.updateUserRole
 )
+router.delete(
+  '/users/:userId',
+  verifyToken,
+  isAdmin,
+  adminController.deleteUser
+)
 
 module.exports = router
