@@ -31,6 +31,19 @@ const adminController = {
       next(err)
     }
   },
+  deleteUser: async (req, res, next) => {
+    const { userId } = req.params
+    try {
+      const user = await User.findByPk(userId)
+      if (!user) {
+        return res.status(404).json({ message: '使用者不存在' })
+      }
+      await user.destroy()
+      return res.status(200).json({ message: '已成功刪除用戶' })
+    } catch (err) {
+      next(err)
+    }
+  },
 }
 
 module.exports = adminController

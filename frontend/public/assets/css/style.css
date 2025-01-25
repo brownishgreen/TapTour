@@ -655,13 +655,7 @@ tr:hover {
 }
 
 th, td {
-  line-height: 2;
-  padding: 14px;
-  text-align: left;
-}
-
-th:last-child, td:last-child {
-  text-align: center; /* 最後一列居中 */
+  text-align: center;
 }
 
 .profile-wrapper {
