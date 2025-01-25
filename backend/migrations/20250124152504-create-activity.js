@@ -12,9 +12,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      image: {
-        type: Sequelize.STRING
-      },
       description: {
         type: Sequelize.TEXT
       },
@@ -34,18 +31,18 @@ module.exports = {
           key: 'id'
         }
       },
-      categoryId: {
+      category_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Categories',
           key: 'id'
         }
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

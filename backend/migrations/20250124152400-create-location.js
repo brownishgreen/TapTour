@@ -12,9 +12,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      image: {
-        type: Sequelize.STRING
-      },
       description: {
         type: Sequelize.TEXT
       },
@@ -22,7 +19,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      updated_at: {
+      updated_att: {
         type: Sequelize.DATE,
         allowNull: false
       }

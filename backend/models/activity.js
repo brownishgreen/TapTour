@@ -4,29 +4,48 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Activity extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Activity.belongsTo(models.Location, { foreignKey: 'location_id' })
+      Activity.belongsTo(models.Category, { foreignKey: 'category_id' })
     }
   }
   Activity.init({
     name: DataTypes.STRING,
-    image: DataTypes.STRING,
     description: DataTypes.TEXT,
-    start_date: DataTypes.DATE,
-    end_date: DataTypes.DATE,
+    startDate: {
+      type: DataTypes.DATE,
+      field: 'start_date'
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      field: 'end_date'
+    },
     price: DataTypes.INTEGER,
-    location_id: DataTypes.INTEGER,
-    category_id: DataTypes.INTEGER,
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE
+    locationId: {
+      type: DataTypes.INTEGER,
+      field: 'location_id'
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      field: 'category_id'
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
+    }
   }, {
     sequelize,
     modelName: 'Activity',
+    tableName: 'Activities',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    categoryId: 'category_id',
+    locationId: 'location_id'
   });
   return Activity;
 };
