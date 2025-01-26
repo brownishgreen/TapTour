@@ -25,7 +25,9 @@ const ProductDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <div className="product-detail-page">
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <SearchBar />
+      <div className="product-detail-page__search-bar-wrapper">
+        <SearchBar />
+      </div>
       <div className="product-detail-page__container">
         <ImageGallery images={images} />
         <div className="product-detail-page__title-wrapper">

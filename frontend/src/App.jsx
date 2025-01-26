@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import './scss/style.scss'
 import RegisterPage from './pages/users/RegisterPage'
 import LoginPage from './pages/users/LoginPage'
 import ProfilePage from './pages/users/ProfilePage'

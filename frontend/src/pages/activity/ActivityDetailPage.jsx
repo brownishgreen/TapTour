@@ -26,7 +26,9 @@ const ActivityDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <div className="activity-detail-page">
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <SearchBar />
+      <div className="activity-detail-page__search-bar-wrapper">
+        <SearchBar />
+      </div>
       <div className="activity-detail-page__container">
         <ImageGallery images={images} />
         <div className="activity-detail-page-title-wrapper">

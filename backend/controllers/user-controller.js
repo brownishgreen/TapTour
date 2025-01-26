@@ -11,7 +11,7 @@ const userController = {
   },
   register: async (req, res, next) => {
     try {
-      const { name, email, password } = req.body
+      const { name, email, password} = req.body
 
       // 檢查必填欄位
       if (!name || !email || !password) {
@@ -33,7 +33,7 @@ const userController = {
       await User.create({
         name,
         email,
-        password: hash,
+        password: hash
       })
 
       res.status(201).json({ message: '註冊成功' })

@@ -3,9 +3,10 @@ const router = express.Router()
 
 const userRoutes = require('./user')
 const adminRoutes = require('./admin')
-
+const activityRoutes = require('./activity')
 // 掛載路由模組
 router.use('/users', userRoutes) // 路徑 /api/users
 router.use('/admin', adminRoutes) // 路徑 /api/admin
+router.use(activityRoutes) // 路徑 /api/activities and activity/:id
 
 module.exports = router
