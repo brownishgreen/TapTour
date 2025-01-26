@@ -1,7 +1,8 @@
 @use '../abstracts/_variables' as *;
 @use '../abstracts/_mixins' as *;
 
-.create-activity-form {
+form.create-activity-form {
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,12 +17,14 @@
   h1 {
     margin-bottom: 20px;
     color: $text-color;
-    z-index: 2;
+    z-index: 10;
   }
 
   &__form {
     width: 100%;
     margin-top:20px;
+    position: relative;
+    z-index: 5;
 
     &-item {
       display: flex;
@@ -43,16 +46,18 @@
         border-radius: 4px;
         outline: none;
         transition: border-color 0.3s;
-        z-index: 2;
+        z-index: 10;
 
         &:focus {
           border-color: $primary-color;
+          z-index: 10;
         }
       }
 
       textarea {
         resize: none;
         height: 100px;
+        z-index: 10;
       }
 
       button[type="submit"] {
@@ -65,7 +70,7 @@
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s;
-
+        z-index: 10;
         &:hover {
           background-color: #333;
         }
@@ -78,5 +83,6 @@
     flex-wrap: wrap;
     gap: 15px;
     width: 100%;
+    z-index: 10;
   }
 }
