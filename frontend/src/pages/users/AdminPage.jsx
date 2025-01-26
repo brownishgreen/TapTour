@@ -1,17 +1,17 @@
 import Header from '../../components/shared/Header'
 import Footer from '../../components/shared/Footer'
-import RegisterForm from '../../components/users/RegisterForm'
+import UserTable from '../../components/users/UserTable'
 
-const RegisterPage = () => {
+const AdminPage = () => {
   return (
-    <div className="page signup-background">
+    <div className="page">
       <Header />
       <main>
-        <RegisterForm />
+        <UserTable />
       </main>
       <Footer />
     </div>
   )
 }
 
-export default RegisterPage
+export default AdminPage

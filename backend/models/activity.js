@@ -31,8 +31,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Activity',
+      tableName: 'Activities',
       underscored: true,
     }
   )
   return Activity
 }
+

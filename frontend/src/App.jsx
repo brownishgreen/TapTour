@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import './scss/style.scss'
 import RegisterPage from './pages/users/RegisterPage'
 import LoginPage from './pages/users/LoginPage'
 import ProfilePage from './pages/users/ProfilePage'
+import AdminPage from './pages/users/AdminPage'
 import CreateActivityFormPage from './pages/activity/CreateActivityPage'
 import EditActivityPage from './pages/activity/EditActivityPage'
 import Homepage from './pages/Homepage'
@@ -18,12 +20,20 @@ import { AuthProvider } from './components/context/AuthContext'
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute>
+                <AdminPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/activities" element={<ActivitiesPage />} />
           <Route
             path="/activity-page" //之後要改成動態 /activities/:id
@@ -65,8 +75,8 @@ function App() {
             }
           />
         </Routes>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   )
 }
 

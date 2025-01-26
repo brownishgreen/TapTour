@@ -5,7 +5,7 @@ const app = express()
 const path = require('path')
 const port = 3000
 const routes = require('./routes')
-const errorHandler = require('./middleware/error-handler')
+const errorHandler = require('./middlewares/error-handler')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
