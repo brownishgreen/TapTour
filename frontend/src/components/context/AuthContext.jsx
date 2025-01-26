@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   useState,
   useContext,
@@ -9,34 +9,53 @@ import axios from 'axios'
 
 const AuthContext = createContext()
 
+// 定義 AuthProvider，包裹應用程式以提供身份驗證功能
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userId, setUserId] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
-  const handleAuthSuccess = useCallback((status, id) => {
+  // 更新身份驗證狀態的函數
+  const handleAuthSuccess = useCallback((status, id, adminStatus) => {
     setIsLoggedIn(status)
     setUserId(id)
+    setIsAdmin(adminStatus || false)
+    setIsLoading(false)
   }, [])
 
+  // 應用程式啟動時自動調用 verifyLogin 進行身份驗證
+  useEffect(() => {
+    verifyLogin()
+  }, [userId])
+
+  // 驗證用戶是否已登入的函數
   const verifyLogin = useCallback(async () => {
+    setIsLoading(true)
     try {
       const response = await axios.get(
         'http://localhost:3000/api/users/verify',
         { withCredentials: true }
       )
-      handleAuthSuccess(true, response.data.userId)
+      const { userId, isAdmin } = response.data
+      handleAuthSuccess(true, userId, isAdmin)
     } catch (error) {
-      handleAuthSuccess(false, null)
+      console.log(error)
+      handleAuthSuccess(false, null, false)
     }
   }, [handleAuthSuccess])
 
-  useEffect(() => {
-    verifyLogin() // 在應用啟動時檢查登入狀態
-  }, [verifyLogin])
-
+  // 提供 Context 給子組件使用
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, userId, handleAuthSuccess, verifyLogin }}
+      value={{
+        isLoggedIn,
+        userId,
+        isAdmin,
+        isLoading,
+        handleAuthSuccess,
+        verifyLogin,
+      }}
     >
       {children}
     </AuthContext.Provider>

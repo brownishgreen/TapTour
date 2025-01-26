@@ -1,7 +1,7 @@
 @use '../../abstracts/_variables' as*;
 
 .table-wrapper {
-  width: 1000px;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -10,29 +10,29 @@
 
 table {
   width: 100%;
-  margin: 0 auto;
-  font-size: 14px;
-  font-family: 'Roboto', sans-serif;
+  // font-size: $font-size-large;
   border: none;
 }
 
 th {
   background-color: $primary-color;
-  font-size: $font-size-base;
+  font-size: $font-size-large;
+  font-weight: $font-weight-bold;
   color: white;
-  text-align: center;
-  padding: 10px;
+  padding: $spacing-md;
 }
 
 td {
-  padding: 10px;
-  text-align: left;
+  padding:$spacing-md;
   border: 1px solid #ddd;
+  // line-height: 20px;
+
 }
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
-  line-height: 20px;
+    padding:$spacing-md;
+
 
 }
 
@@ -41,6 +41,6 @@ tr:hover {
   color: #fff;
 }
 
-th, td {
+thead, td {
    text-align: center;
 }

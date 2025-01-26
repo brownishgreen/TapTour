@@ -131,11 +131,16 @@ const userController = {
   },
   // 檢查用戶的登入狀態的 API 路由
   verify: (req, res) => {
-    const userId = req.user.id // 假設已從驗證中取得 user 資訊
-    if (userId) {
-      res.status(200).json({ message: '已登入', userId }) // 包含 userId
-    } else {
-      res.status(401).json({ message: '未登入' })
+    try {
+      const user = req.user
+      if (!user) {
+        return res.status(401).json({ message: '未登入' }) // 返回未登入狀態
+      }
+      const { id: userId, is_admin: isAdmin } = user
+
+      res.status(200).json({ message: '已登入', userId, isAdmin })
+    } catch (err) {
+      res.status(500).json({ message: '伺服器錯誤', error: err.message })
     }
   },
   updateProfile: async (req, res, next) => {

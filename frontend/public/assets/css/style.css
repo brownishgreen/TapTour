@@ -615,7 +615,7 @@ main {
   }
 }
 .table-wrapper {
-  width: 1000px;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -624,29 +624,25 @@ main {
 
 table {
   width: 100%;
-  margin: 0 auto;
-  font-size: 14px;
-  font-family: "Roboto", sans-serif;
   border: none;
 }
 
 th {
   background-color: #54A2C0;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
   color: white;
-  text-align: center;
-  padding: 10px;
+  padding: 1rem;
 }
 
 td {
-  padding: 10px;
-  text-align: left;
+  padding: 1rem;
   border: 1px solid #ddd;
 }
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
-  line-height: 20px;
+  padding: 1rem;
 }
 
 tr:hover {
@@ -654,7 +650,7 @@ tr:hover {
   color: #fff;
 }
 
-th, td {
+thead, td {
   text-align: center;
 }
 

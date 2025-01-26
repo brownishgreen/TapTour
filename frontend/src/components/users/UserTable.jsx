@@ -1,10 +1,15 @@
-// 負責渲染使用者列表
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTrash,
+  faCheck,
+  faXmark,
+  faBan,
+} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
 const UserTable = () => {
   const [users, setUsers] = useState([])
@@ -12,6 +17,7 @@ const UserTable = () => {
   const [successMessage, setSuccessMessage] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState(null) // 保存要刪除的用戶 ID
+  const { userId: currentUserId } = useAuth() // 使用 useAuth 中的 userId
   const navigate = useNavigate()
 
   // 打開彈窗
@@ -35,7 +41,7 @@ const UserTable = () => {
             user.id === userId ? { ...user, is_admin: isAdmin } : user
           )
         )
-        setSuccessMessage('用戶已成功改變權限')
+        setSuccessMessage(`已成功更改權限`)
         setShowModal(true)
       })
       .catch(() => {
@@ -91,10 +97,7 @@ const UserTable = () => {
 
   return (
     <div className="table-wrapper">
-      <table
-        border="1"
-        style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}
-      >
+      <table>
         <thead>
           <tr>
             <th>ID</th>
@@ -116,29 +119,32 @@ const UserTable = () => {
                 <select
                   value={user.is_admin ? 'admin' : 'user'} // 根據當前角色設置默認值
                   onChange={(e) => toggleRole(user.id, e.target.value)} // 當選擇改變時觸發事件
-                  style={{
-                    padding: '5px',
-                    fontSize: '14px',
-                    border: '1px solid #ddd',
-                    borderRadius: '4px',
-                  }}
+                  disabled={user.id === currentUserId}
                 >
                   <option value="user">一般用戶</option>
                   <option value="admin">管理員</option>
                 </select>
               </td>
               <td>
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  className="icon"
-                  onClick={() => openModal(user.id)}
-                  style={{
-                    fontSize: '20px',
-                    color: 'red',
-                    cursor: 'pointer',
-                    padding: '10px', // 增加點擊範圍
-                  }}
-                />
+                {user.id === currentUserId ? (
+                  <FontAwesomeIcon
+                    icon={faBan}
+                    style={{
+                      fontSize: '20px',
+                      color: 'gray',
+                    }}
+                  /> // 禁用刪除按鈕
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    onClick={() => openModal(user.id)}
+                    style={{
+                      fontSize: '20px',
+                      color: '#FF6B6B',
+                      cursor: 'pointer',
+                    }}
+                  />
+                )}
               </td>
             </tr>
           ))}
