@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       Location.hasMany(models.Comment, { foreignKey: 'locationId' })
       Location.hasMany(models.Activity, { foreignKey: 'locationId' })
       Location.hasMany(models.Image, { foreignKey: 'locationId' })
+      Location.hasMany(models.Product, { foreignKey: 'locationId' })
     }
   }
   Location.init(
