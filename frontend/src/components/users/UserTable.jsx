@@ -42,13 +42,17 @@ const UserTable = () => {
           )
         )
         setSuccessMessage(`已成功更改權限`)
-        setShowModal(true)
       })
       .catch(() => {
         setErrorMessage('更新失敗，請稍後再試。')
-        setShowModal(true)
       })
   }
+
+  useEffect(() => {
+    if (successMessage || errorMessage) {
+      setShowModal(true)
+    }
+  }, [successMessage, errorMessage])
 
   const deleteUser = () => {
     axios
@@ -64,21 +68,21 @@ const UserTable = () => {
         )
         setSuccessMessage('用戶已成功刪除！')
         setErrorMessage('')
-        setShowModal(true)
       })
       .catch(() => {
         setErrorMessage('刪除用戶失敗，請稍後再試。')
         setSuccessMessage('')
-        setShowModal(true)
       })
   }
 
   // 關閉彈窗
   const closeModal = () => {
     setShowModal(false)
-    setSuccessMessage('')
-    setErrorMessage('')
-    setSelectedUserId(null) // 清空選中用戶 ID
+    setTimeout(() => {
+      setSuccessMessage('')
+      setErrorMessage('')
+      setSelectedUserId(null)
+    }, 300) // 清空選中用戶 ID
   }
 
   useEffect(() => {
@@ -177,7 +181,9 @@ const UserTable = () => {
             </div>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body
+          className={successMessage ? 'modal-body-success' : 'modal-body-error'}
+        >
           {successMessage || errorMessage || '此操作無法還原，請謹慎執行。'}
         </Modal.Body>
         <Modal.Footer>
