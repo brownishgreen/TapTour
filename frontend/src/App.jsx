@@ -20,8 +20,8 @@ import { AuthProvider } from './components/context/AuthContext'
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -75,8 +75,8 @@ function App() {
             }
           />
         </Routes>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   )
 }
 

@@ -4,11 +4,11 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
-
+import { useAuth } from '../context/AuthContext'
 
 const LoginForm = () => {
+  const { handleAuthSuccess } = useAuth()
   const navigate = useNavigate()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -34,7 +34,10 @@ const LoginForm = () => {
         },
         { withCredentials: true } // 啟用 Cookie 傳輸
       )
-      const { userId } = response.data
+      const { userId, isAdmin } = response.data
+      // 確保更新 AuthContext 狀態
+      handleAuthSuccess(true, userId, isAdmin)
+
       setPassword('') // 清空密碼欄位，增加用戶安全性
       setSuccessMessage('登入成功！即將跳轉...')
       setShowModal(true)
