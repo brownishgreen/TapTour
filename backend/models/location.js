@@ -1,35 +1,34 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Location extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      Location.hasMany(models.Activity, { foreignKey: 'location_id' })
+      Location.hasMany(models.Comment, { foreignKey: 'locationId' })
+      Location.hasMany(models.Activity, { foreignKey: 'locationId' })
+      Location.hasMany(models.Image, { foreignKey: 'locationId' })
+      Location.hasMany(models.Product, { foreignKey: 'locationId' })
     }
   }
-  Location.init({
-    name: DataTypes.STRING,
-    image: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    createdAt: {
-      type: DataTypes.DATE,
-      field: 'created_at'
+  Location.init(
+    {
+      name: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      latitude: DataTypes.DECIMAL(10, 6),
+      longitude: DataTypes.DECIMAL(10, 6),
+      placeId: DataTypes.INTEGER,
     },
-    updatedAt: {
-      type: DataTypes.DATE,
-      field: 'updated_at'
+    {
+      sequelize,
+      modelName: 'Location',
+      tableName: 'Locations',
+      underscored: true,
     }
-  }, {
-    sequelize,
-    modelName: 'Location',
-    tableName: 'Locations',
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    locationId: 'location_id',
-    categoryId: 'category_id',
-    activityId: 'activity_id'
-  });
-  return Location;
-};
+  )
+  return Location
+}
+

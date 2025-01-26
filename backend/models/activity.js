@@ -1,51 +1,40 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Activity extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      Activity.belongsTo(models.Location, { foreignKey: 'location_id' })
-      Activity.belongsTo(models.Category, { foreignKey: 'category_id' })
+      Activity.hasMany(models.Comment, { foreignKey: 'activityId' })
+      Activity.belongsTo(models.Location, { foreignKey: 'locationId' })
+      Activity.belongsTo(models.Category, { foreignKey: 'categoryId' })
+      Activity.belongsTo(models.User, { foreignKey: 'userId' })
+      Activity.hasMany(models.Image, { foreignKey: 'activityId' })
     }
   }
-  Activity.init({
-    name: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    startDate: {
-      type: DataTypes.DATE,
-      field: 'start_date'
+  Activity.init(
+    {
+      name: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      startDate: DataTypes.DATE,
+      endDate: DataTypes.DATE,
+      time: DataTypes.TIME,
+      venue: DataTypes.STRING,
+      price: DataTypes.INTEGER,
+      locationId: DataTypes.INTEGER,
+      categoryId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
     },
-    endDate: {
-      type: DataTypes.DATE,
-      field: 'end_date'
-    },
-    price: DataTypes.INTEGER,
-    locationId: {
-      type: DataTypes.INTEGER,
-      field: 'location_id'
-    },
-    categoryId: {
-      type: DataTypes.INTEGER,
-      field: 'category_id'
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      field: 'created_at'
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      field: 'updated_at'
+    {
+      sequelize,
+      modelName: 'Activity',
+      tableName: 'Activities',
+      underscored: true,
     }
-  }, {
-    sequelize,
-    modelName: 'Activity',
-    tableName: 'Activities',
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    categoryId: 'category_id',
-    locationId: 'location_id'
-  });
-  return Activity;
-};
+  )
+  return Activity
+}
+
