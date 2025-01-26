@@ -15,13 +15,13 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(
   cors({
-    origin: 'http://localhost:5173', // 替換為你的前端 URL
+    origin: 'http://localhost:5173', // 替換為前端 URL
     credentials: true, // 允許攜帶憑證（Cookie）
   })
 )
 app.use(errorHandler)
 app.use('/api', routes)
-
+app.use('/api/activities', routes)
 app.get('/', (req, res) => {
   res.send('hello world')
 })

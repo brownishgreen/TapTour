@@ -62,7 +62,17 @@ const activityController = {
   createActivity: async (req, res, next) => {
     try {
       const { name, description, startDate, endDate, price, locationId, categoryId } = req.body
-      const activity = await Activity.create({ name, description, startDate, endDate, price, locationId, categoryId })
+      const images = Object.keys(req.files).map(key => req.files[key][0].path)
+      const activity = await Activity.create({
+        name,
+        description,
+        startDate,
+        endDate,
+        price,
+        locationId,
+        categoryId,
+        images: JSON.stringify(images) // 將圖片路徑轉換為JSON字串
+      })
       res.status(200).json({ message: '活動創建成功', activity })
     } catch (err) {
       err.statusCode = 500

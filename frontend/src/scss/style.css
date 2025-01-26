@@ -336,6 +336,7 @@ main {
   background-color: #ffffff;
   width: 100%;
   bottom: 0;
+  margin-top: 100px;
 }
 .footer__links {
   margin-left: 4%;
@@ -616,7 +617,7 @@ main {
   }
 }
 .table-wrapper {
-  width: 1000px;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -625,29 +626,25 @@ main {
 
 table {
   width: 100%;
-  margin: 0 auto;
-  font-size: 14px;
-  font-family: "Roboto", sans-serif;
   border: none;
 }
 
 th {
   background-color: #54A2C0;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
   color: white;
-  text-align: center;
-  padding: 10px;
+  padding: 1rem;
 }
 
 td {
-  padding: 10px;
-  text-align: left;
+  padding: 1rem;
   border: 1px solid #ddd;
 }
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
-  line-height: 20px;
+  padding: 1rem;
 }
 
 tr:hover {
@@ -655,14 +652,8 @@ tr:hover {
   color: #fff;
 }
 
-th, td {
-  line-height: 2;
-  padding: 14px;
-  text-align: left;
-}
-
-th:last-child, td:last-child {
-  text-align: center; /* 最後一列居中 */
+thead, td {
+  text-align: center;
 }
 
 .profile-wrapper {
@@ -884,7 +875,8 @@ th:last-child, td:last-child {
   justify-content: flex-end;
 }
 
-.create-activity-form {
+form.create-activity-form {
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -896,28 +888,30 @@ th:last-child, td:last-child {
   margin: 30px auto 0;
   z-index: 2;
 }
-.create-activity-form h1 {
+form.create-activity-form h1 {
   margin-bottom: 20px;
   color: #444444;
-  z-index: 2;
+  z-index: 10;
 }
-.create-activity-form__form {
+form.create-activity-form__form {
   width: 100%;
   margin-top: 20px;
+  position: relative;
+  z-index: 5;
 }
-.create-activity-form__form-item {
+form.create-activity-form__form-item {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 20px;
 }
-.create-activity-form__form-item label {
+form.create-activity-form__form-item label {
   font-size: 14px;
   color: #444444;
 }
-.create-activity-form__form-item input[type=text],
-.create-activity-form__form-item input[type=file],
-.create-activity-form__form-item textarea {
+form.create-activity-form__form-item input[type=text],
+form.create-activity-form__form-item input[type=file],
+form.create-activity-form__form-item textarea {
   width: 100%;
   padding: 10px;
   font-size: 14px;
@@ -925,18 +919,20 @@ th:last-child, td:last-child {
   border-radius: 4px;
   outline: none;
   transition: border-color 0.3s;
-  z-index: 2;
+  z-index: 10;
 }
-.create-activity-form__form-item input[type=text]:focus,
-.create-activity-form__form-item input[type=file]:focus,
-.create-activity-form__form-item textarea:focus {
+form.create-activity-form__form-item input[type=text]:focus,
+form.create-activity-form__form-item input[type=file]:focus,
+form.create-activity-form__form-item textarea:focus {
   border-color: #54A2C0;
+  z-index: 10;
 }
-.create-activity-form__form-item textarea {
+form.create-activity-form__form-item textarea {
   resize: none;
   height: 100px;
+  z-index: 10;
 }
-.create-activity-form__form-item button[type=submit] {
+form.create-activity-form__form-item button[type=submit] {
   width: 100%;
   padding: 10px;
   font-size: 16px;
@@ -946,15 +942,17 @@ th:last-child, td:last-child {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  z-index: 10;
 }
-.create-activity-form__form-item button[type=submit]:hover {
+form.create-activity-form__form-item button[type=submit]:hover {
   background-color: #333;
 }
-.create-activity-form__image-upload {
+form.create-activity-form__image-upload {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   width: 100%;
+  z-index: 10;
 }
 
 .detail-page-introduction {
@@ -1167,12 +1165,21 @@ th:last-child, td:last-child {
   margin-top: 20px;
 }
 
+.create-activity-form-page {
+  position: relative;
+  z-index: 10;
+}
 .create-activity-form-page__container {
   padding: 60px 0;
   display: flex;
   width: 100%;
   flex-direction: column;
-  background-image: url("https: //images.unsplash.com/photo-1736931544273-ebe70ecc8829?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-image: url("../../../../src/assets/images/product-page-bottom-hero-banner.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 5;
 }
 .create-activity-form-page__container h1 {
   text-align: center;
