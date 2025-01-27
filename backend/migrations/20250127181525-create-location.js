@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -11,30 +11,42 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      image: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       description: {
         type: Sequelize.TEXT,
+        allowNull: true,
       },
       latitude: {
-        type: Sequelize.DECIMAL(10, 6),
+        type: Sequelize.FLOAT,
+        allowNull: true,
       },
       longitude: {
-        type: Sequelize.DECIMAL(10, 6),
+        type: Sequelize.FLOAT,
+        allowNull: true,
       },
-      place_id: {
-        type: Sequelize.INTEGER,
+      google_place_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-    })
+    });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Locations')
+    await queryInterface.dropTable('Locations');
   },
-}
+};

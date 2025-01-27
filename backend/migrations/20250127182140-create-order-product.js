@@ -1,47 +1,48 @@
-'use strict'
-
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Followers', {
+    await queryInterface.createTable('OrderProducts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      follower_id: {
+      order_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: 'Users', // 關聯到 Users 表
+          model: 'Orders',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      following_id: {
+      product_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: 'Users', // 關聯到 Users 表
+          model: 'Products',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-    })
+    });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Followers')
+    await queryInterface.dropTable('OrderProducts');
   },
-}
+};
