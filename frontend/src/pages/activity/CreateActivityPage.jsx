@@ -4,7 +4,7 @@ import Footer from '../../components/shared/Footer.jsx'
 import CreateActivityForm from '../../components/activity/CreateActivityForm.jsx'
 import { useAuth } from '../../components/context/AuthContext'
 
-const CreateActivityFormPage = () => {
+const CreateActivityFormPage = ({}) => {
   const { verifyLogin } = useAuth()
   useEffect(() => {
     verifyLogin() // 在頁面加載時檢查登入狀態
