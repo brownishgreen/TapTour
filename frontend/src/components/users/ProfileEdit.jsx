@@ -38,7 +38,7 @@ const ProfileEdit = () => {
         setEmail(email)
         setBio(bio || '')
         setImage(
-          image ? image : '../public/assets/images/others/default-avatar.jpg'
+          image ? image : '/assets/images/others/default-avatar.jpg'
         )
       } catch (err) {
         setErrorMessage('無法載入用戶資料')
@@ -126,7 +126,7 @@ const ProfileEdit = () => {
       <div className="profile-edit-avatar">
         <img
           src={
-            image ? image : '../public/assets/images/others/default-avatar.jpg'
+            image ? image : '/assets/images/others/default-avatar.jpg'
           } // 替換大頭貼路徑
           alt="大頭貼"
           className="profile-avatar"

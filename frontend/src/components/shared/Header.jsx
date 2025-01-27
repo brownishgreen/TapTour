@@ -39,7 +39,7 @@ const Header = () => {
       ) : (
         <header className="header">
           <div className="header__logo">
-            <Link to="/home">
+            <Link to="/">
               <img src={logo} alt="TapTour Logo" />
               <span>TapTour</span>
             </Link>
