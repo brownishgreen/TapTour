@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import apiClient from '../../api/apiClient.js'
+import axios from 'axios'
 const CreateActivityForm = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -31,14 +32,16 @@ const CreateActivityForm = () => {
     })
 
     try {
-      const response = await apiClient.post('api/activities', data, {
+      const response = await axios.post('http://localhost:3000/api/activities', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
+        },
+        withCredentials: true
       })
       console.log('活動創建成功', response.data)
       alert('活動創建成功')
     } catch (error) {
+      
       console.error('活動創建失敗', error)
       alert('活動創建失敗')
     }
