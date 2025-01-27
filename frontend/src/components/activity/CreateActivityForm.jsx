@@ -1,7 +1,12 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import apiClient from '../../api/apiClient.js'
 import axios from 'axios'
-const CreateActivityForm = () => {
+const CreateActivityForm = ({ mode }) => {
+
+  const { id } = useParams() //抓去編輯模式的活動之ID
+  const isEditMode = mode === 'edit' // 判斷模式
+
   const [formData, setFormData] = useState({
     name: '',
     time: '',
@@ -11,20 +16,38 @@ const CreateActivityForm = () => {
     images: null
   })
 
+  // 如果 mode 是 edit，則從後端獲取活動資料
+  useEffect(() => {
+    if (isEditMode && id ) {
+      axios
+        .get(`http://localhost:3000/api/activities/${id}`)
+        .then(response => setFormData(response.data))
+        .catch(error => console.error('獲取活動資料失敗', error))
+    }
+  }, [isEditMode, id]) // 當 isEdit 或 id 改變時，執行 useEffect
+
+  //更新表單資料
   const handleInputChange = (event) => {
     const { id, value } = event.target
-    setFormData({ ...formData, [id]: value})
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }))
   }
 
   const handleImageChange = (event) => {
     const { id, files } = event.target
     const file = files[0]
-    setFormData({ ...formData, [id]: file})
+    setFormData(prev => ({
+      ...prev,
+      [id]: file
+    }))
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     const data = new FormData()
+    
     Object.keys(formData).forEach(key => {
       if (formData[key] !== null) { //確保沒有空值
         data.append(key, formData[key])
@@ -32,18 +55,25 @@ const CreateActivityForm = () => {
     })
 
     try {
-      const response = await axios.post('http://localhost:3000/api/activities', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        withCredentials: true
-      })
-      console.log('活動創建成功', response.data)
-      alert('活動創建成功')
+      const response = isEditMode 
+        ? await axios.put(`http://localhost:3000/api/activities/${id}`, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          withCredentials: true
+        })
+        : await axios.post('http://localhost:3000/api/activities', data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          withCredentials: true
+        })
+
+      console.log(`${isEditMode ? '更新' : '創建'}成功`, response.data)
+      alert(`${isEditMode ? '活動更新' : '活動創建'}成功`)
     } catch (error) {
-      
-      console.error('活動創建失敗', error)
-      alert('活動創建失敗')
+      console.error(`${isEditMode ? '更新' : '創建'}失敗`, error)
+      alert(`${isEditMode ? '活動更新' : '活動創建'}失敗`)
     }
   }
 
