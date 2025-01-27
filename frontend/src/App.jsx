@@ -13,6 +13,7 @@ import ActivityDetailPage from './pages/activity/ActivityDetailPage'
 import ProductsPage from './pages/product/ProductsPage'
 import ProductDetailPage from './pages/product/ProductDetailPage'
 import LocationDetailPage from './pages/location/LocationDetailPage'
+import LocationsPage from './pages/location/LocationsPage'
 import ProfileEditPage from './pages/users/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/context/AuthContext'
@@ -41,6 +42,7 @@ function App() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/product-page" element={<ProductDetailPage />} />
           <Route path="/location-page" element={<LocationDetailPage />} />
+          <Route path="/locations" element={<LocationsPage />} />
           <Route
             path="/users/:userId/profile"
             element={

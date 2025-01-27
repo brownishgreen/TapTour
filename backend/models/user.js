@@ -11,6 +11,19 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Comment, { foreignKey: 'userId' })
       User.hasMany(models.Activity, { foreignKey: 'userId' })
       User.hasMany(models.Order, { foreignKey: 'userId' })
+      User.belongsToMany(models.User, {
+        through: models.Follower,
+        as: 'Followers', // 被追蹤者
+        foreignKey: 'following_id',
+        otherKey: 'follower_id',
+      })
+
+      User.belongsToMany(models.User, {
+        through: models.Follower,
+        as: 'Followings', // 追蹤者
+        foreignKey: 'follower_id',
+        otherKey: 'following_id',
+      })
     }
   }
   User.init(
