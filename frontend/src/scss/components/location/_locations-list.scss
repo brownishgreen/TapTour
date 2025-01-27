@@ -1,0 +1,14 @@
+@use '../../abstracts/_mixins' as *;
+
+
+.locations-list-wrapper {
+  width: 70%;
+  margin: 3rem auto;
+}
+
+.locations-list {
+  @include flex-center;
+  flex-wrap: wrap;
+  gap: 4rem;
+  margin-top: 10px;
+}

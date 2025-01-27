@@ -14,6 +14,7 @@
 @use './components/shared/pagination';
 @use './components/shared/search-bar';
 @use './components/shared/table';
+@use './components/shared/carousel';
 
 @use './components/user/profile-info';
 @use './components/activity-detail-introduction';
@@ -21,10 +22,12 @@
 @use './components/create-activity-form';
 @use './components/detail-page-introduction';
 @use './components/detail-page-title';
-@use './components/location-map';
-@use './components/location-page-introduction';
 @use './components/price-information';
 @use './components/related-card';
+
+@use './components/location/locations-list';
+@use './components/location/location-map';
+@use './components/location/location-page-introduction';
 
 @use './pages/user/page';
 @use './pages/user/profile';
