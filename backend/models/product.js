@@ -1,37 +1,65 @@
-'use strict'
-const { Model } = require('sequelize')
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      Product.hasMany(models.Comment, { foreignKey: 'productId' })
+      // Product 與 Location 和 Category 建立關聯
+      Product.belongsTo(models.Location, { foreignKey: 'location_id', as: 'location' });
+      Product.belongsTo(models.Category, { foreignKey: 'category_id', as: 'category' });
+      Product.hasMany(models.Image, { foreignKey: 'product_id', as: 'images' });
+      Product.hasMany(models.Comment, { foreignKey: 'product_id', as: 'comments' });
       Product.belongsToMany(models.Order, {
         through: models.OrderProduct,
-        foreignKey: 'productId',
-        as: 'belongedOrders'
-      })
-      Product.hasMany(models.Image, { foreignKey: 'productId' })
-      Product.belongsTo(models.Location, { foreignKey: 'locationId' })
-      Product.belongsTo(models.Category, { foreignKey: 'categoryId' })
+        foreignKey: 'product_id',
+        otherKey: 'order_id',
+        as: 'orders',
+      });
     }
   }
   Product.init(
     {
-      name: DataTypes.STRING,
-      price: DataTypes.INTEGER,
-      description: DataTypes.TEXT,
-      locationId: DataTypes.INTEGER,
-      categoryId: DataTypes.INTEGER
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true, 
+        },
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false, 
+        validate: {
+          isInt: true, 
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true, 
+      },
+      location_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false, 
+        references: {
+          model: 'Locations',
+          key: 'id',
+        },
+      },
+      category_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false, 
+        references: {
+          model: 'Categories',
+          key: 'id',
+        },
+      },
     },
     {
       sequelize,
       modelName: 'Product',
-      underscored: true,
+      tableName: 'Products',
+      underscored: true, 
     }
-  )
-  return Product
-}
+  );
+  return Product;
+};

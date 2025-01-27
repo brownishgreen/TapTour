@@ -1,32 +1,68 @@
-'use strict'
-const { Model } = require('sequelize')
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    
     static associate(models) {
-      Comment.belongsTo(models.User, { foreignKey: 'userId' })
-      Comment.belongsTo(models.Activity, { foreignKey: 'activityId' })
-      Comment.belongsTo(models.Location, { foreignKey: 'locationId' })
-      Comment.belongsTo(models.Product, { foreignKey: 'productId' })
+      // Comment 與 User 建立關聯
+      Comment.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+      // Comment 與 Activity 建立關聯
+      Comment.belongsTo(models.Activity, { foreignKey: 'activity_id', as: 'activity' });
+      // Comment 與 Location 建立關聯
+      Comment.belongsTo(models.Location, { foreignKey: 'location_id', as: 'location' });
+      // Comment 與 Product 建立關聯
+      Comment.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product' });
     }
   }
   Comment.init(
     {
-      content: DataTypes.STRING,
-      userId: DataTypes.INTEGER,
-      activityId: DataTypes.INTEGER,
-      locationId: DataTypes.INTEGER,
-      productId: DataTypes.INTEGER,
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: false, 
+        validate: {
+          notEmpty: true, // 內容不能為空
+        },
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false, // 用戶必須存在
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+      },
+      activity_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // 可選，僅當評論與活動相關時使用
+        references: {
+          model: 'Activities',
+          key: 'id',
+        },
+      },
+      location_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // 可選，僅當評論與地點相關時使用
+        references: {
+          model: 'Locations',
+          key: 'id',
+        },
+      },
+      product_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // 可選，僅當評論與商品相關時使用
+        references: {
+          model: 'Products',
+          key: 'id',
+        },
+      },
     },
     {
       sequelize,
       modelName: 'Comment',
-      underscored: true,
+      tableName: 'Comments',
+      underscored: true, 
+      timestamps: true, 
     }
-  )
-  return Comment
-}
+  );
+  return Comment;
+};

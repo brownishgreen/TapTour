@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -11,45 +11,58 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       description: {
         type: Sequelize.TEXT,
+        allowNull: true,
       },
       start_date: {
         type: Sequelize.DATE,
+        allowNull: true,
       },
       end_date: {
         type: Sequelize.DATE,
-      },
-      time: {
-        type: Sequelize.TIME,
-      },
-      venue: {
-        type: Sequelize.STRING,
+        allowNull: true,
       },
       price: {
         type: Sequelize.INTEGER,
+        allowNull: true,
       },
       location_id: {
         type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Locations',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       category_id: {
         type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Categories',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-      },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-    })
+    });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Activities')
+    await queryInterface.dropTable('Activities');
   },
-}
+};

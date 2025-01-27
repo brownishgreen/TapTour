@@ -1,28 +1,42 @@
-'use strict'
-const { Model } = require('sequelize')
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class OrderProduct extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      // define association here
+      // 沒有額外的直接關聯，因為這是一個中介表
     }
   }
   OrderProduct.init(
     {
-      orderId: DataTypes.INTEGER,
-      productId: DataTypes.INTEGER,
-      quantity: DataTypes.INTEGER,
-      subtotal: DataTypes.INTEGER,
+      order_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Orders',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      product_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Products',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
     },
     {
       sequelize,
       modelName: 'OrderProduct',
-      underscored: true,
+      tableName: 'OrderProducts',
+      underscored: true, // 使用 snake_case 欄位命名
+      timestamps: false, // 不需要 createdAt 和 updatedAt
     }
-  )
-  return OrderProduct
-}
+  );
+  return OrderProduct;
+};

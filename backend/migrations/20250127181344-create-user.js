@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -11,33 +11,40 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       image: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       is_admin: {
         type: Sequelize.BOOLEAN,
-      },
-      bio: {
-        type: Sequelize.TEXT,
+        defaultValue: false,
+        allowNull: false,
       },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-    })
+    });
   },
-  async down(queryInterface) {
-    await queryInterface.dropTable('Users')
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Users');
   },
-}
+};

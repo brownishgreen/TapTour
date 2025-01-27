@@ -1,30 +1,64 @@
-'use strict'
-const { Model } = require('sequelize')
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Image extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      Image.belongsTo(models.Activity, { foreignKey: 'activityId' })
-      Image.belongsTo(models.Location, { foreignKey: 'locationId' })
-      Image.belongsTo(models.Product, { foreignKey: 'productId' })
+      // Image 與 Activity 建立關聯
+      Image.belongsTo(models.Activity, { foreignKey: 'activity_id', as: 'activity' });
+      // Image 與 Location 建立關聯
+      Image.belongsTo(models.Location, { foreignKey: 'location_id', as: 'location' });
+      // Image 與 Product 建立關聯
+      Image.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product' });
     }
   }
   Image.init(
     {
-      imageUrl: DataTypes.STRING,
-      activityId: DataTypes.INTEGER,
-      locationId: DataTypes.INTEGER,
-      productId: DataTypes.INTEGER,
+      image_url: {
+        type: DataTypes.STRING,
+        allowNull: false, // 圖片 URL 為必填
+        validate: {
+          notEmpty: true, // 確保不為空
+        },
+      },
+      activity_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // 與活動關聯時可選
+        references: {
+          model: 'Activities',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      location_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // 與地點關聯時可選
+        references: {
+          model: 'Locations',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      product_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // 與商品關聯時可選
+        references: {
+          model: 'Products',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
     },
     {
       sequelize,
       modelName: 'Image',
-      underscored: true,
+      tableName: 'Images',
+      underscored: true, 
+      timestamps: true, 
     }
-  )
-  return Image
-}
+  );
+  return Image;
+};
