@@ -12,8 +12,8 @@ const activityController = {
   },
   getActivityById: async (req, res, next) => {
     try {
-      const { activityId } = req.params
-      const activity = await Activity.findByPk(Number(activityId))
+      const { id } = req.params
+      const activity = await Activity.findByPk(Number(id))
       if (!activity) {
         return res.status(404).json({ message: '活動不存在' })
       }

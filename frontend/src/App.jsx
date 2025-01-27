@@ -7,7 +7,6 @@ import LoginPage from './pages/users/LoginPage'
 import ProfilePage from './pages/users/ProfilePage'
 import AdminPage from './pages/users/AdminPage'
 import CreateActivityPage from './pages/activity/CreateActivityPage'
-import EditActivityPage from './pages/activity/EditActivityPage'
 import Homepage from './pages/Homepage'
 import ActivitiesPage from './pages/activity/ActivitiesPage'
 import ActivityDetailPage from './pages/activity/ActivityDetailPage'
@@ -61,7 +60,7 @@ function App() {
           {/* 傳入 mode='create' */}
           <Route path="/create-activity" element={<CreateActivityPage mode='create' />} />
           {/* 傳入 mode='edit' */}    
-          <Route path="/edit-activity/:id" element={<EditActivityPage mode='edit' />} />
+          <Route path="/edit-activity/:id" element={<CreateActivityPage mode='edit' />} />
         </Routes>
       </AuthProvider>
     </Router>

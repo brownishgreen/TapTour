@@ -9,12 +9,15 @@ const upload = multer({ dest: 'uploads/activities' })
 
 // 取得所有活動
 router.get('/', activityController.getAllActivities)
-// 取得活動編輯頁面
-router.get('/:activityId/edit', verifyToken, isAdmin, activityController.editActivityPage)
+
+//去的活動編輯頁面
+router.get('/:id/edit', verifyToken, isAdmin, activityController.editActivityPage)
+
 // 取得活動創建頁面
 router.get('/create', verifyToken, isAdmin, activityController.createActivityPage)
 // 創建活動
-router.post('/',
+router.post(
+  '/',
   verifyToken,
   isAdmin,
   upload.fields([
@@ -25,11 +28,14 @@ router.post('/',
     { name: 'activity-image-4', maxCount: 1 }
   ]),
   activityController.createActivity)
+
 // 編輯活動
-router.put('/:activityId', verifyToken, isAdmin, activityController.editActivity)
+router.put('/:id', verifyToken, isAdmin, activityController.editActivity)
+
 // 刪除活動
-router.delete('/:activityId', verifyToken, isAdmin, activityController.deleteActivity)
+router.delete('/:id', verifyToken, isAdmin, activityController.deleteActivity)
+
 // 取得活動
-router.get('/:activityId', activityController.getActivityById)
+router.get('/:id', activityController.getActivityById)
 
 module.exports = router
