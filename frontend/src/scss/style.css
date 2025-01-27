@@ -657,6 +657,50 @@ thead, td {
   text-align: center;
 }
 
+.carousel-item img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 500px;
+}
+
+.custom-carousel-caption {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(81, 81, 81, 0.8);
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.custom-carousel-caption h3 {
+  color: #f8f9fa;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+  margin: 0;
+  font-weight: 700;
+}
+
+.carousel-item {
+  background-color: #000;
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: #fff;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
 .profile-wrapper {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -991,23 +1035,6 @@ form.create-activity-form__image-upload {
   margin-left: 15px;
 }
 
-.location-map {
-  background-color: #ffffff;
-}
-
-.location-page-introduction {
-  background-color: #ffffff;
-}
-.location-page-introduction__about {
-  margin-left: 15px;
-}
-.location-page-introduction__content {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  margin-left: 15px;
-}
-
 .price-information {
   background-color: #ffffff;
   width: 370px;
@@ -1076,6 +1103,37 @@ form.create-activity-form__image-upload {
 .related-card__content p {
   font-size: 1.2rem;
   margin-bottom: 10px;
+}
+
+.locations-list-wrapper {
+  width: 70%;
+  margin: 3rem auto;
+}
+
+.locations-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4rem;
+  margin-top: 10px;
+}
+
+.location-map {
+  background-color: #ffffff;
+}
+
+.location-page-introduction {
+  background-color: #ffffff;
+}
+.location-page-introduction__about {
+  margin-left: 15px;
+}
+.location-page-introduction__content {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-left: 15px;
 }
 
 .page {
