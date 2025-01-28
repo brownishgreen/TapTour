@@ -126,32 +126,35 @@ const ProfileInfo = ({ userId }) => {
         </div>
         <div>
           <div>
-            {isFollowing ? (
-              <button
-                type="button"
-                className="follow-btn following"
-                onClick={handleUnfollow}
-                disabled={followLoading}
-                style={{ backgroundColor: '#54A2C0', color: '#fff' }}
-              >
-                {followLoading ? '處理中...' : '已追蹤'}
-                <FontAwesomeIcon className="icon" icon={solidHeart} />
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="follow-btn"
-                onClick={handleFollow}
-                disabled={followLoading}
-              >
-                {followLoading ? '處理中...' : '追蹤我'}
-                <FontAwesomeIcon icon={regularHeart} className="icon" />
+            {currentUserId !== user.id &&
+              (isFollowing ? (
+                <button
+                  type="button"
+                  className="follow-btn following"
+                  onClick={handleUnfollow}
+                  disabled={followLoading}
+                  style={{ backgroundColor: '#54A2C0', color: '#fff' }}
+                >
+                  {followLoading ? '處理中...' : '已追蹤'}
+                  <FontAwesomeIcon className="icon" icon={solidHeart} />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="follow-btn"
+                  onClick={handleFollow}
+                  disabled={followLoading}
+                >
+                  {followLoading ? '處理中...' : '追蹤我'}
+                  <FontAwesomeIcon icon={regularHeart} className="icon" />
+                </button>
+              ))}
+
+            {currentUserId === user.id && (
+              <button className="profile-btn" onClick={handleEditProfile}>
+                編輯個人檔案
               </button>
             )}
-
-            <button className="profile-btn" onClick={handleEditProfile}>
-              編輯個人檔案
-            </button>
           </div>
         </div>
       </div>

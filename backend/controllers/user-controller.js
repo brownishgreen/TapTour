@@ -155,6 +155,12 @@ const userController = {
   updateProfile: async (req, res, next) => {
     try {
       const { name, email, password, confirmPassword, bio } = req.body
+      const targetUserId = req.params.userId // 被訪問用戶 ID
+      const currentUserId = req.user.id
+
+      if (currentUserId !== parseInt(targetUserId)) {
+        return res.status(403).json({ message: '您沒有權限編輯此用戶的資料！' })
+      }
 
       if (email) {
         const err = new Error('禁止修改email')
@@ -162,14 +168,21 @@ const userController = {
         throw err
       }
 
-      if (password && password !== confirmPassword) {
-        const err = new Error('密碼與確認密碼不一致')
-        err.statusCode = 400
-        throw err
+      if (password) {
+        if (password !== confirmPassword) {
+          const err = new Error('密碼與確認密碼不一致')
+          err.statusCode = 400
+          throw err
+        }
+
+        if (password.length < 6) {
+          const err = new Error('密碼長度應至少為6個字符')
+          err.statusCode = 400
+          throw err
+        }
       }
 
-      const userId = req.params.userId
-      const user = await User.findByPk(userId)
+      const user = await User.findByPk(targetUserId)
       if (!user) {
         const err = new Error('用戶不存在')
         err.statusCode = 404
