@@ -9,8 +9,8 @@ const errorHandler = require('./middlewares/error-handler')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use(cookieParser())
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(

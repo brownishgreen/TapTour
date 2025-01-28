@@ -38,7 +38,10 @@ const activityController = {
   },
   editActivity: async (req, res, next) => {
     try {
-      const { activityId } = req.params
+      const activityId = Number(req.params.id);
+      if (isNaN(activityId)) {
+        return res.status(400).json({ message: "活動 ID 無效" });
+      }
       const { name, description, location, date, time, price } = req.body
       const activity = await Activity.findByPk(Number(activityId))
       if (!activity) {

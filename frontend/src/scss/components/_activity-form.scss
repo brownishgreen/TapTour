@@ -1,7 +1,7 @@
 @use '../abstracts/_variables' as *;
 @use '../abstracts/_mixins' as *;
 
-form.create-activity-form {
+.activity-form {
   z-index: 10;
   display: flex;
   flex-direction: column;

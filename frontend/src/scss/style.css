@@ -920,7 +920,7 @@ thead, td {
   justify-content: flex-end;
 }
 
-form.create-activity-form {
+.activity-form {
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -933,30 +933,30 @@ form.create-activity-form {
   margin: 30px auto 0;
   z-index: 2;
 }
-form.create-activity-form h1 {
+.activity-form h1 {
   margin-bottom: 20px;
   color: #444444;
   z-index: 10;
 }
-form.create-activity-form__form {
+.activity-form__form {
   width: 100%;
   margin-top: 20px;
   position: relative;
   z-index: 5;
 }
-form.create-activity-form__form-item {
+.activity-form__form-item {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 20px;
 }
-form.create-activity-form__form-item label {
+.activity-form__form-item label {
   font-size: 14px;
   color: #444444;
 }
-form.create-activity-form__form-item input[type=text],
-form.create-activity-form__form-item input[type=file],
-form.create-activity-form__form-item textarea {
+.activity-form__form-item input[type=text],
+.activity-form__form-item input[type=file],
+.activity-form__form-item textarea {
   width: 100%;
   padding: 10px;
   font-size: 14px;
@@ -966,18 +966,18 @@ form.create-activity-form__form-item textarea {
   transition: border-color 0.3s;
   z-index: 10;
 }
-form.create-activity-form__form-item input[type=text]:focus,
-form.create-activity-form__form-item input[type=file]:focus,
-form.create-activity-form__form-item textarea:focus {
+.activity-form__form-item input[type=text]:focus,
+.activity-form__form-item input[type=file]:focus,
+.activity-form__form-item textarea:focus {
   border-color: #54A2C0;
   z-index: 10;
 }
-form.create-activity-form__form-item textarea {
+.activity-form__form-item textarea {
   resize: none;
   height: 100px;
   z-index: 10;
 }
-form.create-activity-form__form-item button[type=submit] {
+.activity-form__form-item button[type=submit] {
   width: 100%;
   padding: 10px;
   font-size: 16px;
@@ -989,10 +989,10 @@ form.create-activity-form__form-item button[type=submit] {
   transition: background-color 0.3s;
   z-index: 10;
 }
-form.create-activity-form__form-item button[type=submit]:hover {
+.activity-form__form-item button[type=submit]:hover {
   background-color: #333;
 }
-form.create-activity-form__image-upload {
+.activity-form__image-upload {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
@@ -1224,11 +1224,11 @@ form.create-activity-form__image-upload {
   margin-top: 20px;
 }
 
-.create-activity-form-page {
+.manage-activity-page {
   position: relative;
   z-index: 10;
 }
-.create-activity-form-page__container {
+.manage-activity-page__container {
   padding: 60px 0;
   display: flex;
   width: 100%;
@@ -1240,7 +1240,7 @@ form.create-activity-form__image-upload {
   position: relative;
   z-index: 5;
 }
-.create-activity-form-page__container h1 {
+.manage-activity-page__container h1 {
   text-align: center;
   font-size: 24px;
   color: #444444;

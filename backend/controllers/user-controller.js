@@ -82,10 +82,11 @@ const userController = {
       // 設置 HttpOnly Cookie
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax', // Lax for development
         maxAge: 3600000,
-      })
+      });
+
 
       res.status(200).json({
         message: '登入成功',
