@@ -18,6 +18,10 @@ import ProfileEditPage from './pages/users/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/context/AuthContext'
 
+import CreateLocation from './pages/location/CreateLocation'
+
+
+
 function App() {
   return (
     <Router>
@@ -43,6 +47,7 @@ function App() {
           <Route path="/product-page" element={<ProductDetailPage />} />
           <Route path="/location-page" element={<LocationDetailPage />} />
           <Route path="/locations" element={<LocationsPage />} />
+          <Route path="/locations/create" element={<CreateLocation />} />
           <Route
             path="/users/:userId/profile"
             element={
@@ -60,9 +65,15 @@ function App() {
             }
           />
           {/* 傳入 mode='create' */}
-          <Route path="/create-activity" element={<CreateActivityPage mode='create' />} />
-          {/* 傳入 mode='edit' */}    
-          <Route path="/edit-activity/:id" element={<CreateActivityPage mode='edit' />} />
+          <Route
+            path="/create-activity"
+            element={<CreateActivityPage mode="create" />}
+          />
+          {/* 傳入 mode='edit' */}
+          <Route
+            path="/edit-activity/:id"
+            element={<CreateActivityPage mode="edit" />}
+          />
         </Routes>
       </AuthProvider>
     </Router>
