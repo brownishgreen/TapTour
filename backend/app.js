@@ -8,6 +8,8 @@ const routes = require('./routes')
 const errorHandler = require('./middlewares/error-handler')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const expressFileUpload = require('express-fileupload')
+
 
 app.use(cookieParser())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
@@ -19,8 +21,7 @@ app.use(
     credentials: true, // 允許攜帶憑證（Cookie）
   })
 )
-
-app.use('/api/activities', routes)
+app.use(expressFileUpload())
 app.use('/api', routes)
 app.get('/', (req, res) => {
   res.send('hello world')

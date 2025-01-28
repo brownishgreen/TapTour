@@ -1,4 +1,6 @@
 const { Activity, Location, Category } = require('../models')
+const handleImageUpload = require('../utils/upload-handler')
+const path = require('path')
 
 const activityController = {
   getAllActivities: async (req, res, next) => {
@@ -64,46 +66,49 @@ const activityController = {
   },
   createActivity: async (req, res, next) => {
     try {
-      const body = req
+      const { name, description, time, price, location, category_id } = req.body
 
-      // 確保 body 存在
-      if (!body || Object.keys(body).length === 0) {
-        return res.status(400).json({ message: '請求內容不能為空' });
-      }
-      console.log('接收到的請求 body:', body);
-
-
-      console.log("Request body:", req.body);
-      console.log("Uploaded files:", req.files);
-
-      const { name, description, start_date, end_date, price, location_id, category_id } = req.body;
-
-      if (!name || !description) {
-        return res.status(400).json({ message: '必須提供活動名稱與描述' });
+      // 確保所有必填欄位都已提供
+      if (!name || !description || !time || !price || !location || !category_id) {
+        return res.status(400).json({ message: '必須提供活動名稱、描述、時間、價格、地點、類別' });
       }
 
+      // 建立活動
       const activity = await Activity.create({
         name,
         description,
-        start_date,
-        end_date,
+        time,
         price,
-        location_id,
+        location,
         category_id,
-      });
+      })
+      let imageUrls = []
 
-      // if (req.files) {
-      //   Object.keys(req.files).forEach((key) => {
-      //     req.files[key].forEach(async (file) => {
-      //       await Image.create({ image_url: file.path, activity_id: activity.id });
-      //     });
-      //   });
-      // }
 
-      res.status(201).json({ message: '活動已創建', activity });
-    } catch (error) {
-      console.error("Error in createActivity:", error);
-      next(error);
+      // 圖片上傳處理
+      if (req.files && req.files.images) {
+        const images = Array.isArray(req.files.images) ? req.files.images : [req.files.images]
+        const sanitizedName = name.replace(/\s+/g, '-').toLowerCase() // 處理活動名稱
+        const uploadPath = path.join(__dirname, `../uploads/activities/${activity.id}`)
+
+        // **逐一上傳圖片**
+        for (let i = 0; i < images.length; i++) {
+          const imageUrl = await handleImageUpload(images[i], uploadPath, activity.id, sanitizedName, i + 1)
+          imageUrls.push(imageUrl)
+        }
+
+        // **更新活動資料庫**
+        await activity.update({ image_urls: imageUrls })
+      }
+
+      res.status(201).json({
+        message: '活動已創建',
+        activity
+      })
+
+    } catch (err) {
+      console.error('活動創建失敗', err)
+      res.status(500).json({ message: '活動創建失敗' })
     }
   },
   deleteActivity: async (req, res, next) => {
