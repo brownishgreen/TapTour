@@ -1,4 +1,4 @@
-require('dotenv').config() //要連線個人資料庫，配置資料在env，所以暫時加這行
+require('dotenv').config(); // 載入環境變數
 
 module.exports = {
   development: {
@@ -8,8 +8,9 @@ module.exports = {
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
     dialect: 'mysql',
-    jwtSecret: process.env.JWT_SECRET,
-    jwtExpires: process.env.JWT_EXPIRES,
+    define: {
+      underscored: true, // 全域應用底線命名規則
+    },
   },
   test: {
     username: 'root',
@@ -17,6 +18,9 @@ module.exports = {
     database: 'database_test',
     host: '127.0.0.1',
     dialect: 'mysql',
+    define: {
+      underscored: true, // 全域應用底線命名規則
+    },
   },
   production: {
     username: 'root',
@@ -24,5 +28,8 @@ module.exports = {
     database: 'database_production',
     host: '127.0.0.1',
     dialect: 'mysql',
+    define: {
+      underscored: true, // 全域應用底線命名規則
+    },
   },
-}
+};
