@@ -1,20 +1,25 @@
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faHeart,
+  faHeart as solidHeart,
   faPen,
   faStreetView,
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'
 import { Card, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const ProfileInfo = ({ userId }) => {
+  const { userId: currentUserId } = useAuth() // 從上下文獲取當前用戶的 ID
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
+  const [isFollowing, setIsFollowing] = useState(false)
+  const [followLoading, setFollowLoading] = useState(false)
 
   useEffect(() => {
     const userData = async () => {
@@ -26,6 +31,7 @@ const ProfileInfo = ({ userId }) => {
           }
         )
         setUser(response.data.user)
+        setIsFollowing(response.data.isFollowing || false) // 檢查當前用戶是否已追蹤該用戶，假設後端返回 isFollowing
       } catch (err) {
         setError('無法載入用戶資料')
       } finally {
@@ -41,6 +47,57 @@ const ProfileInfo = ({ userId }) => {
 
   if (error) {
     return <div>{error}</div>
+  }
+
+  const handleFollow = async (e) => {
+    e.preventDefault()
+
+    if (followLoading) return
+    setFollowLoading(true)
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/api/followers/follow',
+        {
+          followerId: currentUserId, // 確保 userId 是當前用戶的 ID
+          followingId: user.id, // 目標用戶 ID
+        },
+        { withCredentials: true }
+      )
+      if (response.data.alreadyFollowing) {
+        console.log('已追蹤該用戶')
+        setIsFollowing(true) // 確保按鈕切換到「已追蹤」
+      } else {
+        setIsFollowing(true) // 新增成功
+      }
+    } catch (error) {
+      console.error('追蹤失敗:', error.message)
+    } finally {
+      setFollowLoading(false)
+    }
+  }
+
+  const handleUnfollow = async (e) => {
+    e.preventDefault() // 防止跳轉
+
+    if (followLoading) return
+    setFollowLoading(true)
+
+    try {
+      await axios.post(
+        'http://localhost:3000/api/followers/unfollow', // 假設你有後端的取消追蹤 API
+        {
+          followerId: currentUserId, // 當前用戶 ID
+          followingId: user.id, // 目標用戶 ID
+        },
+        { withCredentials: true }
+      )
+      setIsFollowing(false) // 更新為未追蹤
+    } catch (error) {
+      console.error('取消追蹤失敗:', error.message)
+    } finally {
+      setFollowLoading(false)
+    }
   }
   const handleEditProfile = () => {
     navigate(`/users/${userId}/profile/edit`)
@@ -68,13 +125,37 @@ const ProfileInfo = ({ userId }) => {
           </p>
         </div>
         <div>
-          <button className="follow-btn">
-            追蹤我
-            <FontAwesomeIcon icon={faHeart} className="icon" />
-          </button>
-          <button className="profile-btn" onClick={handleEditProfile}>
-            編輯個人檔案
-          </button>
+          <div>
+            {currentUserId !== user.id &&
+              (isFollowing ? (
+                <button
+                  type="button"
+                  className="follow-btn following"
+                  onClick={handleUnfollow}
+                  disabled={followLoading}
+                  style={{ backgroundColor: '#54A2C0', color: '#fff' }}
+                >
+                  {followLoading ? '處理中...' : '已追蹤'}
+                  <FontAwesomeIcon className="icon" icon={solidHeart} />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="follow-btn"
+                  onClick={handleFollow}
+                  disabled={followLoading}
+                >
+                  {followLoading ? '處理中...' : '追蹤我'}
+                  <FontAwesomeIcon icon={regularHeart} className="icon" />
+                </button>
+              ))}
+
+            {currentUserId === user.id && (
+              <button className="profile-btn" onClick={handleEditProfile}>
+                編輯個人檔案
+              </button>
+            )}
+          </div>
         </div>
       </div>
 

@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const db = require('../models')
-const { User } = db
+const { User, Follower } = require('../models')
 const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 const EXPIRES = process.env.JWT_EXPIRES
 
@@ -11,7 +10,7 @@ const userController = {
   },
   register: async (req, res, next) => {
     try {
-      const { name, email, password} = req.body
+      const { name, email, password } = req.body
 
       // 檢查必填欄位
       if (!name || !email || !password) {
@@ -33,7 +32,7 @@ const userController = {
       await User.create({
         name,
         email,
-        password: hash
+        password: hash,
       })
 
       res.status(201).json({ message: '註冊成功' })
@@ -111,8 +110,9 @@ const userController = {
   // 個人檔案
   profile: async (req, res, next) => {
     try {
-      const userId = req.params.userId
-      const user = await User.findByPk(userId, {
+      const targetUserId = req.params.userId // 被訪問用戶 ID
+      const currentUserId = req.user.id
+      const user = await User.findByPk(targetUserId, {
         attributes: ['id', 'image', 'name', 'email', 'bio', 'createdAt'],
       })
 
@@ -121,9 +121,18 @@ const userController = {
         err.statusCode = 404
         throw err
       }
+
+      const isFollowing = await Follower.findOne({
+        where: {
+          follower_id: currentUserId,
+          following_id: targetUserId,
+        },
+      })
+
       res.json({
         message: '這是受保護的個人檔案頁面，你已成功獲取使用者資料',
         user,
+        isFollowing: !!isFollowing,
       })
     } catch (err) {
       err.statusCode = err.statusCode || 500
@@ -147,6 +156,12 @@ const userController = {
   updateProfile: async (req, res, next) => {
     try {
       const { name, email, password, confirmPassword, bio } = req.body
+      const targetUserId = req.params.userId // 被訪問用戶 ID
+      const currentUserId = req.user.id
+
+      if (currentUserId !== parseInt(targetUserId)) {
+        return res.status(403).json({ message: '您沒有權限編輯此用戶的資料！' })
+      }
 
       if (email) {
         const err = new Error('禁止修改email')
@@ -154,14 +169,21 @@ const userController = {
         throw err
       }
 
-      if (password && password !== confirmPassword) {
-        const err = new Error('密碼與確認密碼不一致')
-        err.statusCode = 400
-        throw err
+      if (password) {
+        if (password !== confirmPassword) {
+          const err = new Error('密碼與確認密碼不一致')
+          err.statusCode = 400
+          throw err
+        }
+
+        if (password.length < 6) {
+          const err = new Error('密碼長度應至少為6個字符')
+          err.statusCode = 400
+          throw err
+        }
       }
 
-      const userId = req.params.userId
-      const user = await User.findByPk(userId)
+      const user = await User.findByPk(targetUserId)
       if (!user) {
         const err = new Error('用戶不存在')
         err.statusCode = 404
