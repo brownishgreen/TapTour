@@ -87,18 +87,21 @@ const activityController = {
 
       // 圖片上傳處理
       if (req.files && req.files.images) {
-        const images = Array.isArray(req.files.images) ? req.files.images : [req.files.images]
+        console.log("🚀 Debugging req.files:", req.files)
+        const images = req.files?.images
+          ? Array.isArray(req.files.images)
+            ? req.files.images
+            : [req.files.images]
+          : []
+
         const sanitizedName = name.replace(/\s+/g, '-').toLowerCase() // 處理活動名稱
         const uploadPath = path.join(__dirname, `../uploads/activities/${activity.id}`)
 
         // **逐一上傳圖片**
-        for (let i = 0; i < images.length; i++) {
-          const imageUrl = await handleImageUpload(images[i], uploadPath, activity.id, sanitizedName, i + 1)
-          imageUrls.push(imageUrl)
-        }
+        imageUrls = await handleImageUpload(images, uploadPath, activity.id, sanitizedName)
 
         // **更新活動資料庫**
-        await activity.update({ image_urls: imageUrls })
+        await activity.update({ image_urls: JSON.stringify(imageUrls) })
       }
 
       res.status(201).json({
@@ -113,8 +116,12 @@ const activityController = {
   },
   deleteActivity: async (req, res, next) => {
     try {
-      const { activityId } = req.params
-      const activity = await Activity.findByPk(Number(activityId))
+      const activityId = Number(req.params.activityId || req.params.id)
+      if (isNaN(activityId)) {
+        return res.status(400).json({ message: '活動 ID 無效' })
+      }
+      const activity = await Activity.findByPk(activityId)
+
       if (!activity) {
         return res.status(404).json({ message: '活動不存在' })
       }
