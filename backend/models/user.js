@@ -6,6 +6,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasMany(models.Order, { foreignKey: 'user_id', as: 'orders' });
       User.hasMany(models.Comment, { foreignKey: 'user_id', as: 'comments' });
+
+      User.belongsToMany(models.User, {
+        through: models.Follower,
+        as: 'Followers', // 被追蹤者
+        foreignKey: 'following_id',
+        otherKey: 'follower_id',
+      })
+      User.belongsToMany(models.User, {
+        through: models.Follower,
+        as: 'Followings', // 追蹤者
+        foreignKey: 'follower_id',
+        otherKey: 'following_id',
+      })
     }
   }
   User.init(

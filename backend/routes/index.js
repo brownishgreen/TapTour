@@ -11,6 +11,7 @@ router.use('/users', userRoutes) // 路徑 /api/users
 router.use('/admin', adminRoutes) // 路徑 /api/admin
 router.use('/activities', activityRoutes) // 路徑 /api/activities
 router.use('/followers', followerRoutes) // 路徑 /api/admin
+router.use('/followers', followerRoutes) // 路徑 /api/followers
 
 
 module.exports = router
