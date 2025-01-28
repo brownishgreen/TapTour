@@ -8,6 +8,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
 const ProfileEdit = () => {
   const navigate = useNavigate()
@@ -22,9 +23,21 @@ const ProfileEdit = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const { userId: currentUserId } = useAuth()
 
   useEffect(() => {
-    const userData = async () => {
+    // 檢查是否有權訪問該頁面
+    if (String(currentUserId) !== String(userId)) {
+      setErrorMessage('您無權更改此頁面資訊')
+      setShowModal(true)
+      setTimeout(() => {
+        navigate(`/users/${currentUserId}/profile`)
+      }, 1000)
+      return
+    }
+
+    // 初始化表單數據
+    const fetchUserData = async () => {
       try {
         const response = await axios.get(
           `http://localhost:3000/api/users/${userId}/profile`,
@@ -32,51 +45,31 @@ const ProfileEdit = () => {
             withCredentials: true, // 攜帶驗證資訊
           }
         )
-        // 從後端回傳的資料中初始化表單數據
         const { name, email, bio, image } = response.data.user
         setName(name)
         setEmail(email)
         setBio(bio || '')
-        setImage(
-          image ? image : '/assets/images/others/default-avatar.jpg'
-        )
+        setImage(image || '/assets/images/others/default-avatar.jpg')
       } catch (err) {
         setErrorMessage('無法載入用戶資料')
         setShowModal(true)
-        navigate('/profile')
       }
     }
-    userData()
-  }, [userId])
+
+    fetchUserData()
+  }, [currentUserId, userId, navigate])
 
   const handleChange = (e) => {
     const { name, value } = e.target
 
-    // 獲取觸發事件的欄位名稱和輸入值
     if (name === 'password') {
-      // 如果欄位名稱是 password
-      setPassword(value) // 更新 password 狀態
-      if (confirmPassword && value !== confirmPassword) {
-        setErrorMessage('密碼與確認密碼不一致')
-        // setShowModal(true)
-      } else {
-        setSuccessMessage('')
-      }
+      setPassword(value)
     } else if (name === 'confirmPassword') {
       setConfirmPassword(value)
-      if (password && value !== password) {
-        setErrorMessage('密碼與確認密碼不一致')
-        // setShowModal(true)
-      } else {
-        setSuccessMessage('')
-      }
-    } else {
-      // 動態處理其他需要更新的欄位（如 name、bio）
-      if (name === 'name') {
-        setName(value)
-      } else if (name === 'bio') {
-        setBio(value)
-      }
+    } else if (name === 'name') {
+      setName(value)
+    } else if (name === 'bio') {
+      setBio(value)
     }
   }
 
@@ -85,8 +78,13 @@ const ProfileEdit = () => {
     setErrorMessage('')
     setShowModal(false)
 
-    const submittedBio = bio === '請輸入您的個人簡介...' ? '' : bio
+    if (password && password !== confirmPassword) {
+      setErrorMessage('密碼與確認密碼不一致')
+      setShowModal(true)
+      return
+    }
 
+    const submittedBio = bio === '請輸入您的個人簡介...' ? '' : bio
     const formData = new FormData()
     formData.append('name', name)
     formData.append('password', password)
@@ -94,7 +92,6 @@ const ProfileEdit = () => {
     formData.append('bio', submittedBio)
 
     if (imageFile) {
-      // 如果用戶選擇了新圖片，才上傳
       formData.append('image', imageFile)
     }
 
@@ -106,7 +103,7 @@ const ProfileEdit = () => {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-          withCredentials: true, // 攜帶驗證資訊
+          withCredentials: true, // 携带验证信息
         }
       )
       setImage(response.data.user.image)
@@ -125,9 +122,7 @@ const ProfileEdit = () => {
     <div className="profile-edit-form-container">
       <div className="profile-edit-avatar">
         <img
-          src={
-            image ? image : '/assets/images/others/default-avatar.jpg'
-          } // 替換大頭貼路徑
+          src={image ? image : '/assets/images/others/default-avatar.jpg'} // 替換大頭貼路徑
           alt="大頭貼"
           className="profile-avatar"
         />
