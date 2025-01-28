@@ -3,31 +3,20 @@ const router = express.Router()
 const activityController = require('../controllers/activity-controller.js')
 const verifyToken = require('../middlewares/auth')
 const isAdmin = require('../middlewares/isAdmin')
-
-const multer = require('multer')
-const upload = multer({ dest: 'uploads/activities' })
+const uploadActivityImage = require('../middlewares/upload')
+const { Activity } = require('../models')
 
 // 取得所有活動
 router.get('/', activityController.getAllActivities)
 
-//去的活動編輯頁面
+//取得活動編輯頁面
 router.get('/:id/edit', verifyToken, isAdmin, activityController.editActivityPage)
 
 // 取得活動創建頁面
 router.get('/create', verifyToken, isAdmin, activityController.createActivityPage)
+
 // 創建活動
-router.post(
-  '/',
-  verifyToken,
-  isAdmin,
-  upload.fields([
-    { name: 'activity-image-0', maxCount: 1 },
-    { name: 'activity-image-1', maxCount: 1 },
-    { name: 'activity-image-2', maxCount: 1 },
-    { name: 'activity-image-3', maxCount: 1 },
-    { name: 'activity-image-4', maxCount: 1 }
-  ]),
-  activityController.createActivity)
+router.post('/',verifyToken,isAdmin,uploadActivityImage,activityController.createActivity)
 
 // 編輯活動
 router.put('/:id', verifyToken, isAdmin, activityController.editActivity)

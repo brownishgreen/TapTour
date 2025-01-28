@@ -28,6 +28,7 @@
 
     &-item {
       display: flex;
+      flex-direction: column;
       flex-wrap: wrap;
       gap: 15px;
       margin-bottom: 20px;
@@ -38,7 +39,8 @@
 
       input[type="text"],
       input[type="file"],
-      textarea {
+      textarea,
+      select {
         width: 100%;
         padding: 10px;
         font-size: 14px;
@@ -85,4 +87,21 @@
     width: 100%;
     z-index: 10;
   }
+}
+
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path></svg>'); // 自訂下拉箭頭
+  background-repeat: no-repeat;
+  background-position: right 12px center; 
+  background-size: 16px;
+  padding-right: 40px; 
+}
+
+// 🚀 讓 select 和 input 內文對齊
+select option {
+  font-size: 16px;
 }
