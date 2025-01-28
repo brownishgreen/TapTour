@@ -21,6 +21,11 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
+      bio: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        defaultValueValue: null
+      },
       is_admin: {
         type: Sequelize.BOOLEAN
       },

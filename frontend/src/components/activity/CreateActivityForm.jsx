@@ -38,48 +38,55 @@ const CreateActivityForm = ({ mode }) => {
     }))
   }
 
-  const handleImageChange = (event) => {
-    console.log("Submitting form with data:", formData)
-    const { name, files } = event.target
-    const file = files[0]
-    setFormData(prev => ({
-      ...prev,
-      [name]: file
-    }))
-  }
+  // const handleImageChange = (event) => {
+  //   console.log("Submitting form with data:", formData)
+  //   const { name, files } = event.target
+  //   const file = files[0]
+  //   setFormData(prev => ({
+  //     ...prev,
+  //     [name]: file
+  //   }))
+  // }
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    const data = new FormData()
-    
+    event.preventDefault();
+
+    // 檢查 formData 是否有效
+    if (!formData || Object.keys(formData).length === 0) {
+      alert('表單資料為空，請檢查輸入。');
+      return;
+    }
+
+    const data = new FormData();
     Object.keys(formData).forEach(key => {
-      if (formData[key] !== null) { //確保沒有空值
-        data.append(key, formData[key])
+      if (formData[key] !== null && formData[key] !== undefined) {
+        data.append(key, formData[key]);
       }
-    })
+    });
 
     try {
-      const response = isEditMode 
+      const response = isEditMode
         ? await axios.put(`http://localhost:3000/api/activities/${id}`, data, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
           },
-          withCredentials: true
+          withCredentials: true,
         })
         : await axios.post('http://localhost:3000/api/activities', data, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`, // 手動添加 Token
           },
-          withCredentials: true
-        })
-      console.log("Response:", response.data)
-      console.log(`${isEditMode ? '更新' : '創建'}成功`, response.data)
-      alert(`${isEditMode ? '活動更新' : '活動創建'}成功`)
+          withCredentials: true,
+        });
+
+      alert(`${isEditMode ? '活動更新' : '活動創建'}成功`);
     } catch (error) {
-      console.error(`${isEditMode ? '更新' : '創建'}失敗`, error)
-      alert(`${isEditMode ? '活動更新' : '活動創建'}失敗`)
+      console.error('錯誤:', error.response || error.message);
+      alert(`${isEditMode ? '活動更新' : '活動創建'}失敗`);
     }
-  }
+  };
+
   console.log("Rendering CreateActivityForm with mode:", mode)
   return (
     <form className="create-activity-form" onSubmit={handleSubmit}>
@@ -101,14 +108,14 @@ const CreateActivityForm = ({ mode }) => {
           <label htmlFor="description">活動介紹</label>
           <textarea id="description" name="description" value={formData.description || ''} onChange={handleInputChange}/>
           
-          <div className="create-activity-form__image-upload">
+          {/* <div className="create-activity-form__image-upload">
             {[...Array(5)].map((_, index) => (
               <div className="create-activity-form__image-upload-item" key={index}>
                 <label htmlFor={`image-${index}`}>活動圖片</label>
                 <input type="file" id={`image-${index}`} name={`image-${index}`} onChange={handleImageChange}/>
               </div>
             ))}
-          </div>
+          </div> */}
           <div className="create-activity-form__form-item-button">
             <button type="submit">{isEditMode ? '更新活動' : '新增活動'}</button>
           </div>

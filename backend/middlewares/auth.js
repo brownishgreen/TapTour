@@ -5,6 +5,8 @@ const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 const verifyToken = (req, res, next) => {
 
   const token = req.cookies.token // 從 Cookie 中提取 token
+  console.log('Token from Cookie:', req.cookies.token);
+
   
   if (!token) {
     return res.status(401).json({ message: '未授權的訪問(未提供 token)' })

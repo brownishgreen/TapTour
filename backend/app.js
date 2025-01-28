@@ -19,12 +19,13 @@ app.use(
     credentials: true, // 允許攜帶憑證（Cookie）
   })
 )
-app.use(errorHandler)
-app.use('/api', routes)
+
 app.use('/api/activities', routes)
+app.use('/api', routes)
 app.get('/', (req, res) => {
   res.send('hello world')
 })
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`伺服器正運行在http://localhost:${port}`)
