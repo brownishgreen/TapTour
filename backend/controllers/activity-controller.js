@@ -1,4 +1,4 @@
-const { Activity, Location, Category } = require('../models')
+const { Activity, Image } = require('../models')
 const handleImageUpload = require('../utils/upload-handler')
 const path = require('path')
 
@@ -82,36 +82,29 @@ const activityController = {
         location,
         category_id,
       })
+
       let imageUrls = []
 
+      const basePath = path.join(__dirname, '../uploads/activities')
 
       // 圖片上傳處理
       if (req.files && req.files.images) {
-        console.log("🚀 Debugging req.files:", req.files)
-        const images = req.files?.images
-          ? Array.isArray(req.files.images)
-            ? req.files.images
-            : [req.files.images]
-          : []
+        const images = Array.isArray(req.files.images)
+          ? req.files.images
+          : [req.files.images]
 
-        const sanitizedName = name.replace(/\s+/g, '-').toLowerCase() // 處理活動名稱
-        const uploadPath = path.join(__dirname, `../uploads/activities/${activity.id}`)
+        imageUrls = await handleImageUpload(images, basePath, activity.id, name)
 
-        // **逐一上傳圖片**
-        imageUrls = await handleImageUpload(images, uploadPath, activity.id, sanitizedName)
-
-        // **更新活動資料庫**
-        await activity.update({ image_urls: JSON.stringify(imageUrls) })
+        res.status(201).json({
+          message: '活動已創建',
+          activity,
+          images: imageUrls
+        })
       }
-
-      res.status(201).json({
-        message: '活動已創建',
-        activity
-      })
-
     } catch (err) {
       console.error('活動創建失敗', err)
       res.status(500).json({ message: '活動創建失敗' })
+      next(err)
     }
   },
   deleteActivity: async (req, res, next) => {

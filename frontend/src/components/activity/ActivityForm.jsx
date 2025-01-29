@@ -48,27 +48,22 @@ const ActivityForm = ({ mode }) => {
   }
   // 處理圖片上傳
   const handleImageChange = (event) => {
-    const files = Array.from(event.target.files) // 獲取多張圖片
-
     //只接受圖片格式
-    const validFiles = files.filter((file) => {
-      return file.type === 'image/jpeg' || file.type === 'image/png'
-    })
+    const files = Array.from(event.target.files).filter(file => file.type.startsWith('image/'))
 
-    if (validFiles.length !== files.length) {
-      alert('只接受 JPEG、PNG 和 JPG 格式的圖片')
-      return
+    if (files.length === 0) {
+      alert('請選擇有效的圖片文件');
+      return;
     }
 
-    // 限制最多 5 張圖片
-    if (validFiles.length > 5) {
-      alert('最多只能上傳 5 張圖片')
-      return
+    if (files.length > 5) {
+      alert('最多只能上傳 5 張圖片');
+      return;
     }
 
     setFormData((prev) => ({
       ...prev,
-      images: validFiles // 更新圖片到 formData
+      images: files // 更新圖片到 formData
     }))
   }
 
@@ -79,16 +74,28 @@ const ActivityForm = ({ mode }) => {
     // 檢查表單資料是否為空
     const requiredFields = ['name', 'time', 'price', 'location', 'description', 'category_id']
     for (const field of requiredFields) {
-      if (!formData[field]) {
+      if (formData[field] === null || formData[field] === undefined || formData[field] === '') {
         alert(`${field} 是必填欄位`)
         return
       }
     }
+    // 檢查價格是否為空
+    if (formData.price === null || formData.price === undefined || formData.price === '') {
+      alert('價格不能為空');
+      return;
+    }
+
+    // 檢查活動名稱是否為空
+    if (!formData.name.trim()) {
+      alert("活動名稱不能為空");
+      return;
+    }
+
     console.log("🚀 Debugging formData:", formData)
 
 
     //圖片數量在允許範圍內
-    if (formData.images.length > 5) {
+    if (!Array.isArray(formData.images) || formData.images.length > 5) {
       alert('最多只能上傳 5 張圖片')
       return
     }

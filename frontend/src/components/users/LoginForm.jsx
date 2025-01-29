@@ -37,7 +37,7 @@ const LoginForm = () => {
       const { userId, isAdmin } = response.data
       // 確保更新 AuthContext 狀態
       handleAuthSuccess(true, userId, isAdmin)
-
+      console.log('userId:', userId)
       setPassword('') // 清空密碼欄位，增加用戶安全性
       setSuccessMessage('登入成功！即將跳轉...')
       setShowModal(true)

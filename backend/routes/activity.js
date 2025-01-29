@@ -3,8 +3,7 @@ const router = express.Router()
 const activityController = require('../controllers/activity-controller.js')
 const verifyToken = require('../middlewares/auth')
 const isAdmin = require('../middlewares/isAdmin')
-const uploadActivityImage = require('../middlewares/upload')
-const { Activity } = require('../models')
+const uploadActivityImage = require('../utils/upload-handler')
 
 // 取得所有活動
 router.get('/', activityController.getAllActivities)
