@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import Header from '../../components/shared/Header'
 import Footer from '../../components/shared/Footer'
 import SearchBar from '../../components/shared/SearchBar'
@@ -7,20 +8,28 @@ import HeroBanner from '../../components/shared/HeroBanner'
 import Pagination from '../../components/shared/Pagination'
 import { useAuth } from '../../components/context/AuthContext'
 
+
 const ActivitiesPage = () => {
   const { verifyLogin } = useAuth()
+  // 取得活動資料
+  const [activities, setActivities] = useState([])
+
   useEffect(() => {
     verifyLogin() // 在頁面加載時檢查登入狀態
+    fetchActivities() // 請求活動資料
   }, [verifyLogin])
 
-  const activities = Array(12).fill({
-    buttonText: '深入瞭解',
-    image:
-      'https://images.unsplash.com/photo-1735506266367-d6941df3efdc?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    title: 'Activity Title',
-    subtitle: 'Subtitle',
-    description: 'Description',
-  })
+  // 請求活動資料
+  const fetchActivities = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/activities')
+      setActivities(response.data)
+    } catch (error) {
+      console.error('取得活動資料失敗', error)
+    }
+  }
+
+
 
   return (
     <div className="activities-page">
@@ -35,14 +44,16 @@ const ActivitiesPage = () => {
       <main className="activities-page__main">
         <SearchBar />
         <div className="activities-page__card-container">
-          {activities.map((activity, index) => (
+          {activities.map((activity) => (
             <CardItem
-              key={index}
-              buttonText={activity.buttonText}
-              image={activity.image}
-              title={activity.title}
-              subtitle={activity.subtitle}
+              key={activity.id}
+              buttonText="深入瞭解"
+              image={`http://localhost:3000${activity.images?.[1]?.image_url}` || "/default-image.jpg"}
+              title={activity.name}
+              subtitle={activity.category.name}
               description={activity.description}
+              id={activity.id}
+              activityLink={`/activities/${activity.id}`}
             />
           ))}
         </div>

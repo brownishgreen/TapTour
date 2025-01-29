@@ -40,7 +40,7 @@ function App() {
           />
           <Route path="/activities" element={<ActivitiesPage />} />
           <Route
-            path="/activity-page" //之後要改成動態 /activities/:id
+            path="/activities/:id" //之後要改成動態 /activities/:id
             element={<ActivityDetailPage />}
           />
           <Route path="/products" element={<ProductsPage />} />
