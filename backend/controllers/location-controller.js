@@ -20,7 +20,7 @@ const locationController = {
 
     try {
       const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=${apiKey}`
+        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=${apiKey}&language=zh-TW`
       )
 
       if (response.data.predictions) {
@@ -30,6 +30,44 @@ const locationController = {
       }
     } catch (err) {
       console.error('Google Autocomplete API 錯誤:', err)
+      err.statusCode = 500
+      next(err)
+    }
+  },
+
+  // 獲取地點詳細資訊
+  detailsLocation: async (req, res, next) => {
+    const { place_id } = req.query // 從查詢參數獲取 place_id
+    const apiKey = process.env.GOOGLE_API_KEY
+
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${apiKey}&language=zh-TW`
+      )
+
+      if (response.data.result) {
+        const place = response.data.result
+
+        // 提取照片 URL
+        const photos = (place.photos || []).slice(0, 5).map((photo) => {
+          return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo.photo_reference}&key=${apiKey}`
+        })
+
+        // 返回地點詳細資訊，包括圖片 URL
+        res.status(200).json({
+          name: place.name,
+          address: place.formatted_address,
+          rating: place.rating || '無評分',
+          photos: photos, // 返回生成的圖片 URL 陣列
+          reviews: place.reviews || [],
+          opening_hours: place.opening_hours?.weekday_text || [],
+        })
+      } else {
+        console.log('無法獲取地點詳細資訊')
+        res.status(400).json({ error: '無法獲取地點詳細資訊' })
+      }
+    } catch (err) {
+      console.error('Google Place Details API 錯誤:', err)
       err.statusCode = 500
       next(err)
     }
