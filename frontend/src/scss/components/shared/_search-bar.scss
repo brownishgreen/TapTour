@@ -38,6 +38,25 @@
   }
 }
 
+    .create-button {
+      min-width: 100px;
+      background-color: whitesmoke;
+  
+      svg {
+        color: $primary-color;
+      }
+  
+      &:hover {
+        background-color: $gray-light;
+        color: $background-color;
+      }
+      .create-button-icon {
+        margin-right: 10px;
+      }
+    }
+
+
+
 // 響應式設計
 @media (max-width: 768px) {
   .search-bar-container {

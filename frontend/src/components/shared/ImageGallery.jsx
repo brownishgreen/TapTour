@@ -1,4 +1,3 @@
-import React from 'react'
 
 const ImageGallery = ({ images }) => {
   if (!images || images.length === 0) {
