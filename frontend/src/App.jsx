@@ -47,7 +47,6 @@ function App() {
           <Route path="/product-page" element={<ProductDetailPage />} />
           <Route path="/location-page" element={<LocationDetailPage />} />
           <Route path="/locations" element={<LocationsPage />} />
-          <Route path="/locations/create" element={<CreateLocation />} />
           <Route
             path="/users/:userId/profile"
             element={
@@ -73,6 +72,14 @@ function App() {
           <Route
             path="/edit-activity/:id"
             element={<ManageActivityPage mode="edit" />}
+          />
+          <Route
+            path="/locations/create"
+            element={
+              <ProtectedRoute>
+                <CreateLocation />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </AuthProvider>
