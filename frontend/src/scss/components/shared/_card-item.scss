@@ -1,7 +1,9 @@
 @use '../../abstracts/_variables' as*;
 
 .card-item {
-  width: 250px;
+  position: relative;
+  width: 300px;
+  height: 380px;
   margin-bottom: 5px;
   border: 1px solid $secondary-color;
   border-radius: 12px;
@@ -10,16 +12,26 @@
 
   img {
     border-radius: 12px 12px 0 0;
+    object-fit: cover;
+    height: 200px;
   }
+
+  .card-item__button {
+    position: absolute;
+    bottom: 15px;
+    left: 190px;
+    right: 0;
+  }
+
+  // .card-item__button-subtitle {
+  //   position: absolute;
+  //   bottom: -8px;
+  //   left: 200px;
+  //   right: 0;
+  //   font-size: 1rem;
+  // }
 
   &:hover {
     transform: scale(1.03);
   }
-}
-
-.card-item__image {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 12px;
 }
