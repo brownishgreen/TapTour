@@ -14,11 +14,14 @@ import ProductsPage from './pages/product/ProductsPage'
 import ProductDetailPage from './pages/product/ProductDetailPage'
 import LocationDetailPage from './pages/location/LocationDetailPage'
 import LocationsPage from './pages/location/LocationsPage'
+import CreateLocation from './pages/location/CreateLocation'
 import ProfileEditPage from './pages/users/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/context/AuthContext'
+
 import axios from 'axios'
 axios.defaults.withCredentials = true //設定 Axios 預設攜帶 Cookie
+
 function App() {
   return (
     <Router>
@@ -44,6 +47,7 @@ function App() {
           <Route path="/product-page" element={<ProductDetailPage />} />
           <Route path="/location-page" element={<LocationDetailPage />} />
           <Route path="/locations" element={<LocationsPage />} />
+          <Route path="/locations/create" element={<CreateLocation />} />
           <Route
             path="/users/:userId/profile"
             element={
@@ -61,9 +65,15 @@ function App() {
             }
           />
           {/* 傳入 mode='create' */}
-          <Route path="/create-activity" element={<ManageActivityPage mode='create' />} />
+          <Route
+            path="/create-activity"
+            element={<ManageActivityPage mode="create" />}
+          />
           {/* 傳入 mode='edit' */}
-          <Route path="/edit-activity/:id" element={<ManageActivityPage mode='edit' />} />
+          <Route
+            path="/edit-activity/:id"
+            element={<ManageActivityPage mode="edit" />}
+          />
         </Routes>
       </AuthProvider>
     </Router>
