@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 
 const CreateLocationForm = () => {
@@ -6,7 +6,6 @@ const CreateLocationForm = () => {
   const [placeSuggestions, setPlaceSuggestions] = useState([]) // 地點建議
   const [selectedPlace, setSelectedPlace] = useState(null) // 選中的地點資訊
   const [placeDetails, setPlaceDetails] = useState(null) // Google API 獲取的地點詳細資訊
-  const [image, setImage] = useState('') // 圖片 URL
   const [loading, setLoading] = useState(false) // 加載狀態
   const [successMessage, setSuccessMessage] = useState('') // 成功訊息
   const [errorMessage, setErrorMessage] = useState('') // 錯誤訊息
@@ -22,10 +21,10 @@ const CreateLocationForm = () => {
       const response = await axios.get(
         'http://localhost:3000/api/locations/google/autocomplete',
         {
-          params: { input: query },
+          params: { input: query }, // 傳入使用者輸入的內容
         }
       )
-      setPlaceSuggestions(response.data)
+      setPlaceSuggestions(response.data) // 更新地點建議
     } catch (error) {
       console.error('無法獲取地點建議:', error.message)
     }
@@ -40,16 +39,15 @@ const CreateLocationForm = () => {
           params: { place_id: placeId },
         }
       )
-      console.log(response.data)
       setPlaceDetails(response.data) // 設置地點詳細資訊
     } catch (error) {
       console.error('無法獲取地點詳細資訊:', error.message)
     }
   }
 
-  // 選擇地點
+  // 處理使用者選擇的地點
   const handlePlaceSelect = (place) => {
-    const simplifiedName = place.structured_formatting.main_text
+    const simplifiedName = place.structured_formatting.main_text // 取得簡化的地點名稱
     setSelectedPlace(place)
     setName(simplifiedName)
     setPlaceSuggestions([]) // 清空建議清單
@@ -65,22 +63,22 @@ const CreateLocationForm = () => {
     }
 
     setLoading(true)
-    setSuccessMessage('')
-    setErrorMessage('')
 
     try {
+      // 建立新景點
       const response = await axios.post(
         'http://localhost:3000/api/locations/create',
         {
           name: placeDetails.name,
           googlePlaceId: selectedPlace.place_id,
-          image: image || placeDetails.photos?.[0]?.photo_reference,
         }
       )
       setSuccessMessage(`景點「${response.data.location.name}」已成功建立！`)
+      setTimeout(() => {
+        setSuccessMessage('')
+      }, 2000)
       setName('')
       setSelectedPlace(null)
-      setImage('')
       setPlaceDetails(null)
     } catch (error) {
       setErrorMessage(error.response?.data?.error || '建立景點失敗，請稍後再試')
@@ -136,7 +134,18 @@ const CreateLocationForm = () => {
               <strong>地址：</strong> {placeDetails?.address || '無地址'}
             </p>
             <p>
-              <strong>評分：</strong> {placeDetails.rating || '無評分'}
+              <strong>Google Map：</strong>
+              {placeDetails.url ? (
+                <a
+                  href={placeDetails.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {placeDetails.url}
+                </a>
+              ) : (
+                '無網址'
+              )}
             </p>
             <p>
               <strong>營業時間：</strong>
@@ -168,18 +177,6 @@ const CreateLocationForm = () => {
             )}
           </div>
         )}
-
-        {/* 自定義圖片 URL
-        <div className="form-group">
-          <label className="form-label">圖片 URL</label>
-          <input
-            type="text"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="輸入自定義圖片網址"
-            className="form-input"
-          />
-        </div> */}
 
         {/* 提交按鈕 */}
         <button type="submit" disabled={loading} className="form-button">

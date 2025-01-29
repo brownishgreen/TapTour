@@ -1,6 +1,8 @@
 require('dotenv').config() // 載入環境變數
 const { Location } = require('../models')
 const axios = require('axios')
+// const handleImageUpload = require('../utils/upload-handler')
+// const path = require('path')
 
 const locationController = {
   getAllLocation: async (req, res, next) => {
@@ -57,9 +59,8 @@ const locationController = {
         res.status(200).json({
           name: place.name,
           address: place.formatted_address,
-          rating: place.rating || '無評分',
           photos: photos, // 返回生成的圖片 URL 陣列
-          reviews: place.reviews || [],
+          url: place.url || 'null',
           opening_hours: place.opening_hours?.weekday_text || [],
         })
       } else {
@@ -74,12 +75,12 @@ const locationController = {
   },
 
   createLocation: async (req, res, next) => {
-    const { name, googlePlaceId, image } = req.body
+    const { name, googlePlaceId } = req.body
     const apiKey = process.env.GOOGLE_API_KEY
 
     try {
-      // 呼叫 Google Api 獲取景點資訊
-      let latitude, longitude, description
+      // 呼叫 Google API 獲取景點資訊
+      let latitude, longitude, address, description, openingHours, googleUrl
       if (googlePlaceId) {
         const response = await axios.get(
           `https://maps.googleapis.com/maps/api/place/details/json?place_id=${googlePlaceId}&key=${apiKey}`
@@ -87,27 +88,38 @@ const locationController = {
 
         if (response.data.result) {
           const place = response.data.result
+
+          // 提取所需的資訊
           latitude = place.geometry.location.lat
           longitude = place.geometry.location.lng
-          description = place.formatted_address
+          address = place.formatted_address || null 
+          description = '' || null
+          openingHours =
+            place.opening_hours?.weekday_text.join(', ') || '無營業時間資訊'
+          googleUrl = place.url || null
         } else {
-          return res.status(400).json({ error: '無效的api' })
+          return res.status(400).json({ error: '無效的 Google Place ID' })
         }
       }
+
+      // 將資料存入資料庫
       const location = await Location.create({
-        name,
-        image: image || null,
-        description: description || null,
-        latitude: latitude || null,
-        longitude: longitude || null,
-        google_place_id: googlePlaceId || null,
+        name, 
+        description: description || '無描述', 
+        address: address || '無地址',
+        latitude: latitude || null, 
+        longitude: longitude || null, 
+        google_place_id: googlePlaceId || null, 
+        opening_hours: openingHours, 
+        google_url: googleUrl, 
       })
+    
       res.status(201).json({
         message: '新增景點成功',
-        location, // 返回新增的景點資料
+        location, 
       })
     } catch (err) {
-      console.log(err)
+      console.error(err)
       next(err)
     }
   },
