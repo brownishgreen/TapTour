@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"**/*.js\" --fix",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd backend && npm run start",
+    "server": "cd backend && npm run dev",
     "client": "cd frontend && npm run dev"
   },
   "keywords": [],
@@ -40,6 +40,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.37.3",
     "globals": "^15.14.0",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "sequelize-cli": "^6.6.2"
   }
 }

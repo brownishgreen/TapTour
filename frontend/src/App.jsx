@@ -6,21 +6,21 @@ import RegisterPage from './pages/users/RegisterPage'
 import LoginPage from './pages/users/LoginPage'
 import ProfilePage from './pages/users/ProfilePage'
 import AdminPage from './pages/users/AdminPage'
-import CreateActivityPage from './pages/activity/CreateActivityPage'
 import Homepage from './pages/Homepage'
 import ActivitiesPage from './pages/activity/ActivitiesPage'
+import ManageActivityPage from './pages/activity/ManageActivityPage'
 import ActivityDetailPage from './pages/activity/ActivityDetailPage'
 import ProductsPage from './pages/product/ProductsPage'
 import ProductDetailPage from './pages/product/ProductDetailPage'
 import LocationDetailPage from './pages/location/LocationDetailPage'
 import LocationsPage from './pages/location/LocationsPage'
+import CreateLocation from './pages/location/CreateLocation'
 import ProfileEditPage from './pages/users/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/context/AuthContext'
 
-import CreateLocation from './pages/location/CreateLocation'
-
-
+import axios from 'axios'
+axios.defaults.withCredentials = true //設定 Axios 預設攜帶 Cookie
 
 function App() {
   return (
@@ -67,12 +67,12 @@ function App() {
           {/* 傳入 mode='create' */}
           <Route
             path="/create-activity"
-            element={<CreateActivityPage mode="create" />}
+            element={<ManageActivityPage mode="create" />}
           />
           {/* 傳入 mode='edit' */}
           <Route
             path="/edit-activity/:id"
-            element={<CreateActivityPage mode="edit" />}
+            element={<ManageActivityPage mode="edit" />}
           />
         </Routes>
       </AuthProvider>
