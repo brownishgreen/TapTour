@@ -110,8 +110,14 @@ const userController = {
   // 個人檔案
   profile: async (req, res, next) => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: '未授權，請先登入' });
+      }
+
       const targetUserId = req.params.userId // 被訪問用戶 ID
       const currentUserId = req.user.id
+
+      
       const user = await User.findByPk(targetUserId, {
         attributes: ['id', 'image', 'name', 'email', 'bio', 'createdAt'],
       })

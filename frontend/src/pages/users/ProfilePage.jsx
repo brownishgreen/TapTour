@@ -11,9 +11,11 @@ const ProfilePage = () => {
 
   // 確保使用正確的 userId
   const userId = paramUserId || contextUserId
+  console.log('🔍 ProfilePage - userId:', userId) // **偵錯用**
 
   useEffect(() => {
     if (!userId) {
+      console.log('⚠️ userId 不存在，嘗試驗證登入...')
       verifyLogin() // 如果 userId 不存在，嘗試驗證登入
     }
   }, [userId, verifyLogin])
