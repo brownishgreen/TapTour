@@ -1,11 +1,21 @@
-const { Activity, Image } = require('../models')
+const { Activity, Image, Category } = require('../models')
 const handleImageUpload = require('../utils/upload-handler')
 const path = require('path')
 
 const activityController = {
   getAllActivities: async (req, res, next) => {
     try {
-      const activities = await Activity.findAll()
+      const activities = await Activity.findAll({
+        include: [{
+          model: Image,
+          as: 'images',
+          attributes: ['image_url']
+        }, {
+          model: Category,
+          as: 'category',
+          attributes: ['name']
+        }]
+      })
       res.status(200).json(activities)
     } catch (err) {
       err.statusCode = 500
@@ -15,7 +25,17 @@ const activityController = {
   getActivityById: async (req, res, next) => {
     try {
       const { id } = req.params
-      const activity = await Activity.findByPk(Number(id))
+      const activity = await Activity.findByPk(Number(id), {
+        include: [{
+          model: Image,
+          as: 'images',
+          attributes: ['image_url']
+        }, {
+          model: Category,
+          as: 'category',
+          attributes: ['name']
+        }]
+      })
       if (!activity) {
         return res.status(404).json({ message: '活動不存在' })
       }
