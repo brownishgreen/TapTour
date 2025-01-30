@@ -40,12 +40,10 @@ function App() {
             }
           />
           <Route path="/activities" element={<ActivitiesPage />} />
-          <Route
-            path="/activities/:id" //之後要改成動態 /activities/:id
-            element={<ActivityDetailPage />}
-          />
+          <Route path="/activities/:id" element={<ActivityDetailPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/product-page" element={<ProductDetailPage />} />
+
           {/* Product 傳入 mode='create' */}
           <Route
             path="/products/create"
@@ -56,7 +54,7 @@ function App() {
             path="/products/:id/edit"
             element={<ManageProductPage mode="edit" />}
           />
-          <Route path="/location-page" element={<LocationDetailPage />} />
+          <Route path="/locations/:id" element={<LocationDetailPage />} />
           <Route path="/locations" element={<LocationsPage />} />
           <Route
             path="/users/:userId/profile"

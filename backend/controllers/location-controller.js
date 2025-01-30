@@ -55,16 +55,23 @@ const locationController = {
           return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo.photo_reference}&key=${apiKey}`
         })
 
-        // 返回地點詳細資訊，包括圖片 URL
+        // 清理地址格式
+        let cleanedAddress = place.formatted_address || '無地址'
+        if (/\w+\+\w+$/.test(cleanedAddress) && place.address_components) {
+          cleanedAddress = place.address_components
+            .map((comp) => comp.long_name)
+            .join(', ')
+        }
+
+        // 返回地點詳細資訊，包括清理後的地址
         res.status(200).json({
           name: place.name,
-          address: place.formatted_address,
-          photos: photos, // 返回生成的圖片 URL 陣列
+          address: cleanedAddress,
+          photos: photos,
           url: place.url || 'null',
           opening_hours: place.opening_hours?.weekday_text || [],
         })
       } else {
-        console.log('無法獲取地點詳細資訊')
         res.status(400).json({ error: '無法獲取地點詳細資訊' })
       }
     } catch (err) {
@@ -75,15 +82,15 @@ const locationController = {
   },
 
   createLocation: async (req, res, next) => {
-    const { name, googlePlaceId } = req.body
+    const { name, googlePlaceId, description } = req.body
     const apiKey = process.env.GOOGLE_API_KEY
 
     try {
       // 呼叫 Google API 獲取景點資訊
-      let latitude, longitude, address, description, openingHours, googleUrl
+      let latitude, longitude, address, openingHours, googleUrl
       if (googlePlaceId) {
         const response = await axios.get(
-          `https://maps.googleapis.com/maps/api/place/details/json?place_id=${googlePlaceId}&key=${apiKey}`
+          `https://maps.googleapis.com/maps/api/place/details/json?place_id=${googlePlaceId}&key=${apiKey}&language=zh-TW`
         )
 
         if (response.data.result) {
@@ -92,8 +99,7 @@ const locationController = {
           // 提取所需的資訊
           latitude = place.geometry.location.lat
           longitude = place.geometry.location.lng
-          address = place.formatted_address || null 
-          description = '' || null
+          address = place.formatted_address || null
           openingHours =
             place.opening_hours?.weekday_text.join(', ') || '無營業時間資訊'
           googleUrl = place.url || null
@@ -104,22 +110,35 @@ const locationController = {
 
       // 將資料存入資料庫
       const location = await Location.create({
-        name, 
-        description: description || '無描述', 
+        name,
+        description: description || '無描述',
         address: address || '無地址',
-        latitude: latitude || null, 
-        longitude: longitude || null, 
-        google_place_id: googlePlaceId || null, 
-        opening_hours: openingHours, 
-        google_url: googleUrl, 
+        latitude: latitude || null,
+        longitude: longitude || null,
+        google_place_id: googlePlaceId || null,
+        opening_hours: openingHours,
+        google_url: googleUrl,
       })
-    
+
       res.status(201).json({
         message: '新增景點成功',
-        location, 
+        location,
       })
     } catch (err) {
       console.error(err)
+      next(err)
+    }
+  },
+  getLocationById: async (req, res, next) => {
+    try {
+      const location = await Location.findByPk(req.params.id)
+
+      if (!location) {
+        return res.status(404).json({ message: '景點不存在' })
+      }
+      res.status(200).json({ message: '您已成功訪問景點詳細頁面', location })
+    } catch (err) {
+      err.statusCode = 500
       next(err)
     }
   },
