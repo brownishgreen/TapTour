@@ -53,7 +53,7 @@ function App() {
           />
           {/* Product 傳入 mode='edit' */}
           <Route
-            path="/products/:id"
+            path="/products/:id/edit"
             element={<ManageProductPage mode="edit" />}
           />
           <Route path="/location-page" element={<LocationDetailPage />} />

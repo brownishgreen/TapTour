@@ -12,7 +12,6 @@ const ProductForm = ({ mode }) => {
   const [categories, setCategories] = useState([])
   const [formData, setFormData] = useState({
     name: '',
-    time: '',
     price: '',
     location_id: '',
     description: '',
@@ -73,7 +72,7 @@ const ProductForm = ({ mode }) => {
     event.preventDefault();
 
     // 檢查表單資料是否為空
-    const requiredFields = ['name', 'price', 'location', 'description', 'category_id']
+    const requiredFields = ['name', 'price', 'description', 'category_id']
     for (const field of requiredFields) {
       if (formData[field] === null || formData[field] === undefined || formData[field] === '') {
         alert(`${field} 是必填欄位`)
@@ -98,8 +97,8 @@ const ProductForm = ({ mode }) => {
       return
     }
 
-    if (isEditMode && (activityId === null || isNaN(activityId))) {
-      alert("無法更新活動，因為 ID 無效！");
+    if (isEditMode && (productId === null || isNaN(productId))) {
+      alert("無法更新商品，因為 ID 無效！");
       return;
     }
 
@@ -134,7 +133,6 @@ const ProductForm = ({ mode }) => {
 
       console.log('Server Response:', response.data)
       alert(`${isEditMode ? '商品更新' : '建立商品'}成功`)
-      // navigate(`/products/${response.data.id}`)
       navigate('/products')
     } catch (error) {
       console.error('錯誤:', error.response || error.message)
@@ -166,17 +164,10 @@ const ProductForm = ({ mode }) => {
           <label htmlFor="name">商品名稱</label>
           <input type="text" id="name" name="name" value={formData.name || ''} onChange={handleInputChange} />
 
-          <label htmlFor="time">商品所需時間</label>
-          <input type="text" id="time" value={formData.time || ''} name="time" onChange={handleInputChange} />
-
-
-
-
           <label htmlFor="price">商品單價</label>
           <input type="text" id="price" name="price" value={formData.price || ''} onChange={handleInputChange} />
 
-
-
+          {/* 改下拉式選單給location table */}
           <label htmlFor="location">商品所在景點</label>
           <input type="text" id="location" name="location" value={formData.location || ''} onChange={handleInputChange} />
 
