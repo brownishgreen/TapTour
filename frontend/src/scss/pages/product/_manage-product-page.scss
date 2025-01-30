@@ -1,0 +1,26 @@
+@use '../../abstracts/_variables.scss' as *;
+
+.manage-product-page {
+  position: relative;
+  z-index: 10;
+
+  &__container {
+    padding: 60px 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background-image: url('../../../../public/assets/images/backgrounds/osaka_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 5;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    color: $background-color;
+    margin: 50px auto 0;
+  }
+}

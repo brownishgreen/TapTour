@@ -1,19 +1,21 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import apiClient from '../../api/apiClient.js'
 import axios from 'axios'
 const ActivityForm = ({ mode }) => {
+
+  const navigate = useNavigate()
+
   console.log('Received mode:', mode)
 
   const { id } = useParams()
-  const activityId = id && !isNaN(Number(id)) ? Number(id) : null
+  const activityId = Number(id) || null;
   const isEditMode = mode === 'edit' // 判斷模式
   const [categories, setCategories] = useState([])
   const [formData, setFormData] = useState({
     name: '',
     time: '',
     price: '',
-    location: '',
+    location_id: '',
     description: '',
     category_id: '',
     images: []
@@ -43,7 +45,7 @@ const ActivityForm = ({ mode }) => {
     const { name, value } = event.target
     setFormData((prev) => ({
       ...prev,
-      [name]: ["price", "time", "category_id"].includes(name) ? (Number(value) || 0) : value
+      [name]: ["price", "time", "category_id"].includes(name) ? Number(value) || 0 : value
     }))
   }
   // 處理圖片上傳
@@ -136,6 +138,8 @@ const ActivityForm = ({ mode }) => {
 
       console.log('Server Response:', response.data)
       alert(`${isEditMode ? '活動更新' : '建立活動'}成功`)
+      const redirectPath = isEditMode ? `/activities/${activityId}` : '/activities'
+      navigate(redirectPath)
     } catch (error) {
       console.error('錯誤:', error.response || error.message)
       console.error('錯誤詳細資訊:', error.response?.data)
