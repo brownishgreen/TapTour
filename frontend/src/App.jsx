@@ -12,6 +12,7 @@ import ManageActivityPage from './pages/activity/ManageActivityPage'
 import ActivityDetailPage from './pages/activity/ActivityDetailPage'
 import ProductsPage from './pages/product/ProductsPage'
 import ProductDetailPage from './pages/product/ProductDetailPage'
+import ManageProductPage from './pages/product/ManageProductPage'
 import LocationDetailPage from './pages/location/LocationDetailPage'
 import LocationsPage from './pages/location/LocationsPage'
 import CreateLocation from './pages/location/CreateLocation'
@@ -45,6 +46,16 @@ function App() {
           />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/product-page" element={<ProductDetailPage />} />
+          {/* Product 傳入 mode='create' */}
+          <Route
+            path="/products/create"
+            element={<ManageProductPage mode="create" />}
+          />
+          {/* Product 傳入 mode='edit' */}
+          <Route
+            path="/products/:id/edit"
+            element={<ManageProductPage mode="edit" />}
+          />
           <Route path="/location-page" element={<LocationDetailPage />} />
           <Route path="/locations" element={<LocationsPage />} />
           <Route
@@ -65,12 +76,12 @@ function App() {
           />
           {/* 傳入 mode='create' */}
           <Route
-            path="/create-activity"
+            path="/activities/create"
             element={<ManageActivityPage mode="create" />}
           />
           {/* 傳入 mode='edit' */}
           <Route
-            path="/edit-activity/:id"
+            path="/activities/:id"
             element={<ManageActivityPage mode="edit" />}
           />
           <Route

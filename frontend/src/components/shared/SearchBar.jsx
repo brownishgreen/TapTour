@@ -18,7 +18,7 @@ const SearchBar = () => {
 
   const getCreatePagePath = () => {
     const routes = {
-      '/activities': '/create-activity',
+      '/activities': '/activities/create',
       '/products': '/products/create',
       '/locations': '/locations/create',
     }
