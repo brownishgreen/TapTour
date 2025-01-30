@@ -20,6 +20,7 @@
 @use './components/activity-detail-introduction';
 @use './components/comment-card';
 @use './components/activity-form';
+@use './components/product-form';
 @use './components/detail-page-introduction';
 @use './components/detail-page-title';
 @use './components/price-information';
@@ -38,8 +39,7 @@
 @use './pages/activity/manage-activity-page';
 
 @use './pages/product/product-detail-page';
-@use './pages/product/products';
-
+@use './pages/product/manage-product-page';
 @use './pages/location/location-detail-page';
 
 @use './pages/homepage';

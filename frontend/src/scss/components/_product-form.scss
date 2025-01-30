@@ -1,7 +1,7 @@
 @use '../abstracts/_variables' as *;
 @use '../abstracts/_mixins' as *;
 
-.activity-form {
+.product-form {
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@
 
   &__form {
     width: 100%;
-    margin-top:20px;
+    margin-top: 20px;
     position: relative;
     z-index: 5;
 
@@ -32,6 +32,7 @@
       flex-wrap: wrap;
       gap: 15px;
       margin-bottom: 20px;
+
       label {
         font-size: 14px;
         color: $text-color;
@@ -73,6 +74,7 @@
         cursor: pointer;
         transition: background-color 0.3s;
         z-index: 10;
+
         &:hover {
           background-color: #333;
         }
@@ -96,9 +98,9 @@ select {
   -moz-appearance: none;
   background-image: url('data:image/svg+xml;utf8,<svg fill="%23000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path></svg>'); // 自訂下拉箭頭
   background-repeat: no-repeat;
-  background-position: right 12px center; 
+  background-position: right 12px center;
   background-size: 16px;
-  padding-right: 40px; 
+  padding-right: 40px;
 }
 
 //讓 select 和 input 內文對齊

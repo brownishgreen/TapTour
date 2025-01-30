@@ -103,17 +103,17 @@ const activityController = {
         category_id,
       })
 
-      let imageUrls = []
-
-      const basePath = path.join(__dirname, '../uploads/activities')
 
       // 圖片上傳處理
+      let imageUrls = []
+      const basePath = path.join(__dirname, '../uploads/activities')
+
       if (req.files && req.files.images) {
         const images = Array.isArray(req.files.images)
           ? req.files.images
           : [req.files.images]
-
-        imageUrls = await handleImageUpload(images, basePath, activity.id, name)
+        
+        imageUrls = await handleImageUpload(images, basePath, activity.id, name, 'activities', 'activity_id') // 這裡的 'activity.id' 是活動的 ID用來產生目錄和檔名，'activities' 是實體類型，'activity_id' 是資料庫中對應的外鍵欄位名
 
         res.status(201).json({
           message: '活動已創建',
