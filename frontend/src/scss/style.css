@@ -1035,6 +1035,104 @@ select option {
   font-size: 16px;
 }
 
+.product-form {
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 0 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 30px auto 0;
+  z-index: 2;
+}
+.product-form h1 {
+  margin-bottom: 20px;
+  color: #444444;
+  z-index: 10;
+}
+.product-form__form {
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+  z-index: 5;
+}
+.product-form__form-item {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.product-form__form-item label {
+  font-size: 14px;
+  color: #444444;
+}
+.product-form__form-item input[type=text],
+.product-form__form-item input[type=file],
+.product-form__form-item textarea,
+.product-form__form-item select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #bababa;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+  z-index: 10;
+}
+.product-form__form-item input[type=text]:focus,
+.product-form__form-item input[type=file]:focus,
+.product-form__form-item textarea:focus,
+.product-form__form-item select:focus {
+  border-color: #54A2C0;
+  z-index: 10;
+}
+.product-form__form-item textarea {
+  resize: none;
+  height: 100px;
+  z-index: 10;
+}
+.product-form__form-item button[type=submit] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #54A2C0;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 10;
+}
+.product-form__form-item button[type=submit]:hover {
+  background-color: #333;
+}
+.product-form__image-upload {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 100%;
+  z-index: 10;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+select option {
+  font-size: 16px;
+}
+
 .detail-page-introduction {
   max-width: 700px;
   margin-left: 15px;
@@ -1157,7 +1255,6 @@ select option {
 
 .location-map {
   background-color: #ffffff;
-  margin-left: 4rem;
 }
 
 .location-form-container {
@@ -1536,18 +1633,27 @@ select option {
   margin-top: 20px;
 }
 
-.products-page__main {
-  width: 60%;
-  margin: 0 auto;
+.manage-product-page {
+  position: relative;
+  z-index: 10;
 }
-
-.products-page__card-container {
+.manage-product-page__container {
+  padding: 60px 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin-top: 10px;
+  width: 100%;
+  flex-direction: column;
+  background-image: url("../../../../public/assets/images/backgrounds/osaka_background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 5;
+}
+.manage-product-page h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #ffffff;
+  margin: 50px auto 0;
 }
 
 .location-detail-page {
