@@ -1,0 +1,50 @@
+@use '../../abstracts/_variables' as *;
+@use '../../abstracts/_mixins' as *;
+
+.about-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.about-page__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  img {
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    margin: 0 auto;
+  }
+}
+
+.about-page-container-inner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 1rem;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  background-color: $background-color;
+
+  h4 {
+    font-weight: 600;
+    margin: 1rem 0;
+  }
+  
+  
+}
+
+.about-page__contact-icon {
+  font-size: 30px;
+  margin-left: 5px;
+}
+

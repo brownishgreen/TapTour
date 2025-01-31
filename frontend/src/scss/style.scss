@@ -1,6 +1,7 @@
 @use './abstracts/variables';
 @use './abstracts/mixins';
 
+@use './components/user/about-component';
 @use './components/shared/backgrounds';
 @use './components/shared/form';
 @use './components/shared/buttons';

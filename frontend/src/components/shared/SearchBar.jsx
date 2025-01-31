@@ -12,7 +12,6 @@ const SearchBar = () => {
   const { isLoggedIn, isAdmin } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()   // 取得目前路徑
-
   // 顯示按鈕的條件：必須是已登入且是管理員
   const showCreateButton = isLoggedIn && isAdmin
 
@@ -49,7 +48,7 @@ const SearchBar = () => {
               className="create-button"
               onClick={() => navigate(getCreatePagePath())}
             >
-              <FontAwesomeIcon icon={faPlus} size="2xl" className="create-button-icon" />
+              <FontAwesomeIcon icon={faPlus} size="xl" className="create-button-icon" />
               新增
               {location.pathname === '/activities' && '活動'}
               {location.pathname === '/products' && '商品'}

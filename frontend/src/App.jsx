@@ -7,6 +7,7 @@ import LoginPage from './pages/users/LoginPage'
 import ProfilePage from './pages/users/ProfilePage'
 import AdminPage from './pages/users/AdminPage'
 import Homepage from './pages/Homepage'
+import AboutPage from './pages/users/AboutPage'
 import ActivitiesPage from './pages/activity/ActivitiesPage'
 import ManageActivityPage from './pages/activity/ManageActivityPage'
 import ActivityDetailPage from './pages/activity/ActivityDetailPage'
@@ -90,6 +91,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </AuthProvider>
     </Router>
