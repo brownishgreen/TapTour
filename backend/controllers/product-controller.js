@@ -18,7 +18,6 @@ const productController = {
       })
       res.status(200).json(products)
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -41,7 +40,6 @@ const productController = {
       }
       res.status(200).json(product)
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -54,7 +52,6 @@ const productController = {
       }
       res.status(200).json(product)
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -72,7 +69,6 @@ const productController = {
       await product.update({ name, description, location, date, time, price })
       res.status(200).json({ message: '商品更新成功' })
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -80,7 +76,6 @@ const productController = {
     try {
       res.status(200).json({ message: '這是創建商品頁面的json' })
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -123,7 +118,6 @@ const productController = {
       }
     } catch (err) {
       console.error('商品創建失敗', err)
-      res.status(500).json({ message: '商品創建失敗' })
       next(err)
     }
   },
@@ -141,7 +135,6 @@ const productController = {
       await product.destroy()
       res.status(200).json({ message: '商品刪除成功' })
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   }

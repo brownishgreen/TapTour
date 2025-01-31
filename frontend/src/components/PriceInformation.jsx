@@ -6,7 +6,7 @@ const PriceInformation = ({ price }) => {
       <div className="price-information__price">NT$ {price} 起</div>
       <div className="price-information__description">
         <p className="price-information__description-title">每名成人（價格依人數而有不同）</p>
-        <p className="price-information__description-content">
+        <div className="price-information__description-content">
           <div className="price-information__description-content-title">
             選擇日期<br />
           </div>
@@ -22,7 +22,7 @@ const PriceInformation = ({ price }) => {
             <br />
             先預訂後付款！確保名額同時保有彈性。
           </div>
-        </p>
+        </div>
         <button className="price-information__button primary-button">立即預訂</button>
       </div>
     </div>

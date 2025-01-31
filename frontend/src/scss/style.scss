@@ -18,7 +18,10 @@
 
 @use './components/user/profile-info';
 @use './components/activity-detail-introduction';
+
 @use './components/comment-card';
+@use './components/comments-block';
+@use './components/create-comment-form';
 @use './components/activity-form';
 @use './components/product-form';
 @use './components/detail-page-introduction';
