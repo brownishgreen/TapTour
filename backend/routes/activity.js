@@ -3,7 +3,7 @@ const router = express.Router()
 const activityController = require('../controllers/activity-controller.js')
 const verifyToken = require('../middlewares/auth')
 const isAdmin = require('../middlewares/isAdmin')
-const uploadActivityImage = require('../utils/upload-handler')
+const { handleImageUpload } = require('../utils/upload-handler')
 
 // 取得所有活動
 router.get('/', activityController.getAllActivities)
@@ -15,7 +15,13 @@ router.get('/:id/edit', verifyToken, isAdmin, activityController.editActivityPag
 router.get('/create', verifyToken, isAdmin, activityController.createActivityPage)
 
 // 創建活動
-router.post('/',verifyToken,isAdmin,uploadActivityImage,activityController.createActivity)
+router.post(
+  '/',
+  verifyToken,
+  isAdmin,
+  handleImageUpload,
+  activityController.createActivity
+)
 
 // 編輯活動
 router.put('/:id', verifyToken, isAdmin, activityController.editActivity)

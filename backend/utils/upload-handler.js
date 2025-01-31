@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { Image } = require('../models')
 const pinyin = require('pinyin').default
+const axios = require('axios');
 
 /**
  * 這是一個通用圖片上傳處理器
@@ -11,6 +12,8 @@ const pinyin = require('pinyin').default
  * @param {String} name - 相關的名稱，用於產生目錄
  * @param {String} entityType - 實體類型 (如 'activities' 或 'products')，決定上傳目錄
  * @param {String} dbColumn - 資料庫中對應的外鍵欄位名 (如 'activity_id', 'product_id')
+ *  @param {Array} googlePhotos - Google API 返回的照片引用陣列
+ *  @returns {Array} imageUrls - 成功下載的圖片 URL 陣列
  */
 
 const handleImageUpload = async (images, basePath, entityId, name, entityType, dbColumn) => {
@@ -69,4 +72,71 @@ const handleImageUpload = async (images, basePath, entityId, name, entityType, d
   return imageUrls.filter(Boolean) // 過濾掉失敗的圖片
 }
 
-module.exports = handleImageUpload
+const downloadGoogleImages = async (
+  googlePhotos,
+  basePath,
+  entityId,
+  name,
+  entityType,
+  dbColumn
+) => {
+  const imageUrls = []
+
+  if (!googlePhotos || googlePhotos.length === 0) {
+    return imageUrls
+  }
+
+  // 轉換名稱為拼音格式
+  const sanitizedName = pinyin(name, { style: pinyin.STYLE_NORMAL })
+    .map((word) => word.join(''))
+    .join('-')
+    .replace(/[^a-zA-Z0-9-]/g, '')
+    .toLowerCase()
+
+  // 建立轉拼音的資料夾
+  const uploadPath = path.join(basePath, sanitizedName)
+  if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath, { recursive: true })
+  }
+
+  for (const [index, photo] of googlePhotos.entries()) {
+    const apiKey = process.env.GOOGLE_API_KEY
+    const googlePhotoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${photo.reference}&key=${apiKey}`
+    const fileExtension = '.jpg'
+    const fileName = `${sanitizedName}-${index + 1}${fileExtension}`
+    const filePath = path.join(uploadPath, fileName) // 儲存到轉拼音資料夾
+
+    try {
+      // 下載 Google 圖片
+      const response = await axios({
+        url: googlePhotoUrl,
+        responseType: 'stream',
+      })
+
+      // 儲存到本地
+      const writer = fs.createWriteStream(filePath)
+      response.data.pipe(writer)
+
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve)
+        writer.on('error', reject)
+      })
+
+      const imageUrl = `/uploads/${entityType}/${sanitizedName}/${fileName}`
+      imageUrls.push(imageUrl)
+
+      // 存入資料庫
+      await Image.create({
+        [dbColumn]: entityId,
+        image_url: imageUrl,
+      })
+    } catch (error) {
+      console.error(`下載 Google 圖片失敗: ${googlePhotoUrl}`, error)
+    }
+  }
+
+  return imageUrls
+}
+
+
+module.exports ={ handleImageUpload, downloadGoogleImages}
