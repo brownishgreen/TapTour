@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Header from '../../components/shared/Header'
 import SearchBar from '../../components/shared/SearchBar'
-// import ImageGallery from '../../components/shared/ImageGallery'
+import ImageGallery from '../../components/shared/ImageGallery'
 import DetailPageTitle from '../../components/DetailPageTitle'
 import LocationPageIntroduction from '../../components/location/LocationPageIntroduction'
 import LocationMap from '../../components/location/LocationMap'
@@ -32,12 +32,16 @@ const LocationDetailPage = () => {
   return (
     <div className="location-detail-page">
       <Header />
-      <div className="location-detail-page__search-bar-wrapper">
-        <SearchBar />
-      </div>
+      
       {location && (
         <div className="location-detail-page__container">
-          {/* <ImageGallery images={images} /> */}
+          {/* 顯示圖片 */}
+          {location.images && location.images.length > 0 ? (
+            <ImageGallery images={location.images} />
+          ) : (
+            <p>此景點無圖片</p>
+          )}
+
           <div className="location-detail-page__title-wrapper">
             <DetailPageTitle name={location.name} />
           </div>

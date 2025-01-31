@@ -504,6 +504,7 @@ main {
   display: flex;
   justify-content: center;
   padding: 20px;
+  margin-top: 3rem;
 }
 .image-gallery__container {
   width: 100%;
@@ -1255,6 +1256,7 @@ select option {
 
 .location-map {
   background-color: #ffffff;
+  margin-left: 2rem;
 }
 
 .location-form-container {
