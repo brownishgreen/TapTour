@@ -1,9 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect} from 'react'
-import apiClient from '../../api/apiClient.js'
 import axios from 'axios'
 const ProductForm = ({ mode }) => {
+
   const navigate = useNavigate()
+
   console.log('Received mode:', mode)
 
   const { id } = useParams()
@@ -107,7 +108,7 @@ const ProductForm = ({ mode }) => {
       if (key === 'images') {
         //逐一上傳圖片
         formData.images.forEach((image) => {
-          data.append('images', image)
+          data.append(`images`, image)
         })
       } else if (formData[key] !== null && formData[key] !== undefined) {
         data.append(key, formData[key])
@@ -133,7 +134,8 @@ const ProductForm = ({ mode }) => {
 
       console.log('Server Response:', response.data)
       alert(`${isEditMode ? '商品更新' : '建立商品'}成功`)
-      navigate('/products')
+      const redirectPath = isEditMode ? `/products/${productId}` : '/products'
+      navigate(redirectPath)
     } catch (error) {
       console.error('錯誤:', error.response || error.message)
       console.error('錯誤詳細資訊:', error.response?.data)

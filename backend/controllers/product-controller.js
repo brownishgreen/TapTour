@@ -61,12 +61,12 @@ const productController = {
       if (isNaN(productId)) {
         return res.status(400).json({ message: "商品 ID 無效" });
       }
-      const { name, description, location, date, time, price } = req.body
+      const { name, description, location, date, price } = req.body
       const product = await Product.findByPk(Number(productId))
       if (!product) {
         return res.status(404).json({ message: '商品不存在' })
       }
-      await product.update({ name, description, location, date, time, price })
+      await product.update({ name, description, location, date, price })
       res.status(200).json({ message: '商品更新成功' })
     } catch (err) {
       next(err)
@@ -81,20 +81,18 @@ const productController = {
   },
   createProduct: async (req, res, next) => {
     try {
-      const { name, description, time, price, location, category_id } = req.body
+      const { name, description, price, category_id } = req.body
 
       // 確保所有必填欄位都已提供
-      if (!name || !description || !time || !price || !location || !category_id) {
-        return res.status(400).json({ message: '必須提供商品名稱、描述、時間、價格、地點、類別' });
+      if (!name || !description || !price|| !category_id) {
+        return res.status(400).json({ message: '必須提供商品名稱、描述、價格、類別' });
       }
 
       // 建立活動
       const product = await Product.create({
         name,
         description,
-        time,
         price,
-        location,
         category_id,
       })
 
@@ -108,7 +106,7 @@ const productController = {
           ? req.files.images
           : [req.files.images]
 
-        imageUrls = await handleImageUpload(images, basePath, product.id, name, 'products', 'product_id')
+      imageUrls = handleImageUpload(images, basePath, product.id, name, 'products', 'product_id')
 
         res.status(201).json({
           message: '商品已創建',
