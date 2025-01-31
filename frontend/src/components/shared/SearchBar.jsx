@@ -49,7 +49,7 @@ const SearchBar = () => {
               className="create-button"
               onClick={() => navigate(getCreatePagePath())}
             >
-              <FontAwesomeIcon icon={faPlus} size="1xl" className="create-button-icon" />
+              <FontAwesomeIcon icon={faPlus} size="2xl" className="create-button-icon" />
               新增
               {location.pathname === '/activities' && '活動'}
               {location.pathname === '/products' && '商品'}

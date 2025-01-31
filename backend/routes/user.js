@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
 const verifyToken = require('../middlewares/auth')
-const upload = require('../utils/multer-config')
 
 // 檢查 userId 是否為有效數字的 middleware
 const validateUserId = (req, res, next) => {
@@ -30,9 +29,11 @@ router.post('/logout', userController.logout)
 
 
 // 個人檔案
-router.get('/:userId/profile', verifyToken, validateUserId, userController.profile)
+router.get('/:userId/profile',
+  verifyToken,
+  userController.profile)
 
 // 更新個人檔案
-router.put('/:userId/update-profile', verifyToken, validateUserId, upload.single('image'), userController.updateProfile)
+router.put('/:userId/update-profile', userController.updateProfile)
 
 module.exports = router

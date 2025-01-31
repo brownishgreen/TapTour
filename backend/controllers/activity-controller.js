@@ -18,7 +18,6 @@ const activityController = {
       })
       res.status(200).json(activities)
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -39,9 +38,8 @@ const activityController = {
       if (!activity) {
         return res.status(404).json({ message: '活動不存在' })
       }
-      res.status(200).json(activity)
+        res.status(200).json(activity)
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -54,7 +52,6 @@ const activityController = {
       }
       res.status(200).json(activity)
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -72,7 +69,6 @@ const activityController = {
       await activity.update({ name, description, location, date, time, price })
       res.status(200).json({ message: '活動更新成功' })
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -80,7 +76,6 @@ const activityController = {
     try {
       res.status(200).json({ message: '這是創建活動頁面的json' })
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   },
@@ -113,7 +108,13 @@ const activityController = {
           ? req.files.images
           : [req.files.images]
         
-        imageUrls = await handleImageUpload(images, basePath, activity.id, name, 'activities', 'activity_id') // 這裡的 'activity.id' 是活動的 ID用來產生目錄和檔名，'activities' 是實體類型，'activity_id' 是資料庫中對應的外鍵欄位名
+        try {
+          imageUrls = await handleImageUpload(images, basePath, activity.id, name, 'activities', 'activity_id') 
+          // 這裡的 'activity.id' 是活動的 ID用來產生目錄和檔名，'activities' 是實體類型，'activity_id' 是資料庫中對應的外鍵欄位名
+        } catch (err) {
+          console.error('圖片上傳失敗', err)
+          return next(err)
+        }
 
         res.status(201).json({
           message: '活動已創建',
@@ -122,8 +123,6 @@ const activityController = {
         })
       }
     } catch (err) {
-      console.error('活動創建失敗', err)
-      res.status(500).json({ message: '活動創建失敗' })
       next(err)
     }
   },
@@ -141,7 +140,6 @@ const activityController = {
       await activity.destroy()
       res.status(200).json({ message: '活動刪除成功' })
     } catch (err) {
-      err.statusCode = 500
       next(err)
     }
   }

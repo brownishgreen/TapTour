@@ -4,6 +4,7 @@ const { User, Follower } = require('../models')
 const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 const EXPIRES = process.env.JWT_EXPIRES
 
+
 const userController = {
   registerPage: (req, res) => {
     res.status(200).json({ message: '這是註冊頁面的json' })
@@ -160,67 +161,38 @@ const userController = {
     }
   },
   updateProfile: async (req, res, next) => {
+
+    const path = require('path');
+    const fs = require('fs');
+
     try {
-      const { name, email, password, confirmPassword, bio } = req.body
-      const targetUserId = req.params.userId // 被訪問用戶 ID
-      const currentUserId = req.user.id
-
-      if (currentUserId !== parseInt(targetUserId)) {
-        return res.status(403).json({ message: '您沒有權限編輯此用戶的資料！' })
-      }
-
-      if (email) {
-        const err = new Error('禁止修改email')
-        err.statusCode = 403
-        throw err
-      }
-
-      if (password) {
-        if (password !== confirmPassword) {
-          const err = new Error('密碼與確認密碼不一致')
-          err.statusCode = 400
-          throw err
-        }
-
-        if (password.length < 6) {
-          const err = new Error('密碼長度應至少為6個字符')
-          err.statusCode = 400
-          throw err
-        }
-      }
-
-      const user = await User.findByPk(targetUserId)
+      const { name, password, bio, image } = req.body
+      const user = await User.findByPk(req.params.userId)
       if (!user) {
-        const err = new Error('用戶不存在')
-        err.statusCode = 404
-        throw err
+        return res.status(404).json({ message: '用戶不存在' })
       }
 
-      // 準備更新資料
-      const updates = {}
-      if (name) {
-        updates.name = name
-      }
-      if (password) {
-        updates.password = await bcrypt.hash(password, 10)
+      // 更新名稱、密碼、簡介
+      if (name) user.name = name
+      if (password) user.password = await bcrypt.hash(password, 10)
+      if (bio) user.bio = bio
+
+      // 如果有 base64 圖片，將其解碼並儲存成檔案
+      if (image) {
+        const base64Data = image.replace(/^data:image\/\w+;base64,/, '')
+        const imagePath = path.join(__dirname, `../uploads/avatars/avatar-${Date.now()}.png`)
+        fs.writeFileSync(imagePath, base64Data, 'base64')
+        user.image = `http://localhost:3000/uploads/avatars/${path.basename(imagePath)}`
       }
 
-      if (bio !== undefined) {
-        updates.bio = bio // 即使 bio 為空字串也應更新
-      }
-
-      if (req.file) {
-        const avatarUrl = `http://localhost:3000/uploads/avatars/${req.file.filename}`
-        updates.image = avatarUrl
-      }
-      await user.update(updates)
-      const updatedUser = await user.reload()
-      res.status(200).json({ message: '資料更新成功', user: updatedUser })
+      await user.save()
+      res.status(200).json({ message: '資料更新成功', user })
     } catch (err) {
-      err.statusCode = err.statusCode || 500
-      next(err)
+      console.error(err)
+      res.status(500).json({ message: '伺服器錯誤' })
     }
   },
 }
+
 
 module.exports = userController

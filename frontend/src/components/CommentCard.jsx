@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CommentsBlock = ({ name, comment, avatar, timestamp }) => {
+const CommentCard = ({ name, comment, image, timestamp }) => {
   return (
     <div className="comment-card">
       <div className="comment-card__container">
@@ -8,16 +8,16 @@ const CommentsBlock = ({ name, comment, avatar, timestamp }) => {
           <div className="comment-card__comment-header">
             <div className="comment-card__comment-header-left">
               <div className="comment-card__comment-header-left-avatar">
-                <img src={avatar} alt="Avatar" />
+                <img src={image} alt="Avatar" />
               </div>
               <div className="comment-card__comment-header-left-name">
-                <h4>{ name }</h4>
-                <p>{ comment }</p>
+                <h6>{name}</h6>
+                <p>{comment}</p>
               </div>
             </div>
             <div className="comment-card__comment-header-right">
               <div className="comment-card__comment-header-right-date">
-                <p>{ timestamp }</p>
+                <p>{new Date(timestamp).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -27,4 +27,4 @@ const CommentsBlock = ({ name, comment, avatar, timestamp }) => {
   )
 }
 
-export default CommentsBlock
+export default CommentCard

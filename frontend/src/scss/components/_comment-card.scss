@@ -1,4 +1,4 @@
-@use '../abstracts/variables' as *;
+@use '../abstracts/_variables' as*;
 
 .comment-card {
 
@@ -48,6 +48,7 @@
     flex-direction: column;
     justify-content: center;
     left: 110px;
+    font-size: 1rem;
   }
 
   &__comment-header-right {

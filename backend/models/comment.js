@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         type: DataTypes.INTEGER,
-        allowNull: false, // 用戶必須存在
+        allowNull: true, // 允許匿名評論
         references: {
           model: 'Users',
           key: 'id',
