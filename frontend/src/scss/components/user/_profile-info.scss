@@ -25,6 +25,10 @@
     .profile-avatar {
       display: flex;
       justify-content: center;
+
+      img {
+        object-fit: cover;
+      } 
       .default-avatar {
       width: 200px;
       height: 200px;
