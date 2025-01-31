@@ -1,8 +1,8 @@
 require('dotenv').config() // 載入環境變數
-const { Location } = require('../models')
+const { Location, Image } = require('../models')
 const axios = require('axios')
-// const handleImageUpload = require('../utils/upload-handler')
-// const path = require('path')
+const { downloadGoogleImages } = require('../utils/upload-handler')
+const path = require('path')
 
 const locationController = {
   getAllLocation: async (req, res, next) => {
@@ -88,6 +88,7 @@ const locationController = {
     try {
       // 呼叫 Google API 獲取景點資訊
       let latitude, longitude, address, openingHours, googleUrl
+      let googlePhotos = [] // 初始化為空陣列
       if (googlePlaceId) {
         const response = await axios.get(
           `https://maps.googleapis.com/maps/api/place/details/json?place_id=${googlePlaceId}&key=${apiKey}&language=zh-TW`
@@ -103,6 +104,15 @@ const locationController = {
           openingHours =
             place.opening_hours?.weekday_text.join(', ') || '無營業時間資訊'
           googleUrl = place.url || null
+
+          // 取得 Google 提供的圖片 (最多5張)
+          if (place.photos && place.photos.length > 0) {
+            console.log('Google Photos:', place.photos) // 檢查原始圖片數據
+            googlePhotos = place.photos.slice(0, 5).map((photo) => ({
+              reference: photo.photo_reference,
+            }))
+            console.log('Generated googlePhotos:', googlePhotos) // 檢查生成的圖片引用陣列
+          }
         } else {
           return res.status(400).json({ error: '無效的 Google Place ID' })
         }
@@ -120,9 +130,21 @@ const locationController = {
         google_url: googleUrl,
       })
 
+      const basePath = path.join(__dirname, '../uploads/locations')
+
+      const imageUrls = await downloadGoogleImages(
+        googlePhotos,
+        basePath,
+        location.id,
+        name,
+        'locations',
+        'location_id'
+      )
+
       res.status(201).json({
         message: '新增景點成功',
         location,
+        images: imageUrls,
       })
     } catch (err) {
       console.error(err)
@@ -131,7 +153,13 @@ const locationController = {
   },
   getLocationById: async (req, res, next) => {
     try {
-      const location = await Location.findByPk(req.params.id)
+      const location = await Location.findByPk(req.params.id, {
+        include: {
+          model: Image,
+          as: 'images',
+          attributes: ['image_url'],
+        },
+      })
 
       if (!location) {
         return res.status(404).json({ message: '景點不存在' })

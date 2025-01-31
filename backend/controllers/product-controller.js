@@ -1,5 +1,5 @@
 const { Product, Image, Category } = require('../models')
-const handleImageUpload = require('../utils/upload-handler')
+const {handleImageUpload} = require('../utils/upload-handler')
 const path = require('path')
 
 const productController = {

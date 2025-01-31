@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'location_id',
         as: 'products',
       })
+      Location.hasMany(models.Image, {
+        foreignKey: 'location_id',
+        as: 'images',
+      })
     }
   }
   Location.init(
