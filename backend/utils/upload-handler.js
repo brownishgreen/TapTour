@@ -103,7 +103,7 @@ const downloadGoogleImages = async (
     const apiKey = process.env.GOOGLE_API_KEY
     const googlePhotoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${photo.reference}&key=${apiKey}`
     const fileExtension = '.jpg'
-    const fileName = `${sanitizedName}-${index + 1}${fileExtension}`
+    const fileName = `${entityId}-${sanitizedName}-${index + 1}${fileExtension}`
     const filePath = path.join(uploadPath, fileName) // 儲存到轉拼音資料夾
 
     try {
