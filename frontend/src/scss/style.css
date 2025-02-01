@@ -1,4 +1,49 @@
 @charset "UTF-8";
+.about-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.about-page__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.about-page__image img {
+  width: 320px;
+  height: 320px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin: 0 auto;
+}
+
+.about-page-container-inner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 1rem;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  background-color: #ffffff;
+}
+.about-page-container-inner-container h4 {
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.about-page__contact-icon {
+  font-size: 30px;
+  margin-left: 5px;
+}
+
 .signup-background {
   height: 100vh;
   background: url("../../../public/assets/images/backgrounds/city-sea.jpg");
@@ -635,46 +680,6 @@ main {
     width: 90%;
   }
 }
-.table-wrapper {
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-table {
-  width: 100%;
-  border: none;
-}
-
-th {
-  background-color: #54A2C0;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: white;
-  padding: 1rem;
-}
-
-td {
-  padding: 1rem;
-  border: 1px solid #ddd;
-}
-
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-  padding: 1rem;
-}
-
-tr:hover {
-  background-color: #bababa;
-  color: #fff;
-}
-
-thead, td {
-  text-align: center;
-}
-
 .carousel-item img {
   -o-object-fit: cover;
      object-fit: cover;
@@ -738,6 +743,10 @@ thead, td {
 .profile-wrapper .profile-info .profile-avatar {
   display: flex;
   justify-content: center;
+}
+.profile-wrapper .profile-info .profile-avatar img {
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .profile-wrapper .profile-info .profile-avatar .default-avatar {
   width: 200px;
@@ -929,6 +938,7 @@ thead, td {
   flex-direction: column;
   justify-content: center;
   left: 110px;
+  font-size: 1rem;
 }
 .comment-card__comment-header-right {
   position: absolute;
@@ -936,6 +946,55 @@ thead, td {
   top: 5px;
   display: flex;
   justify-content: flex-end;
+}
+
+.comments-section {
+  margin: 60px 15px 0;
+}
+
+.comments-section__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.create-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 60px 15px 0;
+}
+
+.create-comment-form__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.create-comment-form textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.create-comment-form__button {
+  align-self: flex-end;
+  padding: 8px 16px;
+  background-color: #54A2C0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-comment-form button:hover {
+  background-color: #54A2C0;
+}
+
+.create-comment-form__error-message {
+  color: red;
 }
 
 .activity-form {
@@ -1531,6 +1590,82 @@ select option {
 }
 .profile-page footer {
   flex-shrink: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; /* 去除邊框間距 */
+  table-layout: auto; /* 固定表格佈局，讓列寬度一致 */
+}
+
+.backstage-management-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.tab-content {
+  width: 1200px; /* 固定內容區域寬度 */
+  max-width: 1200px;
+  height: 500px; /* 固定高度 */
+  overflow-y: auto; /* 當內容超出高度時顯示滾動條 */
+  border: 1px solid #ddd; /* 增加邊框來區分內容區域 */
+  background-color: #fff; /* 設置背景顏色，增強可視性 */
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+thead th {
+  background-color: #54A2C0; /* 表頭背景色 */
+  color: white; /* 表頭文字顏色 */
+  padding: 10px; /* 表頭內邊距 */
+  text-align: center; /* 表頭文字置中 */
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+  padding: 1rem;
+}
+
+tr:hover {
+  background-color: #bababa;
+  color: #fff;
+}
+
+tbody td {
+  padding: 1rem; /* 表格內容內邊距 */
+  border: 1px solid #ddd; /* 表格內部邊框 */
+  text-align: center; /* 默認置中，可根據需要覆蓋 */
+  line-height: 20px;
+}
+
+.text-center {
+  text-align: center; /* 置中對齊 */
+}
+
+.text-left {
+  text-align: left; /* 靠左對齊 */
+}
+
+th:nth-child(4),
+td:nth-child(4),
+th:nth-child(5),
+td:nth-child(5), th:nth-child(6),
+td:nth-child(6) {
+  width: 13%; /* 編輯與刪除列固定寬度 */
+}
+
+select {
+  width: 120px; /* 設定固定寬度 */
+  padding: 5px; /* 增加內邊距 */
+  text-align: center; /* 中心對齊選項 */
+  -moz-text-align-last: center;
+       text-align-last: center; /* 讓選中的選項置中 */
+}
+
+.nav-link {
+  color: rgb(127, 127, 127);
 }
 
 .activities-page__main {

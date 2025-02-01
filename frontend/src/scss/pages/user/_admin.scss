@@ -1,0 +1,79 @@
+@use '../../abstracts/_variables' as*;
+
+
+table {
+  width: 100%;
+  border-collapse: collapse; /* 去除邊框間距 */
+  table-layout: auto; /* 固定表格佈局，讓列寬度一致 */
+}
+
+.backstage-management-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.tab-content {
+  width: 1200px; /* 固定內容區域寬度 */
+  max-width: 1200px; 
+  height: 500px; /* 固定高度 */
+  overflow-y: auto; /* 當內容超出高度時顯示滾動條 */
+  border: 1px solid #ddd; /* 增加邊框來區分內容區域 */
+  background-color: #fff; /* 設置背景顏色，增強可視性 */
+  padding: 20px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+thead th {
+  background-color: $primary-color; /* 表頭背景色 */
+  color: white; /* 表頭文字顏色 */
+  padding: 10px; /* 表頭內邊距 */
+  text-align: center; /* 表頭文字置中 */
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+  padding:$spacing-md;
+}
+
+tr:hover {
+  background-color: $gray-light;
+  color: #fff;
+}
+
+tbody td {
+  padding: $spacing-md; /* 表格內容內邊距 */
+  border: 1px solid #ddd; /* 表格內部邊框 */
+  text-align: center; /* 默認置中，可根據需要覆蓋 */
+  line-height: 20px;
+}
+
+.text-center {
+  text-align: center; /* 置中對齊 */
+}
+
+.text-left {
+  text-align: left; /* 靠左對齊 */
+}
+
+
+
+th:nth-child(4),
+td:nth-child(4),
+th:nth-child(5),
+td:nth-child(5),th:nth-child(6),
+td:nth-child(6) {
+  width: 13%; /* 編輯與刪除列固定寬度 */
+}
+
+select {
+  width: 120px; /* 設定固定寬度 */
+  padding: 5px; /* 增加內邊距 */
+  text-align: center; /* 中心對齊選項 */
+  text-align-last: center; /* 讓選中的選項置中 */
+}
+
+.nav-link {
+  color:rgb(127, 127, 127)
+}

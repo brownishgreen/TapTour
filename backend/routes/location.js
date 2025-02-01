@@ -12,6 +12,9 @@ router.get('/', locationController.getAllLocation)
 router.get('/:id', locationController.getLocationById)
 
 router.post('/create', downloadGoogleImages, locationController.createLocation)
+
+router.delete('/:id', locationController.deleteLocation)
+
 // 自動補全地點
 router.get('/google/autocomplete', locationController.autocompleteLocation)
 // 獲取地點詳細資訊
