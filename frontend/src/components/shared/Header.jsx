@@ -1,12 +1,7 @@
 import logo from '../../assets/images/500.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faUser,
-  faCrosshairs,
-  faShoppingCart,
-  faLocationDot,
-} from '@fortawesome/free-solid-svg-icons'
+import { faUser, faCrosshairs, faShoppingCart, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { useAuth } from '../context/AuthContext'
 
