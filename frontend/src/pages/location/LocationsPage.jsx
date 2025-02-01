@@ -1,7 +1,6 @@
 import Header from '../../components/shared/Header'
 import SearchBar from '../../components/shared/SearchBar'
 import ImageCarousel from '../../components/shared/ImageCarousel'
-import LocationsList from '../../components/location/LocationsList'
 import Pagination from '../../components/shared/Pagination'
 import Footer from '../../components/shared/Footer'
 
@@ -27,9 +26,8 @@ const LocationsPage = () => {
     <div>
       <Header />
       <main>
-        {<ImageCarousel items={Locationscarousel} />}
         <SearchBar />
-        {<LocationsList />}
+        <ImageCarousel items={Locationscarousel} />
         <Pagination />
       </main>
       <Footer />

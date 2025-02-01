@@ -29,7 +29,7 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route
@@ -92,6 +92,7 @@ function App() {
             }
           />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/" element={<Homepage />} />
         </Routes>
       </AuthProvider>
     </Router>

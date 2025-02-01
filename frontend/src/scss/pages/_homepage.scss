@@ -2,22 +2,44 @@
 @use '../abstracts/_variables' as *;
 
 
-.homepage {
+.home-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding: 0 20px;
+}
 
-  header {
-    flex-shrink: 0; // 固定 Header
+.homepage-search-bar {
+  padding-bottom: 20px;
+}
+
+.homepage-image-carousel {
+  padding-bottom: 60px;
+}
+
+.homepage-activities-information {
+  h2 {
+    margin-left: 0px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: $primary-color;
+
+    svg {
+      margin-right: 10px;
+      color: $primary-color;
+    }
+  }
+}
+
+.homepage-card-item {
+  margin-left: 60px;
+  margin-bottom: 40px;
+  border-radius: 8px;
+
+  img {
+    border-radius: 8px;
   }
 
-  main {
-    position: relative;
-    flex: 1;
-    @include flex-center();
-  }
-
-  footer {
-    flex-shrink: 0; // 固定 Footer
-  }
 }

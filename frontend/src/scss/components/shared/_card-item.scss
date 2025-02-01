@@ -2,12 +2,12 @@
 
 .card-item {
   position: relative;
-  width: 300px;
-  height: 380px;
+  width: 290px;
+  height: 400px;
   margin-bottom: 5px;
   border: 1px solid $secondary-color;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out;
 
   img {
@@ -22,14 +22,6 @@
     left: 190px;
     right: 0;
   }
-
-  // .card-item__button-subtitle {
-  //   position: absolute;
-  //   bottom: -8px;
-  //   left: 200px;
-  //   right: 0;
-  //   font-size: 1rem;
-  // }
 
   &:hover {
     transform: scale(1.03);
