@@ -8,13 +8,15 @@ const CardItem = ({ buttonText, image, title, subtitle, activityLink }) => {
   const isHomepage = location.pathname === '/'
   return (
     <Card className={`card-item ${isHomepage ? 'homepage-card-item' : ''}`}>
-      <Card.Img variant="top" src={image} />
+      <Card.Img variant="top" src={image} alt={title} />
       <Card.Body>
         <Card.Subtitle className="mb-2 text-muted card-item__button-subtitle">{subtitle}</Card.Subtitle>
         <Card.Title>{title}</Card.Title>
       </Card.Body>
       <div className="card-item__button">
-        <Button variant="secondary" href={Link}>{buttonText}</Button>
+        <Link to={activityLink}>
+          <Button variant="secondary">{buttonText}</Button>
+        </Link>
       </div>
     </Card>
   )

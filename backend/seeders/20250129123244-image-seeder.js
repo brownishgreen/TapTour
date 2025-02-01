@@ -77,7 +77,7 @@ module.exports = {
 
       {
         id: 11,
-        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-001.png',
+        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-001.jpg',
         activity_id: 3,
         created_at: new Date(),
         updated_at: new Date(),

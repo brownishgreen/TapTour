@@ -21,7 +21,7 @@ module.exports = {
         description: "盡情享受溫泉泡湯體驗帶來的療癒\n恣意進出 18 個浴池以及許多三溫暖與蒸氣室\n欣賞浴場富麗堂皇的新巴洛克風格建築",
         start_date: new Date("2025-01-01 00:00:00"),
         end_date: new Date("2025-12-31 00:00:00"),
-        price: 7201439,
+        price: 1439,
         location_id: null,
         category_id: 1,
         created_at: new Date(),
