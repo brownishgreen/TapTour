@@ -1,3 +1,9 @@
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/autoplay'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Header from '../components/shared/Header'
@@ -5,6 +11,10 @@ import SearchBar from '../components/shared/SearchBar'
 import ImageCarousel from '../components/shared/ImageCarousel'
 import CardItem from '../components/shared/CardItem'
 import Footer from '../components/shared/Footer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationDot, faShoppingCart, faCrosshairs } from '@fortawesome/free-solid-svg-icons'
+
+
 
 const Homepage = () => {
 
@@ -65,20 +75,117 @@ const Homepage = () => {
           {<ImageCarousel items={Locationscarousel} />}
         </div>
         <div className="homepage-activities-information">
-          <h2>熱門活動</h2>
+          <h2><FontAwesomeIcon icon={faCrosshairs} />  全球人氣旅遊體驗</h2>
           <div className="activities-page__card-container">
-            {activities.map((activity) => (
-              <CardItem
-                key={activity.id}
-                buttonText="深入瞭解"
-                image={`http://localhost:3000${activity.images?.[1]?.image_url}` || "/default-image.jpg"}
-                title={activity.name}
-                subtitle={activity.category.name}
-                description={activity.description}
-                id={activity.id}
-                activityLink={`/activities/${activity.id}`}
-              />
-            ))}
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={-40}
+              slidesPerView={3}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 3000 }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              {activities.map((activity) => (
+                <SwiperSlide key={activity.id}>
+                  <CardItem
+                      buttonText="深入瞭解"
+                      image={`http://localhost:3000${activity.images?.[2]?.image_url}` || "/default-image.jpg"}
+                      title={activity.name}
+                      subtitle={activity.category.name}
+                      description={activity.description}
+                      id={activity.id}
+                      activityLink={`/activities/${activity.id}`}
+                    />
+                  </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+        <div className="homepage-activities-information">
+          <h2><FontAwesomeIcon icon={faShoppingCart} />  踏旅熱門推薦商品</h2>
+          <div className="activities-page__card-container">
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={-40}
+              slidesPerView={3}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 3000 }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              {activities.map((activity) => (
+                <SwiperSlide key={activity.id}>
+                  <CardItem
+                    buttonText="深入瞭解"
+                    image={`http://localhost:3000${activity.images?.[0]?.image_url}` || "/default-image.jpg"}
+                    title={activity.name}
+                    subtitle={activity.category.name}
+                    description={activity.description}
+                    id={activity.id}
+                    activityLink={`/activities/${activity.id}`}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+        <div className="homepage-activities-information">
+          <h2><FontAwesomeIcon icon={faLocationDot} />  下次旅程必選目的地</h2>
+          <div className="activities-page__card-container">
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={-40}
+              slidesPerView={3}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 3000 }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              {activities.map((activity) => (
+                <SwiperSlide key={activity.id}>
+                  <CardItem
+                    buttonText="深入瞭解"
+                    image={`http://localhost:3000${activity.images?.[1]?.image_url}` || "/default-image.jpg"}
+                    title={activity.name}
+                    subtitle={activity.category.name}
+                    description={activity.description}
+                    id={activity.id}
+                    activityLink={`/activities/${activity.id}`}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </main>
