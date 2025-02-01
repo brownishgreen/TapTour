@@ -14,7 +14,6 @@
 @use './components/shared/image-gallery';
 @use './components/shared/pagination';
 @use './components/shared/search-bar';
-@use './components/shared/table';
 @use './components/shared/carousel';
 
 @use './components/user/profile-info';
@@ -37,6 +36,7 @@
 
 @use './pages/user/page';
 @use './pages/user/profile';
+@use './pages/user/admin';
 
 @use './pages/activity/activities';
 @use './pages/activity/activity-detail-page';

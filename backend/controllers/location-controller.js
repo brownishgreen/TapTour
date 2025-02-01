@@ -176,5 +176,19 @@ const locationController = {
       next(err)
     }
   },
+  deleteLocation: async (req, res, next) => {
+    try {
+      const location = await Location.findByPk(req.params.id)
+
+      if (!location) {
+        return res.status(404).json({ message: '景點不存在' })
+      }
+      await location.destroy()
+      res.status(200).json({ message: '景點刪除成功' })
+    } catch (err) {
+      err.statusCode = 500
+      next(err)
+    }
+  },
 }
 module.exports = locationController

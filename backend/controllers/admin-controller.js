@@ -59,3 +59,13 @@ const adminController = {
 }
 
 module.exports = adminController
+
+// update admin
+// 1. activity delete
+// 2. activity edit btn
+// 3. location delete
+// 4. location edit btn
+// 5. 使用bootstrap tabs 切換  v
+// 6. 在 components 增加admin資料夾  v
+// 7. admin資料夾放 activity、location、user Table管理資料
+// 8. 重構modal  v
