@@ -77,35 +77,35 @@ module.exports = {
 
       {
         id: 11,
-        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-001.jpg',
+        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-001.png',
         activity_id: 3,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 12,
-        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-002.jpg',
+        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-002.png',
         activity_id: 3,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 13,
-        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-003.jpg',
+        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-003.png',
         activity_id: 3,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 14,
-        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-004.jpg',
+        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-004.png',
         activity_id: 3,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 15,
-        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-005.jpg',
+        image_url: '/uploads/activities/tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-3/3-tai-guo-man-gu-jimthompson-gu-ju-bo-wu-guan-dao-lan-005.png',
         activity_id: 3,
         created_at: new Date(),
         updated_at: new Date(),
@@ -354,35 +354,35 @@ module.exports = {
 
       {
         id: 46,
-        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-11/11-ma-lai-xi-ya-sha-ba-001.png',
+        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--11/11-ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--001.png',
         activity_id: 11,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 47,
-        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-11/11-ma-lai-xi-ya-sha-ba-002.png',
+        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--11/11-ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--002.png',
         activity_id: 11,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 48,
-        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-11/11-ma-lai-xi-ya-sha-ba-003.png',
+        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--11/11-ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--003.png',
         activity_id: 11,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 49,
-        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-11/11-ma-lai-xi-ya-sha-ba-004.png',
+        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--11/11-ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--004.png',
         activity_id: 11,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 50,
-        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-11/11-ma-lai-xi-ya-sha-ba-005.png',
+        image_url: '/uploads/activities/ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--11/11-ma-lai-xi-ya-sha-ba-10-tian-9-wan-sha-ba-zi-ran-ti-yan-zhi-lv--ma-bu-dao--005.png',
         activity_id: 11,
         created_at: new Date(),
         updated_at: new Date(),
@@ -391,7 +391,7 @@ module.exports = {
       {
         id: 51,
         image_url:
-          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-12/12-ming-gu-wu-shi-jie-yi-chan-001.png',
+          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--12/12-ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--001.png',
         activity_id: 12,
         created_at: new Date(),
         updated_at: new Date(),
@@ -399,7 +399,7 @@ module.exports = {
       {
         id: 52,
         image_url:
-          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-12/12-ming-gu-wu-shi-jie-yi-chan-002.png',
+          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--12/12-ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--002.png',
         activity_id: 12,
         created_at: new Date(),
         updated_at: new Date(),
@@ -407,7 +407,7 @@ module.exports = {
       {
         id: 53,
         image_url:
-          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-12/12-ming-gu-wu-shi-jie-yi-chan-003.png',
+          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--12/12-ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--003.png',
         activity_id: 12,
         created_at: new Date(),
         updated_at: new Date(),
@@ -415,7 +415,7 @@ module.exports = {
       {
         id: 54,
         image_url:
-          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-12/12-ming-gu-wu-shi-jie-yi-chan-004.png',
+          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--12/12-ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--004.png',
         activity_id: 12,
         created_at: new Date(),
         updated_at: new Date(),
@@ -423,7 +423,7 @@ module.exports = {
       {
         id: 55,
         image_url:
-          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-12/12-ming-gu-wu-shi-jie-yi-chan-005.png',
+          '/uploads/activities/ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--12/12-ming-gu-wu-shi-jie-yi-chan-bai-chuan-xiang--fei-dan-gao-shan-san-bu--ai-zhi-xian--qi-fu-xian--005.png',
         activity_id: 12,
         created_at: new Date(),
         updated_at: new Date(),
@@ -431,35 +431,35 @@ module.exports = {
 
       {
         id: 56,
-        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-9/9-jie-ke-ku-lun-luo-fu-001.png',
+        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao--sheng-wei-ta-da-jiao-tang-he-gui-zu-hua-yuan--bu-la-ge-chu-fa-9/9-jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao001.png',
         activity_id: 9,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 57,
-        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-9/9-jie-ke-ku-lun-luo-fu-002.png',
+        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao--sheng-wei-ta-da-jiao-tang-he-gui-zu-hua-yuan--bu-la-ge-chu-fa-9/9-jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao002.png',
         activity_id: 9,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 58,
-        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-9/9-jie-ke-ku-lun-luo-fu-003.png',
+        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao--sheng-wei-ta-da-jiao-tang-he-gui-zu-hua-yuan--bu-la-ge-chu-fa-9/9-jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao003.png',
         activity_id: 9,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 59,
-        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-9/9-jie-ke-ku-lun-luo-fu-004.png',
+        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao--sheng-wei-ta-da-jiao-tang-he-gui-zu-hua-yuan--bu-la-ge-chu-fa-9/9-jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao004.png',
         activity_id: 9,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         id: 60,
-        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-9/9-jie-ke-ku-lun-luo-fu-005.png',
+        image_url: '/uploads/activities/jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao--sheng-wei-ta-da-jiao-tang-he-gui-zu-hua-yuan--bu-la-ge-chu-fa-9/9-jie-ke-ku-lun-luo-fu-yi-ri-you--ku-lun-luo-fu-cheng-bao005.png',
         activity_id: 9,
         created_at: new Date(),
         updated_at: new Date(),
