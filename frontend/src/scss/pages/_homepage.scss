@@ -3,12 +3,10 @@
 
 
 .home-page-container {
-  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 0 20px;
 }
 
 .homepage-search-bar {
@@ -19,7 +17,11 @@
   padding-bottom: 60px;
 }
 
+
+
 .homepage-activities-information {
+  max-width: 1200px;
+  margin: 0 auto;
   h2 {
     margin-left: 0px;
     margin-bottom: 20px;
