@@ -5,10 +5,14 @@ const LocationPageIntroduction = ({ introduction }) => {
     <div className="location-page-introduction">
       <div className="location-page-introduction__container">
         <h3 className="location-page-introduction__about">關於</h3>
-        <p className="location-page-introduction__content">{introduction}</p>
+        <p
+          className="location-page-introduction__content"
+          style={{ whiteSpace: 'pre-line' }}
+        >
+          {introduction}
+        </p>
       </div>
     </div>
-
   )
 }
 

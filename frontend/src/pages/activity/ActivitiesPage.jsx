@@ -53,7 +53,7 @@ const ActivitiesPage = () => {
               subtitle={activity.category.name}
               description={activity.description}
               id={activity.id}
-              activityLink={`/activities/${activity.id}`}
+              Link={`/activities/${activity.id}`}
             />
           ))}
         </div>

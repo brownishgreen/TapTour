@@ -7,7 +7,13 @@ const path = require('path')
 const locationController = {
   getAllLocation: async (req, res, next) => {
     try {
-      const locations = await Location.findAll()
+      const locations = await Location.findAll({
+        include: {
+          model: Image,
+          as: 'images',
+          attributes: ['image_url'],
+        },
+      })
       res.status(200).json({ message: '您已取得所有景點', locations })
     } catch (err) {
       err.statusCode = 500

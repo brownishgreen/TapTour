@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 
-const CardItem = ({ buttonText, image, title, subtitle,activityLink}) => {
+const CardItem = ({ buttonText, image, title, subtitle,Link}) => {
   return (
     <Card className="card-item">
       <Card.Img variant="top" src={image} />
@@ -10,7 +10,7 @@ const CardItem = ({ buttonText, image, title, subtitle,activityLink}) => {
         <Card.Title>{title}</Card.Title>
       </Card.Body>
       <div className="card-item__button">
-        <Button variant="secondary" href={activityLink}>{buttonText}</Button>
+        <Button variant="secondary" href={Link}>{buttonText}</Button>
       </div>
     </Card>
   )

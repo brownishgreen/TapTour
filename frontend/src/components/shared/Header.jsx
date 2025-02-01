@@ -50,7 +50,7 @@ const Header = () => {
               <Link to="/products" className="header__link">
                 行旅通享 <FontAwesomeIcon icon={faShoppingCart} />
               </Link>
-              <Link to="/location-page" className="header__link">
+              <Link to="/locations" className="header__link">
                 特色景點 <FontAwesomeIcon icon={faLocationDot} />
               </Link>
             </nav>

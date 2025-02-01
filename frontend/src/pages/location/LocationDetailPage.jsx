@@ -111,7 +111,7 @@ const LocationDetailPage = () => {
               />
             </div>
           </div>
-          <div className="location-detail-page__comments-wrapper">
+          {/* <div className="location-detail-page__comments-wrapper">
             <h3 className="location-detail-page__comments-title">評論</h3>
             <CommentsBlock
               name="Julia"
@@ -131,9 +131,9 @@ const LocationDetailPage = () => {
               avatar="https://i.pravatar.cc/150?img=12"
               timestamp="2024-01-03"
             />
-          </div>
+          </div> */}
         </div>
-      )}
+      )} 
       <Footer />
     </div>
   )
