@@ -273,7 +273,7 @@ module.exports = {
       {
         id: 36,
         image_url:
-          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-001.png',
+          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-001.png',
         activity_id: 8,
         created_at: new Date(),
         updated_at: new Date(),
@@ -281,7 +281,7 @@ module.exports = {
       {
         id: 37,
         image_url:
-          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-002.png',
+          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-002.png',
         activity_id: 8,
         created_at: new Date(),
         updated_at: new Date(),
@@ -289,7 +289,7 @@ module.exports = {
       {
         id: 38,
         image_url:
-          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-003.png',
+          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-003.png',
         activity_id: 8,
         created_at: new Date(),
         updated_at: new Date(),
@@ -297,7 +297,7 @@ module.exports = {
       {
         id: 39,
         image_url:
-          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-004.png',
+          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-004.png',
         activity_id: 8,
         created_at: new Date(),
         updated_at: new Date(),
@@ -305,7 +305,7 @@ module.exports = {
       {
         id: 40,
         image_url:
-          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-005.png',
+          '/uploads/activities/ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-8/8-ao-di-li--ha-xiu-ta-te-hallstatt-yi-ri-you--wei-ye-na-chu-fa-005.png',
         activity_id: 8,
         created_at: new Date(),
         updated_at: new Date(),
