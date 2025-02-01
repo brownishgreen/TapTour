@@ -1,49 +1,47 @@
 import { useState, useEffect } from 'react'
-import CardItem from '../shared/CardItem'
+import axios from 'axios'
+import CardItem from '../../components/shared/CardItem'
 
 const LocationsList = () => {
-  // 模擬 20 個地點數據
-  const mockLocations = Array.from({ length: 20 }, (_, index) => ({
-    buttonText: 'Discover',
-    image:
-      index % 2 === 0
-        ? '/assets/images/backgrounds/taipei.jpg'
-        : '/assets/images/backgrounds/city-sea.jpg',
-    title: `Location ${index + 1}`,
-    description: `Description for location ${index + 1}`,
-  }))
-
   const [locations, setLocations] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    // 模擬 API 請求
     const fetchLocations = async () => {
       try {
-        // 模擬 API 請求，延遲 1 秒返回數據
-        const response = await new Promise((resolve) =>
-          setTimeout(() => resolve(mockLocations), 1000)
-        )
-        setLocations(response)
+        const response = await axios.get('http://localhost:3000/api/locations')
+        setLocations(response.data.locations)
+        setLoading(false)
       } catch (error) {
         console.error('Failed to fetch locations:', error)
-        setLocations(mockLocations) // 如果出錯，回退到 mock 數據
+        setError('無法獲取地點')
+        setLoading(false)
       }
     }
-
     fetchLocations()
   }, [])
+
+  if (loading) {
+    return <p>加載中...</p>
+  }
 
   return (
     <div className="locations-list-wrapper">
       <div className="locations-list">
-        {locations.map((location, index) => (
+        {locations.map((location) => (
           <CardItem
-            key={index}
-            buttonText={location.buttonText}
-            image={location.image}
-            title={location.title}
+            key={location.id}
+            buttonText="查看更多"
+            image={
+              `http://localhost:3000${location.images?.[1]?.image_url}` ||
+              '/default-image.jpg'
+            }
+            title={location.name}
             description={location.description}
             className="card-item"
+            id={location.id}
+            Link={`/locations/${location.id}`}
           />
         ))}
       </div>

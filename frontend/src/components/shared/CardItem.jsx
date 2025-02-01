@@ -13,7 +13,7 @@ const CardItem = ({ buttonText, image, title, subtitle, activityLink }) => {
         <Card.Title>{title}</Card.Title>
       </Card.Body>
       <div className="card-item__button">
-        <Button variant="secondary" href={activityLink}>{buttonText}</Button>
+        <Button variant="secondary" href={Link}>{buttonText}</Button>
       </div>
     </Card>
   )
