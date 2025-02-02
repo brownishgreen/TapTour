@@ -491,12 +491,12 @@ main {
 
 .card-item {
   position: relative;
-  width: 300px;
-  height: 380px;
+  width: 290px;
+  height: 400px;
   margin-bottom: 5px;
   border: 1px solid #575757;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out;
 }
 .card-item img {
@@ -522,7 +522,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 120px;
 }
 .hero-banner__image {
   width: 50%;
@@ -530,19 +530,21 @@ main {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 .hero-banner__image img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 .hero-banner__content {
   position: absolute;
   top: 78%;
   left: 38%;
   transform: translate(-50%, -50%);
-  color: #ffffff;
 }
 
 .image-gallery {
@@ -687,6 +689,7 @@ main {
 }
 
 .custom-carousel-caption {
+  width: 1000px;
   position: absolute;
   bottom: 10%;
   left: 50%;
@@ -700,9 +703,9 @@ main {
 .custom-carousel-caption h3 {
   color: #f8f9fa;
   font-size: 1.5rem;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   margin: 0;
-  font-weight: 700;
+  font-weight: 300;
 }
 
 .carousel-item {
@@ -1319,7 +1322,7 @@ select option {
 }
 
 .location-form-container {
-  max-width: 800px;
+  width: 1000px;
   margin: 2rem auto;
   padding: 5rem;
   background-color: #f9f9f9;
@@ -1327,8 +1330,8 @@ select option {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .location-form-container h2 {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: 700;
   margin-bottom: 20px;
   text-align: center;
   color: #333;
@@ -1343,24 +1346,31 @@ select option {
   position: relative;
 }
 .location-form-container form .form-group .form-label {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   margin-bottom: 5px;
   display: block;
-  color: #555;
+  color: #606060;
+  text-align: left;
+  font-weight: 700;
 }
-.location-form-container form .form-group .form-input {
+.location-form-container form .form-group .form-input, .location-form-container form .form-group .form-textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
-  color: #333;
+  font-size: 1rem;
+  color: #333333;
+  transition: border 0.3s ease-in-out;
 }
-.location-form-container form .form-group .form-input:focus {
+.location-form-container form .form-group .form-input:focus, .location-form-container form .form-group .form-textarea:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #54A2C0;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+.location-form-container form .form-group .form-textarea {
+  min-height: 150px;
+  resize: vertical;
 }
 .location-form-container form .form-group .suggestions-list {
   position: absolute;
@@ -1445,35 +1455,6 @@ select option {
      object-fit: cover;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.location-form-container form .form-button {
-  padding: 10px 15px;
-  background-color: #54A2C0;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.location-form-container form .form-button:hover {
-  background-color: #0056b3;
-}
-.location-form-container form .form-button:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-}
-.location-form-container .success-message {
-  color: green;
-  text-align: center;
-  margin-top: 10px;
-  font-size: 14px;
-}
-.location-form-container .error-message {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
-  font-size: 14px;
 }
 
 .location-introduction {
@@ -1860,21 +1841,41 @@ select {
   margin-left: 15px;
 }
 
-.homepage {
+.home-page-container {
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-.homepage header {
-  flex-shrink: 0;
+
+.homepage-search-bar {
+  padding-bottom: 20px;
 }
-.homepage main {
-  position: relative;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.homepage-image-carousel {
+  padding-bottom: 60px;
 }
-.homepage footer {
-  flex-shrink: 0;
+
+.homepage-activities-information {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.homepage-activities-information h2 {
+  margin-left: 0px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #54A2C0;
+}
+.homepage-activities-information h2 svg {
+  margin-right: 10px;
+  color: #54A2C0;
+}
+
+.homepage-card-item {
+  margin-left: 60px;
+  margin-bottom: 40px;
+  border-radius: 8px;
+}
+.homepage-card-item img {
+  border-radius: 8px;
 }/*# sourceMappingURL=style.css.map */

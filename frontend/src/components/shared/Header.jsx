@@ -78,8 +78,8 @@ const Header = () => {
                   </li>
                   {isAdmin && (
                     <li>
-                      <Link className="dropdown-item" to="/admin/users">
-                        使用者管理
+                      <Link className="dropdown-item" to="/admin">
+                        後台管理
                       </Link>
                     </li>
                   )}

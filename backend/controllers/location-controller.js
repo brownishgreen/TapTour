@@ -190,5 +190,31 @@ const locationController = {
       next(err)
     }
   },
+  editLocationPage: async (req, res, next) => {
+    try {
+      const location = await Location.findByPk(req.params.id)
+      if (!location) {
+        return res.status(404).json({ message: '景點不存在' })
+      }
+      res.status(200).json(location)
+    } catch (err) {
+      err.statusCode = 500
+      next(err)
+    }
+  },
+  editLocation: async (req, res, next) => {
+    try {
+      const location = await Location.findByPk(req.params.id)
+      const { name, description, opening_hours, address } = req.body
+      if (!location) {
+        return res.status(404).json({ message: '景點不存在' })
+      }
+      await location.update({ name, description, opening_hours, address })
+      res.status(200).json({ message: '景點更新成功' })
+    } catch (err) {
+      err.statusCode = 500
+      next(err)
+    }
+  },
 }
 module.exports = locationController

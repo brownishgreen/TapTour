@@ -109,7 +109,10 @@ const ProfileEdit = () => {
     <div className="profile-edit-form-container">
       <div className="profile-edit-avatar">
         <img src={image} alt="大頭貼" className="profile-avatar" />
-        <span className="change-picture-btn" onClick={() => document.getElementById('fileInput').click()}>
+        <span
+          className="change-picture-btn"
+          onClick={() => document.getElementById('fileInput').click()}
+        >
           <FontAwesomeIcon icon={faCameraRetro} className="change-picture" />
         </span>
         <input
@@ -119,7 +122,11 @@ const ProfileEdit = () => {
           accept="image/*"
           onChange={(e) => {
             const file = e.target.files[0]
-            if (file && file.size <= 5 * 1024 * 1024 && file.type.startsWith('image/')) {
+            if (
+              file &&
+              file.size <= 5 * 1024 * 1024 &&
+              file.type.startsWith('image/')
+            ) {
               setImage(URL.createObjectURL(file))
               setImageFile(file)
             } else {
@@ -132,27 +139,73 @@ const ProfileEdit = () => {
       <form onSubmit={handleSubmit}>
         {/* 表單輸入 */}
         <div className="form-group">
-          <label htmlFor="name" className="form-label">名稱</label>
-          <input type="text" id="name" name="name" className="form-input" value={name} onChange={handleChange} />
+          <label htmlFor="name" className="form-label">
+            名稱
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className="form-input"
+            value={name}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group">
-          <label htmlFor="password" className="form-label">密碼</label>
-          <input type="password" id="password" name="password" className="form-input" placeholder="輸入新密碼" onChange={handleChange} />
+          <label htmlFor="password" className="form-label">
+            密碼
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            className="form-input"
+            placeholder="輸入新密碼"
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group">
-          <label htmlFor="confirmPassword" className="form-label">確認密碼</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" className="form-input" placeholder="再次輸入密碼" onChange={handleChange} />
+          <label htmlFor="confirmPassword" className="form-label">
+            確認密碼
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            className="form-input"
+            placeholder="再次輸入密碼"
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group">
-          <label htmlFor="bio" className="form-label">個人簡介</label>
-          <textarea id="bio" name="bio" className="form-input" value={bio} onChange={handleChange} rows="5" />
+          <label htmlFor="bio" className="form-label">
+            個人簡介
+          </label>
+          <textarea
+            id="bio"
+            name="bio"
+            className="form-input"
+            value={bio}
+            onChange={handleChange}
+            rows="5"
+          />
         </div>
 
         <div className="form-button-group">
-          <button type="submit" className="form-button">確認修改</button>
+          <button
+            type="button"
+            className="form-button cancel-button"
+            onClick={() => navigate(`/users/${userId}/profile`)} // 返回個人檔案頁面
+          >
+            取消
+          </button>
+  
+          <button type="submit" className="form-button">
+            確認修改
+          </button>
         </div>
       </form>
 
