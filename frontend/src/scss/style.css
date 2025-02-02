@@ -1456,35 +1456,6 @@ select option {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.location-form-container form .form-button {
-  padding: 10px 15px;
-  background-color: #54A2C0;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.location-form-container form .form-button:hover {
-  background-color: #0056b3;
-}
-.location-form-container form .form-button:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-}
-.location-form-container .success-message {
-  color: green;
-  text-align: center;
-  margin-top: 10px;
-  font-size: 14px;
-}
-.location-form-container .error-message {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
-  font-size: 14px;
-}
 
 .location-introduction {
   font-size: 50px;

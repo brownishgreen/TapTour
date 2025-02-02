@@ -27,8 +27,8 @@ const LocationsPage = () => {
     <div>
       <Header />
       <main>
-        <SearchBar />
         <ImageCarousel items={Locationscarousel} />
+        <SearchBar />
         {<LocationsList />}
         <Pagination />
       </main>

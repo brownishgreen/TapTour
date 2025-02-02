@@ -83,6 +83,10 @@ const EditLocationForm = () => {
     }
   }
 
+  const handleCancel = async () => {
+    navigate(-1)
+  }
+
   const closeAllModals = () => {
     setShowSuccess(false)
     setShowError(false)
@@ -147,9 +151,19 @@ const EditLocationForm = () => {
             required
           />
         </div>
-        <button type="submit" className="form-button" disabled={loading}>
-          {loading ? '提交中...' : '確認修改'}
-        </button>
+
+        <div className="form-button-group ">
+          <button
+            type="button"
+            className="form-button cancel-button"
+            onClick={handleCancel}
+          >
+            取消
+          </button>
+          <button type="submit" className="form-button" disabled={loading}>
+            {loading ? '提交中...' : '確認修改'}
+          </button>
+        </div>
       </form>
       <SuccessModal
         show={showSuccess}

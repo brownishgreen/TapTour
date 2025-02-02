@@ -33,7 +33,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route
-            path="/admin/users"
+            path="/admin"
             element={
               <ProtectedRoute>
                 <AdminPage />
@@ -80,7 +80,7 @@ function App() {
           />
           {/* 傳入 mode='edit' */}
           <Route
-            path="/activities/:id"
+            path="/activities/:id/edit"
             element={<ManageActivityPage mode="edit" />}
           />
           <Route

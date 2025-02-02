@@ -5,6 +5,7 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import ConfirmModal from '../modal/ConfirmModal'
 import SuccessModal from '../modal/SuccessModal'
 import ErrorModal from '../modal/ErrorModal'
+import { Link } from 'react-router-dom'
 
 const ActivitiesTable = () => {
   const [activities, setActivities] = useState([])
@@ -84,14 +85,16 @@ const ActivitiesTable = () => {
                   : activity.description.length}
               </td>
               <td>
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  style={{
-                    fontSize: '20px',
-                    color: '#999',
-                    cursor: 'pointer',
-                  }}
-                />
+                <Link to={`/activities/${activity.id}/edit`}>
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    style={{
+                      fontSize: '20px',
+                      color: '#999',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </Link>
               </td>
               <td>
                 <FontAwesomeIcon

@@ -6,7 +6,7 @@ const Admin = () => {
   return (
     <div>
       <div className="backstage-management-header">
-        <h3>後臺管理</h3>
+        <h3>後台管理</h3>
       </div>
 
       {/* Tabs navigation */}
