@@ -17,6 +17,7 @@ import ManageProductPage from './pages/product/ManageProductPage'
 import LocationDetailPage from './pages/location/LocationDetailPage'
 import LocationsPage from './pages/location/LocationsPage'
 import CreateLocation from './pages/location/CreateLocation'
+import EditLocation from './pages/location/EditLocation'
 import ProfileEditPage from './pages/users/ProfileEditPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/context/AuthContext'
@@ -29,7 +30,6 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route
@@ -88,6 +88,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <CreateLocation />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/locations/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditLocation />
               </ProtectedRoute>
             }
           />

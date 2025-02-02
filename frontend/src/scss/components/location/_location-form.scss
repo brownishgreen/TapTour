@@ -1,7 +1,7 @@
 @use '../../abstracts/_variables' as*;
 
 .location-form-container {
-  max-width: 800px;
+  width: 1000px;
   margin: 2rem auto;
   padding: 5rem;
   background-color: #f9f9f9;
@@ -9,8 +9,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   h2 {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 30px;
+    font-weight:$font-weight-bold;
     margin-bottom: 20px;
     text-align: center;
     color: #333;
@@ -26,27 +26,37 @@
       position: relative;
 
       .form-label {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 500;
         margin-bottom: 5px;
         display: block;
-        color: #555;
+        color: #606060;
+        text-align: left;
+        font-weight:$font-weight-bold;
+
       }
 
-      .form-input {
+      .form-input, .form-textarea {
         width: 100%;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 5px;
-        font-size: 16px;
-        color: #333;
+        font-size: $font-size-base;
+        color: $gray-dark;
+        transition: border 0.3s ease-in-out;
 
         &:focus {
           outline: none;
-          border-color: #007bff;
+          border-color: $primary-color;
           box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
         }
       }
+
+      .form-textarea {
+      min-height: 150px; // 增加輸入區塊的高度
+      resize: vertical; // 允許調整高度
+      }
+
 
       .suggestions-list {
         position: absolute;
@@ -149,7 +159,7 @@
 
     .form-button {
       padding: 10px 15px;
-      background-color: #54A2C0;
+      background-color:$primary-color;
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -182,8 +192,6 @@
     font-size: 14px;
   }
 }
-
-
 
 .location-introduction {
   font-size: 50px;
