@@ -11,10 +11,29 @@ const locationController = {
         include: {
           model: Image,
           as: 'images',
-          attributes: ['image_url'],
+          attributes: ['id', 'image_url'], // 只選取圖片的 id 和 image_url 屬性
         },
       })
-      res.status(200).json({ message: '您已取得所有景點', locations })
+
+      // 將查詢結果進一步處理，為每個地點添加 main_image_url 屬性
+      // 使用 locations.map 對查詢到的地點數據進行處理
+      const locationsWithMainImage = locations.map((location) => {
+        // location.images 是與該地點關聯的所有圖片
+        // 查找與 main_image_id 對應的圖片
+        const mainImage = location.images?.find(
+          (image) => image.id === location.main_image_id
+        )
+
+        return {
+          ...location.toJSON(), // 將 Sequelize 實例轉為普通對象
+          main_image_url: mainImage ? mainImage.image_url : null, // 如果找到圖片則返回 URL，否則為 null
+        }
+      })
+
+      res.status(200).json({
+        message: '您已取得所有景點',
+        locations: locationsWithMainImage,
+      })
     } catch (err) {
       err.statusCode = 500
       next(err)
@@ -214,6 +233,48 @@ const locationController = {
     } catch (err) {
       err.statusCode = 500
       next(err)
+    }
+  },
+  getLocationAllImage: async (req, res, next) => {
+    try {
+      const location = await Location.findByPk(req.params.id)
+      if (!location) {
+        return res.status(404).json({ message: '景點不存在' })
+      }
+      const images = await Image.findAll({
+        where: { location_id: location.id },
+      })
+      res.json(images)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: '獲取圖片失敗' })
+    }
+  },
+  setLocationMainImage: async (req, res, next) => {
+    const { main_image_id } = req.body
+    try {
+      // 確認地點是否存在
+      const location = await Location.findByPk(req.params.id)
+      if (!location) return res.status(404).json({ error: '地點不存在' })
+
+      // 確認圖片是否存在且屬於該地點
+      const image = await Image.findOne({
+        where: {
+          id: main_image_id,
+          location_id: location.id,
+        },
+      })
+      if (!image) {
+        return res.status(400).json({ error: '圖片不存在或不屬於該地點' })
+      }
+
+      // 更新主要圖片
+      await location.update({ main_image_id })
+
+      res.json({ message: '主要圖片已更新', main_image_id })
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ error: '更新失敗' })
     }
   },
 }

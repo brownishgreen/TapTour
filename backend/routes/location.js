@@ -30,6 +30,17 @@ router.put('/:id', verifyToken, isAdmin, locationController.editLocation)
 
 router.delete('/:id', isAdmin, locationController.deleteLocation)
 
+// 獲取該景點相關image
+router.get('/:id/images', locationController.getLocationAllImage)
+
+// 設置主要圖片
+router.patch(
+  '/:id/main-image',
+  verifyToken,
+  isAdmin,
+  locationController.setLocationMainImage
+)
+
 // 自動補全地點
 router.get('/google/autocomplete', locationController.autocompleteLocation)
 // 獲取地點詳細資訊
