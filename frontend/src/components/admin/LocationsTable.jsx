@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import ConfirmModal from '../modal/ConfirmModal'
@@ -16,8 +16,8 @@ const LocationsTable = () => {
   const [showError, setShowError] = useState(false)
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/api/locations', { withCredentials: true })
+    apiClient
+      .get('api/locations')
       .then((response) => {
         if (Array.isArray(response.data.locations)) {
           setLocations(response.data.locations)
@@ -41,8 +41,8 @@ const LocationsTable = () => {
   }
 
   const deleteLocation = () => {
-    axios
-      .delete(`http://localhost:3000/api/locations/${selectedLocationId}`, {
+    apiClient
+      .delete(`api/locations/${selectedLocationId}`, {
         withCredentials: true,
       })
       .then(() => {

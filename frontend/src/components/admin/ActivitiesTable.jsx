@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import ConfirmModal from '../modal/ConfirmModal'
@@ -16,8 +16,8 @@ const ActivitiesTable = () => {
   const [showError, setShowError] = useState(false)
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/api/activities', { withCredentials: true })
+    apiClient
+      .get('api/activities')
       .then((response) => {
         if (Array.isArray(response.data)) {
           setActivities(response.data)
@@ -38,10 +38,8 @@ const ActivitiesTable = () => {
   }
 
   const deleteActivity = () => {
-    axios
-      .delete(`http://localhost:3000/api/activities/${selectedActivityId}`, {
-        withCredentials: true,
-      })
+    apiClient
+      .delete(`api/activities/${selectedActivityId}`)
       .then(() => {
         setActivities((prevActivities) =>
           prevActivities.filter(
