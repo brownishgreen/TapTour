@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import apiClient from '../../api/apiClient'
 import SuccessModal from '../modal/SuccessModal'
 import ErrorModal from '../modal/ErrorModal'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 const EditLocationForm = () => {
   const { id } = useParams()
@@ -13,7 +15,8 @@ const EditLocationForm = () => {
     address: '',
     openingHours: '',
   })
-
+  const [images, setImages] = useState([])
+  const [mainImageId, setMainImageId] = useState(null)
   const [loading, setLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showError, setShowError] = useState(false)
@@ -29,6 +32,7 @@ const EditLocationForm = () => {
           description = '',
           opening_hours = '',
           address = '',
+          main_image_id = null,
         } = response.data.location || {}
         setFormData({
           name,
@@ -36,6 +40,11 @@ const EditLocationForm = () => {
           openingHours: opening_hours,
           address,
         })
+        setMainImageId(main_image_id) // 設置主要圖片 ID
+
+        // 獲取圖片數據
+        const imageResponse = await apiClient.get(`/api/locations/${id}/images`)
+        setImages(imageResponse.data)
         setLoading(false)
       } catch (err) {
         console.error('Failed to fetch location data:', err)
@@ -45,6 +54,19 @@ const EditLocationForm = () => {
 
     fetchLocationData()
   }, [id])
+
+  const handleSetMainImage = async (imageId) => {
+    try {
+      await apiClient.patch(`/api/locations/${id}/main-image`, {
+        main_image_id: imageId,
+      })
+      setMainImageId(imageId) // 更新主要圖片 ID
+      setShowSuccess(true)
+    } catch (err) {
+      console.error('Failed to set main image:', err)
+      setShowError(true)
+    }
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -151,7 +173,51 @@ const EditLocationForm = () => {
             required
           />
         </div>
-
+        {/* image */}
+        <h2 style={{ marginTop: '3rem', fontSize: '26px' }}>選擇主要圖片</h2>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '10px',
+            margin: '1rem 0 3rem 0',
+          }}
+        >
+          {images.map((image) => (
+            <div key={image.id} style={{ position: 'relative' }}>
+              <img
+                src={`${apiClient.defaults.baseURL.replace(/\/$/, '')}${image.image_url}`}
+                alt="圖片"
+                style={{
+                  width: '150px',
+                  height: '100px',
+                  border:
+                    image.id === mainImageId
+                      ? '5px solid red'
+                      : '1px solid gray',
+                  cursor: 'pointer',
+                }}
+                onClick={() => handleSetMainImage(image.id)}
+              />
+              {image.id === mainImageId && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: '5px',
+                    backgroundColor: 'red',
+                    color: 'white',
+                    fontWeight: '800',
+                    padding: '2px 5px',
+                    fontSize: '18px',
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCheck} />
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+        {/* btn */}
         <div className="form-button-group ">
           <button
             type="button"
@@ -167,7 +233,7 @@ const EditLocationForm = () => {
       </form>
       <SuccessModal
         show={showSuccess}
-        message="您已成功更新景點！"
+        message="您已成功更新！"
         onClose={closeAllModals}
       />
       <ErrorModal

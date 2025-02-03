@@ -14,7 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       })
       Location.hasMany(models.Image, {
         foreignKey: 'location_id',
-        as: 'images',
+        as: 'images', // 用於多張圖片的關聯
+      })
+      Location.belongsTo(models.Image, {
+        foreignKey: 'main_image_id',
+        as: 'mainImages', // 用於主要圖片的關聯，在查詢時，你可以直接使用 mainImage 來獲取 Location 的主要圖片
       })
     }
   }
@@ -60,6 +64,14 @@ module.exports = (sequelize, DataTypes) => {
       google_url: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      main_image_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'images',
+          key: 'id',
+        },
       },
     },
     {
