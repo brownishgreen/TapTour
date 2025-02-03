@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'
 import { Card, Button } from 'react-bootstrap'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -24,12 +24,9 @@ const ProfileInfo = ({ userId }) => {
   useEffect(() => {
     const userData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/users/${userId}/profile`,
-          {
-            withCredentials: true,
-          }
-        )
+        const response = await apiClient.get(`api/users/${userId}/profile`, {
+          withCredentials: true,
+        })
         setUser(response.data.user)
         setIsFollowing(response.data.isFollowing || false) // 檢查當前用戶是否已追蹤該用戶，假設後端返回 isFollowing
       } catch (err) {
@@ -56,14 +53,10 @@ const ProfileInfo = ({ userId }) => {
     setFollowLoading(true)
 
     try {
-      const response = await axios.post(
-        'http://localhost:3000/api/followers/follow',
-        {
-          followerId: currentUserId, // 確保 userId 是當前用戶的 ID
-          followingId: user.id, // 目標用戶 ID
-        },
-        { withCredentials: true }
-      )
+      const response = await apiClient.post('api/followers/follow', {
+        followerId: currentUserId, // 確保 userId 是當前用戶的 ID
+        followingId: user.id, // 目標用戶 ID
+      })
       if (response.data.alreadyFollowing) {
         console.log('已追蹤該用戶')
         setIsFollowing(true) // 確保按鈕切換到「已追蹤」
@@ -84,8 +77,8 @@ const ProfileInfo = ({ userId }) => {
     setFollowLoading(true)
 
     try {
-      await axios.post(
-        'http://localhost:3000/api/followers/unfollow', // 假設你有後端的取消追蹤 API
+      await apiClient.post(
+        'api/followers/unfollow', // 假設你有後端的取消追蹤 API
         {
           followerId: currentUserId, // 當前用戶 ID
           followingId: user.id, // 目標用戶 ID

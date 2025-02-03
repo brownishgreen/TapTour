@@ -1,33 +1,32 @@
 import { useState } from 'react'
-import { Modal, Button } from 'react-bootstrap'
-import axios from 'axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import apiClient from '../../api/apiClient'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import SuccessModal from '../modal/SuccessModal'
+import ErrorModal from '../modal/ErrorModal'
 
 const LoginForm = () => {
   const { handleAuthSuccess } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
-  const [showModal, setShowModal] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setErrorMessage('')
-    setShowModal(false)
 
     if (!email || !password) {
       setErrorMessage('請填寫所有欄位')
-      setShowModal(true)
+      setShowError(true)
       return
     }
     try {
-      const response = await axios.post(
-        'http://localhost:3000/api/users/login',
+      const response = await apiClient.post(
+        'api/users/login',
         {
           email,
           password,
@@ -37,21 +36,25 @@ const LoginForm = () => {
       const { userId, isAdmin } = response.data
       // 確保更新 AuthContext 狀態
       handleAuthSuccess(true, userId, isAdmin)
-      console.log('userId:', userId)
       setPassword('') // 清空密碼欄位，增加用戶安全性
-      setSuccessMessage('登入成功！即將跳轉...')
-      setShowModal(true)
+      setSuccessMessage('您已登入成功！即將跳轉畫面')
+      setShowSuccess(true)
       setTimeout(() => {
         navigate(`/users/${userId}/profile`)
-      }, 1000) // 2 秒後跳轉個人檔案
+      }, 1500)
     } catch (err) {
       if (err.response) {
         setErrorMessage(err.response.data.message || '帳號或密碼錯誤')
       } else {
         setErrorMessage('伺服器錯誤，請稍後再試')
       }
-      setShowModal(true)
+      setShowError(true)
     }
+  }
+
+  const closeAllModals = () => {
+    setShowSuccess(false)
+    setShowError(false)
   }
 
   return (
@@ -109,45 +112,18 @@ const LoginForm = () => {
           </button>
         </div>
       </form>
-      {/* 登入提示訊息 */}
-      <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        centered
-        dialogClassName="custom-modal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <div className="modal-title-container">
-              {successMessage ? (
-                <>
-                  <FontAwesomeIcon icon={faCheck} className="success-icon" />
-                  <span>操作成功</span>
-                </>
-              ) : (
-                <>
-                  <FontAwesomeIcon icon={faXmark} className="error-icon" />
-                  <span>操作失敗</span>
-                </>
-              )}
-            </div>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body
-          className={successMessage ? 'modal-body-success' : 'modal-body-error'}
-        >
-          {successMessage || errorMessage}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowModal(false)}
-            className="modal-btn"
-          >
-            確定
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+      <SuccessModal
+        show={showSuccess}
+        message={successMessage}
+        onClose={closeAllModals}
+      />
+
+      <ErrorModal
+        show={showError}
+        message={errorMessage}
+        onClose={closeAllModals}
+      />
     </div>
   )
 }
