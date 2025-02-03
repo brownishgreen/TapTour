@@ -1,15 +1,20 @@
 import { useState } from 'react'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
+import SuccessModal from '../modal/SuccessModal'
+import ErrorModal from '../modal/ErrorModal'
+import { useNavigate } from 'react-router-dom'
 
 const CreateLocationForm = () => {
+  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [placeSuggestions, setPlaceSuggestions] = useState([])
   const [selectedPlace, setSelectedPlace] = useState(null)
   const [placeDetails, setPlaceDetails] = useState(null) //儲存 GoogleAPI 獲取的地點詳細資訊
   const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false) // btn的加載狀態
-  const [successMessage, setSuccessMessage] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(false)
 
   // 搜尋地點並獲取建議
   const handlePlaceSearch = async (query) => {
@@ -19,8 +24,8 @@ const CreateLocationForm = () => {
     }
 
     try {
-      const response = await axios.get(
-        'http://localhost:3000/api/locations/google/autocomplete',
+      const response = await apiClient.get(
+        'api/locations/google/autocomplete',
         { params: { input: query } } // 將使用者輸入作為參數
       )
       setPlaceSuggestions(response.data) // 輸入後會更新地點建議列表
@@ -32,8 +37,8 @@ const CreateLocationForm = () => {
   // 獲取地點詳細資訊
   const fetchPlaceDetails = async (placeId) => {
     try {
-      const response = await axios.get(
-        'http://localhost:3000/api/locations/google/details',
+      const response = await apiClient.get(
+        'api/locations/google/details',
         { params: { place_id: placeId } } // 根據 placeId 獲取詳細資訊
       )
       const place = response.data
@@ -46,9 +51,9 @@ const CreateLocationForm = () => {
         address: cleanedAddress,
       })
     } catch (error) {
-      console.error('無法獲取地點詳細資訊:', error.message)
       setErrorMessage('無法獲取地點詳細資訊，請稍後再試')
-      setTimeout(() => setErrorMessage(''), 3000)
+      setShowError(true)
+      return
     }
   }
 
@@ -64,33 +69,37 @@ const CreateLocationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!placeDetails) {
-      alert('請先選擇一個地點！')
+      setErrorMessage('請輸入景點名稱')
+      setShowError(true)
       return
     }
 
     setLoading(true)
 
     try {
-      const response = await axios.post(
-        'http://localhost:3000/api/locations/create',
-        {
-          name: placeDetails.name,
-          googlePlaceId: selectedPlace.place_id,
-          description,
-        }
-      )
-      setSuccessMessage(`景點「${response.data.location.name}」已成功建立！`)
-      setTimeout(() => setSuccessMessage(''), 2000)
+      await apiClient.post('api/locations/create', {
+        name: placeDetails.name,
+        googlePlaceId: selectedPlace.place_id,
+        description,
+      })
+      setShowSuccess(true)
+      setTimeout(() => navigate('/locations'), 1500)
       setName('')
       setSelectedPlace(null)
       setPlaceDetails(null)
       setDescription('')
     } catch (error) {
       setErrorMessage(error.response?.data?.error || '建立景點失敗，請稍後再試')
+      setShowError(true)
       setTimeout(() => setErrorMessage(''), 2000)
     } finally {
       setLoading(false)
     }
+  }
+
+  const closeAllModals = () => {
+    setShowSuccess(false)
+    setShowError(false)
   }
 
   return (
@@ -199,8 +208,19 @@ const CreateLocationForm = () => {
         </button>
       </form>
 
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {/* 成功訊息的 Modal */}
+      <SuccessModal
+        show={showSuccess}
+        message="恭喜！您已成功創建景點 "
+        onClose={closeAllModals}
+      />
+
+      {/* 錯誤訊息的 Modal */}
+      <ErrorModal
+        show={showError}
+        message={errorMessage}
+        onClose={closeAllModals}
+      />
     </div>
   )
 }

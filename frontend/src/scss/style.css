@@ -876,6 +876,10 @@ main {
   justify-content: center;
   align-items: center;
 }
+.profile-edit-form-container .profile-edit-avatar img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 .profile-edit-form-container .profile-edit-avatar .profile-avatar {
   width: 200px;
   height: 200px;

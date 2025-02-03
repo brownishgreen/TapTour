@@ -5,7 +5,8 @@ import {
   useCallback,
   useEffect,
 } from 'react'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
+
 
 const AuthContext = createContext()
 
@@ -33,10 +34,7 @@ export const AuthProvider = ({ children }) => {
   const verifyLogin = useCallback(async () => {
     setIsLoading(true)
     try {
-      const response = await axios.get(
-        'http://localhost:3000/api/users/verify',
-        { withCredentials: true }
-      )
+      const response = await apiClient.get('api/users/verify')
       const { userId, isAdmin } = response.data
       handleAuthSuccess(true, userId, isAdmin)
     } catch (error) {
