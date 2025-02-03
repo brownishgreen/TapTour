@@ -3,10 +3,10 @@ import Header from '../../components/shared/Header'
 import ProfileEdit from '../../components/users/ProfileEdit'
 import Footer from '../../components/shared/Footer'
 
-const ProfileEditPage = ({ isLoggedIn, setIsLoggedIn }) => {
+const ProfileEditPage = () => {
   return (
     <div className="profile-page">
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Header  />
       <main>
         <ProfileEdit />
       </main>

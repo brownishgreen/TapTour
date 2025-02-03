@@ -1,16 +1,16 @@
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCameraRetro, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCameraRetro } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Modal, Button } from 'react-bootstrap'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 import { useAuth } from '../context/AuthContext'
+import SuccessModal from '../modal/SuccessModal'
+import ErrorModal from '../modal/ErrorModal'
 
 const ProfileEdit = () => {
   const navigate = useNavigate()
   const { userId } = useParams()
   const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
   const [image, setImage] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -18,29 +18,29 @@ const ProfileEdit = () => {
   const [imageFile, setImageFile] = useState(null)
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
-  const [showModal, setShowModal] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
   const { userId: currentUserId } = useAuth()
 
   useEffect(() => {
     if (String(currentUserId) !== String(userId)) {
       setErrorMessage('您無權更改此頁面資訊')
-      setShowModal(true)
+      setShowError(true)
       setTimeout(() => navigate(`/users/${currentUserId}/profile`), 1000)
       return
     }
 
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/users/${userId}/profile`, { withCredentials: true })
-        const { name, email, bio, image } = response.data.user
+        const response = await apiClient.get(`api/users/${userId}/profile`)
+        const { name, bio, image } = response.data.user
         setName(name)
-        setEmail(email)
         setBio(bio || '')
         setImage(image || '/assets/images/others/default-avatar.jpg')
       } catch (err) {
         const message = err.response?.data?.message || '無法載入用戶資料'
         setErrorMessage(message)
-        setShowModal(true)
+        setShowError(true)
       }
     }
 
@@ -57,8 +57,18 @@ const ProfileEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setErrorMessage('')
-    setShowModal(false)
+
+    if (password && password !== confirmPassword) {
+      setErrorMessage('密碼與確認密碼不一致')
+      setShowError(true)
+      return
+    }
+
+    if (password && password.length < 8) {
+      setErrorMessage('密碼至少需要8個字元')
+      setShowError(true)
+      return
+    }
 
     let base64Image = ''
     // 附加圖片到 FormData
@@ -66,44 +76,43 @@ const ProfileEdit = () => {
       base64Image = await toBase64(imageFile)
     }
 
-
     const payload = {
       name,
       password,
       bio,
-      image: base64Image
+      image: base64Image,
     }
 
     console.log('payload', payload)
     try {
       // 不需要手動設置 Content-Type，Axios 會自動處理
-      const response = await axios.put(
-        `http://localhost:3000/api/users/${userId}/update-profile`,
-        payload,
-        {
-          headers: {
-          'Content-Type': 'application/json'
+      await apiClient.put(`api/users/${userId}/update-profile`, payload, {
+        headers: {
+          'Content-Type': 'application/json',
         },
-        withCredentials: true
-        })
-      
+      })
+
       setSuccessMessage('更新成功，即將跳轉...')
-      setShowModal(true)
-      setTimeout(() => navigate(`/users/${userId}/profile`), 1000)
+      setShowSuccess(true)
+      setTimeout(() => navigate(`/users/${userId}/profile`), 1500)
     } catch (error) {
-      const message = error.response?.data?.message || '更新失敗，請稍後再試'
-      console.error('提交表單失敗:', message)
-      setErrorMessage(message)
-      setShowModal(true)
+      setErrorMessage(error.response?.data?.message || '更新失敗，請稍後再試')
+      setShowError(true)
     }
   }
 
-  const toBase64 = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = reject
-  })
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = reject
+    })
+
+  const closeAllModals = () => {
+    setShowSuccess(false)
+    setShowError(false)
+  }
 
   return (
     <div className="profile-edit-form-container">
@@ -202,22 +211,24 @@ const ProfileEdit = () => {
           >
             取消
           </button>
-  
+
           <button type="submit" className="form-button">
             確認修改
           </button>
         </div>
       </form>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{successMessage ? '操作成功' : '操作失敗'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{successMessage || errorMessage}</Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setShowModal(false)}>確定</Button>
-        </Modal.Footer>
-      </Modal>
+      <SuccessModal
+        show={showSuccess}
+        message={successMessage}
+        onClose={closeAllModals}
+      />
+
+      <ErrorModal
+        show={showError}
+        message={errorMessage}
+        onClose={closeAllModals}
+      />
     </div>
   )
 }

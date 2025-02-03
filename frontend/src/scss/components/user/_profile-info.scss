@@ -173,6 +173,9 @@
   z-index: 3;
   .profile-edit-avatar {
     @include flex-center();
+    img {
+        object-fit: cover;
+      } 
     .profile-avatar {
       width: 200px;
       height: 200px;

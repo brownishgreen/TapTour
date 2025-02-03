@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faBan } from '@fortawesome/free-solid-svg-icons'
 import ConfirmModal from '../modal/ConfirmModal'
@@ -17,20 +17,16 @@ const UsersTable = () => {
   const [showError, setShowError] = useState(false)
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/api/admin/users', { withCredentials: true })
+    apiClient
+      .get('api/admin/users')
       .then((response) => setUsers(response.data))
       .catch((error) => console.log(error))
   }, []) // 管理員可以看到所有使用者
 
   const toggleRole = (userId, role) => {
     const isAdmin = role === 'admin'
-    axios
-      .put(
-        `http://localhost:3000/api/admin/users/${userId}`,
-        { is_admin: isAdmin },
-        { withCredentials: true }
-      )
+    apiClient
+      .put(`api/admin/users/${userId}`, { is_admin: isAdmin })
       .then(() => {
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
@@ -49,10 +45,8 @@ const UsersTable = () => {
   }
 
   const deleteUser = () => {
-    axios
-      .delete(`http://localhost:3000/api/admin/users/${selectedUserId}`, {
-        withCredentials: true,
-      })
+    apiClient
+      .delete(`api/admin/users/${selectedUserId}`)
       .then(() => {
         // 刪除成功後，更新前端狀態，prevUsers是用戶列表的數據
         setUsers((prevUsers) =>

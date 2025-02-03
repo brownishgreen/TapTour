@@ -21,6 +21,7 @@ router.get(
 
 router.post(
   '/create',
+  verifyToken,
   isAdmin,
   downloadGoogleImages,
   locationController.createLocation
@@ -28,7 +29,7 @@ router.post(
 
 router.put('/:id', verifyToken, isAdmin, locationController.editLocation)
 
-router.delete('/:id', isAdmin, locationController.deleteLocation)
+router.delete('/:id', verifyToken, isAdmin, locationController.deleteLocation)
 
 // 獲取該景點相關image
 router.get('/:id/images', locationController.getLocationAllImage)

@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { Modal, Button } from 'react-bootstrap'
-import axios from 'axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import apiClient from '../../api/apiClient'
 import { useNavigate } from 'react-router-dom'
+import SuccessModal from '../modal/SuccessModal'
+import ErrorModal from '../modal/ErrorModal'
 
 const RegisterForm = () => {
   const navigate = useNavigate()
-  const [showModal, setShowModal] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [formData, setFormData] = useState({
@@ -33,39 +33,41 @@ const RegisterForm = () => {
       !formData.confirmPassword
     ) {
       setErrorMessage('請填寫所有必填欄位')
-      setShowModal(true)
+      setShowError(true)
       return
     }
     // 密碼長度驗證
     if (formData.password.length < 8) {
       setErrorMessage('密碼至少需要8個字元')
-      setShowModal(true)
+      setShowError(true)
       return
     }
     // 密碼和確認密碼不相符
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage('密碼和確認密碼不相符')
-      setShowModal(true)
+      setShowError(true)
       return
     }
     try {
-      const response = await axios.post(
-        'http://localhost:3000/api/users/register',
-        formData
-      )
-      setSuccessMessage('註冊成功！即將跳轉...')
-      setShowModal(true)
+      await apiClient.post('api/users/register', formData)
+      setSuccessMessage('您已註冊成功，即將跳轉畫面')
+      setShowSuccess(true)
       setTimeout(() => {
         navigate('/login')
-      }, 1000) // 2 秒後跳轉個人檔案
+      }, 1500)
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message || '註冊失敗')
       } else {
         setErrorMessage('註冊失敗')
       }
-      setShowModal(true)
+      setShowError(true)
     }
+  }
+
+  const closeAllModals = () => {
+    setShowSuccess(false)
+    setShowError(false)
   }
 
   return (
@@ -149,45 +151,18 @@ const RegisterForm = () => {
           </button>
         </div>
       </form>
-      {/* 訊息彈窗 */}
-      <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        centered
-        dialogClassName="custom-modal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <div className="modal-title-container">
-              {successMessage ? (
-                <>
-                  <FontAwesomeIcon icon={faCheck} className="success-icon" />
-                  <span>操作成功</span>
-                </>
-              ) : (
-                <>
-                  <FontAwesomeIcon icon={faXmark} className="error-icon" />
-                  <span>操作失敗</span>
-                </>
-              )}
-            </div>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body
-          className={successMessage ? 'modal-body-success' : 'modal-body-error'}
-        >
-          {successMessage || errorMessage}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowModal(false)}
-            className="modal-btn"
-          >
-            確定
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+      <SuccessModal
+        show={showSuccess}
+        message={successMessage}
+        onClose={closeAllModals}
+      />
+
+      <ErrorModal
+        show={showError}
+        message={errorMessage}
+        onClose={closeAllModals}
+      />
     </div>
   )
 }

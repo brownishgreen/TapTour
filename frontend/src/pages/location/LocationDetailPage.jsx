@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import Header from '../../components/shared/Header'
-import SearchBar from '../../components/shared/SearchBar'
 import ImageGallery from '../../components/shared/ImageGallery'
 import DetailPageTitle from '../../components/DetailPageTitle'
 import LocationPageIntroduction from '../../components/location/LocationPageIntroduction'
@@ -9,7 +8,7 @@ import RelatedCard from '../../components/RelatedCard'
 import CommentsBlock from '../../components/CommentsBlock'
 import Footer from '../../components/shared/Footer'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 
 const LocationDetailPage = () => {
   const { id } = useParams()
@@ -18,9 +17,7 @@ const LocationDetailPage = () => {
   useEffect(() => {
     const fetchLocation = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/locations/${id}`
-        )
+        const response = await apiClient.get(`api/locations/${id}`)
         setLocation(response.data.location)
       } catch (error) {
         console.error('取得活動資料失敗', error)
@@ -32,7 +29,7 @@ const LocationDetailPage = () => {
   return (
     <div className="location-detail-page">
       <Header />
-      
+
       {location && (
         <div className="location-detail-page__container">
           {/* 顯示圖片 */}
@@ -133,7 +130,7 @@ const LocationDetailPage = () => {
             />
           </div> */}
         </div>
-      )} 
+      )}
       <Footer />
     </div>
   )
