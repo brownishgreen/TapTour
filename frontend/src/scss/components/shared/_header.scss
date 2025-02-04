@@ -48,27 +48,18 @@
 
       .header__button {
         padding: 0.5rem 1rem;
-        border: 1px solid transparent;
-        border-radius: 4px;
         font-size: $font-size-large;
         font-weight: $font-weight-bold;
         text-decoration: none;
-        color: $secondary-color;
         background-color: transparent;
 
         &--primary {
           background-color: $primary-color;
           color: white;
-          border-color: $primary-color;
 
           &:hover {
-            background-color: $tertiary-color
+            background-color: $tertiary-color;
           }
-        }
-
-        &:hover {
-          color: $primary-color;
-          border-color: $primary-color;
         }
       }
     }

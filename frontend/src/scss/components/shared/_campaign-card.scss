@@ -1,0 +1,17 @@
+@use '../../abstracts/_variables' as*;
+
+.campaign-card {
+  width: 350px;
+  height: 250px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 8px;
+  img {
+    width: 350px;
+    height: 250px;
+    object-fit: contain ;
+    border-radius: 8px;
+
+  }
+}
+
