@@ -3,30 +3,44 @@ const { Location, Image } = require('../models')
 const axios = require('axios')
 const { downloadGoogleImages } = require('../utils/upload-handler')
 const path = require('path')
+const { Op } = require('sequelize') // 引入 Sequelize 的操作符
 
 const locationController = {
   getAllLocation: async (req, res, next) => {
+    const { search } = req.query // 從請求的查詢參數中提取 search 關鍵字
+
     try {
-      const locations = await Location.findAll({
+      // 初始化查詢選項
+      // 即使查詢條件只有 name，仍然應該 include: Image，這樣可以：
+      // 確保查詢結果一次性包含對應的圖片，避免額外 API 請求
+      const queryOptions = {
         include: {
           model: Image,
           as: 'images',
-          attributes: ['id', 'image_url'], // 只選取圖片的 id 和 image_url 屬性
+          attributes: ['id', 'image_url'], // 包含圖片資訊
         },
-      })
+      }
 
-      // 將查詢結果進一步處理，為每個地點添加 main_image_url 屬性
-      // 使用 locations.map 對查詢到的地點數據進行處理
+      // 如果有搜尋條件，添加模糊查詢條件
+      if (search) {
+        queryOptions.where = {
+          name: { [Op.like]: `%${search}%` }, // 模糊查詢，用來查詢包含某些關鍵字或字符的數據，而不需要完全匹配
+        }
+      }
+
+      const locations = await Location.findAll(queryOptions)
+
+      if (locations.length === 0) {
+        return res.status(404).json({ message: '沒有符合條件的景點' })
+      }
+
       const locationsWithMainImage = locations.map((location) => {
-        // location.images 是與該地點關聯的所有圖片
-        // 查找與 main_image_id 對應的圖片
         const mainImage = location.images?.find(
           (image) => image.id === location.main_image_id
         )
-
         return {
-          ...location.toJSON(), // 將 Sequelize 實例轉為普通對象
-          main_image_url: mainImage ? mainImage.image_url : null, // 如果找到圖片則返回 URL，否則為 null
+          ...location.toJSON(),
+          main_image_url: mainImage ? mainImage.image_url : null,
         }
       })
 
@@ -35,7 +49,8 @@ const locationController = {
         locations: locationsWithMainImage,
       })
     } catch (err) {
-      err.statusCode = 500
+      console.error('取得景點失敗:', err)
+      res.status(500).json({ message: '伺服器錯誤，無法取得景點資料' })
       next(err)
     }
   },

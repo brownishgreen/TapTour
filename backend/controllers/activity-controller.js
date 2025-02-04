@@ -1,21 +1,39 @@
 const { Activity, Image, Category } = require('../models')
 const {handleImageUpload} = require('../utils/upload-handler')
 const path = require('path')
+const { Op } = require('sequelize') // 引入 Sequelize 的操作符
 
 const activityController = {
   getAllActivities: async (req, res, next) => {
+    const { search } = req.query // 從請求的查詢參數中提取 search 關鍵字
+
     try {
-      const activities = await Activity.findAll({
-        include: [{
-          model: Image,
-          as: 'images',
-          attributes: ['image_url']
-        }, {
-          model: Category,
-          as: 'category',
-          attributes: ['name']
-        }]
-      })
+      const queryOptions = {
+        include: [
+          {
+            model: Image,
+            as: 'images',
+            attributes: ['image_url'],
+          },
+          {
+            model: Category,
+            as: 'category',
+            attributes: ['name'],
+          },
+        ],
+      }
+
+      if (search) {
+        queryOptions.where = {
+          name: { [Op.like]: `%${search}%` },
+        }
+      }
+
+      const activities = await Activity.findAll(queryOptions)
+
+      if (activities.lingth === 0) {
+        return res.status(404).json({ message: '沒有符合條件的景點' })
+      }
       res.status(200).json(activities)
     } catch (err) {
       next(err)
@@ -25,20 +43,23 @@ const activityController = {
     try {
       const { id } = req.params
       const activity = await Activity.findByPk(Number(id), {
-        include: [{
-          model: Image,
-          as: 'images',
-          attributes: ['image_url']
-        }, {
-          model: Category,
-          as: 'category',
-          attributes: ['name']
-        }]
+        include: [
+          {
+            model: Image,
+            as: 'images',
+            attributes: ['image_url'],
+          },
+          {
+            model: Category,
+            as: 'category',
+            attributes: ['name'],
+          },
+        ],
       })
       if (!activity) {
         return res.status(404).json({ message: '活動不存在' })
       }
-        res.status(200).json(activity)
+      res.status(200).json(activity)
     } catch (err) {
       next(err)
     }
