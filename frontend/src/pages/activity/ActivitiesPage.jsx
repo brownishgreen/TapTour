@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useSearchParams } from 'react-router-dom'
 import Header from '../../components/shared/Header'
 import Footer from '../../components/shared/Footer'
 import SearchBar from '../../components/shared/SearchBar'
@@ -8,28 +9,29 @@ import HeroBanner from '../../components/shared/HeroBanner'
 import Pagination from '../../components/shared/Pagination'
 import { useAuth } from '../../components/context/AuthContext'
 
-
 const ActivitiesPage = () => {
   const { verifyLogin } = useAuth()
+  const [searchParams] = useSearchParams()
+  const searchTerm = searchParams.get('search') || '' // 提取搜尋參數
   // 取得活動資料
   const [activities, setActivities] = useState([])
 
   useEffect(() => {
     verifyLogin() // 在頁面加載時檢查登入狀態
     fetchActivities() // 請求活動資料
-  }, [verifyLogin])
+  }, [searchTerm])
 
   // 請求活動資料
   const fetchActivities = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/activities')
+      const response = await axios.get(
+        `http://localhost:3000/api/activities?search=${encodeURIComponent(searchTerm)}`
+      )
       setActivities(response.data)
     } catch (error) {
       console.error('取得活動資料失敗', error)
     }
   }
-
-
 
   return (
     <div className="activities-page">
@@ -48,7 +50,10 @@ const ActivitiesPage = () => {
             <CardItem
               key={activity.id}
               buttonText="深入瞭解"
-              image={`http://localhost:3000${activity.images?.[1]?.image_url}` || "/default-image.jpg"}
+              image={
+                `http://localhost:3000${activity.images?.[1]?.image_url}` ||
+                '/default-image.jpg'
+              }
               title={activity.name}
               subtitle={activity.category.name}
               description={activity.description}

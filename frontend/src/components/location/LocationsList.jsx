@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import CardItem from '../../components/shared/CardItem'
 import apiClient from '../../api/apiClient'
 
-const LocationsList = () => {
+const LocationsList = ({ search }) => {
   const [locations, setLocations] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -22,6 +22,23 @@ const LocationsList = () => {
     }
     fetchLocations()
   }, [])
+
+  useEffect(() => {
+    setLoading(true)
+
+    // 根據 search 查詢參數發送 API 請求
+    apiClient
+      .get(`/api/locations?search=${encodeURIComponent(search)}`)
+      .then((response) => {
+        setLocations(response.data.locations)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error('無法取得景點數據:', err)
+        setError('無法取得景點數據，請稍後再試。')
+        setLoading(false)
+      })
+  }, [search]) // 每當 search 改變時重新執行請求
 
   if (loading) {
     return <p>加載中...</p>

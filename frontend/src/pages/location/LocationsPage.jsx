@@ -4,8 +4,11 @@ import ImageCarousel from '../../components/shared/ImageCarousel'
 import Pagination from '../../components/shared/Pagination'
 import LocationsList from '../../components/location/LocationsList'
 import Footer from '../../components/shared/Footer'
+import { useSearchParams } from 'react-router-dom'
 
 const LocationsPage = () => {
+  const [searchParams] = useSearchParams()
+  const searchTerm = searchParams.get('search') || '' // 提取搜尋參數
   const Locationscarousel = [
     {
       src: '/assets/images/backgrounds/5mezpWin6T8.jpg',
@@ -29,7 +32,7 @@ const LocationsPage = () => {
       <main>
         <ImageCarousel items={Locationscarousel} />
         <SearchBar />
-        {<LocationsList />}
+        {<LocationsList search={searchTerm}/>}
         <Pagination />
       </main>
       <Footer />
