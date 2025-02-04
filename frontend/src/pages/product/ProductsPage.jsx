@@ -48,11 +48,14 @@ const ProductsPage = () => {
         </div>
       </main>
       <Pagination />
-      <HeroBanner
-        imageURL="../src/assets/images/product-page-bottom-hero-banner.jpg"
-        title="以自己的方式探索世界"
-        description="利用「旅程」，探索世界，發現更多可能。"
-      />
+      <div className="products-page__bottom-hero-banner">
+        <HeroBanner 
+          className="products-page__hero-banner"
+          imageURL="../src/assets/images/product-page-bottom-hero-banner.jpg"
+          title="以自己的方式探索世界"
+          description="利用「旅程」，探索世界，發現更多可能。"
+        />
+      </div>
       <Footer />
     </div>
   )

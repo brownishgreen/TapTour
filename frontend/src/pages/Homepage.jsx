@@ -7,7 +7,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Header from '../components/shared/Header'
-import SearchBar from '../components/shared/SearchBar'
+import CampaignCardItem from '../components/shared/CampaignCardItem'
 import ImageCarousel from '../components/shared/ImageCarousel'
 import CardItem from '../components/shared/CardItem'
 import Footer from '../components/shared/Footer'
@@ -64,18 +64,73 @@ const Homepage = () => {
     
   ]
 
+  const campaigns = [
+    {
+      image: '/assets/images/campaign/campaign-1.png',
+      name: 'First Slide',    
+    },
+    {
+      image: '/assets/images/campaign/campaign-2.png',
+      name: 'Second Slide',    
+    },
+    {
+      image: '/assets/images/campaign/campaign-3.png',
+      name: 'Third Slide',    
+    },
+    {
+      image: '/assets/images/campaign/campaign-5.png',
+      name: 'Fourth Slide',    
+    },
+    {
+      image: '/assets/images/campaign/campaign-4.png',
+      name: 'Fifth Slide',    
+    },
+    
+  ]
+    
+  
+
   return (
+    
     <div className="home-page-container">
       <Header />
       <main>
-        <div className="homepage-search-bar">
-          <SearchBar />
-        </div>
         <div className="homepage-image-carousel">
           {<ImageCarousel items={Locationscarousel} />}
         </div>
+      <div className="campaign-card-container">
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={-30}
+          slidesPerView={3}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3000 }}
+          breakpoints={{
+            640: {
+              slidesPerView: 1,
+            },
+            768: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+          }}
+        >
+          {campaigns.map((campaign) => (
+            <SwiperSlide key={campaign}>
+              <CampaignCardItem
+                campaign={campaign}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
         <div className="homepage-activities-information">
           <h2><FontAwesomeIcon icon={faCrosshairs} />  全球人氣旅遊體驗</h2>
+          <p>踏旅嚴選全球熱門旅遊體驗，讓你輕鬆探索世界，享受精彩旅程。</p>
           <div className="activities-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
@@ -112,8 +167,9 @@ const Homepage = () => {
             </Swiper>
           </div>
         </div>
-        <div className="homepage-activities-information">
+        <div className="homepage-products-information">
           <h2><FontAwesomeIcon icon={faShoppingCart} />  踏旅熱門推薦商品</h2>
+          <p>藝文票券、都市探索，各種熱門票券滿足你的渴望，迎接難忘旅程。</p>
           <div className="activities-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
@@ -150,8 +206,9 @@ const Homepage = () => {
             </Swiper>
           </div>
         </div>
-        <div className="homepage-activities-information">
+        <div className="homepage-locations-information">
           <h2><FontAwesomeIcon icon={faLocationDot} />  下次旅程必選目的地</h2>
+          <p>山海相伴、靜謐村莊或充滿歷史氣息的古城，提供休閒與探險的完美平衡，迎接難忘旅程。</p>
           <div className="activities-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
