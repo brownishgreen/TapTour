@@ -1,18 +1,12 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import { useAuth } from './context/AuthContext'
-
-
+import { useState } from 'react'
+import apiClient from '../api/apiClient'
 
 const CreateCommentForm = ({ entityId, entityType, onCommentAdded, verifyLogin }) => {
-  console.log('留言表單被渲染了')
 
   const [content, setContent] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)
-  const { user } = useAuth()
-
-  console.log('verifyLogin', verifyLogin)
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,11 +19,10 @@ const CreateCommentForm = ({ entityId, entityType, onCommentAdded, verifyLogin }
     setLoading(true)
 
     try {
-      await axios.post('http://localhost:3000/api/comments', {
+      await apiClient.post('api/comments', {
         content,
         [`${entityType}_id`]: entityId,  // 動態選擇實體 ID，例如 activity_id, product_id
-      },
-      { withCredentials: true }
+      }
       );
 
       console.log('評論已成功提交')

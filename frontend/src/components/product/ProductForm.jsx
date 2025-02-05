@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect} from 'react'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 const ProductForm = ({ mode }) => {
 
   const navigate = useNavigate()
@@ -24,8 +24,8 @@ const ProductForm = ({ mode }) => {
   useEffect(() => {
     if (isEditMode && productId) {
       console.log("Fetching data for edit mode with id:", productId)
-      axios
-        .get(`http://localhost:3000/api/products/${productId}`)
+      apiClient
+        .get(`api/products/${productId}`)
         .then((response) => setFormData(response.data))
         .catch((error) => console.error('獲取商品資料失敗', error));
     }
@@ -33,7 +33,8 @@ const ProductForm = ({ mode }) => {
 
   // 獲取所有分類
   useEffect(() => {
-    axios.get('http://localhost:3000/api/categories')
+    apiClient
+      .get('api/categories')
       .then((response) => setCategories(response.data))
       .catch((error) => console.error('獲取分類資料失敗', error))
   }, [])
@@ -119,17 +120,16 @@ const ProductForm = ({ mode }) => {
 
     try {
       const url = isEditMode
-        ? `http://localhost:3000/api/products/${productId}`
-        : 'http://localhost:3000/api/products'
+        ? `${apiClient.defaults.baseURL}products/${productId}`
+        : `${apiClient.defaults.baseURL}api/products`
       const method = isEditMode ? 'put' : 'post'
-      const response = await axios({
+      const response = await apiClient({
         method,
         url,
         data,
         headers: {
           "Content-Type": 'multipart/form-data'
-        },
-        withCredentials: true
+        }
       })
 
       console.log('Server Response:', response.data)

@@ -5,7 +5,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import apiClient from '../api/apiClient'
 import Header from '../components/shared/Header'
 import CampaignCardItem from '../components/shared/CampaignCardItem'
 import ImageCarousel from '../components/shared/ImageCarousel'
@@ -13,8 +13,6 @@ import CardItem from '../components/shared/CardItem'
 import Footer from '../components/shared/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faShoppingCart, faCrosshairs } from '@fortawesome/free-solid-svg-icons'
-
-
 
 const Homepage = () => {
 
@@ -28,7 +26,7 @@ const Homepage = () => {
   // 請求活動資料
   const fetchActivities = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/activities')
+      const response = await apiClient.get('api/activities')
       setActivities(response.data)
     } catch (error) {
       console.error('取得活動資料失敗', error)
@@ -91,45 +89,44 @@ const Homepage = () => {
   
 
   return (
-    
     <div className="home-page-container">
       <Header />
       <main>
         <div className="homepage-image-carousel">
           {<ImageCarousel items={Locationscarousel} />}
         </div>
-      <div className="campaign-card-container">
-        <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
-          spaceBetween={-30}
-          slidesPerView={3}
-          navigation
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 3000 }}
-          breakpoints={{
-            640: {
-              slidesPerView: 1,
-            },
-            768: {
-              slidesPerView: 2,
-            },
-            1024: {
-              slidesPerView: 3,
-            },
-          }}
-        >
-          {campaigns.map((campaign) => (
-            <SwiperSlide key={campaign}>
-              <CampaignCardItem
-                campaign={campaign}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+        <div className="campaign-card-container">
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={-30}
+            slidesPerView={3}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3000 }}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            }}
+          >
+            {campaigns.map((campaign) => (
+              <SwiperSlide key={campaign}>
+                <CampaignCardItem campaign={campaign} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
         <div className="homepage-activities-information">
-          <h2><FontAwesomeIcon icon={faCrosshairs} />  全球人氣旅遊體驗</h2>
+          <h2>
+            <FontAwesomeIcon icon={faCrosshairs} /> 全球人氣旅遊體驗
+          </h2>
           <p>踏旅嚴選全球熱門旅遊體驗，讓你輕鬆探索世界，享受精彩旅程。</p>
           <div className="activities-page__card-container">
             <Swiper
@@ -154,21 +151,26 @@ const Homepage = () => {
               {activities.map((activity) => (
                 <SwiperSlide key={activity.id}>
                   <CardItem
-                      buttonText="深入瞭解"
-                      image={`http://localhost:3000${activity.images?.[2]?.image_url}` || "/default-image.jpg"}
-                      title={activity.name}
-                      subtitle={activity.category.name}
-                      description={activity.description}
-                      id={activity.id}
-                      activityLink={`/activities/${activity.id}`}
-                    />
-                  </SwiperSlide>
+                    buttonText="深入瞭解"
+                    image={
+                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[2]?.image_url}` ||
+                      '/default-image.jpg'
+                    }
+                    title={activity.name}
+                    subtitle={activity.category.name}
+                    description={activity.description}
+                    id={activity.id}
+                    activityLink={`/activities/${activity.id}`}
+                  />
+                </SwiperSlide>
               ))}
             </Swiper>
           </div>
         </div>
         <div className="homepage-products-information">
-          <h2><FontAwesomeIcon icon={faShoppingCart} />  踏旅熱門推薦商品</h2>
+          <h2>
+            <FontAwesomeIcon icon={faShoppingCart} /> 踏旅熱門推薦商品
+          </h2>
           <p>藝文票券、都市探索，各種熱門票券滿足你的渴望，迎接難忘旅程。</p>
           <div className="activities-page__card-container">
             <Swiper
@@ -194,7 +196,10 @@ const Homepage = () => {
                 <SwiperSlide key={activity.id}>
                   <CardItem
                     buttonText="深入瞭解"
-                    image={`http://localhost:3000${activity.images?.[0]?.image_url}` || "/default-image.jpg"}
+                    image={
+                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[0]?.image_url}` ||
+                      '/default-image.jpg'
+                    }
                     title={activity.name}
                     subtitle={activity.category.name}
                     description={activity.description}
@@ -207,8 +212,12 @@ const Homepage = () => {
           </div>
         </div>
         <div className="homepage-locations-information">
-          <h2><FontAwesomeIcon icon={faLocationDot} />  下次旅程必選目的地</h2>
-          <p>山海相伴、靜謐村莊或充滿歷史氣息的古城，提供休閒與探險的完美平衡，迎接難忘旅程。</p>
+          <h2>
+            <FontAwesomeIcon icon={faLocationDot} /> 下次旅程必選目的地
+          </h2>
+          <p>
+            山海相伴、靜謐村莊或充滿歷史氣息的古城，提供休閒與探險的完美平衡，迎接難忘旅程。
+          </p>
           <div className="activities-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
@@ -233,7 +242,10 @@ const Homepage = () => {
                 <SwiperSlide key={activity.id}>
                   <CardItem
                     buttonText="深入瞭解"
-                    image={`http://localhost:3000${activity.images?.[1]?.image_url}` || "/default-image.jpg"}
+                    image={
+                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[1]?.image_url}` ||
+                      '/default-image.jpg'
+                    }
                     title={activity.name}
                     subtitle={activity.category.name}
                     description={activity.description}

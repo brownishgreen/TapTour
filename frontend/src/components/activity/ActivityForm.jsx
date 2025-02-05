@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 const ActivityForm = ({ mode }) => {
 
   const navigate = useNavigate()
@@ -25,16 +25,17 @@ const ActivityForm = ({ mode }) => {
   useEffect(() => {
     if (isEditMode && activityId) {
       console.log("Fetching data for edit mode with id:", activityId)
-      axios
-        .get(`http://localhost:3000/api/activities/${activityId}`)
+      apiClient
+        .get(`api/activities/${activityId}`)
         .then((response) => setFormData(response.data))
-        .catch((error) => console.error('獲取活動資料失敗', error));
+        .catch((error) => console.error('獲取活動資料失敗', error))
     }
   }, [isEditMode, activityId]);
 
   // 獲取所有分類
   useEffect(() => {
-    axios.get('http://localhost:3000/api/categories')
+    apiClient
+      .get('api/categories')
       .then((response) => setCategories(response.data))
       .catch((error) => console.error('獲取分類資料失敗', error))
   }, [])
@@ -123,17 +124,16 @@ const ActivityForm = ({ mode }) => {
 
     try {
       const url = isEditMode
-        ? `http://localhost:3000/api/activities/${activityId}`
-        : 'http://localhost:3000/api/activities'
+        ? `${apiClient.defaults.baseURL}activities/${activityId}`
+        : `${apiClient.defaults.baseURL}api/activities`
       const method = isEditMode ? 'put' : 'post'
-      const response = await axios({
+      const response = await apiClient({
         method,
         url,
         data,
         headers: {
           "Content-Type": 'multipart/form-data'
-        },
-        withCredentials: true
+        }
       })
 
       console.log('Server Response:', response.data)
