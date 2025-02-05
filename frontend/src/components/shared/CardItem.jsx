@@ -3,7 +3,7 @@ import { Card, Button } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
-const CardItem = ({ buttonText, image, title, subtitle, activityLink }) => {
+const CardItem = ({ buttonText, image, title, subtitle, cardLink }) => {
   const location = useLocation()
   const isHomepage = location.pathname === '/'
   return (
@@ -14,7 +14,7 @@ const CardItem = ({ buttonText, image, title, subtitle, activityLink }) => {
         <Card.Title>{title}</Card.Title>
       </Card.Body>
       <div className="card-item__button">
-        <Link to={activityLink}>
+        <Link to={cardLink}>
           <Button variant="secondary">{buttonText}</Button>
         </Link>
       </div>

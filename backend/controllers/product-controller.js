@@ -1,7 +1,7 @@
 const { Product, Image, Category } = require('../models')
 const {handleImageUpload} = require('../utils/upload-handler')
 const path = require('path')
-
+const { Op } = require('sequelize') // 引入 Sequelize 的操作符
 const productController = {
   getAllProducts: async (req, res, next) => {
     try {
@@ -133,6 +133,49 @@ const productController = {
       await product.destroy()
       res.status(200).json({ message: '商品刪除成功' })
     } catch (err) {
+      next(err)
+    }
+  },
+  getPaginatedProducts: async (req, res, next) => {
+    // limit 主要是由前端傳入的，但如果前端沒有傳入，後端會使用預設的值
+    // 10代表十進位制，不能隨意改動
+    const page = parseInt(req.query.page, 10) || 1 // 預設為第 1 頁
+    const limit = parseInt(req.query.limit, 10) || 9 // 預設每頁 9 筆
+    const offset = (page - 1) * limit // 計算偏移量，分頁查詢時決定從第幾筆資料開始
+
+    // 驗證 page 和 limit 是否有效，若無效則返回 400 錯誤
+    if (isNaN(page) || isNaN(limit) || page <= 0 || limit <= 0) {
+      return res
+        .status(400)
+        .json({ message: 'Page and limit must be positive numbers' })
+    }
+
+    try {
+      // 獲取商品資料（包含關聯的圖片）
+      const products = await Product.findAll({
+        limit,
+        offset,
+        order: [['createdAt', 'DESC']],
+        include: [
+          {
+            model: Image,
+            as: 'images',
+            attributes: ['image_url'],
+          },
+        ],
+      })
+
+      // 獲取商品的總數（不包含關聯表，避免多次計算）
+      //  Sequelize 提供的方法，用於計算資料表的總記錄數
+      const totalItems = await Product.count()
+      res.status(200).json({
+        products,
+        currentPage: page,
+        totalPages: Math.ceil(totalItems / limit), // 計算總頁數
+        totalItems,
+      })
+    } catch (err) {
+      console.log('分頁獲取商品數據失敗:', err)
       next(err)
     }
   }

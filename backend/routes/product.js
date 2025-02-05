@@ -8,6 +8,9 @@ const {handleImageUpload} = require('../utils/upload-handler')
 // 取得所有商品
 router.get('/', productController.getAllProducts)
 
+// 取得分頁商品
+router.get('/paginated', productController.getPaginatedProducts)
+
 //取得商品編輯頁面
 router.get('/:id/edit', verifyToken, isAdmin, productController.editProductPage)
 

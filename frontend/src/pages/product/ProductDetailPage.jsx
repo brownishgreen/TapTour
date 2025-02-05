@@ -1,26 +1,40 @@
-import { React, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 import Header from '../../components/shared/Header'
 import SearchBar from '../../components/shared/SearchBar'
 import Footer from '../../components/shared/Footer'
 import ImageGallery from '../../components/shared/ImageGallery'
 import DetailPageTitle from '../../components/DetailPageTitle'
 import DetailPageIntroduction from '../../components/DetailPageIntroduction'
-import ProductFeatureList from '../../components/product/ProductFeatureList'
 import PriceInformation from '../../components/PriceInformation'
 import { useAuth } from '../../components/context/AuthContext'
+import CreateCommentForm from '../../components/CreateCommentForm'
+import CommentsBlock from '../../components/CommentsBlock'
 
-const ProductDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
-  const { verifyLogin } = useAuth()
+
+const ProductDetailPage = () => {
+  const { id } = useParams()
+  const [product, setProduct] = useState(null)
+  const [comments, setComments] = useState([])
+  const { isLoggedIn, setIsLoggedIn, verifyLogin } = useAuth()
+
   useEffect(() => {
     verifyLogin() // 在頁面加載時檢查登入狀態
-  }, [verifyLogin])
-  const images = [
-    'https://images.unsplash.com/photo-1569789010436-421d71a9fc38?q=80&w=3685&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1596762779387-9c681b5e2818?q=80&w=5722&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1618541062548-c51c1a2d9879?q=80&w=6000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1612404730960-5c71577fca11?q=80&w=6000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1625643263245-c6d54c071ebc?q=80&w=3008&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  ]
+    const fetchProductAndComments = async () => {
+      try {
+        const [productResponse, commentsResponse] = await Promise.all([
+          axios.get(`http://localhost:3000/api/products/${id}`),
+          axios.get(`http://localhost:3000/api/comments/products/${id}`)
+        ])
+        setProduct(productResponse.data)
+        setComments(commentsResponse.data)
+      } catch (err) {
+        console.error('取得商品和評論資料失敗', err)
+      }
+    }
+    fetchProductAndComments()
+  }, [id, verifyLogin])
 
   return (
     <div className="product-detail-page">
@@ -28,40 +42,37 @@ const ProductDetailPage = ({ isLoggedIn, setIsLoggedIn }) => {
       <div className="product-detail-page__search-bar-wrapper">
         <SearchBar />
       </div>
-      <div className="product-detail-page__container">
-        <ImageGallery images={images} />
-        <div className="product-detail-page__title-wrapper">
-          <DetailPageTitle name="環球影城門票 Universal Studios Japan｜日本大阪 （官方授權）" />
+      {product && (
+        <div className="product-detail-page__container">
+          <ImageGallery images={product.images} />
+          <div className="product-detail-page-title-wrapper">
+            <DetailPageTitle name={product.name} />
+          </div>
+          <div className="product-detail-page__wrapper">
+            <main className="product-detail-page__main">
+              <DetailPageIntroduction introduction={product.description} />
+              {isLoggedIn ? (
+                <CreateCommentForm
+                  entityId={product.id}
+                  entityType="product"
+                  onCommentAdded={() => {
+                    axios
+                      .get(`http://localhost:3000/api/comments/products/${id}`)
+                      .then((res) => setComments(res.data))
+                      .catch((err) => console.error('取得更新後的評論失敗', err))
+                  }}
+                />
+              ) : (
+                <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
+              )}
+              <CommentsBlock comments={comments} />
+            </main>
+            <aside className="product-detail-page__aside">
+              <PriceInformation price={product.price} />
+            </aside>
+          </div>
         </div>
-        <div className="product-detail-page__wrapper">
-          <main className="product-detail-page__main">
-            <DetailPageIntroduction
-              introduction={[
-                '日本環球影城官方授權門票，中文介面讓您輕鬆訂購，',
-                <br key="1" />,
-                '在 TapTour 訂購後立即取得電子門票，現場掃 QR code 即可入園遊玩。',
-                <br key="2" />,
-                '有效期限內，可依照日本環球影城月曆中相同票種之日期入園，保有行程絕佳彈性！',
-                <br key="3" />,
-                '日本環球影城門票＋超級任天堂世界™ 園區保證入場套票，輕鬆玩轉瑪利歐世界。',
-                <br key="4" />,
-                '更多細節請見日本環球影城攻略',
-              ]}
-            />
-            <ProductFeatureList
-              features={[
-                '日本環球影城官方授權門票，中文介面讓您輕鬆訂購',
-                '訂購日本環球影城門票後可立即拿到電子門票，掃 QR code 即可入園遊玩',
-                '有效期限內，可依照日本環球影城月曆中相同票種之日期入園，保有行程絕佳彈性',
-                '日本環球影城門票＋超級任天堂世界™ 園區保證入場套票，輕鬆玩轉瑪利歐世界',
-              ]}
-            />
-          </main>
-          <aside className="product-detail-page__aside">
-            <PriceInformation price="1790" />
-          </aside>
-        </div>
-      </div>
+      )}
       <Footer />
     </div>
   )

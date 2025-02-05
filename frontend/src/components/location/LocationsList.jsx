@@ -27,7 +27,7 @@ const LocationsList = ({ locations }) => {
             description={location.description}
             className="card-item"
             id={location.id}
-            activityLink={`/locations/${location.id}`}
+            cardLink={`/locations/${location.id}`}
           />
         ))}
       </div>
