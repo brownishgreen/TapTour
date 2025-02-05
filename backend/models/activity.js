@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true, 
       },
+      time_duration: {
+        type: DataTypes.INTEGER,
+        allowNull: true, 
+      },
       start_date: {
         type: DataTypes.DATE,
         allowNull: true, 
