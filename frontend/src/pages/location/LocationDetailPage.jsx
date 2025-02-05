@@ -6,6 +6,8 @@ import LocationPageIntroduction from '../../components/location/LocationPageIntr
 import LocationMap from '../../components/location/LocationMap'
 import RelatedCard from '../../components/RelatedCard'
 import CommentsBlock from '../../components/CommentsBlock'
+import SearchBar from '../../components/shared/SearchBar'
+
 import Footer from '../../components/shared/Footer'
 import { useParams } from 'react-router-dom'
 import apiClient from '../../api/apiClient'
@@ -29,6 +31,8 @@ const LocationDetailPage = () => {
   return (
     <div className="location-detail-page">
       <Header />
+
+      <SearchBar />
 
       {location && (
         <div className="location-detail-page__container">

@@ -8,6 +8,9 @@ const { handleImageUpload } = require('../utils/upload-handler')
 // 取得所有活動
 router.get('/', activityController.getAllActivities)
 
+router.get('/paginated', activityController.getPaginatedActivities)
+
+
 //取得活動編輯頁面
 router.get('/:id/edit', verifyToken, isAdmin, activityController.editActivityPage)
 
