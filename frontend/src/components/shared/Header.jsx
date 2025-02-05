@@ -2,7 +2,7 @@ import logo from '../../assets/images/500.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faCrosshairs, faShoppingCart, faLocationDot } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 import { useAuth } from '../context/AuthContext'
 
 const Header = () => {
@@ -13,8 +13,8 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(
-        `http://localhost:3000/api/users/logout`,
+      await apiClient.post(
+        `api/users/logout`,
         {},
         {
           withCredentials: true,
