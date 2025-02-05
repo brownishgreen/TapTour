@@ -1,26 +1,51 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import apiClient from '../../api/apiClient'
+import { useSearchParams } from 'react-router-dom'
 import Header from '../../components/shared/Header'
 import Footer from '../../components/shared/Footer'
 import HeroBanner from '../../components/shared/HeroBanner'
 import SearchBar from '../../components/shared/SearchBar'
 import CardItem from '../../components/shared/CardItem'
 import Pagination from '../../components/shared/Pagination'
-import { useAuth } from '../../components/context/AuthContext'
 
 const ProductsPage = () => {
-  const { verifyLogin } = useAuth()
-  useEffect(() => {
-    verifyLogin() // 在頁面加載時檢查登入狀態
-  }, [verifyLogin])
+  const [searchParams] = useSearchParams()
+  const searchTerm = searchParams.get('search') || '' // 提取搜尋參數
 
-  const products = Array(12).fill({
-    buttonText: '立刻購買',
-    image:
-      'https://plus.unsplash.com/premium_photo-1684407617372-106ebb96091e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    title: 'Activity Title',
-    subtitle: 'Subtitle',
-    description: 'Description',
-  })
+  const [products, setProducts] = useState([]) // 取得產品資料
+  const [currentPage, setCurrentPage] = useState(1) // 當前頁碼
+  const [totalPages, setTotalPages] = useState(1) // 總頁數
+  const [totalItems, setTotalItems] = useState(0) // 總數據數量
+
+  useEffect(() => {
+    fetchProducts() // 請求產品資料
+  }, [searchTerm, currentPage])
+
+  // 請求產品資料
+  const fetchProducts = async () => {
+    try {
+      if (searchTerm) {
+        // 如果有搜尋條件，執行搜尋 API
+        const response = await apiClient.get(
+          `api/products?search=${encodeURIComponent(searchTerm)}`
+        )
+        setProducts(response.data) // 設定搜尋結果
+        setTotalPages(1) // 搜尋結果不需要分頁，頁數設為 1
+        setTotalItems(response.data.length) // 設定搜尋結果的總數
+      } else {
+        // 如果沒有搜尋條件，執行分頁 API
+        const response = await apiClient.get(
+          `api/products/paginated?page=${currentPage}&limit=9`
+        )
+        const { products, totalPages, totalItems } = response.data
+        setProducts(products) // 設定分頁的產品資料
+        setTotalPages(totalPages) // 設定分頁的總頁數
+        setTotalItems(totalItems) // 設定分頁的總數據數量
+      }
+    } catch (error) {
+      console.error('取得產品資料失敗', error)
+    }
+  }
 
   return (
     <div className="products-page">
@@ -38,18 +63,24 @@ const ProductsPage = () => {
           {products.map((product, index) => (
             <CardItem
               key={index}
-              buttonText={product.buttonText}
-              image={product.image}
-              title={product.title}
-              subtitle={product.subtitle}
-              description={product.description}
+              buttonText="立刻購買"
+              image={`${apiClient.defaults.baseURL.replace(/\/$/, '')}${product?.images?.[1]?.image_url}` || '/default-image.jpg'}
+              title={product?.name}
+              subtitle={product?.category?.name}
+              description={product?.description}
+              id={product?.id}
+              cardLink={`/products/${product?.id}`}
             />
           ))}
         </div>
       </main>
-      <Pagination />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
       <div className="products-page__bottom-hero-banner">
-        <HeroBanner 
+        <HeroBanner
           className="products-page__hero-banner"
           imageURL="../src/assets/images/product-page-bottom-hero-banner.jpg"
           title="以自己的方式探索世界"

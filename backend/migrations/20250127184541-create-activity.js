@@ -15,6 +15,9 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
+      time_duration: {
+        type: Sequelize.INTEGER
+      },
       start_date: {
         type: Sequelize.DATE
       },

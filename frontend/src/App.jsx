@@ -43,7 +43,7 @@ function App() {
           <Route path="/activities" element={<ActivitiesPage />} />
           <Route path="/activities/:id" element={<ActivityDetailPage />} />
           <Route path="/products" element={<ProductsPage />} />
-          <Route path="/product-page" element={<ProductDetailPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
 
           {/* Product 傳入 mode='create' */}
           <Route

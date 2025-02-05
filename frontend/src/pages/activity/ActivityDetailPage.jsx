@@ -64,7 +64,7 @@ const ActivityDetailPage = () => {
                   }}
                 />
               ) : (
-                <p>請先登入以新增評論。</p>
+                <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
               )}
               <CommentsBlock comments={comments} />
             </main>
