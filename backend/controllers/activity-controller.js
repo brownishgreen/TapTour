@@ -1,5 +1,5 @@
 const { Activity, Image, Category } = require('../models')
-const {handleImageUpload} = require('../utils/upload-handler')
+const { handleImageUpload } = require('../utils/upload-handler')
 const path = require('path')
 const { Op } = require('sequelize') // 引入 Sequelize 的操作符
 
@@ -78,9 +78,9 @@ const activityController = {
   },
   editActivity: async (req, res, next) => {
     try {
-      const activityId = Number(req.params.id);
+      const activityId = Number(req.params.id)
       if (isNaN(activityId)) {
-        return res.status(400).json({ message: "活動 ID 無效" });
+        return res.status(400).json({ message: '活動 ID 無效' })
       }
       const { name, description, location, date, time, price } = req.body
       const activity = await Activity.findByPk(Number(activityId))
@@ -105,8 +105,17 @@ const activityController = {
       const { name, description, time, price, location, category_id } = req.body
 
       // 確保所有必填欄位都已提供
-      if (!name || !description || !time || !price || !location || !category_id) {
-        return res.status(400).json({ message: '必須提供活動名稱、描述、時間、價格、地點、類別' });
+      if (
+        !name ||
+        !description ||
+        !time ||
+        !price ||
+        !location ||
+        !category_id
+      ) {
+        return res
+          .status(400)
+          .json({ message: '必須提供活動名稱、描述、時間、價格、地點、類別' })
       }
 
       // 建立活動
@@ -119,7 +128,6 @@ const activityController = {
         category_id,
       })
 
-
       // 圖片上傳處理
       let imageUrls = []
       const basePath = path.join(__dirname, '../uploads/activities')
@@ -128,9 +136,16 @@ const activityController = {
         const images = Array.isArray(req.files.images)
           ? req.files.images
           : [req.files.images]
-        
+
         try {
-          imageUrls = await handleImageUpload(images, basePath, activity.id, name, 'activities', 'activity_id') 
+          imageUrls = await handleImageUpload(
+            images,
+            basePath,
+            activity.id,
+            name,
+            'activities',
+            'activity_id'
+          )
           // 這裡的 'activity.id' 是活動的 ID用來產生目錄和檔名，'activities' 是實體類型，'activity_id' 是資料庫中對應的外鍵欄位名
         } catch (err) {
           console.error('圖片上傳失敗', err)
@@ -140,7 +155,7 @@ const activityController = {
         res.status(201).json({
           message: '活動已創建',
           activity,
-          images: imageUrls
+          images: imageUrls,
         })
       }
     } catch (err) {
@@ -163,7 +178,51 @@ const activityController = {
     } catch (err) {
       next(err)
     }
-  }
+  },
+  getPaginatedActivities: async (req, res, next) => {
+    // limit 主要是由前端傳入的，但如果前端沒有傳入，後端會使用預設的值
+    // 10代表十進位制，不能隨意改動
+    const page = parseInt(req.query.page, 10) || 1 // 預設為第 1 頁
+    const limit = parseInt(req.query.limit, 10) || 9 // 預設每頁 9 筆
+    const offset = (page - 1) * limit // 計算偏移量，分頁查詢時決定從第幾筆資料開始
+
+    // 驗證 page 和 limit 是否有效，若無效則返回 400 錯誤
+    if (isNaN(page) || isNaN(limit) || page <= 0 || limit <= 0) {
+      return res
+        .status(400)
+        .json({ message: 'Page and limit must be positive numbers' })
+    }
+
+    try {
+      // 獲取活動資料（包含關聯的圖片）
+      const activities = await Activity.findAll({
+        limit,
+        offset,
+        order: [['createdAt', 'DESC']],
+        include: [
+          {
+            model: Image,
+            as: 'images',
+            attributes: ['image_url'], // 僅返回圖片 URL
+          },
+        ],
+      })
+
+      // 獲取活動的總數（不包含關聯表，避免多次計算）
+      //  Sequelize 提供的方法，用於計算資料表的總記錄數
+      const totalItems = await Activity.count()
+
+      res.status(200).json({
+        activities,
+        currentPage: page,
+        totalPages: Math.ceil(totalItems / limit),
+        totalItems,
+      })
+    } catch (error) {
+      console.log('分頁獲取活動數據失敗:', error)
+      next(error)
+    }
+  },
 }
 
 module.exports = activityController
