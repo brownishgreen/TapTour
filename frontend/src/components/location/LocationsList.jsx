@@ -2,10 +2,6 @@ import CardItem from '../../components/shared/CardItem'
 import apiClient from '../../api/apiClient'
 
 const LocationsList = ({ locations }) => {
-  if (!locations.length) {
-    return <p>目前沒有符合條件的地點。</p> // 無數據時顯示提示
-  }
-
   return (
     <div className="locations-list-wrapper">
       <div className="locations-list">
@@ -13,7 +9,6 @@ const LocationsList = ({ locations }) => {
           <CardItem
             key={location.id}
             buttonText="查看更多"
-            
             image={
               location.images?.length
                 ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${

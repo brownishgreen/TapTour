@@ -689,6 +689,15 @@ main {
     width: 90%;
   }
 }
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.error-container .error-image {
+  width: 400px;
+}
+
 .carousel-item img {
   -o-object-fit: cover;
      object-fit: cover;

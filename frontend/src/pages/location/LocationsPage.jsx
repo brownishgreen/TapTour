@@ -89,7 +89,16 @@ const LocationsPage = () => {
         <ImageCarousel items={Locationscarousel} />
         <SearchBar />
         {loading && <p>加載中...</p>}
-        {error && <p>{error}</p>}
+        {error && (
+          <div className="error-container">
+            <img
+              src="../src/assets/images/error-search.jpg"
+              alt="搜尋失敗"
+              className="error-image"
+            />
+
+          </div>
+        )}
         {!loading && !error && <LocationsList locations={locations} />}
         {!searchTerm && ( // 只有在沒有搜索時顯示分頁
           <Pagination
