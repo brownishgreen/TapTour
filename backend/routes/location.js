@@ -4,10 +4,11 @@ const locationController = require('../controllers/location-controller')
 const { downloadGoogleImages } = require('../utils/upload-handler')
 const isAdmin = require('../middlewares/isAdmin')
 const verifyToken = require('../middlewares/auth')
-// require('dotenv').config() // 載入環境變數
 
 // 取得所有景點
 router.get('/', locationController.getAllLocation)
+
+router.get('/paginated', locationController.getPaginatedLocations)
 
 // 取得景點單一頁面
 router.get('/:id', locationController.getLocationById)

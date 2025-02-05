@@ -25,13 +25,20 @@ const SearchBar = () => {
   const handleSearch = (e) => {
     e.preventDefault()
 
-    const routes = {
-      '/activities': `/activities?search=${searchTerm}`,
-      '/products': `/products?search=${searchTerm}`,
-      '/locations': `/locations?search=${searchTerm}`,
+    // 根據當前路徑動態判斷
+    let searchPath
+    if (location.pathname.startsWith('/activities')) {
+      searchPath = `/activities?search=${searchTerm}`
+    } else if (location.pathname.startsWith('/locations')) {
+      searchPath = `/locations?search=${searchTerm}`
+    } else if (location.pathname.startsWith('/products')) {
+      searchPath = `/products?search=${searchTerm}`
+    } else {
+      // 默認的搜尋路徑
+      searchPath = `/activities?search=${searchTerm}`
     }
-    const searchPath =
-      routes[location.pathname] || `/search?query=${searchTerm}`
+
+    // 導航到相應的搜尋結果頁
     navigate(searchPath)
   }
 
