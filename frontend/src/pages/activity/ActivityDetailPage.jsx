@@ -51,7 +51,7 @@ const ActivityDetailPage = () => {
           <div className="activity-detail-page__wrapper">
             <main className="activity-detail-page__main">
               <DetailPageIntroduction introduction={activity.description} />
-              <ActivityDetailIntroduction />
+              <ActivityDetailIntroduction timeDuration={activity.time_duration} />
               {isLoggedIn ? (
                 <CreateCommentForm
                   entityId={activity.id}
