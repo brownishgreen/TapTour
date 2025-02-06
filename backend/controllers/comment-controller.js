@@ -90,7 +90,15 @@ const commentController = {
   getCommentsByProductId: async (req, res, next) => {
     try {
       const { productId } = req.params
-      const comments = await Comment.findAll({ where: { product_id: productId } })
+      const comments = await Comment.findAll({ where: { product_id: productId },
+        include: [
+          {
+            model: User,
+            as: 'user',
+            attributes: ['name', 'image']
+          }
+        ]
+      })
       res.json(comments)
     } catch (err) {
       next(err)

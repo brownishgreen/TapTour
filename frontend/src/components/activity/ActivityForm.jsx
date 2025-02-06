@@ -4,9 +4,6 @@ import axios from 'axios'
 const ActivityForm = ({ mode }) => {
 
   const navigate = useNavigate()
-
-  console.log('Received mode:', mode)
-
   const { id } = useParams()
   const activityId = Number(id) || null;
   const isEditMode = mode === 'edit' // 判斷模式
@@ -17,6 +14,7 @@ const ActivityForm = ({ mode }) => {
     price: '',
     location_id: '',
     description: '',
+    time_duration: '',
     category_id: '',
     images: []
   })
@@ -69,6 +67,20 @@ const ActivityForm = ({ mode }) => {
     }))
   }
 
+  const validateForm = () => {
+    const requiredFields = ['name', 'time', 'price', 'location', 'description', 'category_id', 'time_duration']
+    for (const field of requiredFields) {
+      if (formData[field] === null || formData[field] === undefined || formData[field] === '') {
+        alert(`${field} 是必填欄位`)
+        return false
+      }
+      if (formData.images.length === 0) {
+        alert('請至少上傳一張圖片')
+        return false
+      }
+    }
+    return true
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
