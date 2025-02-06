@@ -102,29 +102,20 @@ const activityController = {
   },
   createActivity: async (req, res, next) => {
     try {
-      const { name, description, time, price, location, category_id } = req.body
+      const { name, description, time_duration, price, location_id, category_id } = req.body
 
       // 確保所有必填欄位都已提供
-      if (
-        !name ||
-        !description ||
-        !time ||
-        !price ||
-        !location ||
-        !category_id
-      ) {
-        return res
-          .status(400)
-          .json({ message: '必須提供活動名稱、描述、時間、價格、地點、類別' })
+      if (!name || !description || !time_duration || !price || !location_id || !category_id) {
+        return res.status(400).json({ message: '必須提供活動名稱、描述、時間、價格、地點、類別' })
       }
 
       // 建立活動
       const activity = await Activity.create({
         name,
         description,
-        time,
+        time_duration,
         price,
-        location,
+        location_id,
         category_id,
       })
 
@@ -137,21 +128,14 @@ const activityController = {
           ? req.files.images
           : [req.files.images]
 
-        try {
-          imageUrls = await handleImageUpload(
+          imageUrls = handleImageUpload(
             images,
             basePath,
             activity.id,
             name,
             'activities',
             'activity_id'
-          )
-          // 這裡的 'activity.id' 是活動的 ID用來產生目錄和檔名，'activities' 是實體類型，'activity_id' 是資料庫中對應的外鍵欄位名
-        } catch (err) {
-          console.error('圖片上傳失敗', err)
-          return next(err)
-        }
-
+        )
         res.status(201).json({
           message: '活動已創建',
           activity,
@@ -159,6 +143,7 @@ const activityController = {
         })
       }
     } catch (err) {
+      console.error('商品創建失敗', err)
       next(err)
     }
   },

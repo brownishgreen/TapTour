@@ -10,7 +10,6 @@ const ActivityForm = ({ mode }) => {
   const [categories, setCategories] = useState([])
   const [formData, setFormData] = useState({
     name: '',
-    time: '',
     price: '',
     location_id: '',
     description: '',
@@ -43,80 +42,47 @@ const ActivityForm = ({ mode }) => {
     const { name, value } = event.target
     setFormData((prev) => ({
       ...prev,
-      [name]: ["price", "time", "category_id"].includes(name) ? Number(value) || 0 : value
+      [name]: ["price", "category_id", "time_duration"].includes(name) ? Number(value) || 0 : value
     }))
   }
   // 處理圖片上傳
   const handleImageChange = (event) => {
     //只接受圖片格式
-    const files = Array.from(event.target.files).filter(file => file.type.startsWith('image/'))
+    const newFiles = Array.from(event.target.files).filter(file => file.type.startsWith('image/'))
 
-    if (files.length === 0) {
-      alert('請選擇有效的圖片文件');
-      return;
-    }
-
-    if (files.length > 5) {
-      alert('最多只能上傳 5 張圖片');
-      return;
+    if( formData.images.length + newFiles.length > 5) {
+      alert('最多只能上傳 5 張圖片')
+      return
     }
 
     setFormData((prev) => ({
       ...prev,
-      images: files // 更新圖片到 formData
+      images: [...prev.images, ...newFiles] // 更新圖片到 formData
     }))
   }
 
-  const validateForm = () => {
-    const requiredFields = ['name', 'time', 'price', 'location', 'description', 'category_id', 'time_duration']
+  const validationForm = () => {
+    const requiredFields = ['name', 'price', 'location_id', 'description', 'category_id', 'time_duration']
     for (const field of requiredFields) {
-      if (formData[field] === null || formData[field] === undefined || formData[field] === '') {
+      if (!formData[field]?.toString().trim()) {
         alert(`${field} 是必填欄位`)
         return false
       }
-      if (formData.images.length === 0) {
-        alert('請至少上傳一張圖片')
-        return false
-      }
+    }
+    if (formData.images.length === 0) {
+      alert('請至少上傳一張圖片')
+      return false
     }
     return true
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('提交表單時的資料', formData)
 
-    // 檢查表單資料是否為空
-    const requiredFields = ['name', 'time', 'price', 'location', 'description', 'category_id']
-    for (const field of requiredFields) {
-      if (formData[field] === null || formData[field] === undefined || formData[field] === '') {
-        alert(`${field} 是必填欄位`)
-        return
-      }
-    }
-    // 檢查價格是否為空
-    if (formData.price === null || formData.price === undefined || formData.price === '') {
-      alert('價格不能為空');
-      return;
-    }
-
-    // 檢查活動名稱是否為空
-    if (!formData.name.trim()) {
-      alert("活動名稱不能為空");
-      return;
-    }
-
-    console.log("🚀 Debugging formData:", formData)
-
-
-    //圖片數量在允許範圍內
-    if (!Array.isArray(formData.images) || formData.images.length > 5) {
-      alert('最多只能上傳 5 張圖片')
+    if (!validationForm()) {
+      console.log('表單驗證失敗')
       return
-    }
-
-    if (isEditMode && (activityId === null || isNaN(activityId))) {
-      alert("無法更新活動，因為 ID 無效！");
-      return;
     }
 
     const data = new FormData();
@@ -124,7 +90,7 @@ const ActivityForm = ({ mode }) => {
       if (key === 'images') {
         //逐一上傳圖片
         formData.images.forEach((image) => {
-          data.append('images', image)
+          data.append(`images`, image)
         })
       } else if (formData[key] !== null && formData[key] !== undefined) {
         data.append(key, formData[key])
@@ -182,8 +148,8 @@ const ActivityForm = ({ mode }) => {
               <label htmlFor="name">活動名稱</label>
               <input type="text" id="name" name="name" value={formData.name || ''} onChange={handleInputChange} />
 
-              <label htmlFor="time">活動所需時間</label>
-              <input type="text" id="time" value={formData.time || ''} name="time" onChange={handleInputChange} />
+              <label htmlFor="time_duration">活動所需時間</label>
+              <input type="text" id="time_duration" value={formData.time_duration || ''} name="time_duration" onChange={handleInputChange} />
 
 
 
@@ -193,8 +159,8 @@ const ActivityForm = ({ mode }) => {
 
 
 
-              <label htmlFor="location">活動所在景點</label>
-              <input type="text" id="location" name="location" value={formData.location || ''} onChange={handleInputChange} />
+              <label htmlFor="location_id">活動所在景點</label>
+              <input type="text" id="location_id" name="location_id" value={formData.location_id || ''} onChange={handleInputChange} />
 
 
 
