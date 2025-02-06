@@ -90,7 +90,6 @@ const userController = {
 
       res.status(200).json({
         message: '登入成功',
-        token,
         userId: user.id,
       })
     } catch (err) {
