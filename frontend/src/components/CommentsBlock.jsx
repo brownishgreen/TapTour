@@ -14,7 +14,7 @@ const CommentsBlock = ({ comments }) => {
             {comments.map((comment) => (
               <CommentCard
                 key={comment.id}
-                name={comment.user.name}
+                name={comment.user_id.name}
                 comment={comment.content}
                 image={comment.user.image}
                 timestamp={comment.createdAt}

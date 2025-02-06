@@ -4,6 +4,10 @@ const ImageGallery = ({ images }) => {
   if (!images || images.length === 0) {
     return null
   }
+
+  const underBuildImage = '/assets/images/others/under-build.png'
+
+  console.log(underBuildImage.type)
   return (
     <div className="image-gallery">
       <div className="image-gallery__container">
