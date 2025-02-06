@@ -4,13 +4,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 60px 15px 0;
+  margin: 20px 15px 0;
 }
 
 .create-comment-form__title {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .create-comment-form textarea {
@@ -22,7 +22,7 @@
 }
 
 .create-comment-form__button {
-  align-self: flex-end;
+  align-self: flex-start;
   padding: 8px 16px;
   background-color: $primary-color;
   color: white;
