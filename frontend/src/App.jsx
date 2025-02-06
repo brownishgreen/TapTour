@@ -7,6 +7,7 @@ import LoginPage from './pages/users/LoginPage'
 import ProfilePage from './pages/users/ProfilePage'
 import AdminPage from './pages/users/AdminPage'
 import Homepage from './pages/Homepage'
+import NotFound from './pages/NotFound'
 import AboutPage from './pages/users/AboutPage'
 import ActivitiesPage from './pages/activity/ActivitiesPage'
 import ManageActivityPage from './pages/activity/ManageActivityPage'
@@ -101,6 +102,7 @@ function App() {
           />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/" element={<Homepage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </Router>

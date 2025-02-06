@@ -1968,4 +1968,22 @@ select {
 }
 .homepage-card-item img {
   border-radius: 8px;
+}
+
+.error-page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  margin-top: -80px;
+  z-index: 1000;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.error-page-btn:hover {
+  background-color: #0056b3;
 }/*# sourceMappingURL=style.css.map */
