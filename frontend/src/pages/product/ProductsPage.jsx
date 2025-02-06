@@ -16,6 +16,7 @@ const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1) // 當前頁碼
   const [totalPages, setTotalPages] = useState(1) // 總頁數
   const [totalItems, setTotalItems] = useState(0) // 總數據數量
+  const [error, setError] = useState(false) // 搜尋失敗狀態
 
   useEffect(() => {
     fetchProducts() // 請求產品資料
@@ -24,11 +25,19 @@ const ProductsPage = () => {
   // 請求產品資料
   const fetchProducts = async () => {
     try {
+      setError(false) // 重置錯誤狀態
       if (searchTerm) {
         // 如果有搜尋條件，執行搜尋 API
         const response = await apiClient.get(
           `api/products?search=${encodeURIComponent(searchTerm)}`
         )
+
+        if (response.data.length === 0) {
+          // 如果搜尋結果為空，顯示錯誤圖片
+          setError(true)
+          setProducts([]) // 清空產品列表
+          return
+        }
         setProducts(response.data) // 設定搜尋結果
         setTotalPages(1) // 搜尋結果不需要分頁，頁數設為 1
         setTotalItems(response.data.length) // 設定搜尋結果的總數
@@ -38,11 +47,13 @@ const ProductsPage = () => {
           `api/products/paginated?page=${currentPage}&limit=9`
         )
         const { products, totalPages, totalItems } = response.data
+
         setProducts(products) // 設定分頁的產品資料
         setTotalPages(totalPages) // 設定分頁的總頁數
         setTotalItems(totalItems) // 設定分頁的總數據數量
       }
     } catch (error) {
+      setError(true)
       console.error('取得產品資料失敗', error)
     }
   }
@@ -59,26 +70,41 @@ const ProductsPage = () => {
       </div>
       <main className="products-page__main">
         <SearchBar />
-        <div className="products-page__card-container">
-          {products.map((product, index) => (
-            <CardItem
-              key={index}
-              buttonText="立刻購買"
-              image={`${apiClient.defaults.baseURL.replace(/\/$/, '')}${product?.images?.[1]?.image_url}` || '/default-image.jpg'}
-              title={product?.name}
-              subtitle={product?.category?.name}
-              description={product?.description}
-              id={product?.id}
-              cardLink={`/products/${product?.id}`}
+        {error ? (
+          <div className="error-container">
+            <img
+              src="../src/assets/images/error-search.jpg"
+              alt="搜尋失敗"
+              className="error-image"
             />
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="products-page__card-container">
+            {products.map((product, index) => (
+              <CardItem
+                key={index}
+                buttonText="立刻購買"
+                image={
+                  `${apiClient.defaults.baseURL.replace(/\/$/, '')}${product?.images?.[1]?.image_url}` ||
+                  '/default-image.jpg'
+                }
+                title={product?.name}
+                subtitle={product?.category?.name}
+                description={product?.description}
+                id={product?.id}
+                cardLink={`/products/${product?.id}`}
+              />
+            ))}
+          </div>
+        )}
       </main>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
+      {!searchTerm && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
       <div className="products-page__bottom-hero-banner">
         <HeroBanner
           className="products-page__hero-banner"

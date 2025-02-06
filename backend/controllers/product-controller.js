@@ -4,18 +4,34 @@ const path = require('path')
 const { Op } = require('sequelize') // 引入 Sequelize 的操作符
 const productController = {
   getAllProducts: async (req, res, next) => {
+    const { search } = req.query
+
     try {
-      const products = await Product.findAll({
-        include: [{
-          model: Image,
-          as: 'images',
-          attributes: ['image_url']
-        }, {
-          model: Category,
-          as: 'category',
-          attributes: ['name']
-        }]
-      })
+      const queryOptions = {
+        include: [
+          {
+            model: Image,
+            as: 'images',
+            attributes: ['image_url'],
+          },
+          {
+            model: Category,
+            as: 'category',
+            attributes: ['name'],
+          },
+        ],
+      }
+
+      if (search) {
+        queryOptions.where = {
+          name: { [Op.like]: `%${search}%` },
+        }
+      }
+      const products = await Product.findAll(queryOptions)
+
+      if (products.length === 0) {
+        return res.status(404).json({ message: '沒有符合的產品' })
+      }
       res.status(200).json(products)
     } catch (err) {
       next(err)

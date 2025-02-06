@@ -64,3 +64,13 @@
     width: 90%;
   }
 }
+
+// for search error
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .error-image { 
+  width: 400px;
+}
+}

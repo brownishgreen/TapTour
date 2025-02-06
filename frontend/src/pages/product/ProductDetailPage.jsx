@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 import Header from '../../components/shared/Header'
 import SearchBar from '../../components/shared/SearchBar'
 import Footer from '../../components/shared/Footer'
@@ -24,8 +24,8 @@ const ProductDetailPage = () => {
     const fetchProductAndComments = async () => {
       try {
         const [productResponse, commentsResponse] = await Promise.all([
-          axios.get(`http://localhost:3000/api/products/${id}`),
-          axios.get(`http://localhost:3000/api/comments/products/${id}`)
+          apiClient.get(`api/products/${id}`),
+          apiClient.get(`api/comments/products/${id}`)
         ])
         setProduct(productResponse.data)
         setComments(commentsResponse.data)
@@ -56,8 +56,8 @@ const ProductDetailPage = () => {
                   entityId={product.id}
                   entityType="product"
                   onCommentAdded={() => {
-                    axios
-                      .get(`http://localhost:3000/api/comments/products/${id}`)
+                    apiClient
+                      .get(`api/comments/products/${id}`)
                       .then((res) => setComments(res.data))
                       .catch((err) => console.error('取得更新後的評論失敗', err))
                   }}

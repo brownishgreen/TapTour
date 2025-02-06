@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import apiClient from '../../api/apiClient'
 import Header from '../../components/shared/Header'
 import SearchBar from '../../components/shared/SearchBar'
 import ImageGallery from '../../components/shared/ImageGallery'
@@ -24,8 +24,8 @@ const ActivityDetailPage = () => {
     const fetchActivityAndComments = async () => {
       try {
         const [activityResponse, commentsResponse] = await Promise.all([
-          axios.get(`http://localhost:3000/api/activities/${id}`),
-          axios.get(`http://localhost:3000/api/comments/activities/${id}`)
+          apiClient.get(`api/activities/${id}`),
+          apiClient.get(`api/comments/activities/${id}`)
         ])
         setActivity(activityResponse.data)
         setComments(commentsResponse.data)
@@ -57,8 +57,8 @@ const ActivityDetailPage = () => {
                   entityId={activity.id}
                   entityType="activity"
                   onCommentAdded={() => {
-                    axios
-                      .get(`http://localhost:3000/api/comments/activities/${id}`)
+                    apiClient
+                      .get(`api/comments/activities/${id}`)
                       .then((res) => setComments(res.data))
                       .catch((err) => console.error('取得更新後的評論失敗', err))
                   }}
