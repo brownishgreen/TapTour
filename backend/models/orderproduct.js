@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'OrderProduct',
       tableName: 'OrderProducts',
       underscored: true, // 使用 snake_case 欄位命名
-      timestamps: false, // 不需要 createdAt 和 updatedAt
+      timestamps: true, // 不需要 createdAt 和 updatedAt
     }
   );
   return OrderProduct;
