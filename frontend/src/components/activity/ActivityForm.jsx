@@ -8,13 +8,14 @@ const ActivityForm = ({ mode }) => {
   const activityId = Number(id) || null;
   const isEditMode = mode === 'edit' // 判斷模式
   const [categories, setCategories] = useState([])
+  const [locations, setLocations] = useState([])
   const [formData, setFormData] = useState({
     name: '',
     price: '',
-    location_id: '',
     description: '',
     time_duration: '',
     category_id: '',
+    location_id: '',
     images: []
   })
 
@@ -36,14 +37,22 @@ const ActivityForm = ({ mode }) => {
       .then((response) => setCategories(response.data))
       .catch((error) => console.error('獲取分類資料失敗', error))
   }, [])
-  // 當 isEdit 或 id 改變時，執行 useEffect
+
+  // 獲取所有景點
+  useEffect(() => {
+    apiClient
+      .get('api/locations')
+      .then((response) => setLocations(response.data.locations))
+      .catch((error) => console.error('獲取景點資料失敗', error))
+  }, [])
+
 
   //更新表單資料
   const handleInputChange = (event) => {
     const { name, value } = event.target
     setFormData((prev) => ({
       ...prev,
-      [name]: ["price", "category_id", "time_duration"].includes(name) ? Number(value) || 0 : value
+      [name]: ["price", "category_id", "time_duration", "location_id"].includes(name) ? Number(value) || 0 : value
     }))
   }
   // 處理圖片上傳
@@ -63,7 +72,7 @@ const ActivityForm = ({ mode }) => {
   }
 
   const validationForm = () => {
-    const requiredFields = ['name', 'price', 'location_id', 'description', 'category_id', 'time_duration']
+    const requiredFields = ['name', 'price', 'location_id', 'description', 'category_id', 'location_id', 'time_duration']
     for (const field of requiredFields) {
       if (!formData[field]?.toString().trim()) {
         alert(`${field} 是必填欄位`)
@@ -160,9 +169,19 @@ const ActivityForm = ({ mode }) => {
 
 
               <label htmlFor="location_id">活動所在景點</label>
-              <input type="text" id="location_id" name="location_id" value={formData.location_id || ''} onChange={handleInputChange} />
-
-
+              <select
+                id="location_id"
+                name="location_id"
+                value={formData.location_id}
+                onChange={handleInputChange}
+              >
+                <option value="">請選擇景點</option>
+                {locations.map((location) => (
+                  <option key={location.id} value={location.id}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
 
               <label htmlFor="description">活動介紹</label>
               <textarea id="description" name="description" value={formData.description || ''} onChange={handleInputChange} />
