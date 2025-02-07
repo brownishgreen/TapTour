@@ -10,6 +10,7 @@ import Header from '../components/shared/Header'
 import CampaignCardItem from '../components/shared/CampaignCardItem'
 import ImageCarousel from '../components/shared/ImageCarousel'
 import CardItem from '../components/shared/CardItem'
+import LocationCardItem from '../pages/location/LocationCardIterm'
 import Footer from '../components/shared/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faShoppingCart, faCrosshairs } from '@fortawesome/free-solid-svg-icons'
@@ -273,7 +274,7 @@ const Homepage = () => {
             >
               {locations.map((location) => (
                 <SwiperSlide key={location.id}>
-                  <CardItem
+                  <LocationCardItem
                     buttonText="探索景點"
                     image={
                       `${apiClient.defaults.baseURL.replace(/\/$/, '')}${location.images?.[1]?.image_url}` ||
