@@ -18,9 +18,13 @@ const Homepage = () => {
 
   // 取得活動資料
   const [activities, setActivities] = useState([])
+  const [products, setProducts] = useState([])
+  const [locations, setLocations] = useState([])
 
   useEffect(() => {
     fetchActivities() // 請求活動資料
+    fetchProducts() // 請求商品資料
+    fetchLocations() // 請求目的地資料
   }, [])
 
   // 請求活動資料
@@ -33,6 +37,25 @@ const Homepage = () => {
     }
   }
 
+  // 請求商品資料
+  const fetchProducts = async () => {
+    try {
+      const response = await apiClient.get('api/products')
+      setProducts(response.data)  
+    } catch (error) {
+      console.error('取得商品資料失敗', error)
+    }
+  }
+
+  // 請求目的地資料
+  const fetchLocations = async () => {
+    try {
+      const response = await apiClient.get('api/locations')
+      setLocations(response.data.locations)
+    } catch (error) {
+      console.error('取得目的地資料失敗', error)
+    }
+  }
   const Locationscarousel = [
     {
       src: 'https://images.unsplash.com/photo-1520503922584-590e8f7a90d7?q=80&w=3570&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -64,24 +87,34 @@ const Homepage = () => {
 
   const campaigns = [
     {
-      image: '/assets/images/campaign/campaign-1.png',
+      id: 1,
+      image: '/assets/images/campaign/campaign-1.jpg',
       name: 'First Slide',    
     },
     {
+      id: 2,
       image: '/assets/images/campaign/campaign-2.png',
       name: 'Second Slide',    
     },
     {
+      id: 3,
       image: '/assets/images/campaign/campaign-3.png',
       name: 'Third Slide',    
     },
     {
+      id: 4,
       image: '/assets/images/campaign/campaign-5.png',
       name: 'Fourth Slide',    
     },
     {
+      id: 5,
       image: '/assets/images/campaign/campaign-4.png',
       name: 'Fifth Slide',    
+    },
+    {
+      id: 6,
+      image: '/assets/images/campaign/campaign-6.png',
+      name: 'Sixth Slide',    
     },
     
   ]
@@ -116,7 +149,7 @@ const Homepage = () => {
             }}
           >
             {campaigns.map((campaign) => (
-              <SwiperSlide key={campaign}>
+              <SwiperSlide key={campaign.id}>
                 <CampaignCardItem campaign={campaign} />
               </SwiperSlide>
             ))}
@@ -160,7 +193,7 @@ const Homepage = () => {
                     subtitle={activity.category.name}
                     description={activity.description}
                     id={activity.id}
-                    activityLink={`/activities/${activity.id}`}
+                    cardLink={`/activities/${activity.id}`}
                   />
                 </SwiperSlide>
               ))}
@@ -172,7 +205,7 @@ const Homepage = () => {
             <FontAwesomeIcon icon={faShoppingCart} /> 踏旅熱門推薦商品
           </h2>
           <p>藝文票券、都市探索，各種熱門票券滿足你的渴望，迎接難忘旅程。</p>
-          <div className="activities-page__card-container">
+          <div className="products-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={-40}
@@ -192,19 +225,19 @@ const Homepage = () => {
                 },
               }}
             >
-              {activities.map((activity) => (
-                <SwiperSlide key={activity.id}>
+              {products.map((product) => (
+                <SwiperSlide key={product.id}>
                   <CardItem
                     buttonText="深入瞭解"
                     image={
-                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[0]?.image_url}` ||
+                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${product.images?.[0]?.image_url}` ||
                       '/default-image.jpg'
                     }
-                    title={activity.name}
-                    subtitle={activity.category.name}
-                    description={activity.description}
-                    id={activity.id}
-                    activityLink={`/activities/${activity.id}`}
+                    title={product.name}
+                    subtitle={product.category.name}
+                    description={product.description}
+                    id={product.id}
+                    cardLink={`/products/${product.id}`}
                   />
                 </SwiperSlide>
               ))}
@@ -218,7 +251,7 @@ const Homepage = () => {
           <p>
             山海相伴、靜謐村莊或充滿歷史氣息的古城，提供休閒與探險的完美平衡，迎接難忘旅程。
           </p>
-          <div className="activities-page__card-container">
+          <div className="locations-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={-40}
@@ -238,19 +271,22 @@ const Homepage = () => {
                 },
               }}
             >
-              {activities.map((activity) => (
-                <SwiperSlide key={activity.id}>
+              {locations.map((location) => (
+                <SwiperSlide key={location.id}>
                   <CardItem
-                    buttonText="深入瞭解"
+                    buttonText="探索景點"
                     image={
-                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[1]?.image_url}` ||
+                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${location.images?.[1]?.image_url}` ||
                       '/default-image.jpg'
                     }
-                    title={activity.name}
-                    subtitle={activity.category.name}
-                    description={activity.description}
-                    id={activity.id}
-                    activityLink={`/activities/${activity.id}`}
+                    title={location.name}
+                    subtitle={
+                      location.description
+                    ?`${location.description.slice(0, 55)}...`
+                    :'無描述'
+                    }
+                    id={location.id}
+                    cardLink={`/locations/${location.id}`}
                   />
                 </SwiperSlide>
               ))}
