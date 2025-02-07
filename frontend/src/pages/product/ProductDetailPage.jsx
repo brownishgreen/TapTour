@@ -17,7 +17,9 @@ const ProductDetailPage = () => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
   const [comments, setComments] = useState([])
-  const { isLoggedIn, setIsLoggedIn, verifyLogin } = useAuth()
+  const { isLoggedIn, setIsLoggedIn, verifyLogin, user } = useAuth()
+
+  console.log('User:', user)
 
   useEffect(() => {
     verifyLogin() // 在頁面加載時檢查登入狀態
@@ -59,7 +61,9 @@ const ProductDetailPage = () => {
                     apiClient
                       .get(`api/comments/products/${id}`)
                       .then((res) => setComments(res.data))
-                      .catch((err) => console.error('取得更新後的評論失敗', err))
+                      .catch((err) =>
+                        console.error('取得更新後的評論失敗', err)
+                      )
                   }}
                 />
               ) : (
@@ -68,7 +72,11 @@ const ProductDetailPage = () => {
               <CommentsBlock comments={comments} />
             </main>
             <aside className="product-detail-page__aside">
-              <PriceInformation price={product.price} />
+              <PriceInformation
+                price={product.price}
+                productId={product.id}
+                user={user}
+              />
             </aside>
           </div>
         </div>

@@ -4,7 +4,6 @@ const { User, Follower } = require('../models')
 const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 const EXPIRES = process.env.JWT_EXPIRES
 
-
 const userController = {
   registerPage: (req, res) => {
     res.status(200).json({ message: '這是註冊頁面的json' })
@@ -85,8 +84,7 @@ const userController = {
         secure: process.env.NODE_ENV === 'production', // HTTPS only in production
         sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax', // Lax for development
         maxAge: 3600000,
-      });
-
+      })
 
       res.status(200).json({
         message: '登入成功',
@@ -111,13 +109,12 @@ const userController = {
   profile: async (req, res, next) => {
     try {
       if (!req.user) {
-        return res.status(401).json({ message: '未授權，請先登入' });
+        return res.status(401).json({ message: '未授權，請先登入' })
       }
 
       const targetUserId = req.params.userId // 被訪問用戶 ID
       const currentUserId = req.user.id
 
-      
       const user = await User.findByPk(targetUserId, {
         attributes: ['id', 'image', 'name', 'email', 'bio', 'createdAt'],
       })
@@ -146,23 +143,41 @@ const userController = {
     }
   },
   // 檢查用戶的登入狀態的 API 路由
-  verify: (req, res) => {
+  verify: async (req, res) => {
     try {
-      const user = req.user
+      const user = req.user // 假設你有中間件注入 req.user
       if (!user) {
-        return res.status(401).json({ message: '未登入' }) // 返回未登入狀態
+        return res.status(401).json({ message: '未登入' })
       }
+
       const { id: userId, is_admin: isAdmin } = user
 
-      res.status(200).json({ message: '已登入', userId, isAdmin })
+      // 查詢用戶完整信息
+      const userData = await User.findOne({
+        where: { id: userId },
+        attributes: ['id', 'name', 'email', 'is_admin'],
+      })
+
+      if (!userData) {
+        return res.status(404).json({ message: '用戶不存在' })
+      }
+
+      // 返回完整用戶信息
+      res.status(200).json({
+        message: '已登入',
+        userId: userData.id,
+        name: userData.name,
+        email: userData.email,
+        isAdmin: userData.is_admin,
+      })
     } catch (err) {
+      console.error(err)
       res.status(500).json({ message: '伺服器錯誤', error: err.message })
     }
   },
   updateProfile: async (req, res, next) => {
-
-    const path = require('path');
-    const fs = require('fs');
+    const path = require('path')
+    const fs = require('fs')
 
     try {
       const { name, password, bio, image } = req.body
@@ -179,7 +194,10 @@ const userController = {
       // 如果有 base64 圖片，將其解碼並儲存成檔案
       if (image) {
         const base64Data = image.replace(/^data:image\/\w+;base64,/, '')
-        const imagePath = path.join(__dirname, `../uploads/avatars/avatar-${Date.now()}.png`)
+        const imagePath = path.join(
+          __dirname,
+          `../uploads/avatars/avatar-${Date.now()}.png`
+        )
         fs.writeFileSync(imagePath, base64Data, 'base64')
         user.image = `http://localhost:3000/uploads/avatars/${path.basename(imagePath)}`
       }
@@ -192,6 +210,5 @@ const userController = {
     }
   },
 }
-
 
 module.exports = userController
