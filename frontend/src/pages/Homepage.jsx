@@ -10,7 +10,7 @@ import Header from '../components/shared/Header'
 import CampaignCardItem from '../components/shared/CampaignCardItem'
 import ImageCarousel from '../components/shared/ImageCarousel'
 import CardItem from '../components/shared/CardItem'
-import LocationCardItem from '../pages/location/LocationCardIterm'
+import LocationCardItem from '../components/location/LocationCardIterm'
 import Footer from '../components/shared/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faShoppingCart, faCrosshairs } from '@fortawesome/free-solid-svg-icons'
@@ -283,7 +283,7 @@ const Homepage = () => {
                     title={location.name}
                     subtitle={
                       location.description
-                    ?`${location.description.slice(0, 55)}...`
+                    ?`${location.description.slice(0, 70)}...`
                     :'無描述'
                     }
                     id={location.id}

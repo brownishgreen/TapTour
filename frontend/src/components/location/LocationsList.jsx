@@ -1,4 +1,4 @@
-import CardItem from '../../components/shared/CardItem'
+import LocationCardItem from './LocationCardIterm'
 import apiClient from '../../api/apiClient'
 
 const LocationsList = ({ locations }) => {
@@ -6,20 +6,23 @@ const LocationsList = ({ locations }) => {
     <div className="locations-list-wrapper">
       <div className="locations-list">
         {locations.map((location) => (
-          <CardItem
+          <LocationCardItem
             key={location.id}
             buttonText="查看更多"
             image={
               location.images?.length
-                ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${
-                    location.images.find(
-                      (img) => Number(img.id) === Number(location.main_image_id) // 確保 ID 類型匹配
-                    )?.image_url || location.images[0].image_url
-                  }`
+                ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${location.images.find(
+                  (img) => Number(img.id) === Number(location.main_image_id) // 確保 ID 類型匹配
+                )?.image_url || location.images[0].image_url
+                }`
                 : '/default-image.jpg'
             }
             title={location.name}
-            description={location.description}
+            subtitle={
+              location.description
+                ? `${location.description.slice(0, 70)}...`
+                : '無描述'
+            }
             className="card-item"
             id={location.id}
             cardLink={`/locations/${location.id}`}
