@@ -34,7 +34,7 @@ const ActivityForm = ({ mode }) => {
   useEffect(() => {
     apiClient
       .get('api/categories')
-      .then((response) => setCategories(response.data.categories))
+      .then((response) => setCategories(response.data))
       .catch((error) => console.error('獲取分類資料失敗', error))
   }, [])
 
