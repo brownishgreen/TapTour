@@ -1,13 +1,12 @@
-'use strict';
-const { Model } = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class OrderProduct extends Model {
-
+  class OrderedItem extends Model {
     static associate(models) {
       // 沒有額外的直接關聯，因為這是一個中介表
     }
   }
-  OrderProduct.init(
+  OrderedItem.init(
     {
       order_id: {
         type: DataTypes.INTEGER,
@@ -29,14 +28,29 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
+      activity_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Activities',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1, // 預設數量為 1
+      },
     },
     {
       sequelize,
-      modelName: 'OrderProduct',
-      tableName: 'OrderProducts',
+      modelName: 'OrderedItem',
+      tableName: 'OrderedItems',
       underscored: true, // 使用 snake_case 欄位命名
       timestamps: true, // 不需要 createdAt 和 updatedAt
     }
-  );
-  return OrderProduct;
-};
+  )
+  return OrderedItem
+}
