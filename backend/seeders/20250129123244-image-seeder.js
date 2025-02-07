@@ -1322,6 +1322,7 @@ module.exports = {
         image_url: '/uploads/locations/bu-da-pei-si/13-bu-da-pei-si-2.jpg',
         location_id: 13,
         created_at: '2025-01-31 20:18:53',
+        updated_at: '2025-01-31 20:18:53',
       },
       {
         id: 178,
