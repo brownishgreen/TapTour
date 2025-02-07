@@ -20,7 +20,7 @@ const LocationsList = ({ locations }) => {
             title={location.name}
             subtitle={
               location.description
-                ? `${location.description.slice(0, 55)}...`
+                ? `${location.description.slice(0, 70)}...`
                 : '無描述'
             }
             className="card-item"
