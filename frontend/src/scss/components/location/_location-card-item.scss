@@ -1,0 +1,32 @@
+@use '../../abstracts/_variables' as*;
+
+.card-item {
+  position: relative;
+  width: 290px;
+  height: 400px;
+  margin-bottom: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
+  border-radius: 8px 8px 0 0;
+
+  .card-item__top {
+    border-radius: 8px 8px 0 0;
+  }
+
+  img {
+    border-radius: 8px 8px 0 0;
+    object-fit: cover;
+    height: 200px;
+  }
+
+  .card-item__button {
+    position: absolute;
+    bottom: 15px;
+    left: 180px;
+    right: 0;
+  }
+
+  &:hover {
+    transform: scale(1.03);
+  }
+}

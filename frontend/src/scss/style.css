@@ -987,7 +987,7 @@ main {
 }
 
 .comments-section {
-  margin: 60px 15px 0;
+  margin: 10px 15px 0;
 }
 
 .comments-section__title {
@@ -1000,13 +1000,13 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 60px 15px 0;
+  margin: 20px 15px 0;
 }
 
 .create-comment-form__title {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .create-comment-form textarea {
@@ -1018,7 +1018,7 @@ main {
 }
 
 .create-comment-form__button {
-  align-self: flex-end;
+  align-self: flex-start;
   padding: 8px 16px;
   background-color: #54A2C0;
   color: white;
@@ -1562,6 +1562,34 @@ select option {
   border: 0;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-item {
+  position: relative;
+  width: 290px;
+  height: 400px;
+  margin-bottom: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
+  border-radius: 8px 8px 0 0;
+}
+.card-item .card-item__top {
+  border-radius: 8px 8px 0 0;
+}
+.card-item img {
+  border-radius: 8px 8px 0 0;
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 200px;
+}
+.card-item .card-item__button {
+  position: absolute;
+  bottom: 15px;
+  left: 180px;
+  right: 0;
+}
+.card-item:hover {
+  transform: scale(1.03);
 }
 
 .page {
