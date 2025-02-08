@@ -84,32 +84,26 @@ const LocationDetailPage = () => {
             </div>
           </div>
 
+
           {/* 以下未處理 */}
           <div className="location-detail-page__related-wrapper">
             <h3 className="location-detail-page__related-cards-title">
               {' '}
-              相關景點
+              相關活動
             </h3>
             <div className="location-detail-page__related-cards">
-              <RelatedCard
-                title="道頓崛"
-                description="道頓崛位於日本大阪，是美食與娛樂聚集地，以霓虹燈、道頓堀川、格力高廣告牌及美味小吃聞名。"
-                image="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTX5gLkNtSdtwpAqCcympCPUkO0-FLUcxiiiM3PgbPE00iGjBh1X01HyLltLbeEaRSpRNcv-J9Pj1YZOYNECvA4fKzPQ2fn-vv_HS-Mug"
-              />
-            </div>
-            <div className="location-detail-page__related-cards">
-              <RelatedCard
-                title="環球影城"
-                description="環球影城位於大阪，是以電影主題為特色的主題樂園，擁有哈利波特園區、刺激遊樂設施及表演活動。"
-                image="https://i0.wp.com/sosowetalk.com/wp-content/uploads/2023/10/01-1.jpg?resize=732%2C380&ssl=1"
-              />
-            </div>
-            <div className="location-detail-page__related-cards">
-              <RelatedCard
-                title="Osaka Aquarium KAIYUKAN"
-                description="大阪海遊館是日本著名水族館，以巨大中央水槽展示海洋生態，包含鯨鯊、企鵝及多樣水生生物。"
-                image="https://ak-d.tripcdn.com/images/0101212000f6qvubbA8BA.jpg"
-              />
+              {location.activities.map((activity) => (
+                <RelatedCard
+                  activityId={activity.id}
+                  title={activity.name}
+                  description={activity.description.slice(0, 35)+'...'}
+                  image={
+                    activity.images && activity.images.length > 0
+                      ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images[0].image_url}`
+                      : '/default-image.jpg'
+                  }
+                />
+              ))}
             </div>
           </div>
           {/* <div className="location-detail-page__comments-wrapper">
