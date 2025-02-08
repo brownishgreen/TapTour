@@ -1,5 +1,5 @@
 require('dotenv').config() // 載入環境變數
-const { Location, Image } = require('../models')
+const { Location, Image, Activity } = require('../models')
 const axios = require('axios')
 const { downloadGoogleImages } = require('../utils/upload-handler')
 const path = require('path')
@@ -194,11 +194,24 @@ const locationController = {
   getLocationById: async (req, res, next) => {
     try {
       const location = await Location.findByPk(req.params.id, {
-        include: {
-          model: Image,
-          as: 'images',
-          attributes: ['image_url'],
-        },
+        include: [
+          {
+            model: Image,
+            as: 'images',
+            attributes: ['image_url'],
+          },
+          {
+            model: Activity,
+            as: 'activities',
+            include: [
+            {
+              model: Image,
+              as: 'images',
+              attributes: ['image_url'],
+            }
+          ],
+          },
+        ],
       })
 
       if (!location) {

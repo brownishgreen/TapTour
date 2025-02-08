@@ -82,12 +82,12 @@ const activityController = {
       if (isNaN(activityId)) {
         return res.status(400).json({ message: '活動 ID 無效' })
       }
-      const { name, description, location, date, time, price } = req.body
+      const { name, description, location_id, category_id, time_duration, price } = req.body
       const activity = await Activity.findByPk(Number(activityId))
       if (!activity) {
         return res.status(404).json({ message: '活動不存在' })
       }
-      await activity.update({ name, description, location, date, time, price })
+      await activity.update({ name, description, location_id, category_id, time_duration, price })
       res.status(200).json({ message: '活動更新成功' })
     } catch (err) {
       next(err)
