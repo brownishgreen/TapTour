@@ -128,8 +128,8 @@ main {
   align-items: center;
 }
 
-.form-label {
-  flex: 0 0 80px;
+.payment-form-label {
+  flex: 0 0 120px;
   text-align: right;
   margin-right: 20px;
   font-size: 1.2rem;
@@ -137,15 +137,15 @@ main {
   color: #444444;
 }
 
-.form-input {
-  width: 70%;
+.payment-form-input {
+  width: 60%;
   padding: 0.8rem;
   border: 1.5px solid #54A2C0;
   border-radius: 5px;
   font-size: 1rem;
   background-color: #ffffff;
 }
-.form-input:focus {
+.payment-form-input:focus {
   border-color: #3d8ca5;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
@@ -491,6 +491,10 @@ main {
 }
 .card-item .card-item__top {
   border-radius: 8px 8px 0 0;
+}
+.card-item .card-item__button-subtitle {
+  font-size: 14px;
+  margin-top: 10px;
 }
 .card-item img {
   border-radius: 8px 8px 0 0;
@@ -1590,6 +1594,35 @@ select option {
 }
 .card-item:hover {
   transform: scale(1.03);
+}
+
+.payment-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+.payment-title h3 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.form-label {
+  flex: 0 0 80px;
+  text-align: right;
+  margin-right: 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #444444;
+}
+
+.form-input {
+  width: 80%;
+  padding: 0.8rem;
+  border: 1.5px solid #54A2C0;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #ffffff;
 }
 
 .page {

@@ -36,6 +36,8 @@
 @use './components/location/location-page-introduction';
 @use './components/location/location-card-item';
 
+@use './components/order/payment';
+
 @use './pages/user/page';
 @use './pages/user/profile';
 @use './pages/user/admin';
