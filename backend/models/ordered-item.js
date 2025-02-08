@@ -3,7 +3,18 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class OrderedItem extends Model {
     static associate(models) {
-      // 沒有額外的直接關聯，因為這是一個中介表
+      OrderedItem.belongsTo(models.Order, {
+        foreignKey: 'order_id',
+        as: 'order',
+      })
+      OrderedItem.belongsTo(models.Product, {
+        foreignKey: 'product_id',
+        as: 'product',
+      })
+      OrderedItem.belongsTo(models.Activity, {
+        foreignKey: 'activity_id',
+        as: 'activity',
+      })
     }
   }
   OrderedItem.init(

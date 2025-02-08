@@ -2,7 +2,7 @@ import { useState } from 'react'
 import apiClient from '../api/apiClient'
 import { useNavigate } from 'react-router-dom'
 
-const PriceInformation = ({ price, productId, user }) => {
+const PriceInformation = ({ price, productId, activityId, user }) => {
   const navigate = useNavigate()
   const [date, setDate] = useState('')
   const [people, setPeople] = useState(1)
@@ -10,8 +10,8 @@ const PriceInformation = ({ price, productId, user }) => {
   const [message, setMessage] = useState('')
 
   const handleBooking = async () => {
-    if (!user || !user.id || !user.name || !user.email) {
-      setMessage('用戶資料不完整或未登入')
+    if (!user || !user.id) {
+      setMessage('請先登入後再進行預訂。')
       return
     }
 
@@ -23,13 +23,22 @@ const PriceInformation = ({ price, productId, user }) => {
     setLoading(true)
     setMessage('')
 
+    // 動態組裝 productIds 和 activityIds
+    const productIds = productId ? [productId] : []
+    const activityIds = activityId ? [activityId] : []
+    if (!productIds.length && !activityIds.length) {
+      setMessage('請至少選擇一個產品或活動。')
+      return
+    }
+
     try {
-      const response = await apiClient.post('api/orders/product', {
+      const response = await apiClient.post('api/orders/create', {
         userId: user.id,
-        name: user.name,
-        email: user.email,
-        productIds: [productId],
+        productIds,
+        activityIds,
         total_amount: price * people,
+        chosen_date: date,
+        quantities: Array(productIds.length + activityIds.length).fill(people),
       })
 
       console.log('成功建立訂單:', response)
@@ -44,7 +53,6 @@ const PriceInformation = ({ price, productId, user }) => {
       setLoading(false)
     }
   }
-
 
   return (
     <div className="price-information">

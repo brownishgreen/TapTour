@@ -7,12 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Order 與 User 建立關聯
       Order.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' })
-      // Order 與 Product 通過 OrderedItem 建立多對多關聯
-      Order.belongsToMany(models.Product, {
-        through: models.OrderedItem,
+
+      Order.hasMany(models.OrderedItem, {
         foreignKey: 'order_id',
-        otherKey: 'product_id',
-        as: 'products',
+        as: 'orderedItems',
       })
     }
   }
