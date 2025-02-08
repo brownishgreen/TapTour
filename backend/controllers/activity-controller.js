@@ -143,7 +143,7 @@ const activityController = {
         })
       }
     } catch (err) {
-      console.error('商品創建失敗', err)
+      console.error('活動創建失敗', err)
       next(err)
     }
   },
