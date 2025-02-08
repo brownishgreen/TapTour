@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
       Activity.belongsTo(models.Category, { foreignKey: 'category_id', as: 'category' });
       Activity.hasMany(models.Image, { foreignKey: 'activity_id', as: 'images' });
       Activity.hasMany(models.Comment, { foreignKey: 'activity_id', as: 'comments' });
+      Activity.belongsToMany(models.Order, {
+        through: models.OrderedItem,
+        foreignKey: 'activity_id',
+        otherKey: 'order_id',
+        as: 'orders',
+      })
     }
   }
   Activity.init(

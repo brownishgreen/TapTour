@@ -47,7 +47,7 @@ function App() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
 
-          <Route path="/payment/:id" element={<PaymentPage />} />
+          <Route path="/payment/:orderId" element={<PaymentPage />} />
           {/* Product 傳入 mode='create' */}
           <Route
             path="/products/create"

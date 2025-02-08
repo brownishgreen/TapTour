@@ -17,7 +17,7 @@ const ActivityDetailPage = () => {
   const { id } = useParams()
   const [activity, setActivity] = useState(null)
   const [comments, setComments] = useState([])
-  const { isLoggedIn, setIsLoggedIn, verifyLogin } = useAuth()
+  const { isLoggedIn, setIsLoggedIn, verifyLogin, user } = useAuth()
 
   useEffect(() => {
     verifyLogin()
@@ -51,7 +51,9 @@ const ActivityDetailPage = () => {
           <div className="activity-detail-page__wrapper">
             <main className="activity-detail-page__main">
               <DetailPageIntroduction introduction={activity.description} />
-              <ActivityDetailIntroduction timeDuration={activity.time_duration} />
+              <ActivityDetailIntroduction
+                timeDuration={activity.time_duration}
+              />
               {isLoggedIn ? (
                 <CreateCommentForm
                   entityId={activity.id}
@@ -60,7 +62,9 @@ const ActivityDetailPage = () => {
                     apiClient
                       .get(`api/comments/activities/${id}`)
                       .then((res) => setComments(res.data))
-                      .catch((err) => console.error('取得更新後的評論失敗', err))
+                      .catch((err) =>
+                        console.error('取得更新後的評論失敗', err)
+                      )
                   }}
                 />
               ) : (
@@ -69,7 +73,11 @@ const ActivityDetailPage = () => {
               <CommentsBlock comments={comments} />
             </main>
             <aside className="activity-detail-page__aside">
-              <PriceInformation price={activity.price} />
+              <PriceInformation
+                price={activity.price}
+                activityId={activity.id}
+                user={user}
+              />
             </aside>
           </div>
         </div>
