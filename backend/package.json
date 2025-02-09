@@ -25,6 +25,8 @@
     "pinyin": "^4.0.0-alpha.2",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
