@@ -1,14 +1,16 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect} from 'react'
 import apiClient from '../../api/apiClient'
-const ProductForm = ({ mode }) => {
+import SuccessModal from '../modal/SuccessModal'
+import ErrorModal from '../modal/ErrorModal'
 
+const ProductForm = ({ mode }) => {
   const navigate = useNavigate()
 
   console.log('Received mode:', mode)
 
   const { id } = useParams()
-  const productId = Number(id) || null;
+  const productId = Number(id) || null
   const isEditMode = mode === 'edit' // 判斷模式
   const [categories, setCategories] = useState([])
   const [formData, setFormData] = useState({
@@ -17,19 +19,24 @@ const ProductForm = ({ mode }) => {
     location_id: '',
     description: '',
     category_id: '',
-    images: []
+    images: [],
   })
+  // Modal 狀態
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   // 如果 mode 是 edit，則從後端獲取商品資料
   useEffect(() => {
     if (isEditMode && productId) {
-      console.log("Fetching data for edit mode with id:", productId)
+      console.log('Fetching data for edit mode with id:', productId)
       apiClient
         .get(`api/products/${productId}`)
         .then((response) => setFormData(response.data))
-        .catch((error) => console.error('獲取商品資料失敗', error));
+        .catch((error) => console.error('獲取商品資料失敗', error))
     }
-  }, [isEditMode, productId]);
+  }, [isEditMode, productId])
 
   // 獲取所有分類
   useEffect(() => {
@@ -45,22 +52,27 @@ const ProductForm = ({ mode }) => {
     const { name, value } = event.target
     setFormData((prev) => ({
       ...prev,
-      [name]: ["price", "category_id"].includes(name) ? Number(value) || 0 : value
+      [name]: ['price', 'category_id'].includes(name)
+        ? Number(value) || 0
+        : value,
     }))
   }
   // 處理圖片上傳
   const handleImageChange = (event) => {
     //只接受圖片格式
-    const files = Array.from(event.target.files).filter(file => file.type.startsWith('image/'))
+    const files = Array.from(event.target.files).filter((file) =>
+      file.type.startsWith('image/')
+    )
 
     if (files.length > 5) {
-      alert('最多只能上傳 5 張圖片');
-      return;
+      setErrorMessage('最多只能上傳 5 張圖片')
+      setShowError(true)
+      return
     }
 
     setFormData((prev) => ({
       ...prev,
-      images: files // 更新圖片到 formData
+      images: files, // 更新圖片到 formData
     }))
 
     console.log('已經選擇圖片數量', files.length)
@@ -70,19 +82,21 @@ const ProductForm = ({ mode }) => {
     const requiredFields = ['name', 'price', 'description', 'category_id']
     for (const field of requiredFields) {
       if (!formData[field]?.toString().trim()) {
-        alert(`${field} 是必填欄位`)
+        setErrorMessage('請填寫所有欄位')
+        setShowError(true)
         return false
       }
     }
     if (formData.images.length === 0) {
-      alert('請至少上傳一張圖片')
+      setErrorMessage('請至少上傳一張圖片')
+      setShowError(true)
       return false
     }
     return true
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     console.log('提交表單時的資料', formData)
 
     if (!validationForm()) {
@@ -90,8 +104,8 @@ const ProductForm = ({ mode }) => {
       return
     }
 
-    const data = new FormData();
-    Object.keys(formData).forEach(key => {
+    const data = new FormData()
+    Object.keys(formData).forEach((key) => {
       if (key === 'images') {
         //逐一上傳圖片
         formData.images.forEach((image) => {
@@ -100,7 +114,7 @@ const ProductForm = ({ mode }) => {
       } else if (formData[key] !== null && formData[key] !== undefined) {
         data.append(key, formData[key])
       }
-    });
+    })
 
     console.log(' Submitting FormData', Array.from(data.entries()))
 
@@ -114,26 +128,39 @@ const ProductForm = ({ mode }) => {
         url,
         data,
         headers: {
-          "Content-Type": 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       })
 
       console.log('Server Response:', response.data)
-      alert(`${isEditMode ? '商品更新' : '建立商品'}成功`)
-      const redirectPath = isEditMode ? `/products/${productId}` : '/products'
-      navigate(redirectPath)
+      setSuccessMessage(`${isEditMode ? '商品更新' : '建立商品'}成功`)
+      setShowSuccess(true)
+
+      setTimeout(() => {
+        const redirectPath = isEditMode ? `/products/${productId}` : '/products'
+        navigate(redirectPath)
+      }, 3000)
     } catch (error) {
       console.error('錯誤:', error.response || error.message)
       console.error('錯誤詳細資訊:', error.response?.data)
-      alert(`${isEditMode ? '商品更新' : '商品建立'}失敗，請檢查錯誤`)
+      setErrorMessage(`${isEditMode ? '商品更新' : '商品建立'}失敗，請檢查錯誤`)
+      setShowError(true)
     }
   }
+
+  const closeAllModals = () => {
+    setShowSuccess(false)
+    setShowError(false)
+  }
+
   return (
     <form className="product-form" onSubmit={handleSubmit}>
       <div className="product-form__form">
         <div className="product-form__form-item">
           <div className="product-form__category">
-            <label htmlFor="category_id" style={{ marginBottom: '10px' }}>商品類別</label>
+            <label htmlFor="category_id" style={{ marginBottom: '10px' }}>
+              商品類別
+            </label>
             <select
               id="category_id"
               name="category_id"
@@ -150,20 +177,40 @@ const ProductForm = ({ mode }) => {
           </div>
 
           <label htmlFor="name">商品名稱</label>
-          <input type="text" id="name" name="name" value={formData.name || ''} onChange={handleInputChange} />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name || ''}
+            onChange={handleInputChange}
+          />
 
           <label htmlFor="price">商品單價</label>
-          <input type="text" id="price" name="price" value={formData.price || ''} onChange={handleInputChange} />
+          <input
+            type="text"
+            id="price"
+            name="price"
+            value={formData.price || ''}
+            onChange={handleInputChange}
+          />
 
           {/* 改下拉式選單給location table */}
           <label htmlFor="location">商品所在景點</label>
-          <input type="text" id="location" name="location" value={formData.location || ''} onChange={handleInputChange} />
-
-
+          <input
+            type="text"
+            id="location"
+            name="location"
+            value={formData.location || ''}
+            onChange={handleInputChange}
+          />
 
           <label htmlFor="description">商品介紹</label>
-          <textarea id="description" name="description" value={formData.description || ''} onChange={handleInputChange} />
-
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description || ''}
+            onChange={handleInputChange}
+          />
 
           <div className="product-form__image-upload">
             <label htmlFor="images">商品圖片（最多 5 張）</label>
@@ -177,10 +224,25 @@ const ProductForm = ({ mode }) => {
             />
           </div>
           <div className="product-form__form-item-button">
-            <button type="submit">{isEditMode ? '更新商品' : '新增商品'}</button>
+            <button type="submit">
+              {isEditMode ? '更新商品' : '新增商品'}
+            </button>
           </div>
         </div>
       </div>
+      {/* 成功訊息的 Modal */}
+      <SuccessModal
+        show={showSuccess}
+        message={successMessage}
+        onClose={closeAllModals}
+      />
+
+      {/* 錯誤訊息的 Modal */}
+      <ErrorModal
+        show={showError}
+        message={errorMessage}
+        onClose={closeAllModals}
+      />
     </form>
   )
 }

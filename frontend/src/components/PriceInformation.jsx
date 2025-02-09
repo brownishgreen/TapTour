@@ -1,33 +1,42 @@
 import { useState } from 'react'
 import apiClient from '../api/apiClient'
 import { useNavigate } from 'react-router-dom'
+import SuccessModal from './modal/SuccessModal'
+import ErrorModal from './modal/ErrorModal'
 
 const PriceInformation = ({ price, productId, activityId, user }) => {
   const navigate = useNavigate()
   const [date, setDate] = useState('')
   const [people, setPeople] = useState(1)
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
+  // Modal 狀態
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleBooking = async () => {
     if (!user || !user.id) {
-      setMessage('請先登入後再進行預訂。')
+      setErrorMessage('請先登入後再進行預訂。')
+      setShowError(true)
       return
     }
 
     if (!date || people < 1) {
-      setMessage('請選擇日期並填寫人數')
+      setErrorMessage('請選擇日期並填寫人數')
+      setShowError(true)
       return
     }
 
     setLoading(true)
-    setMessage('')
+    setErrorMessage('')
 
     // 動態組裝 productIds 和 activityIds
     const productIds = productId ? [productId] : []
     const activityIds = activityId ? [activityId] : []
     if (!productIds.length && !activityIds.length) {
-      setMessage('請至少選擇一個產品或活動。')
+      setErrorMessage('請至少選擇一個產品或活動。')
+      setShowError(true)
       return
     }
 
@@ -42,16 +51,26 @@ const PriceInformation = ({ price, productId, activityId, user }) => {
       })
 
       console.log('成功建立訂單:', response)
-      setMessage('訂單建立成功!')
+      setSuccessMessage('訂單建立成功!')
+      setShowSuccess(true)
+
       const orderId = response.data.orderId // 從後端獲取訂單 ID
-      navigate(`/payment/${orderId}`) // 跳轉到付款頁面
+      setTimeout(() => {
+        navigate(`/payment/${orderId}`) // 跳轉到付款頁面
+      }, 2000)
     } catch (error) {
       console.error('訂單建立失敗:', error)
-      setMessage('訂單建立失敗，請稍後再試')
-      alert('無法完成訂單，請稍後再試。')
+      setErrorMessage('訂單建立失敗，請稍後再試')
+      setShowError(true)
+
     } finally {
       setLoading(false)
     }
+  }
+
+  const closeAllModals = () => {
+    setShowSuccess(false)
+    setShowError(false)
   }
 
   return (
@@ -104,6 +123,19 @@ const PriceInformation = ({ price, productId, activityId, user }) => {
           </button>
         </div>
       </div>
+      {/* 成功訊息的 Modal */}
+      <SuccessModal
+        show={showSuccess}
+        message={successMessage}
+        onClose={closeAllModals}
+      />
+
+      {/* 錯誤訊息的 Modal */}
+      <ErrorModal
+        show={showError}
+        message={errorMessage}
+        onClose={closeAllModals}
+      />
     </div>
   )
 }
