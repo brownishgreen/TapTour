@@ -541,7 +541,7 @@ module.exports = {
         id: 70,
         image_url:
           '/uploads/locations/zi-you-nv-shen-xiang/2-zi-you-nv-shen-xiang-5.jpg',
-        location_id: 2,
+        location_id: 12,
         created_at: '2025-01-31 18:59:57',
         updated_at: '2025-01-31 18:59:57',
       },
