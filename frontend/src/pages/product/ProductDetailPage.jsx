@@ -19,8 +19,6 @@ const ProductDetailPage = () => {
   const [comments, setComments] = useState([])
   const { isLoggedIn, setIsLoggedIn, verifyLogin, user } = useAuth()
 
-  console.log('User:', user)
-
   useEffect(() => {
     verifyLogin() // 在頁面加載時檢查登入狀態
     const fetchProductAndComments = async () => {
@@ -37,6 +35,19 @@ const ProductDetailPage = () => {
     }
     fetchProductAndComments()
   }, [id, verifyLogin])
+
+  const handleNewComment = async (newComment) => {
+    setComments((prevComments) => [newComment, ...prevComments])
+
+    apiClient
+      .get(`api/comments/products/${id}`)
+      .then((response) => setComments(response.data))
+      .catch((err) => console.error('取得更新後的評論失敗', err))
+  }
+
+  const handleCommentDeleted = (commentId) => {
+    setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId))
+  }
 
   return (
     <div className="product-detail-page">
@@ -57,19 +68,12 @@ const ProductDetailPage = () => {
                 <CreateCommentForm
                   entityId={product.id}
                   entityType="product"
-                  onCommentAdded={() => {
-                    apiClient
-                      .get(`api/comments/products/${id}`)
-                      .then((res) => setComments(res.data))
-                      .catch((err) =>
-                        console.error('取得更新後的評論失敗', err)
-                      )
-                  }}
+                  onCommentAdded={handleNewComment}
                 />
               ) : (
                 <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
               )}
-              <CommentsBlock comments={comments} />
+              <CommentsBlock comments={comments} onCommentDeleted={handleCommentDeleted} />
             </main>
             <aside className="product-detail-page__aside">
               <PriceInformation
