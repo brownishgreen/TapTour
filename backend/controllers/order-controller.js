@@ -61,12 +61,16 @@ const ordersController = {
         where: { user_id: userId },
         include: [
           {
-            model: Product,
-            as: 'products', // 與模型定義中的別名一致
-          },
-          {
-            model: Activity,
-            as: 'activities', // 與模型定義中的別名一致
+            model: OrderedItem,
+            as: 'orderedItems',
+            include: [
+              { model: Product, as: 'product', attributes: ['name', 'price'] },
+              {
+                model: Activity,
+                as: 'activity',
+                attributes: ['name', 'price'],
+              },
+            ],
           },
         ],
         order: [['createdAt', 'DESC']],
@@ -76,7 +80,19 @@ const ordersController = {
         return res.status(404).json({ message: '沒有找到相關訂單' })
       }
 
-      res.status(200).json(orders)
+       const orderDetails = orders.map((order) => ({
+         orderId: order.id,
+         uuid: order.uuid,
+         createdAt: order.createdAt,
+         totalAmount: order.total_amount,
+         items: order.orderedItems.map((item) => ({
+           name: item.product ? item.product.name : item.activity.name,
+           quantity: item.quantity,
+           price: item.product ? item.product.price : item.activity.price,
+         })),
+       }))
+
+      res.status(200).json(orderDetails)
     } catch (error) {
       res.status(500).json({ message: '伺服器錯誤，查詢訂單失敗' })
       next(error)

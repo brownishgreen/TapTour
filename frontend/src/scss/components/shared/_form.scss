@@ -20,8 +20,8 @@
   align-items: center;
 }
 
-.form-label {
-  flex: 0 0 80px;
+.payment-form-label {
+  flex: 0 0 120px;
   text-align: right;
   margin-right: 20px;
   font-size: $font-size-large;
@@ -29,8 +29,8 @@
   color: $text-color;
 }
 
-.form-input {
-  width: 70%;
+.payment-form-input {
+  width: 60%;
   padding: 0.8rem;
   border: 1.5px solid $primary-color;
   border-radius: 5px;

@@ -72,8 +72,8 @@ const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/orders">
-                      歷史訂單
+                    <Link className="dropdown-item" to={`/orders/${userId}`}>
+                    歷史訂單
                     </Link>
                   </li>
                   {isAdmin && (
