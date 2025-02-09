@@ -1,6 +1,8 @@
 import UsersTable from './UsersTable'
 import LocationsTable from './LocationsTable'
 import ActivitiesTable from './ActivitiesTable'
+import ProductsTable from './ProductsTable'
+
 
 const Admin = () => {
   return (
@@ -44,9 +46,9 @@ const Admin = () => {
         <li className="nav-item">
           <button
             className="nav-link"
-            id="activities-tab"
+            id="products-tab"
             data-bs-toggle="tab"
-            data-bs-target="#activities"
+            data-bs-target="#products"
           >
             產品管理
           </button>
@@ -63,6 +65,9 @@ const Admin = () => {
         </div>
         <div className="tab-pane fade" id="activities">
           <ActivitiesTable />
+        </div>
+        <div className="tab-pane fade" id="products">
+          <ProductsTable />
         </div>
       </div>
     </div>
