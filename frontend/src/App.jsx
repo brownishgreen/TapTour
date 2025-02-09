@@ -21,6 +21,8 @@ import CreateLocation from './pages/location/CreateLocation'
 import EditLocation from './pages/location/EditLocation'
 import ProfileEditPage from './pages/users/ProfileEditPage'
 import PaymentPage from './pages/order/PaymentPage'
+import HistoryOrdersPage from './pages/order/HistoryOrdersPage'
+
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/context/AuthContext'
 
@@ -48,6 +50,8 @@ function App() {
           <Route path="/products/:id" element={<ProductDetailPage />} />
 
           <Route path="/payment/:orderId" element={<PaymentPage />} />
+          <Route path="/orders/:userId" element={<HistoryOrdersPage />} />
+
           {/* Product 傳入 mode='create' */}
           <Route
             path="/products/create"
