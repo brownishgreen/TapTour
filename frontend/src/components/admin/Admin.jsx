@@ -5,7 +5,7 @@ import ActivitiesTable from './ActivitiesTable'
 const Admin = () => {
   return (
     <div>
-      <div className="backstage-management-header">
+      <div className="main-title">
         <h3>後台管理</h3>
       </div>
 

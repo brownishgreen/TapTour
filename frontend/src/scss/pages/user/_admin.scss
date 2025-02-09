@@ -7,7 +7,7 @@ table {
   table-layout: auto; /* 固定表格佈局，讓列寬度一致 */
 }
 
-.backstage-management-header {
+.main-title {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,4 +76,9 @@ select {
 
 .nav-link {
   color:rgb(127, 127, 127)
+}
+
+th.quantity-header, td.quantity-cell {
+   text-align: center; /* 文字置中 */
+  vertical-align: middle; /* 垂直居中對齊 */
 }

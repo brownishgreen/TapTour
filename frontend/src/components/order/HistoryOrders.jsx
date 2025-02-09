@@ -47,27 +47,49 @@ const HistoryOrdersPage = () => {
 
   return (
     <div>
-      <h3>歷史訂單</h3>
+      <div className="main-title">
+        <h3>歷史訂單</h3>
+      </div>
       {orders.length === 0 ? (
         <p>目前尚無歷史訂單。</p>
       ) : (
-        <ul>
-          {orders.map((order) => (
-            <li key={order.orderId}>
-              <p>訂單編號: {order.uuid}</p>
-              <p>建立日期: {new Date(order.createdAt).toLocaleString()}</p>
-              <p>總金額: NT$ {order.totalAmount}</p>
-              <ul>
-                {order.items.map((item, index) => (
-                  <li key={index}>
-                    商品名稱: {item.name}，數量: {item.quantity}，單價: NT${' '}
-                    {item.price}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>訂單編號</th>
+
+              <th>商品名稱</th>
+              <th style={{ minWidth: '180px' }}>單價</th>
+              <th style={{ maxWidth: '80px' }}>數量</th>
+              <th>總金額</th>
+              <th>建立日期</th>
+              <th style={{ minWidth: '100px' }}>訂單狀態</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) =>
+              order.items.map((item, index) => (
+                <tr key={`${order.orderId}-${index}`}>
+                  <td title={order.uuid}>
+                    {index === 0 ? `${order.uuid.substring(0, 8)}...` : ''}
+                  </td>
+
+                  <td>{item.name}</td>
+                  <td>NT$ {item.price}</td>
+
+                  <td>{item.quantity}</td>
+                  <td>{index === 0 ? `NT$ ${order.totalAmount}` : ''}</td>
+                  <td>
+                    {index === 0
+                      ? new Date(order.createdAt).toLocaleString()
+                      : ''}
+                  </td>
+                  <td>待確認</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       )}
     </div>
   )
