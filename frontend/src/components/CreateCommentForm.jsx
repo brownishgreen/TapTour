@@ -17,16 +17,6 @@ const CreateCommentForm = ({ entityId, entityType, onCommentAdded}) => {
       return;
     }
 
-    // 模擬新留言資料
-    const newComment = {
-      id: Date.now(), //temporary id
-      content: commentContent,
-      user_id: user.id,
-      userImage: user.image,
-      userName: user.name,
-      createdAt: new Date().toISOString(),
-    }
-
     setLoading(true)
 
     try {
@@ -40,15 +30,15 @@ const CreateCommentForm = ({ entityId, entityType, onCommentAdded}) => {
       // 從後端返回的最新留言資料
       const createdComment = response.data
 
-      // 更新到本地狀態並即時顯示
+      // 樂觀更新：先更新畫面，立即顯示新評論
       onCommentAdded({
         ...createdComment,
-        user_id: { id: user.id, name: user.name },  // 加入用戶資訊
+        user_id: { id: user.id, name: user.name },
         user: { image: user.image },
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       })
       
-      console.log('評論已成功提交')
-
       setCommentContent('')
       setErrorMessage('')
     } catch (err) {

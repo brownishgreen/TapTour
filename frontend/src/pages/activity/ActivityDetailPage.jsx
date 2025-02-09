@@ -39,12 +39,14 @@ const ActivityDetailPage = () => {
   const handleNewComment = async (newComment) => {
     setComments((prevComments) => [newComment, ...prevComments])
 
-    try {
-      const response = await apiClient.get(`api/comments/activities/${id}`)
-      setComments(response.data)
-    } catch (err) {
-      console.error('取得更新後的評論失敗', err)
-    }
+    apiClient
+      .get(`api/comments/activities/${id}`)
+      .then((response) => setComments(response.data))
+      .catch((err) => console.error('取得更新後的評論失敗', err))
+  }
+
+  const handleCommentDeleted = (commentId) => {
+    setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId))
   }
 
   return (
@@ -74,7 +76,7 @@ const ActivityDetailPage = () => {
               ) : (
                 <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
               )}
-              <CommentsBlock comments={comments} />
+              <CommentsBlock comments={comments} onCommentDeleted={handleCommentDeleted} />
             </main>
             <aside className="activity-detail-page__aside">
               <PriceInformation

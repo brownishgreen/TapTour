@@ -1,4 +1,6 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 const CommentCard = ({ name, comment, image, timestamp, isAuthor, isAdmin, onDelete }) => {
   return (
@@ -17,19 +19,16 @@ const CommentCard = ({ name, comment, image, timestamp, isAuthor, isAdmin, onDel
             </div>
             <div className="comment-card__comment-header-right">
               <div className="comment-card__comment-header-right-date">
-                <p>{new Date(timestamp).toLocaleString()}</p>
+                <p>寫於  {timestamp}</p>
               </div>
 
-              {/* 刪除按鈕，只有作者或管理員才顯示 */}
-              {(isAuthor || isAdmin) && (
-                <button
-                  onClick={onDelete}
-                  className="delete-button"
-                  aria-label="Delete comment"
-                >
-                  ❌
-                </button>
-              )}
+              <div className="comment-card__comment-header-right-delete">
+                {isAuthor || isAdmin && (
+                  <button onClick={onDelete}>
+                    <FontAwesomeIcon icon={faTrashAlt} /> 刪除
+                  </button>
+                )}
+              </div>
 
             </div>
           </div>

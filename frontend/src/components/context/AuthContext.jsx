@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(true) // 開始加載狀態
     try {
       const response = await apiClient.get('api/users/verify') // 調用後端驗證 API
-      console.log('後端返回的用戶數據:', response.data) // 調試用
       const { userId, isAdmin, name, email } = response.data
 
       // 保存用戶完整資料
