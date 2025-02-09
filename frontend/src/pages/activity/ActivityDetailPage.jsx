@@ -36,6 +36,17 @@ const ActivityDetailPage = () => {
     fetchActivityAndComments()
   }, [id, verifyLogin])
 
+  const handleNewComment = async (newComment) => {
+    setComments((prevComments) => [newComment, ...prevComments])
+
+    try {
+      const response = await apiClient.get(`api/comments/activities/${id}`)
+      setComments(response.data)
+    } catch (err) {
+      console.error('取得更新後的評論失敗', err)
+    }
+  }
+
   return (
     <div className="activity-detail-page">
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
@@ -58,14 +69,7 @@ const ActivityDetailPage = () => {
                 <CreateCommentForm
                   entityId={activity.id}
                   entityType="activity"
-                  onCommentAdded={() => {
-                    apiClient
-                      .get(`api/comments/activities/${id}`)
-                      .then((res) => setComments(res.data))
-                      .catch((err) =>
-                        console.error('取得更新後的評論失敗', err)
-                      )
-                  }}
+                  onCommentAdded={handleNewComment}
                 />
               ) : (
                 <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>

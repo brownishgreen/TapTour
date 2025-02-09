@@ -106,7 +106,7 @@ const ProductForm = ({ mode }) => {
 
     try {
       const url = isEditMode
-        ? `${apiClient.defaults.baseURL}products/${productId}`
+        ? `${apiClient.defaults.baseURL}api/products/${productId}`
         : `${apiClient.defaults.baseURL}api/products`
       const method = isEditMode ? 'put' : 'post'
       const response = await apiClient({
