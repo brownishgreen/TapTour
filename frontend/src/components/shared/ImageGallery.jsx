@@ -6,8 +6,6 @@ const ImageGallery = ({ images }) => {
   }
 
   const underBuildImage = '/assets/images/others/under-build.png'
-
-  console.log(underBuildImage.type)
   return (
     <div className="image-gallery">
       <div className="image-gallery__container">

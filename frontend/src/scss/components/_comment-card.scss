@@ -51,12 +51,26 @@
     font-size: 1rem;
   }
 
-  &__comment-header-right {
+  &__comment-header-right-date {
+    width: 130px;
     position: absolute;
-    right: 15px;
-    top: 5px;
+    right: 6px;
+    top: 60px;
     display: flex;
     justify-content: flex-end;
+    font-size: 0.8rem;
+    color: $secondary-color;
+  }
+
+  &__comment-header-right-delete {
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: $primary-color;
+      font-size: 1rem;
+      font-weight: 400;
+    }
   }
 }
 

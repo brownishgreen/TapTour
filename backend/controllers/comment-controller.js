@@ -79,9 +79,11 @@ const commentController = {
           as: 'user',  // 確保和模型中的別名一致
           attributes: ['name', 'image']  // 只取所需的欄位
         }
-      ]
+        ]
+        
 })
-    res.json(comments)
+      res.json(comments)
+      console.log(comments)
   } catch(err) {
     next(err)
   }

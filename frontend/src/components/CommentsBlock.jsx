@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import CommentCard from './CommentCard'
-const CommentsBlock = ({ comments }) => {
+import { useAuth } from './context/AuthContext'
+import apiClient from '../api/apiClient'
 
 
+const CommentsBlock = ({ comments, onCommentDeleted }) => {
+  const { user, isAdmin } = useAuth()
+
+
+  const handleDelete = async (commentId) => {
+    try {
+      await apiClient.delete(`/api/comments/${commentId}`)
+      onCommentDeleted(commentId)
+    } catch (error) {
+      console.error('刪除評論失敗:', error)
+    }
+  }
 
   return (
     <div className="comments-section">
@@ -11,15 +24,24 @@ const CommentsBlock = ({ comments }) => {
         ? (<p>目前沒有評論</p>)
         : (
           <div className="comments-section__comments">
-            {comments.map((comment) => (
-              <CommentCard
-                key={comment.id}
-                name={comment.user_id.name}
-                comment={comment.content}
-                image={comment.user.image}
-                timestamp={comment.createdAt}
-              />
-            ))}
+            {comments.map((comment) => {
+              if (!comment || !comment.user_id || !comment.user) {
+                console.error('發現不完整的評論資料：', comment)
+                return null
+              }
+              return (
+                <CommentCard
+                  key={comment.id}
+                  name={comment.user.name}
+                  comment={comment.content}
+                  image={comment.user.image}
+                  timestamp={comment.createdAt.toLocaleString().split('T')[0]}
+                  isAuthor={comment.user_id.id === user.id}
+                  isAdmin={isAdmin}
+                  onDelete={() => handleDelete(comment.id)}
+                />
+              )
+            })}
           </div>
         )
       }
