@@ -14,12 +14,14 @@ const SearchBar = () => {
   const showCreateButton = isLoggedIn && isAdmin
 
   const getCreatePagePath = () => {
+    const path = location.pathname.split('/')[1] // 取得第一層路由 (例如 'locations')
     const routes = {
-      '/activities': '/activities/create',
-      '/products': '/products/create',
-      '/locations': '/locations/create',
+      activities: '/activities/create',
+      products: '/products/create',
+      locations: '/locations/create',
     }
-    return routes[location.pathname] || '/' // 如果找不到對應的路徑，回傳 `/`
+
+    return routes[path] || '/' // 如果找不到對應的路徑，回傳 `/`
   }
 
   const handleSearch = (e) => {

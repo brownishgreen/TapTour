@@ -4,7 +4,7 @@ import CreateLocationForm from '../../components/location/CreateLocationForm'
 
 const CreateLocation = () => {
   return (
-    <div className="page">
+    <div className="page location-background">
       <Header />
       <main>
         <CreateLocationForm />

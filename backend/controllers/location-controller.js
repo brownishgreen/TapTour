@@ -204,12 +204,12 @@ const locationController = {
             model: Activity,
             as: 'activities',
             include: [
-            {
-              model: Image,
-              as: 'images',
-              attributes: ['image_url'],
-            }
-          ],
+              {
+                model: Image,
+                as: 'images',
+                attributes: ['image_url'],
+              },
+            ],
           },
         ],
       })
@@ -306,13 +306,10 @@ const locationController = {
     }
   },
   getPaginatedLocations: async (req, res, next) => {
-    // limit 主要是由前端傳入的，但如果前端沒有傳入，後端會使用預設的值
-    // 10代表十進位制，不能隨意改動
-    const page = parseInt(req.query.page, 10) || 1 // 預設為第 1 頁
-    const limit = parseInt(req.query.limit, 10) || 9 // 預設每頁 9 筆
-    const offset = (page - 1) * limit // 計算偏移量，分頁查詢時決定從第幾筆資料開始
+    const page = parseInt(req.query.page, 10) || 1
+    const limit = parseInt(req.query.limit, 10) || 9
+    const offset = (page - 1) * limit
 
-    // 驗證 page 和 limit 是否有效，若無效則返回 400 錯誤
     if (isNaN(page) || isNaN(limit) || page <= 0 || limit <= 0) {
       return res
         .status(400)
@@ -320,7 +317,6 @@ const locationController = {
     }
 
     try {
-      // 獲取活動資料（包含關聯的圖片）
       const locations = await Location.findAll({
         limit,
         offset,
@@ -329,24 +325,36 @@ const locationController = {
           {
             model: Image,
             as: 'images',
-            attributes: ['image_url'], // 僅返回圖片 URL
+            attributes: ['id', 'image_url'], // 確保返回 id 和 image_url
           },
         ],
       })
 
-      // 獲取活動的總數（不包含關聯表，避免多次計算）
-      //  Sequelize 提供的方法，用於計算資料表的總記錄數
       const totalItems = await Location.count()
 
+      const locationsWithMainImage = locations.map((location) => {
+        const mainImage = location.images.find(
+          (image) => image.id === location.main_image_id
+        )
+        return {
+          ...location.toJSON(),
+          main_image_url: mainImage ? mainImage.image_url : null,
+          images: location.images.map((image) => ({
+            id: image.id,
+            image_url: image.image_url,
+          })),
+        }
+      })
+
       res.status(200).json({
-        locations,
+        locations: locationsWithMainImage,
         currentPage: page,
         totalPages: Math.ceil(totalItems / limit),
         totalItems,
       })
     } catch (error) {
-      console.log('分頁獲取活動數據失敗:', error)
-      next(error)
+      console.log('分頁獲取景點數據失敗:', error)
+      res.status(500).json({ message: '伺服器錯誤，無法獲取景點資料' })
     }
   },
 }

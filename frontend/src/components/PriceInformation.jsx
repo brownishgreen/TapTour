@@ -16,8 +16,16 @@ const PriceInformation = ({ price, productId, activityId, user }) => {
   const [errorMessage, setErrorMessage] = useState('')
 
   const handleBooking = async () => {
+    const today = new Date().toISOString().split('T')[0]
+
     if (!user || !user.id) {
       setErrorMessage('請先登入後再進行預訂。')
+      setShowError(true)
+      return
+    }
+
+    if (date < today) {
+      setErrorMessage('請選擇今天或未來的日期')
       setShowError(true)
       return
     }
@@ -91,6 +99,7 @@ const PriceInformation = ({ price, productId, activityId, user }) => {
               className="price-information__date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
+              min={new Date().toISOString().split('T')[0]} // 限制不可選過去日期
             />
             <br />
             <div className="price-information__description-content-title">
