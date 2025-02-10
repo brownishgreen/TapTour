@@ -105,6 +105,25 @@
   z-index: -1;
 }
 
+.location-background {
+  height: auto;
+  background: url("../../../public/assets/images/backgrounds/12turkey.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+  position: relative;
+}
+.location-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(200, 200, 200, 0.5);
+  z-index: -1;
+}
+
 main {
   margin-top: 100px;
 }
@@ -982,16 +1001,27 @@ main {
   left: 110px;
   font-size: 1rem;
 }
-.comment-card__comment-header-right {
+.comment-card__comment-header-right-date {
+  width: 130px;
   position: absolute;
-  right: 15px;
-  top: 5px;
+  right: 6px;
+  top: 60px;
   display: flex;
   justify-content: flex-end;
+  font-size: 0.8rem;
+  color: #575757;
+}
+.comment-card__comment-header-right-delete button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #54A2C0;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 .comments-section {
-  margin: 10px 15px 0;
+  margin: 30px 15px 0;
 }
 
 .comments-section__title {
@@ -1367,6 +1397,7 @@ select option {
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0.9;
 }
 .location-form-container h2 {
   font-size: 30px;
@@ -1675,7 +1706,7 @@ table {
   table-layout: auto; /* 固定表格佈局，讓列寬度一致 */
 }
 
-.backstage-management-header {
+.main-title {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1743,6 +1774,11 @@ select {
 
 .nav-link {
   color: rgb(127, 127, 127);
+}
+
+th.quantity-header, td.quantity-cell {
+  text-align: center; /* 文字置中 */
+  vertical-align: middle; /* 垂直居中對齊 */
 }
 
 .activities-page__main {

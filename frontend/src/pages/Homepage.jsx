@@ -89,7 +89,7 @@ const Homepage = () => {
   const campaigns = [
     {
       id: 1,
-      image: '/assets/images/campaign/campaign-1.jpg',
+      image: '/assets/images/campaign/campaign-1.png',
       name: 'First Slide',    
     },
     {

@@ -61,7 +61,6 @@ const EditLocationForm = () => {
         main_image_id: imageId,
       })
       setMainImageId(imageId) // 更新主要圖片 ID
-      setShowSuccess(true)
     } catch (err) {
       console.error('Failed to set main image:', err)
       setShowError(true)
@@ -116,25 +115,25 @@ const EditLocationForm = () => {
 
   return (
     <div className="location-form-container">
-      <h2>編輯地點資訊</h2>
+      <h2>編輯景點資訊</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name" className="form-label">
-            地點名稱
+            景點名稱
           </label>
           <input
             type="text"
             name="name"
             value={formData.name || ''} // 防止 undefined
             onChange={handleInputChange}
-            placeholder="輸入地點名稱"
+            placeholder="輸入景點名稱"
             className="form-input"
             required
           />
         </div>
         <div className="form-group">
           <label htmlFor="address" className="form-label">
-            地址
+            景點地址
           </label>
           <input
             type="text"
@@ -148,7 +147,7 @@ const EditLocationForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="description" className="form-label">
-            描述
+            景點描述
           </label>
           <textarea
             name="description"

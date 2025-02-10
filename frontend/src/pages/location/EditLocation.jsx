@@ -4,7 +4,7 @@ import EditLocationForm from '../../components/location/EditLocationForm'
 
 const EditLocation = () => {
   return (
-    <div className="page">
+    <div className="page location-background">
       <Header />
       <main>
         <EditLocationForm />
