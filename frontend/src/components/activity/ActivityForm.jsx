@@ -91,7 +91,6 @@ const ActivityForm = ({ mode }) => {
       'location_id',
       'description',
       'category_id',
-      'location_id',
       'time_duration',
     ]
     for (const field of requiredFields) {
