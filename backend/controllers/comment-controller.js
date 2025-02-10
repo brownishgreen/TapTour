@@ -73,15 +73,15 @@ const commentController = {
       const { activityId } = req.params
       const comments = await Comment.findAll({
         where: { activity_id: activityId },
+        order: [['createdAt', 'DESC']],
         include: [
-        {
-          model: User,
-          as: 'user',  // 確保和模型中的別名一致
-          attributes: ['name', 'image']  // 只取所需的欄位
-        }
-        ]
-        
-})
+          {
+            model: User,
+            as: 'user', // 確保和模型中的別名一致
+            attributes: ['name', 'image'], // 只取所需的欄位
+          },
+        ],
+      })
       res.json(comments)
       console.log(comments)
   } catch(err) {
@@ -92,14 +92,16 @@ const commentController = {
   getCommentsByProductId: async (req, res, next) => {
     try {
       const { productId } = req.params
-      const comments = await Comment.findAll({ where: { product_id: productId },
+      const comments = await Comment.findAll({
+        where: { product_id: productId },
+        order: [['createdAt', 'DESC' ]],
         include: [
           {
             model: User,
             as: 'user',
-            attributes: ['name', 'image']
-          }
-        ]
+            attributes: ['name', 'image'],
+          },
+        ],
       })
       res.json(comments)
     } catch (err) {
