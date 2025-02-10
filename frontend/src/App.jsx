@@ -22,7 +22,7 @@ import EditLocation from './pages/location/EditLocation'
 import ProfileEditPage from './pages/users/ProfileEditPage'
 import PaymentPage from './pages/order/PaymentPage'
 import HistoryOrdersPage from './pages/order/HistoryOrdersPage'
-
+import ScrollToTop from './components/ScrollToTop'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/context/AuthContext'
 
@@ -33,6 +33,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
+        <ScrollToTop />
         <Routes>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
