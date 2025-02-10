@@ -6,13 +6,11 @@ import ErrorModal from '../modal/ErrorModal'
 
 const ProductForm = ({ mode }) => {
   const navigate = useNavigate()
-
-  console.log('Received mode:', mode)
-
   const { id } = useParams()
   const productId = Number(id) || null
   const isEditMode = mode === 'edit' // 判斷模式
   const [categories, setCategories] = useState([])
+  const [locations, setLocations] = useState([])
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -47,12 +45,20 @@ const ProductForm = ({ mode }) => {
   }, [])
   // 當 isEdit 或 id 改變時，執行 useEffect
 
+  //獲取所有景點
+  useEffect(() => {
+    apiClient
+      .get('api/locations')
+      .then((response) => setLocations(response.data.locations))
+      .catch((error) => console.error('獲取景點資料失敗', error))
+  }, [])
+
   //更新表單資料
   const handleInputChange = (event) => {
     const { name, value } = event.target
     setFormData((prev) => ({
       ...prev,
-      [name]: ['price', 'category_id'].includes(name)
+      [name]: ['price', 'category_id', 'location_id'].includes(name)
         ? Number(value) || 0
         : value,
     }))
@@ -79,12 +85,18 @@ const ProductForm = ({ mode }) => {
   }
 
   const validationForm = () => {
-    const requiredFields = ['name', 'price', 'description', 'category_id']
+    const requiredFields = [
+      'name',
+      'price',
+      'description',
+      'category_id',
+      'location_id',
+    ]
     for (const field of requiredFields) {
       if (!formData[field]?.toString().trim()) {
         setErrorMessage('請填寫所有欄位')
         setShowError(true)
-        return false
+        return
       }
     }
     if (formData.images.length === 0) {
@@ -194,15 +206,20 @@ const ProductForm = ({ mode }) => {
             onChange={handleInputChange}
           />
 
-          {/* 改下拉式選單給location table */}
-          <label htmlFor="location">商品所在景點</label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={formData.location || ''}
+          <label htmlFor="location_id">商品所在景點</label>
+          <select
+            id="location_id"
+            name="location_id"
+            value={formData.location_id}
             onChange={handleInputChange}
-          />
+          >
+            <option value="">請選擇景點</option>
+            {locations.map((location) => (
+              <option key={location.id} value={location.id}>
+                {location.name}
+              </option>
+            ))}
+          </select>
 
           <label htmlFor="description">商品介紹</label>
           <textarea
