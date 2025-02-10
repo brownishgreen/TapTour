@@ -74,4 +74,4 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2025  [@Ryan5381 \/ @brownishgreen]( https://github.com/Ryan5381 / https://github.com/brownishgreen ).
+Copyright © 2025  [@Ryan5381 \/ @brownishgreen]
