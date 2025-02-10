@@ -77,12 +77,12 @@ const productController = {
       if (isNaN(productId)) {
         return res.status(400).json({ message: "商品 ID 無效" });
       }
-      const { name, description, location, date, price } = req.body
+      const { name, description, location_id, price, category_id } = req.body
       const product = await Product.findByPk(Number(productId))
       if (!product) {
         return res.status(404).json({ message: '商品不存在' })
       }
-      await product.update({ name, description, location, date, price })
+      await product.update({ name, description, location_id, price, category_id })
       res.status(200).json({ message: '商品更新成功' })
     } catch (err) {
       next(err)
@@ -97,10 +97,10 @@ const productController = {
   },
   createProduct: async (req, res, next) => {
     try {
-      const { name, description, price, category_id } = req.body
+      const { name, description, price, category_id, location_id } = req.body
 
       // 確保所有必填欄位都已提供
-      if (!name || !description || !price|| !category_id) {
+      if (!name || !description || !price|| !category_id || !location_id) {
         return res.status(400).json({ message: '必須提供商品名稱、描述、價格、類別' });
       }
 
@@ -110,6 +110,7 @@ const productController = {
         description,
         price,
         category_id,
+        location_id,
       })
 
       let imageUrls = []
