@@ -1,14 +1,13 @@
-@use '../../abstracts/_variables' as*;
-@use '../../abstracts/_mixins' as*;
-
+@use '../../abstracts/_variables' as *;
+@use '../../abstracts/_mixins' as *;
 
 .form-actions {
-  text-align: center; /* 讓內容水平置中 */
+  text-align: center;
   margin-top: $spacing-md;
 
   .login-link {
     margin: 10px 0;
-    font-size: $font-size-small;
+    font-size: 1rem; // 預設手機版較大，避免字體太小
     color: $gray-dark;
 
     a {
@@ -19,12 +18,17 @@
         text-decoration: underline;
       }
     }
+
+    // 📲 平板 (768px 以上)
+    @media (min-width: 768px) {
+      font-size: $font-size-small; // 平板以上縮小字體
+    }
   }
 
   .divider {
     display: flex;
     align-items: center;
-    margin: 20px 0;
+    margin: 10px 0; // 預設手機版縮小間距
     font-size: $font-size-base;
     color: $text-color;
     font-weight: $font-weight-bold;
@@ -35,14 +39,32 @@
       flex: 1;
       height: 1px;
       background-color: $secondary-color;
-      margin: 0 20px;
+      margin: 0 10px; // 手機版縮小
+    }
+
+    @media (min-width: 768px) {
+      margin: 20px 0;
+      &::before,
+      &::after {
+        margin: 0 20px;
+      }
+    }
+
+    @media (min-width: 992px) {
+      margin: 25px 0; 
+      font-size: 1.1rem; // 字體略大
+    }
+
+    @media (min-width: 1200px) {
+      margin: 30px 0;
+      font-size: 1.2rem; // 大螢幕更大字體
     }
   }
 
   .google-login-button {
     @include flex-center();
     margin: 2rem auto;
-    width: 60%;
+    width: 90%; // 📱 手機版按鈕較寬
     height: 50px;
     padding: 10px 15px;
     background-color: #000;
@@ -63,6 +85,14 @@
       background-color: #ffffff;
       border-radius: 50%;
       padding: 5px;
+    }
+
+    @media (min-width: 768px) {
+      width: 75%; // 平板按鈕稍微縮小
+    }
+
+    @media (min-width: 992px) {
+      width: 60%;
     }
   }
 }

@@ -1,6 +1,9 @@
 @use '../abstracts/_mixins' as *;
 @use '../abstracts/_variables' as *;
 
+body {
+  min-width: 320px; // 限制最小寬度
+}
 
 .home-page-container {
   margin: 0 auto;

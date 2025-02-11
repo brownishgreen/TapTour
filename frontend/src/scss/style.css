@@ -81,6 +81,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
   background-color: rgba(200, 200, 200, 0.5);
   z-index: 1;
 }
@@ -125,26 +126,99 @@
 }
 
 main {
-  margin-top: 100px;
+  width: 100%;
 }
 
 .form-container {
   position: relative;
   background-color: #ffffff;
   opacity: 0.9;
-  width: 500px;
-  margin: 2rem auto 0 auto;
+  width: 90%;
+  max-width: 500px;
+  min-width: 320px;
   padding: 2rem 3rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 3;
+  margin-top: 0 !important;
+}
+@media (min-width: 768px) {
+  .form-container {
+    width: 80%;
+    max-width: 450px;
+  }
+}
+@media (min-width: 992px) {
+  .form-container {
+    width: 60%;
+    max-width: 500px;
+  }
+}
+@media (min-width: 1200px) {
+  .form-container {
+    width: 50%;
+    max-width: 500px;
+  }
 }
 
 .form-group {
-  margin: 2rem 0;
+  margin: 0;
   text-align: left;
   display: flex;
   align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .form-group {
+    flex-direction: row;
+    width: 90%;
+    margin: 2rem 0;
+  }
+}
+
+.form-label {
+  flex: 0 0 80px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #444444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .form-label {
+    text-align: right;
+  }
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1.5px solid #54A2C0;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  max-width: 500px;
+}
+@media (min-width: 768px) {
+  .form-input {
+    width: 95%;
+    max-width: 450px;
+  }
+}
+@media (min-width: 992px) {
+  .form-input {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+@media (min-width: 1200px) {
+  .form-input {
+    width: 85%;
+    max-width: 350px;
+  }
 }
 
 .payment-form-label {
@@ -237,12 +311,12 @@ main {
 }
 
 .form-actions {
-  text-align: center; /* 讓內容水平置中 */
+  text-align: center;
   margin-top: 1rem;
 }
 .form-actions .login-link {
   margin: 10px 0;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #333333;
 }
 .form-actions .login-link a {
@@ -252,10 +326,15 @@ main {
 .form-actions .login-link a:hover {
   text-decoration: underline;
 }
+@media (min-width: 768px) {
+  .form-actions .login-link {
+    font-size: 0.875rem;
+  }
+}
 .form-actions .divider {
   display: flex;
   align-items: center;
-  margin: 20px 0;
+  margin: 10px 0;
   font-size: 1rem;
   color: #444444;
   font-weight: 700;
@@ -265,14 +344,34 @@ main {
   flex: 1;
   height: 1px;
   background-color: #575757;
-  margin: 0 20px;
+  margin: 0 10px;
+}
+@media (min-width: 768px) {
+  .form-actions .divider {
+    margin: 20px 0;
+  }
+  .form-actions .divider::before, .form-actions .divider::after {
+    margin: 0 20px;
+  }
+}
+@media (min-width: 992px) {
+  .form-actions .divider {
+    margin: 25px 0;
+    font-size: 1.1rem;
+  }
+}
+@media (min-width: 1200px) {
+  .form-actions .divider {
+    margin: 30px 0;
+    font-size: 1.2rem;
+  }
 }
 .form-actions .google-login-button {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 2rem auto;
-  width: 60%;
+  width: 90%;
   height: 50px;
   padding: 10px 15px;
   background-color: #000;
@@ -292,6 +391,16 @@ main {
   background-color: #ffffff;
   border-radius: 50%;
   padding: 5px;
+}
+@media (min-width: 768px) {
+  .form-actions .google-login-button {
+    width: 75%;
+  }
+}
+@media (min-width: 992px) {
+  .form-actions .google-login-button {
+    width: 60%;
+  }
 }
 
 .header {
@@ -393,7 +502,6 @@ main {
   width: 100%;
   height: 75px;
   box-shadow: 0 -6px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 100px;
 }
 .footer__links {
   margin-left: 4%;
@@ -1640,24 +1748,6 @@ select option {
   font-weight: 700;
 }
 
-.form-label {
-  flex: 0 0 80px;
-  text-align: right;
-  margin-right: 20px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #444444;
-}
-
-.form-input {
-  width: 80%;
-  padding: 0.8rem;
-  border: 1.5px solid #54A2C0;
-  border-radius: 5px;
-  font-size: 1rem;
-  background-color: #ffffff;
-}
-
 .page {
   display: flex;
   flex-direction: column;
@@ -1977,6 +2067,10 @@ th.quantity-header, td.quantity-cell {
 }
 .location-detail-page__comments-wrapper {
   margin-left: 15px;
+}
+
+body {
+  min-width: 320px;
 }
 
 .home-page-container {
