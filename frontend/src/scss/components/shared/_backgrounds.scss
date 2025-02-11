@@ -4,7 +4,7 @@
 
 .signup-background {
   height: 100vh;
-  background: url('../../../public/assets/images/backgrounds/city-sea.jpg');
+  background: url('/assets/images/backgrounds/city-sea.jpg');
   background-size: cover;
   background-position: center;
   @include flex-center();
@@ -24,7 +24,7 @@
 
 .signin-background {
   height: 100vh;
-  background: url('../../../public/assets/images/backgrounds/taipei.jpg');
+  background: url('/assets/images/backgrounds/taipei.jpg');
   background-size: cover;
   background-position: center;
   @include flex-center();
@@ -43,7 +43,7 @@
 
 .create-activity-background {
   height:auto;
-  background: url('../../../public/assets/images/backgrounds/taipei.jpg');
+  background: url('/assets/images/backgrounds/taipei.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: repeat;
