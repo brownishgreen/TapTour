@@ -100,7 +100,7 @@ const Homepage = () => {
     {
       id: 3,
       image: '/assets/images/campaign/campaign-3.png',
-      name: 'Third Slide',    
+      name: 'Third Slide',
     },
     {
       id: 4,
@@ -110,12 +110,12 @@ const Homepage = () => {
     {
       id: 5,
       image: '/assets/images/campaign/campaign-4.png',
-      name: 'Fifth Slide',    
+      name: 'Fifth Slide',
     },
     {
       id: 6,
       image: '/assets/images/campaign/campaign-6.png',
-      name: 'Sixth Slide',    
+      name: 'Sixth Slide',
     },
     
   ]
