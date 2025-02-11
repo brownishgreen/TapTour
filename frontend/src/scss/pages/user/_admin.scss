@@ -7,6 +7,11 @@ table {
   table-layout: auto; /* 固定表格佈局，讓列寬度一致 */
 }
 
+.admin-page {
+  background: linear-gradient(to right, #dfe9f3, #ffffff); 
+
+}
+
 .main-title {
   display: flex;
   align-items: center;
