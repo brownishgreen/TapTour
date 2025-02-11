@@ -4,7 +4,7 @@ import Admin from '../../components/admin/Admin'
 
 const AdminPage = () => {
   return (
-    <div className="page">
+    <div className="page admin-page">
       <Header />
       <main>
         <Admin />

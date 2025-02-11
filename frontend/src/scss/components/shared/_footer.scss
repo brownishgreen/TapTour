@@ -7,43 +7,32 @@
   background-color: $background-color;
   width: 100%;
   height: 75px;
-  padding-top: 100px;
+  // padding-top: 100px;
   box-shadow: 0 -6px 8px rgba(0, 0, 0, 0.1);
   margin-top: 100px;
 
   &__links {
     margin-left: 4%;
-
-    ul {
-      list-style: none;
-      padding: 0;
-
       a {
         color: $text-color;
         text-decoration: none;
-        font-size: 1.5rem;
-
+        font-size: $font-size-large;
+        font-weight: $font-weight-bold;
+        
         &:hover {
           color: $primary-color;
         }
       }
-    }
-
-    p {
-      color: $gray-light;
-      font-size: 1.2rem;
-    }
   }
 
   &__socials {
     display: flex;
     gap: 1rem;
     margin-right: 4%;
-    margin-bottom: 40px;
 
     a {
       color: $text-color;
-      font-size: 2rem;
+      // font-size: 2rem;
 
       &:hover {
         color: $primary-color;

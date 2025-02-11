@@ -5,19 +5,21 @@ import {
   faFacebook,
   faXTwitter,
 } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 const Footer = () => {
   return (
     <footer className="footer">
       {/*左邊的連結區塊*/}
-      <div className="footer__links">
-        <ul>
-          <li>
-            <a href="#">聯繫我們</a>
-          </li>
-        </ul>
-        <p>COPYRIGHT © TAPTOUR ALL RIGHT RESERVED.</p>
-      </div>
+      <nav className="footer__links">
+        <a href="#">
+          聯繫我們 <FontAwesomeIcon icon={faEnvelope} />
+        </a>
+      </nav>
+
+      <small className="footer__copyright">
+        COPYRIGHT © TAPTOUR ALL RIGHTS RESERVED.
+      </small>
       {/*右邊的SNS LINKS*/}
       <div className="footer__socials">
         <a href="#">
