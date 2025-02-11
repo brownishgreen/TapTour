@@ -132,10 +132,38 @@ const userController = {
         },
       })
 
+      // **查詢 followers（誰在追蹤這個 targetUserId）**
+      const followerRecords = await Follower.findAll({
+        where: { following_id: targetUserId }, // 查找所有追蹤這個用戶的紀錄
+        attributes: ['follower_id'],
+      })
+      const followerIds = followerRecords.map((f) => f.follower_id)
+
+      // **查詢 following（這個 targetUserId 追蹤了誰）**
+      const followingRecords = await Follower.findAll({
+        where: { follower_id: targetUserId }, // 查找這個用戶追蹤了誰
+        attributes: ['following_id'],
+      })
+      const followingIds = followingRecords.map((f) => f.following_id)
+
+      // **查詢 follower 的詳細資料**
+      const followers = await User.findAll({
+        where: { id: followerIds },
+        attributes: ['id', 'name', 'image'],
+      })
+
+      // **查詢 following 的詳細資料**
+      const following = await User.findAll({
+        where: { id: followingIds },
+        attributes: ['id', 'name', 'image'],
+      })
+
       res.json({
         message: '這是受保護的個人檔案頁面，你已成功獲取使用者資料',
         user,
         isFollowing: !!isFollowing,
+        followers, // 直接回傳 followers 陣列
+        following, // 直接回傳 following 陣列
       })
     } catch (err) {
       err.statusCode = err.statusCode || 500

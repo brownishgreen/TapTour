@@ -4,7 +4,6 @@ import {
   faHeart as solidHeart,
   faPen,
   faStreetView,
-  faUserPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'
 import { Card, Button } from 'react-bootstrap'
@@ -18,6 +17,8 @@ const ProfileInfo = ({ userId }) => {
   const [user, setUser] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
+  const [followers, setFollowers] = useState([]) // 追蹤我的人 -列表
+  const [following, setFollowing] = useState([]) // 我正在追蹤的人-列表
   const [isFollowing, setIsFollowing] = useState(false)
   const [followLoading, setFollowLoading] = useState(false)
 
@@ -28,6 +29,8 @@ const ProfileInfo = ({ userId }) => {
           withCredentials: true,
         })
         setUser(response.data.user)
+        setFollowers(response.data.followers) // 設置追蹤者
+        setFollowing(response.data.following) // 設置正在追蹤的列表
         setIsFollowing(response.data.isFollowing || false) // 檢查當前用戶是否已追蹤該用戶，假設後端返回 isFollowing
       } catch (err) {
         setError('無法載入用戶資料')
@@ -216,36 +219,48 @@ const ProfileInfo = ({ userId }) => {
             </div>
           </div>
         </div>
-
         <div className="profile-content__followers">
-          <h5 className="profile-content-title">
-            追蹤者
-            <FontAwesomeIcon icon={faUserPlus} className="icon" />
-          </h5>
-          <div className="profile-content__follower-box">
-            <div className="profile-content__follower-item">
-              <img
-                src="../../public/assets/images/others/default-avatar.jpg"
-                alt="預設追蹤者 1"
-                className="followers"
-              />
-              <p>wilson</p>
+          <div className="profile-content__follow">
+            <h5 className="profile-content-title">
+              追蹤者（{followers.length}）
+            </h5>
+            <div className="profile-content__follower-box">
+              {followers.length === 0 ? (
+                <p>尚無追蹤者</p>
+              ) : (
+                followers.map((follower) => (
+                  <div
+                    key={follower.id}
+                    className="profile-content__follower-item"
+                  >
+                    <img
+                      src={follower.image || '/default-avatar.jpg'}
+                      alt={follower.name}
+                    />
+                    <p>{follower.name}</p>
+                  </div>
+                ))
+              )}
             </div>
-            <div className="profile-content__follower-item">
-              <img
-                src="../../public/assets/images/others/default-avatar.jpg"
-                alt="預設追蹤者 2"
-                className="followers"
-              />
-              <p>andy</p>
-            </div>
-            <div className="profile-content__follower-item">
-              <img
-                src="../../public/assets/images/others/default-avatar.jpg"
-                alt="預設追蹤者 3"
-                className="followers"
-              />
-              <p>candy</p>
+          </div>
+          <div className="profile-content__follow">
+            <h5 className="profile-content-title">
+              正在追蹤（{following.length}）
+            </h5>
+            <div className="profile-content__follower-box">
+              {following.length === 0 ? (
+                <p>尚未追蹤任何人</p>
+              ) : (
+                following.map((f) => (
+                  <div key={f.id} className="profile-content__follower-item">
+                    <img
+                      src={f.image || '/default-avatar.jpg'}
+                      alt={f.name}
+                    />
+                    <p>{f.name}</p>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

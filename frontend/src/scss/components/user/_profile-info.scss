@@ -91,8 +91,7 @@
     display: flex;
     flex-direction: column;
 
-    .profile-content__activities,
-    .profile-content__followers {
+    .profile-content__activities {
       border-radius: 10px;
       margin: 1.5rem;
       padding: 1.5rem;
@@ -114,6 +113,17 @@
         0 -4px 6px rgba(0, 0, 0, 0.1),
         4px 0 6px rgba(0, 0, 0, 0.1),
         -4px 0 6px rgba(0, 0, 0, 0.1); // 四周陰影
+    }
+
+    .profile-content__followers {
+      display: flex;
+      justify-content: space-between; /* 讓左右區塊均勻排列 */
+      gap: 20px; /* 設定左右區塊之間的間距 */
+      flex-wrap: wrap;
+      .profile-content__follow {
+        flex: 1; /* 讓兩個區塊均分空間 */
+        min-width: 250px; /* 設定最小寬度，確保在小螢幕時不會擠壓 */
+      }
     }
     .profile-content__comment-box,
     .profile-content__activities-box
@@ -143,9 +153,11 @@
         justify-content: center;
         text-align: center;
         margin: 1rem;
-      .followers {
-        border-radius: 50%;
-        width: 100px;
+        img {
+          border-radius: 50%;
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
         }
       }
     }
