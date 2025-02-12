@@ -117,8 +117,8 @@ const EditLocationForm = () => {
     <div className="location-form-container">
       <h2>編輯景點資訊</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name" className="form-label">
+        <div className="location-edit-form-group">
+          <label htmlFor="name" className="location-edit-form-label">
             景點名稱
           </label>
           <input
@@ -131,8 +131,8 @@ const EditLocationForm = () => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="address" className="form-label">
+        <div className="location-edit-form-group">
+          <label htmlFor="address" className="location-edit-form-label">
             景點地址
           </label>
           <input
@@ -145,21 +145,9 @@ const EditLocationForm = () => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="description" className="form-label">
-            景點描述
-          </label>
-          <textarea
-            name="description"
-            value={formData.description || ''} // 防止 undefined
-            onChange={handleInputChange}
-            placeholder="輸入描述"
-            className="form-textarea"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="openingHours" className="form-label">
+
+        <div className="location-edit-form-group">
+          <label htmlFor="openingHours" className="location-edit-form-label">
             營業時間
           </label>
           <input
@@ -172,50 +160,48 @@ const EditLocationForm = () => {
             required
           />
         </div>
-        {/* image */}
-        <h2 style={{ marginTop: '3rem', fontSize: '26px' }}>選擇主要圖片</h2>
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '10px',
-            margin: '1rem 0 3rem 0',
-          }}
-        >
-          {images.map((image) => (
-            <div key={image.id} style={{ position: 'relative' }}>
-              <img
-                src={`${apiClient.defaults.baseURL.replace(/\/$/, '')}${image.image_url}`}
-                alt="圖片"
-                style={{
-                  width: '150px',
-                  height: '100px',
-                  border:
-                    image.id === mainImageId
-                      ? '5px solid red'
-                      : '1px solid gray',
-                  cursor: 'pointer',
-                }}
-                onClick={() => handleSetMainImage(image.id)}
-              />
-              {image.id === mainImageId && (
-                <span
-                  style={{
-                    position: 'absolute',
-                    left: '5px',
-                    backgroundColor: 'red',
-                    color: 'white',
-                    fontWeight: '800',
-                    padding: '2px 5px',
-                    fontSize: '18px',
-                  }}
-                >
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
-              )}
-            </div>
-          ))}
+
+        <div className="location-edit-form-group">
+          <label htmlFor="description" className="location-edit-form-label">
+            景點描述
+          </label>
+          <textarea
+            name="description"
+            value={formData.description || ''} // 防止 undefined
+            onChange={handleInputChange}
+            placeholder="輸入描述"
+            className="location-edit-form-textarea"
+            rows={6}
+          />
         </div>
+        {/* image */}
+        <div className="image-selection">
+          <h2>選擇主要圖片</h2>
+          <div className="image-selection__container">
+            {images.map((image) => (
+              <div
+                key={image.id}
+                className={`image-selection__item ${
+                  image.id === mainImageId
+                    ? 'image-selection__item--selected'
+                    : ''
+                }`}
+                onClick={() => handleSetMainImage(image.id)}
+              >
+                <img
+                  src={`${apiClient.defaults.baseURL.replace(/\/$/, '')}${image.image_url}`}
+                  alt="圖片"
+                />
+                {image.id === mainImageId && (
+                  <span>
+                    <FontAwesomeIcon icon={faCheck} />
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* btn */}
         <div className="form-button-group ">
           <button
