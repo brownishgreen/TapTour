@@ -307,7 +307,7 @@ const locationController = {
   },
   getPaginatedLocations: async (req, res, next) => {
     const page = parseInt(req.query.page, 10) || 1
-    const limit = parseInt(req.query.limit, 10) || 9
+    const limit = parseInt(req.query.limit, 10) || 6
     const offset = (page - 1) * limit
 
     if (isNaN(page) || isNaN(limit) || page <= 0 || limit <= 0) {

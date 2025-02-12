@@ -51,7 +51,7 @@ const LocationsPage = () => {
     setError('')
     try {
       const response = await apiClient.get(
-        `/api/locations/paginated?page=${currentPage}&limit=9`
+        `/api/locations/paginated?page=${currentPage}&limit=6`
       )
       const { locations, totalPages } = response.data
       setLocations(locations) // 設置分頁數據
@@ -68,17 +68,17 @@ const LocationsPage = () => {
     {
       src: '/assets/images/backgrounds/5mezpWin6T8.jpg',
       alt: 'First Slide',
-      caption: '走進壯麗高山秘境，遠離喧囂，擁抱自然的純淨與自由',
+      caption: '走進壯麗高山秘境，遠離喧囂，擁抱自然的純淨與自由。',
     },
     {
       src: '/assets/images/backgrounds/streetwindy.jpg',
       alt: 'Second Slide',
-      caption: '探索浮動市集，木屋倒映水波，體驗古樸原始的生活韻味',
+      caption: '探索浮動市集，木屋倒映水波，體驗古樸原始的生活韻味。',
     },
     {
       src: '/assets/images/backgrounds/ituaTXxbrPA.jpg',
       alt: 'Third Slide',
-      caption: '沿著鐵軌探索未知旅程，小鎮風光與遠山城市交織成畫卷',
+      caption: '沿著鐵軌探索未知旅程，小鎮風光與遠山城市交織成畫卷。',
     },
   ]
 

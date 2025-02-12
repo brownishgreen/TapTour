@@ -168,7 +168,7 @@ const activityController = {
     // limit 主要是由前端傳入的，但如果前端沒有傳入，後端會使用預設的值
     // 10代表十進位制，不能隨意改動
     const page = parseInt(req.query.page, 10) || 1 // 預設為第 1 頁
-    const limit = parseInt(req.query.limit, 10) || 9 // 預設每頁 9 筆
+    const limit = parseInt(req.query.limit, 10) || 6 // 預設每頁 6 筆
     const offset = (page - 1) * limit // 計算偏移量，分頁查詢時決定從第幾筆資料開始
 
     // 驗證 page 和 limit 是否有效，若無效則返回 400 錯誤

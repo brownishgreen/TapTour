@@ -2,28 +2,55 @@
 
 .carousel-item img {
   object-fit: cover; // 圖片自適應填充容器
-  height: 500px;     // 固定高度
+  width: 100%;
+  min-width: 300px;
+  height: 50vh;
+  min-height: 350px;
 }
 
 .custom-carousel-caption {
-  width: 1000px;
+  max-width: 1000px; 
+  min-width: 600px; 
+  width: fit-content; // 讓背景只包住內容
+  padding: 10px 20px;
   position: absolute;
   bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(81, 81, 81, 0.8); 
-  padding: 10px 20px; 
-  border-radius: 8px; 
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); 
+  background-color: rgba(81, 81, 81, 0.8);
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  text-align: center;
+
+  @media (max-width: 768px) {
+    min-width: 290px; 
+    width: fit-content; 
+    padding: 8px 15px; 
+  text-align: left;
+  }
+
+  @media (min-width: 769px) and (max-width: 991px) { 
+    min-width: 600px; 
+    width: fit-content; 
+    padding: 8px 15px;
+  }
 }
 
 // 調整 Caption 標題的樣式
 .custom-carousel-caption h3 {
-  color: #f8f9fa; 
-  font-size: 1.5rem; 
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
+  color: #f8f9fa;
+  font-size: 1.3rem;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   margin: 0;
   font-weight: 300;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem; 
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 }
 
 // 背景顏色控制
@@ -42,8 +69,19 @@
 // 自定義上一張、下一張按鈕樣式
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: rgba(0, 0, 0, 0.5); // 半透明黑底
-  border-radius: 50%; // 圓形背景
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
   width: 40px;
   height: 40px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 30px;
+  }
 }

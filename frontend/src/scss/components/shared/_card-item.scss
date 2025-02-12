@@ -2,12 +2,16 @@
 
 .card-item {
   position: relative;
-  width: 290px;
+  width: 100%;
+  max-width: 290px;
   height: 400px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out;
   border-radius: 8px 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .card-item__top {
     border-radius: 8px 8px 0 0;
@@ -16,6 +20,8 @@
   .card-item__button-subtitle {
     font-size: 14px;
     margin-top: 10px;
+    text-align: left;
+     padding-bottom: 20px;
   }
 
   img {
@@ -25,13 +31,22 @@
   }
 
   .card-item__button {
-    position: absolute;
-    bottom: 15px;
-    left: 180px;
-    right: 0;
+    display: flex;
+    justify-content: flex-end; // 讓按鈕靠右
+    margin-top: auto; // 讓按鈕自然推到底部
+  
   }
 
   &:hover {
     transform: scale(1.03);
+  }
+
+  @media (min-width: 768px) {
+    width: 90%;
+    max-width: 390px;
+  }
+
+  @media (min-width: 992px) {
+    width: 390px;
   }
 }
