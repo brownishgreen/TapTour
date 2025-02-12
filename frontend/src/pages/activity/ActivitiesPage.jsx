@@ -45,7 +45,7 @@ const ActivitiesPage = () => {
       } else {
         // 如果沒有搜尋條件，執行分頁 API
         const response = await apiClient.get(
-          `api/activities/paginated?page=${currentPage}&limit=9`
+          `api/activities/paginated?page=${currentPage}&limit=6`
         )
 
         

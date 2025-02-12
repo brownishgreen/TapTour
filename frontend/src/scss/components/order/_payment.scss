@@ -11,21 +11,3 @@
     font-weight: $font-weight-bold;
   }
 }
-
-.form-label {
-  flex: 0 0 80px;
-  text-align: right;
-  margin-right: 20px;
-  font-size: $font-size-large;
-  font-weight: $font-weight-bold;
-  color: $text-color;
-}
-
-.form-input {
-  width: 80%;
-  padding: 0.8rem;
-  border: 1.5px solid $primary-color;
-  border-radius: 5px;
-  font-size: $font-size-base;
-  background-color: $background-color;
-}

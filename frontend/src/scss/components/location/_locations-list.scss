@@ -2,13 +2,25 @@
 
 
 .locations-list-wrapper {
-  width: 70%;
+  width: 50%;
   margin: 3rem auto;
 }
 
+
 .locations-list {
-  @include flex-center;
-  flex-wrap: wrap;
-  gap: 4rem;
-  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: 4rem; // 控制間距
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;
+
+  @media (min-width: 700px) {
+    grid-template-columns: repeat(2, 1fr); // ✅ iPad Mini (768px) 變 2 列
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr); // ✅ 桌機變 3 列，最多 3 個
+  }
 }

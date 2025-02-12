@@ -5,20 +5,93 @@
   position: relative;
   background-color: $background-color;
   opacity: 0.9;
-  width: 500px;
-  margin: 2rem auto 0 auto;
+  width: 90%; // 手機版
+  max-width: 500px;
+  min-width: 320px;
   padding: 2rem 3rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 3;
+  margin-top: 0 !important;
+
+   // 📲 平板 (768px 以上)
+  @media (min-width: 768px) {
+    width: 80%;
+    max-width: 450px; // 限制寬度，避免過寬
+  }
+
+  // 💻 筆電 / 小桌機 (992px 以上)
+  @media (min-width: 992px) {
+    width: 60%;
+    max-width: 500px; // 桌機版維持 500px
+  }
+
+  // 🖥 桌機 / 大螢幕 (1200px 以上)
+  @media (min-width: 1200px) {
+    width: 50%;
+    max-width: 500px; // 避免過寬影響美觀
+  }
 }
 
 .form-group {
-  margin: 2rem 0;
+  margin: 0 ;
   text-align: left;
   display: flex;
   align-items: center;
+  flex-direction: column; // 預設手機版直排
+  width: 100%;
+
+
+  @media (min-width: 768px) {
+    flex-direction: row; // 平板以上水平排列
+    width: 90%;
+    margin: 2rem 0;
+  }
 }
+
+.form-label {
+  flex: 0 0 80px;
+  text-align: center; // 預設手機版置中
+  font-size: $font-size-large;
+  font-weight: $font-weight-bold;
+  color: $text-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;;
+
+  @media (min-width: 768px) {
+    text-align: right; // 平板以上對齊右側
+  }
+}
+
+.form-input {
+  width: 100%; // 📱 手機版填滿
+  padding: 0.8rem;
+  border: 1.5px solid $primary-color;
+  border-radius: 5px;
+  font-size: $font-size-base;
+  background-color: $background-color;
+  max-width: 500px; // 防止超大畫面輸入框過長
+
+  // 📲 平板 (768px 以上)
+  @media (min-width: 768px) {
+    width: 95%;
+    max-width: 450px;
+  }
+
+  // 💻 筆電 / 小桌機 (992px 以上)
+  @media (min-width: 992px) {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  // 🖥 桌機 / 大螢幕 (1200px 以上)
+  @media (min-width: 1200px) {
+    width: 85%;
+    max-width: 350px; // 限制最大寬度，避免過寬
+  }
+}
+
 
 .payment-form-label {
   flex: 0 0 120px;
