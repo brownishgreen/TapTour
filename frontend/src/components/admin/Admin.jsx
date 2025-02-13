@@ -6,11 +6,10 @@ import ProductsTable from './ProductsTable'
 
 const Admin = () => {
   return (
-    <div>
+    <div className="admin-table-container">
       <div className="main-title">
         <h3>後台管理</h3>
       </div>
-
       {/* Tabs navigation */}
       <ul className="nav nav-tabs" id="adminTabs" role="tablist">
         <li className="nav-item">
