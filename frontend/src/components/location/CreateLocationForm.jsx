@@ -97,6 +97,10 @@ const CreateLocationForm = () => {
     }
   }
 
+  const handleCancel = async () => {
+    navigate(-1)
+  }
+
   const closeAllModals = () => {
     setShowSuccess(false)
     setShowError(false)
@@ -106,10 +110,10 @@ const CreateLocationForm = () => {
     <div className="location-form-container">
       <h2>建立景點</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group" style={{ position: 'relative' }}>
-          <label htmlFor="name" className="form-label">
-            地點名稱
-          </label>
+        <div className="location-form-group" style={{ position: 'relative' }}>
+          <p className="location-p">
+            ⨳輸入景點後，會由 GOOGLE 自動帶入相關資料
+          </p>
           <input
             type="text"
             value={name}
@@ -117,10 +121,11 @@ const CreateLocationForm = () => {
               setName(e.target.value)
               handlePlaceSearch(e.target.value)
             }}
-            placeholder="輸入地點名稱"
-            className="form-input"
+            placeholder="輸入景點名稱"
+            className="location-form-input"
             required
           />
+
           {placeSuggestions.length > 0 && (
             <ul className="suggestions-list">
               {placeSuggestions.map((place) => (
@@ -187,25 +192,34 @@ const CreateLocationForm = () => {
                 ))}
               </div>
             )}
-            <div className="form-group">
+            <div className="location-form-group">
               <label htmlFor="description" className="form-label">
-                地點描述
+                景點描述
               </label>
               <textarea
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="輸入地點描述"
-                className="form-input"
+                placeholder="請輸入景點描述..."
+                className="form-textarea"
                 rows="4"
               ></textarea>
             </div>
           </div>
         )}
+        <div className="form-button-group ">
+          <button
+            type="button"
+            className="form-button cancel-button"
+            onClick={handleCancel}
+          >
+            取消
+          </button>
 
-        <button type="submit" disabled={loading} className="form-button">
-          {loading ? '建立中...' : '建立景點'}
-        </button>
+          <button type="submit" disabled={loading} className="form-button">
+            {loading ? '建立中...' : '建立景點'}
+          </button>
+        </div>
       </form>
 
       {/* 成功訊息的 Modal */}

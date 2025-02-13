@@ -37,4 +37,52 @@
       }
     }
   }
+
+     /** 📌 RWD: 平板 (≤ 768px) **/
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem 0;
+    gap: 0.8rem;
+
+    &__links {
+      margin-left: 0;
+      justify-content: center;
+    }
+
+    &__socials {
+      margin-right: 0;
+      justify-content: center;
+    }
+  }
+
+  /** 📌 RWD: 小手機 (≤ 480px) **/
+  @media (max-width: 480px) {
+    padding: 0.8rem 0; // ✅ 再次縮小 padding，避免 footer 佔據太多空間
+    gap: 0.6rem; // ✅ 調整間距，避免過擠
+
+    &__links {
+      flex-direction: column; // ✅ 小手機時連結改為「直向排列」
+      text-align: center;
+      gap: 0.4rem;
+
+      a {
+        font-size: $font-size-base; // ✅ 再縮小字體，提升可讀性
+      }
+    }
+
+    &__copyright {
+      padding: 0.1rem;
+        font-size: 10px; // ✅ 再縮小字體，提升可讀性
+
+    }
+
+    &__socials {
+      gap: 0.6rem;
+
+      a {
+        font-size:  $font-size-base; // ✅ 小手機 icon 也縮小
+      }
+    }
+  }
 }
