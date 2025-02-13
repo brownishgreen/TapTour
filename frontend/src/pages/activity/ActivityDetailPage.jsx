@@ -67,16 +67,6 @@ const ActivityDetailPage = () => {
               <ActivityDetailIntroduction
                 timeDuration={activity.time_duration}
               />
-              {isLoggedIn ? (
-                <CreateCommentForm
-                  entityId={activity.id}
-                  entityType="activity"
-                  onCommentAdded={handleNewComment}
-                />
-              ) : (
-                <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
-              )}
-              <CommentsBlock comments={comments} onCommentDeleted={handleCommentDeleted} />
             </main>
             <aside className="activity-detail-page__aside">
               <PriceInformation
@@ -85,6 +75,18 @@ const ActivityDetailPage = () => {
                 user={user}
               />
             </aside>
+          </div>
+          <div className="activity-detail-page__comments-wrapper">
+            {isLoggedIn ? (
+              <CreateCommentForm
+                entityId={activity.id}
+                entityType="activity"
+                onCommentAdded={handleNewComment}
+              />
+            ) : (
+              <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
+            )}
+            <CommentsBlock comments={comments} onCommentDeleted={handleCommentDeleted} />
           </div>
         </div>
       )}

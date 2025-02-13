@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 20px 15px 0;
+  margin: 20px 15px 0 45px;
 }
 
 .create-comment-form__title {
@@ -14,11 +14,15 @@
 }
 
 .create-comment-form textarea {
-  width: 100%;
+  width: 60%;
   min-height: 100px;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .create-comment-form__button {

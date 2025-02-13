@@ -1,5 +1,6 @@
 @use '../../abstracts/_variables' as*;
 
+
 .activity-detail-page {
   background-color: $background-color;
   min-height: 100vh;
@@ -13,27 +14,62 @@
     margin-top: 120px;
   }
 
-  &__wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-
-  &__main {
-    margin-top: 20px;
-    max-width: 800px;
-    flex: 2;
-  }
-
-  &__aside {
-    flex: 1;
-    max-width: 400px;
-  }
-
   &__button {
     margin-top: 20px;
   }
+
+  .activity-detail-introduction {
+    margin-left: 35px;
+  }
 }
 
+@media (max-width: 992px) {
+  .activity-detail-page {
 
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__main {
+      position: relative;
+      width: 90%;
+
+      @media (max-width: 768px) {
+        width: 90%;
+        margin: 0;
+
+        .activity-detail-introduction {
+          margin-left: 25px;
+        }
+      }
+
+
+
+    }
+
+    &__aside {
+      position: relative;
+      width: 90%;
+      margin: 0 0 40px -38%;
+
+      @media (max-width: 768px) {
+        margin-left: 0;
+      }
+    }
+
+    &__comments-wrapper {
+      width: 90%;
+      margin: 0 auto;
+    }
+
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-page-title {
+    margin-left: 25px;
+    width: 90%;
+  }
+}

@@ -64,7 +64,7 @@ const CommentsBlock = ({ comments, onCommentDeleted }) => {
                 comment={comment.content}
                 image={comment.user.image}
                 timestamp={comment.createdAt.toLocaleString().split('T')[0]}
-                isAuthor={comment.user_id.id === user.id}
+                // isAuthor={comment.user_id === user.id}
                 isAdmin={isAdmin}
                 onDelete={() => confirmDelete(comment.id)}
               />

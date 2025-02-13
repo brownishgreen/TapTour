@@ -5,6 +5,15 @@
   background-color: $background-color;
   min-height: 100vh;
 
+  .detail-page-title {
+    margin-left: 35px;
+  }
+
+  .detail-page-introduction {
+    margin-left: 35px;
+    margin-top: -50px;
+  }
+
   &__container {
     max-width: 1200px;
     margin: 0 auto;
@@ -14,31 +23,44 @@
     margin-top: 120px;
   }
 
-  &__wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-
-  &__title-wrapper {
-    margin-left: 15px;
-    margin-top: 35px;
-    margin-bottom: 35px;
-  }
-
-  &__main {
-    max-width: 800px;
-    flex: 2;
-    margin-top: 20px;
-  }
-
-  &__aside {
-    flex: 1;
-    max-width: 400px;
-  }
-
   &__button {
     margin-top: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .product-detail-page {
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__main {
+      width: 90%;
+      margin-top: 20px;
+      margin-left: -55px;
+
+      @media (max-width: 768px) {
+        margin-left: 0;
+      }
+    }
+
+    &__aside {
+      position: relative;
+      width: 90%;
+      margin: 0 0 40px -38%;
+
+      @media (max-width: 768px) {
+        margin-left: 0;
+      }
+    }
+
+    &__comments-wrapper {
+      width: 90%;
+      margin: 0 auto;
+    }
+
   }
 }
