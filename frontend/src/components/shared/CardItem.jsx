@@ -3,7 +3,7 @@ import { Card, Button } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
-const CardItem = ({ buttonText, image, title, subtitle, cardLink }) => {
+const   CardItem = ({ buttonText, image, title, subtitle, cardLink }) => {
   const location = useLocation()
   const isHomepage = location.pathname === '/'
   return (

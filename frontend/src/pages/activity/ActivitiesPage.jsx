@@ -27,16 +27,17 @@ const ActivitiesPage = () => {
   const fetchActivities = async () => {
     try {
       setError(false) // 重置錯誤狀態
+      let response
       if (searchTerm) {
         // 如果有搜尋條件，執行搜尋 API
-        const response = await apiClient.get(
+        response = await apiClient.get(
           `api/activities?search=${encodeURIComponent(searchTerm)}`
         )
 
         if (response.data.length === 0) {
           // 如果搜尋結果為空，顯示錯誤圖片
           setError(true)
-          setProducts([]) // 清空產品列表
+          setActivities([]) // 清空活動列表
           return
         }
         setActivities(response.data) // 設定搜尋結果
@@ -48,7 +49,7 @@ const ActivitiesPage = () => {
           `api/activities/paginated?page=${currentPage}&limit=6`
         )
 
-        
+
         const { activities, totalPages, totalItems } = response.data
         setActivities(activities) // 設定分頁的活動資料
         setTotalPages(totalPages) // 設定分頁的總頁數
@@ -84,15 +85,15 @@ const ActivitiesPage = () => {
           <div className="activities-page__card-container">
             {activities.map((activity) => (
               <CardItem
-                key={activity?.id}
                 buttonText="深入瞭解"
                 image={
-                  `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity?.images?.[1]?.image_url}` ||
-                  '/default-image.jpg'
+                  activity.images?.length > 0
+                    ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[0]?.image_url}`
+                    : '/default-image.jpg'
                 }
-                title={activity?.name}
-                subtitle={activity.category?.name}
-                description={activity?.description}
+                title={activity?.name || '無標題'}
+                subtitle={activity?.category?.name || '未分類'}
+                description={activity?.description || '無詳細描述'}
                 id={activity?.id}
                 cardLink={`/activities/${activity?.id}`}
               />

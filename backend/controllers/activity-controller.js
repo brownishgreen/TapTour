@@ -31,7 +31,7 @@ const activityController = {
 
       const activities = await Activity.findAll(queryOptions)
 
-      if (activities.lingth === 0) {
+      if (activities.length === 0) {
         return res.status(404).json({ message: '沒有符合條件的景點' })
       }
       res.status(200).json(activities)
@@ -189,6 +189,11 @@ const activityController = {
             model: Image,
             as: 'images',
             attributes: ['image_url'], // 僅返回圖片 URL
+          },
+          {
+            model: Category,
+            as: 'category',
+            attributes: ['name'],
           },
         ],
       })
