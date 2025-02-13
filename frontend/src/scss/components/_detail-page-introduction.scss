@@ -1,35 +1,63 @@
 @use '../abstracts/variables' as *;
 
 .detail-page-introduction {
-  max-width: 700px;
-  margin-left: 15px;
+  width: 100%;  // ✅ 手機預設全寬
+  max-width: 100%;
+  padding: 10px;  // ✅ 手機有內邊距，避免文字貼邊
+  text-align: left; // ✅ 預設手機版文字靠左對齊
 
   &__about {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   &__content {
     margin-top: 10px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.5;
+    text-align: left; // ✅ 讓所有文字靠左顯示
   }
 
   &__more {
     margin-top: 10px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1.5;
     text-decoration-line: underline;
     text-decoration-color: $gray-light;
+    
     &::after {
       content: '';
       display: block;
-      width: 720px;
+      width: 100%;  // ✅ 在手機上寬度滿版
       height: 1px;
       background-color: $gray-light;
       margin-top: 20px;
-
     }
+  }
+
+  // 📌 **平板 (768px 以上)**
+  @media (min-width: 768px) {
+    max-width: 90%; // ✅ 平板稍微縮小
+    margin-left: auto;
+    margin-right: auto;
+
+    &__about {
+      font-size: 1.3rem;
+    }
+
+    &__content {
+      font-size: 1.1rem;
+    }
+
+    &__more {
+      font-size: 1rem;
+    }
+  }
+
+  // 📌 **桌機 (1024px 以上)**
+  @media (min-width: 1024px) {
+    max-width: 700px; // ✅ 限制最大寬度，避免太寬
+    margin-left: 15px;
   }
 }
