@@ -6,7 +6,7 @@ import ProductsTable from './ProductsTable'
 
 const Admin = () => {
   return (
-    <div className="admin-table-container">
+    <div className="table-container">
       <div className="main-title">
         <h3>後台管理</h3>
       </div>
