@@ -3,12 +3,13 @@
 .card-item {
   position: relative;
   width: 100%;
-  max-width: 290px;
+  max-width: 300px;
+  min-width: 300px;
   height: 400px;
   margin-bottom: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out;
-  border-radius: 8px 8px 0 0;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -21,7 +22,7 @@
     font-size: 14px;
     margin-top: 10px;
     text-align: left;
-     padding-bottom: 20px;
+    padding-bottom: 20px;
   }
 
   img {
@@ -34,7 +35,7 @@
     display: flex;
     justify-content: flex-end; // 讓按鈕靠右
     margin-top: auto; // 讓按鈕自然推到底部
-  
+    margin-right: 10px;
   }
 
   &:hover {
