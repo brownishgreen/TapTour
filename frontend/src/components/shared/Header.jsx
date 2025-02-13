@@ -1,15 +1,17 @@
 import logo from '../../assets/images/500.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faCrosshairs, faShoppingCart, faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faCrosshairs, faShoppingCart, faLocationDot, faPeopleGroup, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import apiClient from '../../api/apiClient'
 import { useAuth } from '../context/AuthContext'
-
+import { useState } from 'react'
 const Header = () => {
-  const { isLoggedIn, isLoading, isAdmin, userId, handleAuthSuccess } =
-    useAuth()
+  const {
+    isLoggedIn, isLoading, isAdmin, userId, handleAuthSuccess } = useAuth()
 
   const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false)
+
 
   const handleLogout = async () => {
     try {
@@ -38,18 +40,31 @@ const Header = () => {
               <img src={logo} alt="TapTour Logo" />
               <span>TapTour</span>
             </Link>
-            <nav className="header__nav">
-              <Link to="/activities" className="header__link">
+            {/* 漢堡排按鈕 (手機版) */}
+            <button className="header__menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
+              <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+            </button>
+
+            {/* 導覽選單 (行動裝置會隱藏，點擊漢堡排才展開) */}
+            <nav className={`header__nav ${menuOpen ? 'active' : ''}`}>
+              <Link to="/activities" className="header__link" onClick={() => setMenuOpen(false)}>
                 探索活動 <FontAwesomeIcon icon={faCrosshairs} />
               </Link>
-              <Link to="/products" className="header__link">
+              <Link to="/products" className="header__link" onClick={() => setMenuOpen(false)}>
                 行旅通享 <FontAwesomeIcon icon={faShoppingCart} />
               </Link>
-              <Link to="/locations" className="header__link">
+              <Link to="/locations" className="header__link" onClick={() => setMenuOpen(false)}>
                 特色景點 <FontAwesomeIcon icon={faLocationDot} />
               </Link>
+              <Link to="/about" className="header__link" onClick={() => setMenuOpen(false)}>
+                關於我們 <FontAwesomeIcon icon={faPeopleGroup} />
+              </Link>
             </nav>
+
+
           </div>
+
+
           <div className="header__actions">
             {isLoggedIn ? (
               <div className="dropdown">
@@ -73,7 +88,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link className="dropdown-item" to={`/orders/${userId}`}>
-                    歷史訂單
+                      歷史訂單
                     </Link>
                   </li>
                   {isAdmin && (
@@ -83,11 +98,6 @@ const Header = () => {
                       </Link>
                     </li>
                   )}
-                  <li>
-                    <Link className="dropdown-item" to="/about">
-                      關於我們
-                    </Link>
-                  </li>
                   <li>
                     <button className="dropdown-item" onClick={handleLogout}>
                       登出
