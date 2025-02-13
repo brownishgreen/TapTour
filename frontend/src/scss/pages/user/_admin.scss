@@ -1,16 +1,23 @@
 @use '../../abstracts/_variables' as*;
 
 
+.admin-page {
+  background: linear-gradient(to right, #dfe9f3, #ffffff); 
+}
+
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 10px;
+}
 table {
   width: 100%;
   border-collapse: collapse; /* 去除邊框間距 */
   table-layout: auto; /* 固定表格佈局，讓列寬度一致 */
 }
 
-.admin-page {
-  background: linear-gradient(to right, #dfe9f3, #ffffff); 
 
-}
 
 .main-title {
   display: flex;

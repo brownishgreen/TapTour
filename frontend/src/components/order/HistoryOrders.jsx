@@ -46,7 +46,7 @@ const HistoryOrdersPage = () => {
   }
 
   return (
-    <div>
+    <div className="table-container">
       <div className="main-title">
         <h3>歷史訂單</h3>
       </div>

@@ -115,7 +115,7 @@ const ProfileEdit = () => {
   }
 
   return (
-    <div className="profile-edit-form-container">
+    <div className="profile-edit-form-container form-container ">
       <div className="profile-edit-avatar">
         <img src={image} alt="大頭貼" className="profile-avatar" />
         <span
