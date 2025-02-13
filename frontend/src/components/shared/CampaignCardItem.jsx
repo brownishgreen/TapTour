@@ -3,9 +3,9 @@ import React from 'react'
 
 
 
-const CampaignCardItem = ({ campaign }) => {
+const CampaignCardItem = ({ campaign, className }) => {
   return (
-      <div className="campaign-card">
+      <div className={`campaign-card ${className}`}>
         <img src={campaign.image} alt={campaign.name} />
       </div>
   )
