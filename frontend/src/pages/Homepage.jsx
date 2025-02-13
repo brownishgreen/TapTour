@@ -132,13 +132,13 @@ const Homepage = () => {
         <div className="campaign-card-container">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={-30}
+            spaceBetween={5}
             slidesPerView={3}
             navigation
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
             breakpoints={{
-              640: {
+              320: {
                 slidesPerView: 1,
               },
               768: {
@@ -151,7 +151,10 @@ const Homepage = () => {
           >
             {campaigns.map((campaign) => (
               <SwiperSlide key={campaign.id}>
-                <CampaignCardItem campaign={campaign} />
+                <CampaignCardItem
+                  campaign={campaign}
+                  className="campaign-card"
+                />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -165,13 +168,13 @@ const Homepage = () => {
           <div className="activities-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={-40}
+              spaceBetween={5}
               slidesPerView={3}
               navigation
               pagination={{ clickable: true }}
               autoplay={{ delay: 3000 }}
               breakpoints={{
-                640: {
+                320: {
                   slidesPerView: 1,
                 },
                 768: {
@@ -179,6 +182,7 @@ const Homepage = () => {
                 },
                 1024: {
                   slidesPerView: 3,
+
                 },
               }}
             >
@@ -209,20 +213,23 @@ const Homepage = () => {
           <div className="products-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={-40}
+              spaceBetween={5}
               slidesPerView={3}
               navigation
               pagination={{ clickable: true }}
               autoplay={{ delay: 3000 }}
               breakpoints={{
-                640: {
+                320: {
                   slidesPerView: 1,
+                  spaceBetween: 20,
                 },
                 768: {
                   slidesPerView: 2,
+                  spaceBetween: 20,
                 },
                 1024: {
                   slidesPerView: 3,
+                  spaceBetween: 20,
                 },
               }}
             >
@@ -249,26 +256,29 @@ const Homepage = () => {
           <h2>
             <FontAwesomeIcon icon={faLocationDot} /> 下次旅程必選目的地
           </h2>
-          <p>
+          <p className="homepage-locations-information__description">
             山海相伴、靜謐村莊或充滿歷史氣息的古城，提供休閒與探險的完美平衡，迎接難忘旅程。
           </p>
           <div className="locations-page__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={-40}
+              spaceBetween={5}
               slidesPerView={3}
               navigation
               pagination={{ clickable: true }}
               autoplay={{ delay: 3000 }}
               breakpoints={{
-                640: {
+                320: {
                   slidesPerView: 1,
+                  spaceBetween: 20,
                 },
                 768: {
                   slidesPerView: 2,
+                  spaceBetween: 20,
                 },
                 1024: {
                   slidesPerView: 3,
+                  spaceBetween: 20,
                 },
               }}
             >
