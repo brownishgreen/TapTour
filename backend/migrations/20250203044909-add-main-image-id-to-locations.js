@@ -7,7 +7,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: true,
       references: {
-        model: 'images',
+        model: 'Images',
         key: 'id',
       },
       onUpdate: 'CASCADE', //當 images.id 更新時，main_image_id 也會自動更新

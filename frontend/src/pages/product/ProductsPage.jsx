@@ -85,7 +85,7 @@ const ProductsPage = () => {
                 key={index}
                 buttonText="立刻購買"
                 image={
-                  `${apiClient.defaults.baseURL.replace(/\/$/, '')}${product?.images?.[1]?.image_url}` ||
+                  `${apiClient.defaults.baseURL.replace(/\/$/, '')}${product?.images?.[0]?.image_url}` ||
                   '/default-image.jpg'
                 }
                 title={product?.name}
@@ -105,14 +105,6 @@ const ProductsPage = () => {
           onPageChange={(page) => setCurrentPage(page)}
         />
       )}
-      <div className="products-page__bottom-hero-banner">
-        <HeroBanner
-          className="products-page__hero-banner"
-          imageURL="../src/assets/images/product-page-bottom-hero-banner.jpg"
-          title="以自己的方式探索世界"
-          description="利用「旅程」，探索世界，發現更多可能。"
-        />
-      </div>
       <Footer />
     </div>
   )

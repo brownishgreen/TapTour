@@ -179,6 +179,11 @@ const productController = {
             as: 'images',
             attributes: ['image_url'],
           },
+          {
+            model: Category,
+            as: 'category',
+            attributes: ['name'],
+          },
         ],
       })
 

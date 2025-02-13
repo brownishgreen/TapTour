@@ -11,8 +11,16 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 500px;
+  min-width: 320px;
+  outline: 2px solid $primary-color;
   margin: 30px auto 0;
   z-index: 2;
+
+  //mobile
+  @media (max-width: 768px) {
+    width: 80%;
+    max-width: 450px; // 限制寬度，避免過寬
+  }
 
   h1 {
     margin-bottom: 20px;
