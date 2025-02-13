@@ -185,7 +185,7 @@ main {
   color: #444444;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
 }
 @media (min-width: 768px) {
   .form-label {
@@ -1157,18 +1157,8 @@ main {
   margin-top: 0.5rem;
 }
 
-.profile-edit-form-container {
-  position: relative;
-  background-color: #ffffff;
-  opacity: 0.8;
-  width: 500px;
-  margin: 2rem auto;
-  padding: 2rem 3rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 3;
-}
 .profile-edit-form-container .profile-edit-avatar {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1178,6 +1168,7 @@ main {
      object-fit: cover;
 }
 .profile-edit-form-container .profile-edit-avatar .profile-avatar {
+  position: relative;
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -1186,14 +1177,21 @@ main {
 .profile-edit-form-container .profile-edit-avatar .change-picture {
   background-color: none;
   position: absolute;
-  left: 305px;
-  top: 195px;
-  font-size: 1.2rem;
+  top: 75%;
+  left: 78%;
+  font-size: 1.5rem;
   color: #333333;
 }
 .profile-edit-form-container .profile-edit-avatar .change-picture:hover {
   color: #54A2C0;
   scale: 1.5;
+}
+@media (min-width: 440px) {
+  .profile-edit-form-container .profile-edit-avatar .change-picture {
+    position: absolute;
+    top: 75%;
+    left: 68%;
+  }
 }
 
 .activity-detail-introduction {
@@ -2512,8 +2510,19 @@ th.quantity-header, td.quantity-cell {
   }
 }
 
-body {
-  min-width: 320px;
+h2 {
+  margin-left: 0px;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+h2 svg {
+  margin-right: 10px;
+  color: #54A2C0;
 }
 
 .home-page-container {
@@ -2525,6 +2534,7 @@ body {
 
 .campaign-card-container {
   max-width: 1200px;
+  min-width: 320px;
   height: 300px;
   margin: 0 auto;
   padding: 30px;
@@ -2542,19 +2552,15 @@ body {
   padding: 30px;
   border-radius: 12px;
 }
-.homepage-activities-information h2 {
-  margin-left: 0px;
-  margin-bottom: 20px;
-  font-size: 2rem;
-}
-.homepage-activities-information h2 svg {
-  margin-right: 10px;
-  color: #54A2C0;
-}
 .homepage-activities-information p {
   font-size: 1.5rem;
   color: #666;
   margin-left: 52px;
+}
+@media (max-width: 768px) {
+  .homepage-activities-information p {
+    display: none;
+  }
 }
 
 .homepage-products-information {
@@ -2564,19 +2570,15 @@ body {
   padding: 30px;
   border-radius: 12px;
 }
-.homepage-products-information h2 {
-  margin-left: 0px;
-  margin-bottom: 20px;
-  font-size: 2rem;
-}
-.homepage-products-information h2 svg {
-  margin-right: 10px;
-  color: #54A2C0;
-}
 .homepage-products-information p {
   font-size: 1.5rem;
   color: #666;
   margin-left: 52px;
+}
+@media (max-width: 768px) {
+  .homepage-products-information p {
+    display: none;
+  }
 }
 
 .homepage-locations-information {
@@ -2586,27 +2588,24 @@ body {
   padding: 30px;
   border-radius: 12px;
 }
-.homepage-locations-information h2 {
-  margin-left: 0px;
-  margin-bottom: 20px;
-  font-size: 2rem;
-}
-.homepage-locations-information h2 svg {
-  margin-right: 10px;
-  color: #54A2C0;
-}
 .homepage-locations-information p {
   font-size: 1.5rem;
   color: #666;
   margin-left: 52px;
 }
+@media (max-width: 768px) {
+  .homepage-locations-information p {
+    display: none;
+  }
+}
 
 .homepage-card-item {
-  margin-left: 60px;
   margin-bottom: 40px;
   border-radius: 8px;
+  margin: 0 auto;
 }
 .homepage-card-item img {
+  margin: 0 auto;
   border-radius: 8px;
 }
 

@@ -157,21 +157,16 @@
 
 
 .profile-edit-form-container {
-  position: relative;
-  background-color: $background-color;
-  opacity: 0.8;
-  width: 500px;
-  margin: 2rem auto;
-  padding: 2rem 3rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 3;
   .profile-edit-avatar {
+      position: relative;
+
     @include flex-center();
     img {
         object-fit: cover;
       } 
     .profile-avatar {
+      position: relative;
+
       width: 200px;
       height: 200px;
       border-radius: 50%;
@@ -180,15 +175,23 @@
     .change-picture {
       background-color: none;
       position: absolute;
-      left: 305px;
-      top: 195px;
-      font-size: $font-size-large;
+      top: 75%;
+      left: 78%;
+      font-size: 1.5rem;
       color: $gray-dark;
 
       &:hover {
         color: $primary-color;
         scale: 1.5;
       }
+    }
+
+    @media(min-width:440px) {
+      .change-picture {
+      position: absolute;
+        top: 75%;
+        left: 68%;
+    }
     }
   }
 }

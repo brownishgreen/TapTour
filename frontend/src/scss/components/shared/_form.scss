@@ -57,8 +57,7 @@
   color: $text-color;
   display: flex;
   justify-content: center;
-  align-items: center;;
-
+  align-items: end;
   @media (min-width: 768px) {
     text-align: right; // 平板以上對齊右側
   }
