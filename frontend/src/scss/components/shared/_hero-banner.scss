@@ -3,19 +3,20 @@
 .hero-banner {
   position: relative;
   width: 100%;
-  height: 600px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 120px;
-  
+
 
   &__image {
-    width: 75%;
-    height: 100%;
+    width: 90%;
+    height: 300px;
     object-fit: cover;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    margin-top: 100px;
 
     & img {
       width: 100%;
@@ -28,9 +29,64 @@
 
   &__content {
     position: absolute;
-    top: 78%;
+    top: 80%;
     left: 38%;
     transform: translate(-50%, -50%);
 
+    & h1 {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    & p {
+      font-size: 1rem;
+    }
+  }
+}
+
+//平板
+@media (min-width: 768px) {
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 120px;
+
+
+    &__image {
+      width: 75%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      margin-top: 100px;
+
+      & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+      &__content {
+        position: absolute;
+        top: 90%;
+        left: 35%;
+        transform: translate(-50%, -50%);
+
+        & h1 {
+          font-size: 2rem;
+          font-weight: 500;
+        }
+
+        & p {
+          font-size: 1rem;
+        }
+      }
   }
 }
