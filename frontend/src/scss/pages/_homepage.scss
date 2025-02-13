@@ -1,8 +1,20 @@
 @use '../abstracts/_mixins' as *;
 @use '../abstracts/_variables' as *;
 
-body {
-  min-width: 320px; // 限制最小寬度
+
+h2 {
+  margin-left: 0px;
+  margin-bottom: 20px;
+  font-size: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  svg {
+    margin-right: 10px;
+    color: $primary-color;
+  }
 }
 
 .home-page-container {
@@ -14,6 +26,7 @@ body {
 
 .campaign-card-container {
   max-width: 1200px;
+  min-width: 320px;
   height: 300px;
   margin: 0 auto;
   padding: 30px;
@@ -33,22 +46,14 @@ body {
   padding: 30px;
   border-radius: 12px;
 
-
-  h2 {
-    margin-left: 0px;
-    margin-bottom: 20px;
-    font-size: 2rem;
-
-    svg {
-      margin-right: 10px;
-      color: $primary-color;
-    }
-  }
-
   p {
     font-size: 1.5rem;
     color: #666;
     margin-left: 52px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
@@ -59,22 +64,14 @@ body {
   padding: 30px;
   border-radius: 12px;
 
-
-  h2 {
-    margin-left: 0px;
-    margin-bottom: 20px;
-    font-size: 2rem;
-
-    svg {
-      margin-right: 10px;
-      color: $primary-color;
-    }
-  }
-
   p {
     font-size: 1.5rem;
     color: #666;
     margin-left: 52px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
@@ -85,30 +82,25 @@ body {
   padding: 30px;
   border-radius: 12px;
 
-  h2 {
-    margin-left: 0px;
-    margin-bottom: 20px;
-    font-size: 2rem;
-
-    svg {
-      margin-right: 10px;
-      color: $primary-color;
-    }
-  }
-
   p {
     font-size: 1.5rem;
     color: #666;
     margin-left: 52px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
 .homepage-card-item {
-  margin-left: 60px;
   margin-bottom: 40px;
   border-radius: 8px;
+  margin: 0 auto;
+
 
   img {
+    margin: 0 auto;
     border-radius: 8px;
   }
 
