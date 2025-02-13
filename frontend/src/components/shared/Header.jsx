@@ -34,7 +34,12 @@ const Header = () => {
       {isLoading ? (
         <div>載入中...</div>
       ) : (
-          <header className="header">
+        <header className="header">
+          <div className="header__logo">
+            <Link to="/">
+              <img src={logo} alt="TapTour Logo" />
+              <span>TapTour</span>
+            </Link>
             {/* 漢堡排按鈕 (手機版) */}
             <button className="header__menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
               <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
@@ -55,15 +60,9 @@ const Header = () => {
                 關於我們 <FontAwesomeIcon icon={faPeopleGroup} />
               </Link>
             </nav>
-          <div className="header__logo">
-            <Link to="/">
-              <img src={logo} alt="TapTour Logo" />
-              <span>TapTour</span>
-            </Link>
-
-
-
           </div>
+
+
 
 
           <div className="header__actions">

@@ -64,16 +64,6 @@ const ProductDetailPage = () => {
           <div className="product-detail-page__wrapper">
             <main className="product-detail-page__main">
               <DetailPageIntroduction introduction={product.description} />
-              {isLoggedIn ? (
-                <CreateCommentForm
-                  entityId={product.id}
-                  entityType="product"
-                  onCommentAdded={handleNewComment}
-                />
-              ) : (
-                <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
-              )}
-              <CommentsBlock comments={comments} onCommentDeleted={handleCommentDeleted} />
             </main>
             <aside className="product-detail-page__aside">
               <PriceInformation
@@ -82,6 +72,18 @@ const ProductDetailPage = () => {
                 user={user}
               />
             </aside>
+          </div>
+          <div className="product-detail-page__comments-wrapper">
+            {isLoggedIn ? (
+              <CreateCommentForm
+                entityId={product.id}
+                entityType="product"
+                onCommentAdded={handleNewComment}
+              />
+            ) : (
+              <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
+            )}
+            <CommentsBlock comments={comments} onCommentDeleted={handleCommentDeleted} />
           </div>
         </div>
       )}
