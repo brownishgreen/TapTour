@@ -58,7 +58,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="form-container">
+    <div className="auth-form-container">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email" className="form-label">
