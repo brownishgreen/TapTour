@@ -1,8 +1,9 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
 
-const CommentCard = ({ name, comment, image, timestamp, isAuthor, isAdmin, onDelete }) => {
+const CommentCard = ({ name, comment, image, timestamp, isAuthor, isAdmin, onDelete, userId }) => {
   return (
     <div className="comment-card">
       <div className="comment-card__container">
@@ -10,7 +11,9 @@ const CommentCard = ({ name, comment, image, timestamp, isAuthor, isAdmin, onDel
           <div className="comment-card__comment-header">
             <div className="comment-card__comment-header-left">
               <div className="comment-card__comment-header-left-avatar">
-                <img src={image} alt="Avatar" />
+                <Link to={`/users/${userId}/profile`}>
+                  <img src={image} alt="Avatar" />
+                </Link>
               </div>
               <div className="comment-card__comment-header-left-name">
                 <h6>{name}</h6>
