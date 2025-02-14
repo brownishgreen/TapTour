@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     },
-    itemId: {
+    item_id: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    itemType: {
+    item_type: {
       type: DataTypes.ENUM('activity', 'product'),
       allowNull: false
     }

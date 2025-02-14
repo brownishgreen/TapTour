@@ -1,13 +1,13 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('favorites', {
+    await queryInterface.createTable('Favorites', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -17,11 +17,11 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      itemId: {
+      item_id: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      itemType: {
+      item_type: {
         type: Sequelize.ENUM('activity', 'product'),
         allowNull: false
       },

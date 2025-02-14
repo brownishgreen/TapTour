@@ -1,6 +1,6 @@
-import express from 'express'
+const express = require('express')
 const router = express.Router()
-import favoriteController from '../controllers/favoriteController.js'
+const favoriteController = require('../controllers/favoriteController')
 
 // 新增收藏
 router.post('/', favoriteController.createFavorite)
@@ -12,4 +12,8 @@ router.delete('/:id', favoriteController.deleteFavorite)
 router.get('/activity/:userId', favoriteController.getFavoritesActivity)
 router.get('/product/:userId', favoriteController.getFavoritesProduct)
 
-export default router
+// 檢查是否已收藏
+router.get('/check', favoriteController.checkFavorite);
+
+
+module.exports = router
