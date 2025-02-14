@@ -6,7 +6,7 @@ import ConfirmModal from './modal/ConfirmModal'
 import SuccessModal from './modal/SuccessModal'
 import ErrorModal from './modal/ErrorModal'
 
-const CommentsBlock = ({ comments, userId, onCommentDeleted }) => {
+const CommentsBlock = ({ comments, onCommentDeleted }) => {
   const { user, isAdmin } = useAuth()
   const [selectedCommentId, setSelectedCommentId] = useState(null) // 記錄要刪除的留言 ID
 
@@ -64,10 +64,10 @@ const CommentsBlock = ({ comments, userId, onCommentDeleted }) => {
                 comment={comment.content}
                 image={comment.user.image}
                 timestamp={comment.createdAt.toLocaleString().split('T')[0]}
-                isAuthor={comment.user_id === userId}
+                isAuthor={comment.user_id === user.id}
                 isAdmin={isAdmin}
                 onDelete={() => confirmDelete(comment.id)}
-                userId={userId}
+                userId={comment.user_id}
               />
             )
           })}

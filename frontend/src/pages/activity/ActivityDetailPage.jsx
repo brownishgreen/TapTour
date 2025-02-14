@@ -86,7 +86,7 @@ const ActivityDetailPage = () => {
             ) : (
               <p style={{ marginLeft: '10px' }}>⚠️ 請先登入以新增評論。</p>
             )}
-            <CommentsBlock comments={comments} userId={user?.id} onCommentDeleted={handleCommentDeleted} />
+            <CommentsBlock comments={comments} onCommentDeleted={handleCommentDeleted} />
           </div>
         </div>
       )}
