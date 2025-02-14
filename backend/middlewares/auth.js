@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
-const { User } = require('../models')
+import jwt from 'jsonwebtoken'
+import { User } from '../models/index.js'
 const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 
 const verifyToken = async (req, res, next) => {
@@ -27,4 +27,4 @@ const verifyToken = async (req, res, next) => {
   }
 }
 
-module.exports = verifyToken
+export default verifyToken

@@ -1,9 +1,10 @@
-const express = require('express')
+import express from 'express'
+import activityController from '../controllers/activity-controller.js'
+import verifyToken from '../middlewares/auth.js'
+import isAdmin from '../middlewares/isAdmin.js'
+import { handleImageUpload } from '../utils/upload-handler.js'
+
 const router = express.Router()
-const activityController = require('../controllers/activity-controller.js')
-const verifyToken = require('../middlewares/auth')
-const isAdmin = require('../middlewares/isAdmin')
-const { handleImageUpload } = require('../utils/upload-handler')
 
 /**
  * @swagger
@@ -651,5 +652,4 @@ router.delete('/:id', verifyToken, isAdmin, activityController.deleteActivity)
  */
 
 router.get('/:id', activityController.getActivityById)
-
-module.exports = router
+export default router

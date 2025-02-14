@@ -1,7 +1,8 @@
-const express = require('express')
+import express from 'express'
+import verifyToken from '../middlewares/auth.js'
+import followerController from '../controllers/follower-controller.js'
+
 const router = express.Router()
-const verifyToken = require('../middlewares/auth')
-const followerController = require('../controllers/follower-controller.js')
 
 /**
  * @swagger
@@ -138,5 +139,4 @@ router.post('/follow', verifyToken, followerController.followUser)
 
 router.post('/unfollow', verifyToken, followerController.unfollowUser)
 
-
-module.exports = router
+export default router

@@ -1,4 +1,4 @@
-const { Category } = require('../models')
+import { Category } from '../models/index.js'
 
 const categoryController = {
   getAllCategories: async (req, res, next) => {
@@ -14,4 +14,4 @@ const categoryController = {
   }
 }
 
-module.exports = categoryController
+export default categoryController

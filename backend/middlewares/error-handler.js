@@ -1,4 +1,4 @@
-module.exports = (err, req, res, next) => {
+export default (err, req, res, next) => {
   console.log(err.stack) // 打印錯誤堆疊
 
   const statusCode = err.statusCode || 500 // 如果沒有自定義狀態碼，使用 500

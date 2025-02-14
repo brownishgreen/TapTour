@@ -1,7 +1,8 @@
-const express = require('express')
+import express from 'express'
+import commentController from '../controllers/comment-controller.js'
+import verifyToken from '../middlewares/auth.js'
+
 const router = express.Router()
-const commentController = require('../controllers/comment-controller.js')
-const verifyToken = require('../middlewares/auth.js')
 
 /**
  * @swagger
@@ -599,5 +600,4 @@ router.get('/locations/:locationId', commentController.getCommentsByLocationId)
 router.get('/users/:userId', verifyToken, commentController.getCommentsByUserId)
 
 
-
-module.exports = router
+export default router

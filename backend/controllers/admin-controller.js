@@ -1,4 +1,4 @@
-const { User } = require('../models')
+import { User } from '../models/index.js'
 
 const adminController = {
   getAllUsers: async (req, res, next) => {
@@ -58,4 +58,4 @@ const adminController = {
   },
 }
 
-module.exports = adminController
+export default adminController

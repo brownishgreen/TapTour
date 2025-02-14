@@ -1,6 +1,7 @@
-const express = require('express')
+import express from 'express'
+import ordersController from '../controllers/order-controller.js'
+
 const router = express.Router()
-const ordersController = require('../controllers/order-controller')
 
 /**
  * @swagger
@@ -176,4 +177,4 @@ router.post('/create', ordersController.createOrder)
 router.get('/:orderId', ordersController.getOrderDetails)
 router.get('/user/:userId', ordersController.getOrdersByUser)
 
-module.exports = router
+export default router

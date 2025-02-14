@@ -1,7 +1,10 @@
-const { Activity, Image, Category } = require('../models')
-const { handleImageUpload } = require('../utils/upload-handler')
-const path = require('path')
-const { Op } = require('sequelize') // 引入 Sequelize 的操作符
+import { Activity, Image, Category } from '../models/index.js'
+import { handleImageUpload } from '../utils/upload-handler.js'
+import { fileURLToPath } from 'url'
+import path from 'path'
+import { Op } from 'sequelize' // 引入 Sequelize 的操作符
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const activityController = {
   getAllActivities: async (req, res, next) => {
@@ -215,4 +218,4 @@ const activityController = {
   },
 }
 
-module.exports = activityController
+export default activityController

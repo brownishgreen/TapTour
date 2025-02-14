@@ -1,5 +1,4 @@
-const { Comment, User, Activity, Product, Location } = require('../models')
-
+import { Comment, User, Activity, Product, Location } from '../models/index.js'
 
 const commentController = {
   // 取得所有評論
@@ -110,4 +109,4 @@ const commentController = {
   }
 }
 
-module.exports = commentController
+export default commentController

@@ -1,8 +1,8 @@
 'use strict'
-const { Model } = require('sequelize')
-const { v4: uuidv4 } = require('uuid') // 引入 UUID 生成方法
+import { Model } from 'sequelize'
+import { v4 as uuidv4 } from 'uuid' // 引入 UUID 生成方法
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class Order extends Model {
     static associate(models) {
       // Order 與 User 建立關聯

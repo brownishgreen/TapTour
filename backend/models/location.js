@@ -1,6 +1,6 @@
 'use strict'
-const { Model } = require('sequelize')
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize'
+export default (sequelize, DataTypes) => {
   class Location extends Model {
     static associate(models) {
       // Location 與 Activity 和 Product 建立一對多關係

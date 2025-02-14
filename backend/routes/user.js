@@ -1,7 +1,9 @@
-const express = require('express')
+import express from 'express'
+import userController from '../controllers/user-controller.js'
+import verifyToken from '../middlewares/auth.js'
+
 const router = express.Router()
-const userController = require('../controllers/user-controller')
-const verifyToken = require('../middlewares/auth')
+
 
 // 檢查 userId 是否為有效數字的 middleware
 const validateUserId = (req, res, next) => {
@@ -340,4 +342,4 @@ router.get('/:userId/profile', verifyToken, userController.profile);
 router.put('/:userId/update-profile', userController.updateProfile);
 
 
-module.exports = router
+export default router

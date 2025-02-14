@@ -1,4 +1,4 @@
-const { Follower } = require('../models')
+import { Follower } from '../models/index.js'
 
 const followerController = {
   followUser: async (req, res, next) => {
@@ -65,4 +65,4 @@ const followerController = {
     }
   },
 }
-module.exports = followerController
+export default followerController

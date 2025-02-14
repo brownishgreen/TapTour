@@ -1,15 +1,15 @@
-const express = require('express')
-const router = express.Router()
+import express from 'express'
+import userRoutes from './user.js'
+import adminRoutes from './admin.js'
+import activityRoutes from './activity.js'
+import productRoutes from './product.js'
+import followerRoutes from './follower.js'
+import LocationRoutes from './location.js'
+import categoryRoutes from './category.js'
+import commentRoutes from './comment.js'
+import orderRoutes from './orders.js'
 
-const userRoutes = require('./user')
-const adminRoutes = require('./admin')
-const activityRoutes = require('./activity')
-const productRoutes = require('./product')
-const followerRoutes = require('./follower')
-const LocationRoutes = require('./location')
-const categoryRoutes = require('./category')
-const commentRoutes = require('./comment')
-const orderRoutes = require('./orders')
+const router = express.Router()
 
 // 掛載路由模組
 router.use('/users', userRoutes) // 路徑 /api/users
@@ -22,4 +22,4 @@ router.use('/categories', categoryRoutes) // 路徑 /api/categories
 router.use('/comments', commentRoutes) // 路徑 /api/comments
 router.use('/orders', orderRoutes) // 路徑 /api/comments
 
-module.exports = router
+export default router
