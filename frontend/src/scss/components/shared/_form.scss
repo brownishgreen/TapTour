@@ -33,6 +33,54 @@
   }
 }
 
+.auth-form-container {
+  position: relative;
+  background-color: $background-color;
+  opacity: 0.9;
+  width: 100%;
+  max-width: 500px;
+  min-width: 320px;
+  padding: 0 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 3;
+  margin: 0 auto;
+  max-height: calc(100vh - 150px); // ✅ 確保表單不會過長，觸發滾動
+  overflow-y: auto; // ✅ 讓 `scrollbar` 出現在表單內
+
+  /* ✅ 讓 scrollbar 貼近表單 */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  // 📲 平板 (768px 以上)
+  @media (min-width: 768px) {
+    width: 80%;
+    max-width: 450px;
+  }
+
+  // 💻 筆電 / 小桌機 (992px 以上)
+  @media (min-width: 992px) {
+    width: 60%;
+    max-width: 500px;
+  }
+
+  // 🖥 桌機 / 大螢幕 (1200px 以上)
+  @media (min-width: 1200px) {
+    width: 50%;
+    max-width: 500px;
+  }
+}
+
 .form-group {
   margin: 0 ;
   text-align: left;

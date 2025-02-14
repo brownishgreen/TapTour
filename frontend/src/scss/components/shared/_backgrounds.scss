@@ -9,6 +9,7 @@
   background-position: center;
   @include flex-center();
   position: relative;
+  
 
   &::after {
     content: "";

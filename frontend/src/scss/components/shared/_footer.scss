@@ -8,7 +8,6 @@
   width: 100%;
   height: 75px;
   box-shadow: 0 -6px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 50px;
 
   &__links {
     margin-left: 4%;
@@ -52,8 +51,7 @@
     }
 
     &__socials {
-      margin-right: 0;
-      justify-content: center;
+      display: none;
     }
   }
 
@@ -68,22 +66,18 @@
       gap: 0.4rem;
 
       a {
-        font-size: $font-size-base; // ✅ 再縮小字體，提升可讀性
+        font-size: 10px;
       }
     }
 
     &__copyright {
       padding: 0.1rem;
-        font-size: 10px; // ✅ 再縮小字體，提升可讀性
+      font-size: 10px;
 
     }
 
     &__socials {
-      gap: 0.6rem;
-
-      a {
-        font-size:  $font-size-base; // ✅ 小手機 icon 也縮小
-      }
+     display: none;
     }
   }
 }

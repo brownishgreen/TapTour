@@ -71,7 +71,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <div className="form-container">
+    <div className="auth-form-container">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name" className="form-label">
