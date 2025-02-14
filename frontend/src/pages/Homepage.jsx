@@ -199,6 +199,7 @@ const Homepage = () => {
                     description={activity.description}
                     id={activity.id}
                     cardLink={`/activities/${activity.id}`}
+                    className="homepage-card-item"
                   />
                 </SwiperSlide>
               ))}
@@ -246,6 +247,7 @@ const Homepage = () => {
                     description={product.description}
                     id={product.id}
                     cardLink={`/products/${product.id}`}
+                    className="homepage-card-item"
                   />
                 </SwiperSlide>
               ))}
@@ -298,6 +300,7 @@ const Homepage = () => {
                     }
                     id={location.id}
                     cardLink={`/locations/${location.id}`}
+                    className="homepage-card-item"
                   />
                 </SwiperSlide>
               ))}
