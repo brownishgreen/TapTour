@@ -7,8 +7,11 @@ import HeroBanner from '../../components/shared/HeroBanner'
 import SearchBar from '../../components/shared/SearchBar'
 import CardItem from '../../components/shared/CardItem'
 import Pagination from '../../components/shared/Pagination'
-
+import { useAuth } from '../../components/context/AuthContext'
 const ProductsPage = () => {
+  const { user } = useAuth()
+  const userId = user?.id
+
   const [searchParams] = useSearchParams()
   const searchTerm = searchParams.get('search') || '' // 提取搜尋參數
 
@@ -91,8 +94,10 @@ const ProductsPage = () => {
                 title={product?.name}
                 subtitle={product?.category?.name}
                 description={product?.description}
-                id={product?.id}
+                itemId={product?.id}
                 cardLink={`/products/${product?.id}`}
+                userId={userId}
+                itemType="product"
               />
             ))}
           </div>

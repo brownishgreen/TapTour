@@ -11,11 +11,9 @@ import expressFileUpload from 'express-fileupload'
 import routes from './routes/index.js' // 確保路由文件使用 `.js` 副檔名
 import errorHandler from './middlewares/error-handler.js'
 const app = express()
-const port = 3000
-
-// 設定 `__dirname`
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const port = 3000
 
 // Swagger 文件設定
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
@@ -31,6 +29,10 @@ app.use(
     credentials: true,
   })
 )
+
+// 提供靜態文件（前端）
+app.use(express.static(path.join(__dirname, 'frontend/dist')))
+
 // 檔案上傳設定
 app.use(
   expressFileUpload({

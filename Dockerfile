@@ -1,22 +1,21 @@
-# 1. 使用 Node.js 的官方映像檔 
-FROM node:20-alpine
-
-# 2. 設定容器工作目錄
+# 建立前端
+FROM node:18 AS frontend
 WORKDIR /app
+COPY frontend ./
+RUN npm install && npm run build
 
-# 3. 複製 package.json 和 package-lock.json
-COPY package.json .
-COPY package-lock.json .
-
-# 4. 安裝依賴
+# 建立後端
+FROM node:18
+WORKDIR /app
+COPY backend ./
+COPY --from=frontend /app/dist ./frontend/dist
 RUN npm install
 
-# 5. 複製專案目錄
-COPY . .
+# 設定環境變數
+ENV PORT=8080
 
-# 6. 設定環境變量
-ENV NODE_ENV=production
+# 確保 8080 端口開放
+EXPOSE 8080
 
-# 7. 設定容器啟動命令
-CMD ["npm", "start"]
-
+# 啟動應用
+CMD ["node", "app.js"]

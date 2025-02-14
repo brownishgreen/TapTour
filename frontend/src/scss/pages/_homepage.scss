@@ -98,6 +98,17 @@ h2 {
   border-radius: 8px;
   margin: 0 auto;
 
+  .card-item__button {
+
+    button {
+      margin-left: 15px;
+    }
+
+    .favorite-button {
+      display: none;
+    }
+  }
+
 
   img {
     margin: 0 auto;

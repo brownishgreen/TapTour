@@ -8,6 +8,7 @@ import LocationRoutes from './location.js'
 import categoryRoutes from './category.js'
 import commentRoutes from './comment.js'
 import orderRoutes from './orders.js'
+import favoriteRoutes from './favorite.js'
 
 const router = express.Router()
 
@@ -20,6 +21,7 @@ router.use('/followers', followerRoutes) // 路徑 /api/followers
 router.use('/locations', LocationRoutes) // 路徑 /api/locations
 router.use('/categories', categoryRoutes) // 路徑 /api/categories
 router.use('/comments', commentRoutes) // 路徑 /api/comments
-router.use('/orders', orderRoutes) // 路徑 /api/comments
+router.use('/orders', orderRoutes) // 路徑 /api/orders
+router.use('/favorites', favoriteRoutes) // 路徑 /api/favorites
 
 export default router

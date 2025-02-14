@@ -58,4 +58,5 @@ export const {
   Order,
   OrderedItem,
   Product,
+  Favorite,
 } = db
