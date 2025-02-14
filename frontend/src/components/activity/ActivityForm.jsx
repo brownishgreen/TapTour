@@ -169,8 +169,10 @@ const ActivityForm = ({ mode }) => {
   return (
     <form className="activity-form" onSubmit={handleSubmit}>
       <div className="activity-form__form">
+        <h1>{mode === 'edit' ? '編輯活動' : '新增活動'}</h1>
         <div className="activity-form__form-item">
           <div className="activity-form__category">
+
             <label htmlFor="category_id" style={{ marginBottom: '10px' }}>
               活動類別
             </label>
@@ -251,6 +253,13 @@ const ActivityForm = ({ mode }) => {
             />
           </div>
           <div className="activity-form__form-item-button">
+            <button
+              className="activity-form__form-item-button-cancel"
+              type="button"
+              onClick={() => navigate('/activities')}
+            >
+              取消
+            </button>
             <button type="submit">
               {isEditMode ? '更新活動' : '新增活動'}
             </button>
