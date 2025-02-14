@@ -5,7 +5,7 @@ const { swaggerUi, swaggerSpec } = require('./swagger')
 const app = express()
 
 const path = require('path')
-const port = 3000
+const port = process.env.PORT || 8080
 const routes = require('./routes')
 const errorHandler = require('./middlewares/error-handler')
 const cors = require('cors')
