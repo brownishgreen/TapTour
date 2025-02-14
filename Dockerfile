@@ -1,22 +1,23 @@
-# 1. 使用 Node.js 的官方映像檔 
-FROM node:20-alpine
+# 使用官方 Node.js 18 映像
+FROM node:18
 
-# 2. 設定容器工作目錄
+# 設定工作目錄
 WORKDIR /app
 
-# 3. 複製 package.json 和 package-lock.json
-COPY package.json .
-COPY package-lock.json .
+# 複製 package.json 和 package-lock.json
+COPY package*.json ./
 
-# 4. 安裝依賴
+# 安裝 npm 依賴
 RUN npm install
 
-# 5. 複製專案目錄
+# 複製所有專案檔案
 COPY . .
 
-# 6. 設定環境變量
-ENV NODE_ENV=production
+# 設定環境變數（Cloud Run 預設使用 PORT 8080）
+ENV PORT=8080
 
-# 7. 設定容器啟動命令
+# 開啟 8080 端口
+EXPOSE 8080
+
+# 啟動應用
 CMD ["npm", "start"]
-
