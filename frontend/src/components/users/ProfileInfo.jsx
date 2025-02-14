@@ -10,6 +10,7 @@ import { Card, Button } from 'react-bootstrap'
 import apiClient from '../../api/apiClient'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 const ProfileInfo = ({ userId }) => {
   const { userId: currentUserId } = useAuth() // 從上下文獲取當前用戶的 ID
@@ -228,16 +229,19 @@ const ProfileInfo = ({ userId }) => {
               {followers.length === 0 ? (
                 <p>尚無追蹤者</p>
               ) : (
-                followers.map((follower) => (
+                followers.map((f) => (
                   <div
-                    key={follower.id}
+                    key={f.id}
                     className="profile-content__follower-item"
                   >
-                    <img
-                      src={follower.image || '/default-avatar.jpg'}
-                      alt={follower.name}
-                    />
-                    <p>{follower.name}</p>
+                    <Link to={`/users/${f.id}/profile`}>
+                      <img
+                        src={f.image || '/default-avatar.jpg'}
+                        alt={f.name}
+                      />
+                    </Link>
+
+                    <p>{f.name}</p>
                   </div>
                 ))
               )}
@@ -253,10 +257,13 @@ const ProfileInfo = ({ userId }) => {
               ) : (
                 following.map((f) => (
                   <div key={f.id} className="profile-content__follower-item">
-                    <img
-                      src={f.image || '/default-avatar.jpg'}
-                      alt={f.name}
-                    />
+                    <Link to={`/users/${f.id}/profile`}>
+                      <img
+                        src={f.image || '/default-avatar.jpg'}
+                        alt={f.name}
+                      />
+                    </Link>
+
                     <p>{f.name}</p>
                   </div>
                 ))
