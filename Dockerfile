@@ -8,7 +8,7 @@ RUN npm install && npm run build
 FROM node:18
 WORKDIR /app
 COPY backend ./
-COPY --from=frontend /app/dist ./frontend/dist  # 複製前端檔案到後端
+COPY --from=frontend /app/dist ./frontend/dist
 RUN npm install
 
 # 設定環境變數
