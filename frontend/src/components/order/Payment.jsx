@@ -41,81 +41,71 @@ const Payment = () => {
       </div>
       <div className="payment-form">
         <div className="form-group">
-          <label className="payment-form-label">使用者名稱:</label>
-          <input
-            className="payment-form-input"
-            type="text"
-            value={userName}
-            disabled
-          />
+          <label className="form-label">使用者:</label>
+          <input className="form-input" type="text" value={userName} disabled />
         </div>
         <div className="form-group">
-          <label className="payment-form-label">Email: </label>
+          <label className="form-label">信箱: </label>
           <input
-            className="payment-form-input"
+            className="form-input"
             type="email"
             value={userEmail}
             disabled
           />
         </div>
         <div className="form-group">
-          <label className="payment-form-label">訂單編號: </label>
-          <input
-            className="payment-form-input"
-            type="text"
-            value={uuid}
-            disabled
-          />
+          <label className="form-label">訂單號: </label>
+          <input className="form-input" type="text" value={uuid} disabled />
         </div>
         <div className="form-group">
-          <label className="payment-form-label">商品名稱: </label>
+          <label className="form-label">名稱: </label>
           <input
-            className="payment-form-input"
+            className="form-input"
             type="text"
             value={item.name}
             disabled
           />
         </div>
         <div className="form-group">
-          <label className="payment-form-label">商品單價: </label>
+          <label className="form-label">單價: </label>
           <input
-            className="payment-form-input"
+            className="form-input"
             type="text"
             value={`NT$ ${item.price}`}
             disabled
           />
         </div>
         <div className="form-group">
-          <label className="payment-form-label">選擇日期: </label>
+          <label className="form-label">日期: </label>
           <input
-            className="payment-form-input"
+            className="form-input"
             type="text"
             value={chosenDate}
             disabled
           />
         </div>
         <div className="form-group">
-          <label className="payment-form-label">訂單數量: </label>
+          <label className="form-label">數量: </label>
           <input
-            className="payment-form-input"
+            className="form-input"
             type="number"
             value={item.quantity}
             disabled
           />
         </div>
         <div className="form-group">
-          <label className="payment-form-label">總金額: </label>
+          <label className="form-label">總金額: </label>
           <input
-            className="payment-form-input"
+            className="form-input"
             type="text"
             value={`NT$ ${totalAmount}`}
             disabled
           />
         </div>
         <div className="form-group">
-          <label className="payment-form-label">信用卡資訊: </label>
+          <label className="form-label">信用卡: </label>
           <input
-            className="payment-form-input"
+            className="form-input"
             type="text"
             value="**** **** **** 1234"
             disabled

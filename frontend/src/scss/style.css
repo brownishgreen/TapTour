@@ -2661,6 +2661,10 @@ th.quantity-header, td.quantity-cell {
   }
 }
 
+.location-search-bar-wrapper {
+  margin-top: 120px;
+}
+
 h2 {
   margin-left: 0px;
   margin-bottom: 20px;

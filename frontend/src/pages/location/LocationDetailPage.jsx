@@ -32,8 +32,9 @@ const LocationDetailPage = () => {
     <div className="location-detail-page">
       <Header />
 
-      <SearchBar />
-
+      <div className="location-search-bar-wrapper">
+        <SearchBar />
+      </div>
       {location && (
         <div className="location-detail-page__container">
           {/* 顯示圖片 */}
@@ -84,7 +85,6 @@ const LocationDetailPage = () => {
             </div>
           </div>
 
-
           {/* 以下未處理 */}
           <div className="location-detail-page__related-wrapper">
             <h3 className="location-detail-page__related-cards-title">
@@ -96,7 +96,7 @@ const LocationDetailPage = () => {
                 <RelatedCard
                   activityId={activity.id}
                   title={activity.name}
-                  description={activity.description.slice(0, 35)+'...'}
+                  description={activity.description.slice(0, 35) + '...'}
                   image={
                     activity.images && activity.images.length > 0
                       ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images[0].image_url}`
