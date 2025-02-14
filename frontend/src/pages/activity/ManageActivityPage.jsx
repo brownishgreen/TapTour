@@ -15,8 +15,9 @@ const ManageActivityPage = ({ mode }) => {
     <div className="manage-activity-page">
       <Header />
       <div className="manage-activity-page__container create-activity-background">
-        <h1>{mode === 'edit' ? '編輯活動' : '新增活動'}</h1>
+
         <div className="manage-activity-page__form">
+          
           <ActivityForm mode={mode} />
         </div>
       </div>

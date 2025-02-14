@@ -15,7 +15,6 @@ const ManageProductPage = ({ mode }) => {
     <div className="manage-product-page">
       <Header />
       <div className="manage-product-page__container create-product-background">
-        <h1>{mode === 'edit' ? '編輯商品' : '新增商品'}</h1>
         <div className="manage-product-page__form">
           <ProductForm mode={mode} />
         </div>

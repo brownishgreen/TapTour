@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import apiClient from '../../api/apiClient'
 import SuccessModal from '../modal/SuccessModal'
 import ErrorModal from '../modal/ErrorModal'
@@ -168,6 +168,7 @@ const ProductForm = ({ mode }) => {
   return (
     <form className="product-form" onSubmit={handleSubmit}>
       <div className="product-form__form">
+        <h1>{mode === 'edit' ? '編輯商品' : '新增商品'}</h1>
         <div className="product-form__form-item">
           <div className="product-form__category">
             <label htmlFor="category_id" style={{ marginBottom: '10px' }}>
@@ -241,6 +242,13 @@ const ProductForm = ({ mode }) => {
             />
           </div>
           <div className="product-form__form-item-button">
+            <button
+              className="product-form__form-item-button-cancel"
+              type="button"
+              onClick={() => navigate('/products')}
+            >
+              取消
+            </button>
             <button type="submit">
               {isEditMode ? '更新商品' : '新增商品'}
             </button>

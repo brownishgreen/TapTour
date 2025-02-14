@@ -9,6 +9,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   opacity: 0.9;
+
   @media (max-width: 768px) {
     width: 90%;
     padding: 3rem;
@@ -21,7 +22,7 @@
 
   h2 {
     font-size: 30px;
-    font-weight:$font-weight-bold;
+    font-weight: $font-weight-bold;
     margin-bottom: 3rem;
     text-align: center;
     color: #333;
@@ -35,7 +36,7 @@
     .location-form-group {
       margin: 2rem 0 10px 0;
       position: relative;
-      
+
 
       .location-form-label {
         font-size: 18px;
@@ -44,11 +45,12 @@
         display: block;
         color: #606060;
         text-align: left;
-        font-weight:$font-weight-bold;
+        font-weight: $font-weight-bold;
 
       }
 
-      .location-form-input, .form-textarea {
+      .location-form-input,
+      .form-textarea {
         width: 100%;
         padding: 10px;
         border: 1px solid #ddd;
@@ -71,10 +73,10 @@
       }
 
       .form-textarea {
-        width: 100%; 
-        max-width: 900px; 
-        min-height: 120px; 
-        max-height: 300px; 
+        width: 100%;
+        max-width: 900px;
+        min-height: 120px;
+        max-height: 300px;
         resize: vertical;
         font-size: $font-size-base;
         padding: 10px;
@@ -155,7 +157,8 @@
       a {
         color: #357296; // 自訂超連結顏色
         text-decoration: none;
-         &:hover {
+
+        &:hover {
           text-decoration: underline; // 滑鼠懸停時顯示下劃線
         }
       }
@@ -201,7 +204,7 @@
           border-radius: 5px; // 圓角
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-  }
+      }
     }
 
     .location-edit-form-group {
@@ -217,77 +220,77 @@
         text-align: left;
       }
 
-    .location-edit-form-input,
-    .location-edit-form-textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: $font-size-base;
-      color: $gray-dark;
-      transition: border 0.3s ease-in-out;
+      .location-edit-form-input,
+      .location-edit-form-textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: $font-size-base;
+        color: $gray-dark;
+        transition: border 0.3s ease-in-out;
 
-      &:focus {
-        outline: none;
-        border-color: $primary-color;
-        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
-      }
-    }
-
-    .image-selection {
-      text-align: center; // 讓標題置中
-      margin-top: 3rem;
-
-      h2 {
-        font-size: 26px;
-        margin-bottom: 1.5rem;
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+        }
       }
 
-      .image-selection__container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center; // ✅ 讓圖片區塊水平置中
-        margin: 1rem auto 3rem;
-        max-width: 700px; // ✅ 限制最大寬度，避免圖片過度延伸
-      }
+      .image-selection {
+        text-align: center; // 讓標題置中
+        margin-top: 3rem;
 
-      .image-selection__item {
-        position: relative;
-        cursor: pointer;
-
-        img {
-          width: 150px;
-          height: 100px;
-          border: 1px solid gray;
-          transition: all 0.3s;
-
-          &:hover {
-            transform: scale(1.05); // ✅ 鼠標懸停時微放大
-          }
+        h2 {
+          font-size: 26px;
+          margin-bottom: 1.5rem;
         }
 
-        &--selected {
+        .image-selection__container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          justify-content: center; // ✅ 讓圖片區塊水平置中
+          margin: 1rem auto 3rem;
+          max-width: 700px; // ✅ 限制最大寬度，避免圖片過度延伸
+        }
+
+        .image-selection__item {
+          position: relative;
+          cursor: pointer;
+
           img {
-            border: 5px solid red;
+            width: 150px;
+            height: 100px;
+            border: 1px solid gray;
+            transition: all 0.3s;
+
+            &:hover {
+              transform: scale(1.05); // ✅ 鼠標懸停時微放大
+            }
           }
 
-          span {
-            position: absolute;
-            left: 5px;
-            background-color: red;
-            color: white;
-            font-weight: 800;
-            padding: 2px 5px;
-            font-size: 18px;
+          &--selected {
+            img {
+              border: 5px solid red;
+            }
+
+            span {
+              position: absolute;
+              left: 5px;
+              background-color: red;
+              color: white;
+              font-weight: 800;
+              padding: 2px 5px;
+              font-size: 18px;
+            }
           }
         }
       }
-    }
 
-    
+
+    }
   }
-}
 }
 
 .location-introduction {
@@ -354,7 +357,7 @@
   }
 
   @media (max-width: 768px) {
-    
+
 
     &__item img {
       width: 130px;

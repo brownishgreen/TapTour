@@ -12,8 +12,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 500px;
   min-width: 320px;
-  outline: 2px solid $primary-color;
-  margin: 30px auto 0;
+  margin: 130px auto 0;
   z-index: 2;
 
   //mobile
@@ -22,15 +21,14 @@
     max-width: 450px; // 限制寬度，避免過寬
   }
 
-  h1 {
-    margin-bottom: 20px;
-    color: $text-color;
-    z-index: 10;
-  }
+    h1 {
+      margin-bottom: 20px;
+      color: $text-color;
+      z-index: 10;
+    }
 
   &__form {
     width: 100%;
-    margin-top: 20px;
     position: relative;
     z-index: 5;
 
@@ -72,8 +70,9 @@
       }
 
       button[type="submit"] {
-        width: 100%;
+        width: 45%;
         padding: 10px;
+        margin: 0 1.25% 0 2.5%;
         font-size: 16px;
         background-color: $primary-color;
         color: #fff;
@@ -86,6 +85,20 @@
         &:hover {
           background-color: #333;
         }
+      }
+
+      button[type="button"] {
+        width: 45%;
+        padding: 10px;
+        margin: 0 1.25% 0 2.5%;
+        font-size: 16px;
+        background: $alert-color;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        z-index: 10;
       }
     }
   }
