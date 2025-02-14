@@ -7,8 +7,14 @@ import SearchBar from '../../components/shared/SearchBar'
 import CardItem from '../../components/shared/CardItem'
 import HeroBanner from '../../components/shared/HeroBanner'
 import Pagination from '../../components/shared/Pagination'
+import { useAuth } from '../../components/context/AuthContext'
+
 
 const ActivitiesPage = () => {
+
+  const { user } = useAuth()
+  const userId = user?.id
+
   const [searchParams] = useSearchParams()
   const searchTerm = searchParams.get('search') || '' // 提取搜尋參數
 
@@ -88,14 +94,16 @@ const ActivitiesPage = () => {
                 buttonText="深入瞭解"
                 image={
                   activity.images?.length > 0
-                    ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[0]?.image_url}`
+                    ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[1]?.image_url}`
                     : '/default-image.jpg'
                 }
                 title={activity?.name || '無標題'}
                 subtitle={activity?.category?.name || '未分類'}
                 description={activity?.description || '無詳細描述'}
-                id={activity?.id}
+                itemId={activity?.id}
                 cardLink={`/activities/${activity?.id}`}
+                userId={userId}
+                itemType="activity"
               />
             ))}
           </div>
