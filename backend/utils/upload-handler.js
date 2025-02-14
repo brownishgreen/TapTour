@@ -1,8 +1,11 @@
-const fs = require('fs')
-const path = require('path')
-const { Image } = require('../models')
-const pinyin = require('pinyin').default
-const axios = require('axios');
+import fs from 'fs'
+import path from 'path'
+import db from '../models/index.js' // ✅ 確保 `models/index.js` 使用 `export default db`
+import pinyinModule from 'pinyin'
+import axios from 'axios'
+
+const { Image } = db // ✅ 從 `db` 物件中解構
+const pinyin = pinyinModule.default
 
 /**
  * 這是一個通用圖片上傳處理器
@@ -16,13 +19,20 @@ const axios = require('axios');
  *  @returns {Array} imageUrls - 成功下載的圖片 URL 陣列
  */
 
-const handleImageUpload = async (images, basePath, entityId, name, entityType, dbColumn) => {
+export const handleImageUpload = async (
+  images,
+  basePath,
+  entityId,
+  name,
+  entityType,
+  dbColumn
+) => {
   if (!fs.existsSync(basePath)) {
     fs.mkdirSync(basePath, { recursive: true })
   }
 
   if (!images) throw new Error('未提供任何圖片')
-  
+
   // 將 images 轉換成陣列
   const imageArray = Array.isArray(images) ? images : [images]
 
@@ -31,10 +41,10 @@ const handleImageUpload = async (images, basePath, entityId, name, entityType, d
 
   // 將活動名稱轉換成安全的字串（拼音）
   const sanitizedName = pinyin(name, { style: pinyin.STYLE_NORMAL })
-    .map(word => word.join(''))
+    .map((word) => word.join(''))
     .join('-')
     .replace(/[^a-zA-Z0-9-]/g, '')
-    .toLowerCase();
+    .toLowerCase()
 
   const uploadPath = path.join(basePath, `${sanitizedName}-${entityId}`)
 
@@ -43,36 +53,41 @@ const handleImageUpload = async (images, basePath, entityId, name, entityType, d
   }
 
   //處理所有圖片上傳
-  const imageUrls = await Promise.all(imageArray.map(async (image, index) => {
-    const fileExtension = path.extname(image.name)
+  const imageUrls = await Promise.all(
+    imageArray.map(async (image, index) => {
+      const fileExtension = path.extname(image.name)
 
-    const fileName = `${entityId}-${sanitizedName}-${String(index + 1).padStart(3, '0')}${fileExtension}`
-    const filePath = path.join(uploadPath, fileName)
+      const fileName = `${entityId}-${sanitizedName}-${String(index + 1).padStart(3, '0')}${fileExtension}`
+      const filePath = path.join(uploadPath, fileName)
 
-    console.log(`上傳圖片: ${image.name} 到 ${filePath}`)
+      console.log(`上傳圖片: ${image.name} 到 ${filePath}`)
 
-    try {
-      await image.mv(filePath)  // 待每個 mv 操作完成
-      const imageUrl = `/uploads/${entityType}/${sanitizedName}-${entityId}/${fileName}`
-      console.log(`上傳成功: ${imageUrl}`)
+      try {
+        await image.mv(filePath) // 待每個 mv 操作完成
+        const imageUrl = `/uploads/${entityType}/${sanitizedName}-${entityId}/${fileName}`
+        console.log(`上傳成功: ${imageUrl}`)
 
-      // 將上傳的圖片資料存入資料庫
-      await Image.create({
-        [dbColumn]: entityId,
-        image_url: imageUrl
-      })
+        // 將上傳的圖片資料存入資料庫
+        await Image.create({
+          [dbColumn]: entityId,
+          image_url: imageUrl,
+        })
 
-      return imageUrl
-    } catch (error) {
-      console.error(`${entityType} ${entityId} 的圖片 ${image.name} 上傳失敗:`, error)
-      return null
-    }
-  }))
+        return imageUrl
+      } catch (error) {
+        console.error(
+          `${entityType} ${entityId} 的圖片 ${image.name} 上傳失敗:`,
+          error
+        )
+        return null
+      }
+    })
+  )
 
   return imageUrls.filter(Boolean) // 過濾掉失敗的圖片
 }
 
-const downloadGoogleImages = async (
+export const downloadGoogleImages = async (
   googlePhotos,
   basePath,
   entityId,
@@ -137,6 +152,3 @@ const downloadGoogleImages = async (
 
   return imageUrls
 }
-
-
-module.exports ={ handleImageUpload, downloadGoogleImages}

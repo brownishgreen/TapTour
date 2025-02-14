@@ -1,24 +1,32 @@
 'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize'
+export default (sequelize, DataTypes) => {
   class Comment extends Model {
-    
     static associate(models) {
       // Comment 與 User 建立關聯
-      Comment.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+      Comment.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' })
       // Comment 與 Activity 建立關聯
-      Comment.belongsTo(models.Activity, { foreignKey: 'activity_id', as: 'activity' });
+      Comment.belongsTo(models.Activity, {
+        foreignKey: 'activity_id',
+        as: 'activity',
+      })
       // Comment 與 Location 建立關聯
-      Comment.belongsTo(models.Location, { foreignKey: 'location_id', as: 'location' });
+      Comment.belongsTo(models.Location, {
+        foreignKey: 'location_id',
+        as: 'location',
+      })
       // Comment 與 Product 建立關聯
-      Comment.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product' });
+      Comment.belongsTo(models.Product, {
+        foreignKey: 'product_id',
+        as: 'product',
+      })
     }
   }
   Comment.init(
     {
       content: {
         type: DataTypes.TEXT,
-        allowNull: false, 
+        allowNull: false,
         validate: {
           notEmpty: true, // 內容不能為空
         },
@@ -60,9 +68,9 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Comment',
       tableName: 'Comments',
-      underscored: true, 
-      timestamps: true, 
+      underscored: true,
+      timestamps: true,
     }
-  );
-  return Comment;
-};
+  )
+  return Comment
+}

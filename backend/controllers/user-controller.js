@@ -1,6 +1,9 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const { User, Follower } = require('../models')
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import { User, Follower } from '../models/index.js'
+import path from 'path'
+import fs from 'fs'
+import { fileURLToPath } from 'url' // `__dirname` 替代方案
 const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 const EXPIRES = process.env.JWT_EXPIRES
 
@@ -204,9 +207,8 @@ const userController = {
     }
   },
   updateProfile: async (req, res, next) => {
-    const path = require('path')
-    const fs = require('fs')
-
+    const __filename = fileURLToPath(import.meta.url)
+    const __dirname = path.dirname(__filename)
     try {
       const { name, password, bio, image } = req.body
       const user = await User.findByPk(req.params.userId)
@@ -239,4 +241,4 @@ const userController = {
   },
 }
 
-module.exports = userController
+export default userController

@@ -1,6 +1,7 @@
-const express = require('express')
+import express from 'express'
+import categoryController from '../controllers/category-controller.js'
+
 const router = express.Router()
-const categoryController = require('../controllers/category-controller.js')
 
 /**
  * @swagger
@@ -50,4 +51,4 @@ const categoryController = require('../controllers/category-controller.js')
 router.get('/', categoryController.getAllCategories)
 
 
-module.exports = router
+export default router

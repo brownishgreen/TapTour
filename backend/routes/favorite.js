@@ -1,7 +1,7 @@
-const express = require('express')
-const router = express.Router()
-const favoriteController = require('../controllers/favoriteController')
+import express from 'express'
+import favoriteController from '../controllers/favoriteController.js'
 
+const router = express.Router()
 // 新增收藏
 router.post('/', favoriteController.createFavorite)
 
@@ -16,4 +16,4 @@ router.get('/product/:userId', favoriteController.getFavoritesProduct)
 router.get('/check', favoriteController.checkFavorite);
 
 
-module.exports = router
+export default router

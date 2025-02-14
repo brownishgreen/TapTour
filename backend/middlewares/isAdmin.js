@@ -5,4 +5,4 @@ const isAdmin = (req, res, next) => {
   return res.status(403).json({ message: '沒有權限訪問該頁面' })
 }
 
-module.exports = isAdmin
+export default isAdmin

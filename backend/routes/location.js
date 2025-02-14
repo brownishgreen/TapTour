@@ -1,9 +1,10 @@
-const express = require('express')
+import express from 'express'
+import locationController from '../controllers/location-controller.js'
+import { downloadGoogleImages } from '../utils/upload-handler.js'
+import isAdmin from '../middlewares/isAdmin.js'
+import verifyToken from '../middlewares/auth.js'
+
 const router = express.Router()
-const locationController = require('../controllers/location-controller')
-const { downloadGoogleImages } = require('../utils/upload-handler')
-const isAdmin = require('../middlewares/isAdmin')
-const verifyToken = require('../middlewares/auth')
 
 /**
  * @swagger
@@ -862,5 +863,4 @@ router.get('/google/autocomplete', locationController.autocompleteLocation)
 
 router.get('/google/details', locationController.detailsLocation)
 
-
-module.exports = router
+export default router

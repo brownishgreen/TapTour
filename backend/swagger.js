@@ -1,6 +1,6 @@
 //swagger.js
-const swaggerJSDoc = require('swagger-jsdoc')
-const swaggerUi = require('swagger-ui-express')
+import swaggerJSDoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
 
 const options = {
     definition: {
@@ -57,6 +57,6 @@ const options = {
     apis: ['./routes/*.js'] //指定包含 Swagger 註解的文件所在的檔案位置
 }
 
-const swaggerSpec = swaggerJSDoc(options)
+export const swaggerSpec = swaggerJSDoc(options)
 
-module.exports = { swaggerSpec, swaggerUi }
+export { swaggerUi } 

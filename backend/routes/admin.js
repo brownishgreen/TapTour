@@ -1,8 +1,9 @@
-const express = require('express')
+import express from 'express'
+import adminController from '../controllers/admin-controller.js'
+import verifyToken from '../middlewares/auth.js'
+import isAdmin from '../middlewares/isAdmin.js'
+
 const router = express.Router()
-const adminController = require('../controllers/admin-controller')
-const verifyToken = require('../middlewares/auth')
-const isAdmin = require('../middlewares/isAdmin')
 
 /**
  * @swagger
@@ -60,7 +61,6 @@ const isAdmin = require('../middlewares/isAdmin')
  */
 
 router.get('/users', verifyToken, isAdmin, adminController.getAllUsers)
-
 
 /**
  * @swagger
@@ -148,7 +148,12 @@ router.get('/users', verifyToken, isAdmin, adminController.getAllUsers)
  *                   example: 伺服器錯誤
  */
 
-router.put('/users/:userId', verifyToken, isAdmin, adminController.updateUserRole)
+router.put(
+  '/users/:userId',
+  verifyToken,
+  isAdmin,
+  adminController.updateUserRole
+)
 
 /**
  * @swagger
@@ -210,7 +215,11 @@ router.put('/users/:userId', verifyToken, isAdmin, adminController.updateUserRol
  *                   example: 伺服器錯誤
  */
 
-router.delete('/users/:userId', verifyToken, isAdmin, adminController.deleteUser)
+router.delete(
+  '/users/:userId',
+  verifyToken,
+  isAdmin,
+  adminController.deleteUser
+)
 
-
-module.exports = router
+export default router

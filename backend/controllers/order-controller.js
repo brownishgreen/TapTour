@@ -1,4 +1,4 @@
-const { Order, OrderedItem, Product, Activity, User } = require('../models')
+import { Order, OrderedItem, Product, Activity, User } from '../models/index.js'
 
 const ordersController = {
   createOrder: async (req, res, next) => {
@@ -80,24 +80,25 @@ const ordersController = {
         return res.status(404).json({ message: '沒有找到相關訂單' })
       }
 
-       const orderDetails = orders.map((order) => ({
-         orderId: order.id,
-         uuid: order.uuid,
-         createdAt: order.createdAt,
-         totalAmount: order.total_amount,
-         items: order.orderedItems.map((item) => ({
-           name: item.product ? item.product.name : item.activity.name,
-           quantity: item.quantity,
-           price: item.product ? item.product.price : item.activity.price,
-         })),
-       }))
+      const orderDetails = orders.map((order) => ({
+        orderId: order.id,
+        uuid: order.uuid,
+        createdAt: order.createdAt,
+        totalAmount: order.total_amount,
+        items: order.orderedItems.map((item) => ({
+          name: item.product?.name || item.activity?.name || '未知名稱',
+          quantity: item.quantity,
+          price: item.product?.price || item.activity?.price || 0,
+        })),
+      }))
 
-      res.status(200).json(orderDetails)
+      return res.status(200).json(orderDetails)
     } catch (error) {
-      res.status(500).json({ message: '伺服器錯誤，查詢訂單失敗' })
-      next(error)
+      console.error('查詢訂單發生錯誤:', error)
+      return next(error) // ✅ 只傳遞錯誤，不會重複回應
     }
   },
+
   getOrderDetails: async (req, res, next) => {
     const { orderId } = req.params
 
@@ -151,4 +152,4 @@ const ordersController = {
     }
   },
 }
-module.exports = ordersController
+export default ordersController

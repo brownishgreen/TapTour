@@ -1,5 +1,4 @@
-const db = require('../models')
-const { Favorite, User, Activity, Product } = db
+import { Favorite, User, Activity, Product } from '../models/index.js'
 
 const favoriteController = {
   getFavoritesActivity: async (req, res) => {
@@ -69,4 +68,4 @@ const favoriteController = {
   }
 }
 
-module.exports = favoriteController
+export default favoriteController
