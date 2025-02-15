@@ -24,7 +24,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ limit: '10mb', extended: true }))
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://taptour-817210876591.asia-east1.run.app'],
+  origin: 'https://taptour-2d4fa.web.app',
   credentials: true
 }))
 
