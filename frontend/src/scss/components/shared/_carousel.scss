@@ -1,20 +1,37 @@
 @use '../../abstracts/_variables' as*;
 
-.carousel-item {
-  width: 100%;
-  height: 40%;
-  min-width: 550px;
-  max-height: 550px;
-  min-height: 250px;
-
-  img {
-    object-fit: cover; // 圖片自適應填充容器
-    width: 100%;
-    height: 100%;
-  }
+/* ✅ 確保整個輪播區域不超出視窗 */
+.carousel-wrapper {
+  width: 100vw;  /* 讓整個輪播區塊填滿視窗寬度 */
+  max-width: 100%; /* ✅ 避免內容溢出 */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* ✅ 確保 `.carousel-item` 100% 填滿 `.carousel-wrapper` */
+.carousel-item {
+  width: 100%;
+  height: 50vh; /* ✅ 讓高度隨視窗變動 */
+  min-height: 280px;
+  max-height: 550px;
+
+  background-color: #000;
+}
+
+/* ✅ 確保圖片完全填滿 */
+.carousel-item img {
+  width: 100%;
+  max-width: 100%; /* ✅ 確保圖片不會超出 */
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ✅ Caption 樣式 */
 .custom-carousel-caption {
+  width: 90%; /* ✅ 限制最大寬度 */
+  max-width: 1000px;
   padding: 10px 20px;
   position: absolute;
   bottom: 10%;
@@ -26,7 +43,7 @@
   text-align: center;
 }
 
-// 調整 Caption 標題的樣式
+/* ✅ Caption 文字 */
 .custom-carousel-caption h3 {
   color: #f8f9fa;
   font-size: 1.3rem;
@@ -43,20 +60,15 @@
   }
 }
 
-// 背景顏色控制
-.carousel-item {
-  background-color: #000; // 背景設為黑色
-}
-
-// 自定義指示器樣式
+/* ✅ 指示器樣式 */
 .carousel-indicators [data-bs-target] {
-  background-color: #fff; // 指示器顏色
+  background-color: #fff;
   width: 12px;
   height: 12px;
   border-radius: 50%;
 }
 
-// 自定義上一張、下一張按鈕樣式
+/* ✅ 左右按鈕樣式 */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: rgba(0, 0, 0, 0.5);
@@ -69,4 +81,35 @@
   &:hover {
     opacity: 1;
   }
+}
+
+/* ✅ RWD 適應不同裝置 */
+@media (max-width: 1024px) {
+  .carousel-item {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-item {
+    height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-item {
+    height: 280px;
+  }
+}
+
+/* ✅ 修正 `body` 避免水平滾動 */
+html,
+body {
+  width: 100%;
+  overflow-x: hidden; // ✅ 避免水平滾動
+}
+
+/* ✅ Bootstrap `.container` 可能影響布局，確保不超過 */
+.container {
+  max-width: 100vw; /* ✅ 防止 Bootstrap 限制內容寬度 */
 }
