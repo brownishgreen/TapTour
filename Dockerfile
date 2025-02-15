@@ -7,9 +7,12 @@ RUN npm install && npm run build
 # 建立後端
 FROM node:18
 WORKDIR /app
-COPY backend ./
-COPY --from=frontend /app/dist ./frontend/dist
-RUN npm install
+COPY backend ./backend
+WORKDIR /app/backend
+COPY backend/package.json ./
+COPY backend/package-lock.json ./
+RUN ls -la /app/backend
+RUN npm install --omit=dev
 
 # 設定環境變數
 ENV PORT=8080

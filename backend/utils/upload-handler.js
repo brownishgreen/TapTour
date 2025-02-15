@@ -1,24 +1,26 @@
-import fs from 'fs'
+import { Storage } from '@google-cloud/storage'
+import dotenv from 'dotenv'
 import path from 'path'
+import axios from 'axios'
 import db from '../models/index.js'
 import pinyinModule from 'pinyin'
-import axios from 'axios'
-import { Storage } from '@google-cloud/storage'
+
+dotenv.config()
 
 const { Image } = db
 const pinyin = pinyinModule.default
 
-const bucketName = process.env.GOOGLE_CLOUD_STORAGE_BUCKET || "taptour-uploads";
+// ✅ Google Cloud Storage 設定
+const storage = new Storage({
+  projectId: process.env.GOOGLE_CLOUD_PROJECT,
+})
+const bucketName = process.env.GOOGLE_CLOUD_STORAGE_BUCKET || 'taptour-uploads'
+const bucket = storage.bucket(bucketName)
 
-const { Storage } = require("@google-cloud/storage");
-const storage = new Storage();
-const bucket = storage.bucket(bucketName);
+console.log("✅ Using Bucket:", bucketName) // 確認變數是否正確
 
-console.log("Using Bucket:", bucketName); // ✅ 確認變數是否正確
-/**
- * 📤 **上傳圖片到 GCS，並回傳公開存取的 URL**
- */
-const uploadToGCS = (fileBuffer, destinationPath) => {
+// ✅ **統一 `uploadToGCS` 方法**
+export const uploadToGCS = (fileBuffer, destinationPath) => {
   return new Promise((resolve, reject) => {
     const blob = bucket.file(destinationPath)
     const blobStream = blob.createWriteStream({
@@ -28,7 +30,7 @@ const uploadToGCS = (fileBuffer, destinationPath) => {
 
     blobStream.on('error', (err) => reject(err))
     blobStream.on('finish', () => {
-      const publicUrl = `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_STORAGE_BUCKET}/${destinationPath}`
+      const publicUrl = `https://storage.googleapis.com/${bucketName}/${destinationPath}`
       resolve(publicUrl)
     })
 
@@ -36,9 +38,7 @@ const uploadToGCS = (fileBuffer, destinationPath) => {
   })
 }
 
-/**
- * ✅ **handleImageUpload**（改為上傳到 GCS）
- */
+// ✅ **handleImageUpload**（處理上傳圖片到 GCS）
 export const handleImageUpload = async (images, entityId, name, entityType, dbColumn) => {
   if (!images) throw new Error('未提供任何圖片')
 
@@ -79,9 +79,7 @@ export const handleImageUpload = async (images, entityId, name, entityType, dbCo
   return imageUrls.filter(Boolean)
 }
 
-/**
- * 🌍 **從 Google Places API 下載圖片並存入 GCS**
- */
+// ✅ **下載 Google Places API 圖片並存入 GCS**
 export const downloadGoogleImages = async (googlePhotos, entityId, name, entityType, dbColumn) => {
   const imageUrls = []
   if (!googlePhotos || googlePhotos.length === 0) return imageUrls
@@ -104,7 +102,7 @@ export const downloadGoogleImages = async (googlePhotos, entityId, name, entityT
     try {
       const response = await axios({
         url: googlePhotoUrl,
-        responseType: 'arraybuffer', // 改為 arraybuffer 方便存入 GCS
+        responseType: 'arraybuffer', // 下載為 Buffer 以便存入 GCS
       })
 
       // 上傳到 GCS
