@@ -4,17 +4,17 @@ import db from '../models/index.js'
 import pinyinModule from 'pinyin'
 import axios from 'axios'
 import { Storage } from '@google-cloud/storage'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 const { Image } = db
 const pinyin = pinyinModule.default
 
-// 設定 Google Cloud Storage（GCS）
-const storage = new Storage({ projectId: process.env.GOOGLE_CLOUD_PROJECT })
-const bucket = storage.bucket(process.env.GCLOUD_STORAGE_BUCKET)
+const bucketName = process.env.GOOGLE_CLOUD_STORAGE_BUCKET || "taptour-uploads";
 
+const { Storage } = require("@google-cloud/storage");
+const storage = new Storage();
+const bucket = storage.bucket(bucketName);
+
+console.log("Using Bucket:", bucketName); // ✅ 確認變數是否正確
 /**
  * 📤 **上傳圖片到 GCS，並回傳公開存取的 URL**
  */
@@ -28,7 +28,7 @@ const uploadToGCS = (fileBuffer, destinationPath) => {
 
     blobStream.on('error', (err) => reject(err))
     blobStream.on('finish', () => {
-      const publicUrl = `https://storage.googleapis.com/${process.env.GCLOUD_STORAGE_BUCKET}/${destinationPath}`
+      const publicUrl = `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_STORAGE_BUCKET}/${destinationPath}`
       resolve(publicUrl)
     })
 

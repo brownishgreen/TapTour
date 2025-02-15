@@ -8,6 +8,9 @@ const config = {
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
     dialect: 'mysql',
+    dialectOptions: {
+      socketPath: process.env.DATABASE_HOST, // Cloud SQL 需要 socketPath
+    },
     define: {
       underscored: true,
     },
@@ -39,6 +42,13 @@ const config = {
     migrationStorageTableName: 'SequelizeMeta',
     migrationStorageExtension: 'cjs',
   },
-};
+}
 
-export default config;
+console.log('Database Config:', {
+  user: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  host: process.env.DATABASE_HOST,
+})
+
+export default config

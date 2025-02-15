@@ -43,6 +43,8 @@ app.use(
 
 // 路由設定
 app.use('/api', routes)
+console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
+
 
 // 錯誤處理
 app.use(errorHandler)
