@@ -1,4 +1,4 @@
-import 'dotenv/config' // 載入環境變數
+import 'dotenv/config'; // 確保環境變數可讀取
 
 const config = {
   development: {
@@ -9,8 +9,10 @@ const config = {
     port: process.env.DATABASE_PORT,
     dialect: 'mysql',
     define: {
-      underscored: true, // 全域應用底線命名規則
+      underscored: true,
     },
+    migrationStorageTableName: 'SequelizeMeta',
+    migrationStorageExtension: 'cjs',
   },
   test: {
     username: 'root',
@@ -19,20 +21,24 @@ const config = {
     host: '127.0.0.1',
     dialect: 'mysql',
     define: {
-      underscored: true, // 全域應用底線命名規則
+      underscored: true,
     },
+    migrationStorageExtension: 'cjs',
   },
   production: {
     username: 'root',
-    password: null,
-    database: 'database_production',
-    host: '127.0.0.1',
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
     dialect: 'mysql',
     define: {
-      underscored: true, // 全域應用底線命名規則
+      underscored: true,
     },
+    dialectOptions: {
+      socketPath: process.env.INSTANCE_UNIX_SOCKET, // Cloud SQL
+    },
+    migrationStorageTableName: 'SequelizeMeta',
+    migrationStorageExtension: 'cjs',
   },
-}
+};
 
-
-export default config
+export default config;

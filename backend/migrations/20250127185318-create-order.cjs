@@ -1,4 +1,5 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -9,11 +10,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
+      uuid: { // ✅ 直接加入新欄位
+        type: Sequelize.UUID,
+        allowNull: false,
+        unique: true,
       },
-      email: {
-        type: Sequelize.STRING
+      chosen_date: { // ✅ 直接加入新欄位
+        type: Sequelize.DATEONLY,
+        allowNull: false,
       },
       total_amount: {
         type: Sequelize.INTEGER
@@ -34,6 +38,7 @@ module.exports = {
       }
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Orders');
   }

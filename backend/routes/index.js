@@ -24,4 +24,25 @@ router.use('/comments', commentRoutes) // 路徑 /api/comments
 router.use('/orders', orderRoutes) // 路徑 /api/orders
 router.use('/favorites', favoriteRoutes) // 路徑 /api/favorites
 
+// 📌 新增上傳圖片 API
+router.post('/upload', async (req, res) => {
+  if (!req.files || !req.files.image) {
+    return res.status(400).json({ error: '請提供圖片' })
+  }
+
+  try {
+    const imageUrls = await handleImageUpload(
+      req.files.image,
+      req.body.entityId,
+      req.body.name,
+      req.body.entityType,
+      req.body.dbColumn
+    )
+    res.json({ urls: imageUrls })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+})
+
+
 export default router
