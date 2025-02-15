@@ -737,10 +737,19 @@ main {
   height: 200px;
 }
 .card-item .card-item__button {
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-top: auto;
-  margin-right: 10px;
+  margin-left: -8%;
+}
+.card-item .card-item__button .favorite-button {
+  margin-right: 5px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #D04745;
 }
 .card-item:hover {
   transform: scale(1.03);
@@ -989,21 +998,38 @@ main {
   width: 400px;
 }
 
-.carousel-item {
-  width: 100%;
-  height: 40%;
-  min-width: 550px;
-  max-height: 550px;
-  min-height: 250px;
-}
-.carousel-item img {
-  -o-object-fit: cover;
-     object-fit: cover;
-  width: 100%;
-  height: 100%;
+/* ✅ 確保整個輪播區域不超出視窗 */
+.carousel-wrapper {
+  width: 100vw; /* 讓整個輪播區塊填滿視窗寬度 */
+  max-width: 100%; /* ✅ 避免內容溢出 */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* ✅ 確保 `.carousel-item` 100% 填滿 `.carousel-wrapper` */
+.carousel-item {
+  width: 100%;
+  height: 50vh; /* ✅ 讓高度隨視窗變動 */
+  min-height: 280px;
+  max-height: 550px;
+  background-color: #000;
+}
+
+/* ✅ 確保圖片完全填滿 */
+.carousel-item img {
+  width: 100%;
+  max-width: 100%; /* ✅ 確保圖片不會超出 */
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* ✅ Caption 樣式 */
 .custom-carousel-caption {
+  width: 90%; /* ✅ 限制最大寬度 */
+  max-width: 1000px;
   padding: 10px 20px;
   position: absolute;
   bottom: 10%;
@@ -1015,6 +1041,7 @@ main {
   text-align: center;
 }
 
+/* ✅ Caption 文字 */
 .custom-carousel-caption h3 {
   color: #f8f9fa;
   font-size: 1.3rem;
@@ -1033,10 +1060,7 @@ main {
   }
 }
 
-.carousel-item {
-  background-color: #000;
-}
-
+/* ✅ 指示器樣式 */
 .carousel-indicators [data-bs-target] {
   background-color: #fff;
   width: 12px;
@@ -1044,6 +1068,7 @@ main {
   border-radius: 50%;
 }
 
+/* ✅ 左右按鈕樣式 */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: rgba(0, 0, 0, 0.5);
@@ -1056,6 +1081,34 @@ main {
 .carousel-control-prev-icon:hover,
 .carousel-control-next-icon:hover {
   opacity: 1;
+}
+
+/* ✅ RWD 適應不同裝置 */
+@media (max-width: 1024px) {
+  .carousel-item {
+    height: 400px;
+  }
+}
+@media (max-width: 768px) {
+  .carousel-item {
+    height: 350px;
+  }
+}
+@media (max-width: 480px) {
+  .carousel-item {
+    height: 280px;
+  }
+}
+/* ✅ 修正 `body` 避免水平滾動 */
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ✅ Bootstrap `.container` 可能影響布局，確保不超過 */
+.container {
+  max-width: 100vw; /* ✅ 防止 Bootstrap 限制內容寬度 */
 }
 
 .campaign-card {
@@ -1378,7 +1431,7 @@ main {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 500px;
-  margin: 30px auto 0;
+  margin: 130px auto 0;
   z-index: 2;
 }
 @media (max-width: 768px) {
@@ -1394,7 +1447,6 @@ main {
 }
 .activity-form__form {
   width: 100%;
-  margin-top: 20px;
   position: relative;
   z-index: 5;
 }
@@ -1435,8 +1487,9 @@ main {
   z-index: 10;
 }
 .activity-form__form-item button[type=submit] {
-  width: 100%;
+  width: 45%;
   padding: 10px;
+  margin: 0 1.25% 0 2.5%;
   font-size: 16px;
   background-color: #54A2C0;
   color: #fff;
@@ -1447,6 +1500,22 @@ main {
   z-index: 10;
 }
 .activity-form__form-item button[type=submit]:hover {
+  background-color: #333;
+}
+.activity-form__form-item button[type=button] {
+  width: 45%;
+  padding: 10px;
+  margin: 0 1.25% 0 2.5%;
+  font-size: 16px;
+  background: #FF6B6B;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 10;
+}
+.activity-form__form-item button[type=button]:hover {
   background-color: #333;
 }
 .activity-form__image-upload {
@@ -1483,8 +1552,7 @@ select option {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 500px;
   min-width: 320px;
-  outline: 2px solid #54A2C0;
-  margin: 30px auto 0;
+  margin: 130px auto 0;
   z-index: 2;
 }
 @media (max-width: 768px) {
@@ -1500,7 +1568,6 @@ select option {
 }
 .product-form__form {
   width: 100%;
-  margin-top: 20px;
   position: relative;
   z-index: 5;
 }
@@ -1541,8 +1608,9 @@ select option {
   z-index: 10;
 }
 .product-form__form-item button[type=submit] {
-  width: 100%;
+  width: 45%;
   padding: 10px;
+  margin: 0 1.25% 0 2.5%;
   font-size: 16px;
   background-color: #54A2C0;
   color: #fff;
@@ -1554,6 +1622,19 @@ select option {
 }
 .product-form__form-item button[type=submit]:hover {
   background-color: #333;
+}
+.product-form__form-item button[type=button] {
+  width: 45%;
+  padding: 10px;
+  margin: 0 1.25% 0 2.5%;
+  font-size: 16px;
+  background: #FF6B6B;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 10;
 }
 .product-form__image-upload {
   display: flex;
@@ -1674,6 +1755,7 @@ select option {
 .related-card {
   background-color: #ffffff;
   max-width: 750px;
+  min-width: 300px;
   height: 200px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -1691,6 +1773,12 @@ select option {
   border-radius: 12px;
   margin: 20px;
 }
+@media (max-width: 768px) {
+  .related-card__image-wrapper img {
+    width: 160px;
+    height: 160px;
+  }
+}
 .related-card__content {
   flex: 3;
   display: flex;
@@ -1699,7 +1787,7 @@ select option {
 .related-card__content h3 {
   font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin: 20px 0 10px 0;
 }
 @media (max-width: 768px) {
   .related-card__content h3 {
@@ -1716,13 +1804,25 @@ select option {
   }
 }
 .related-card__content button {
+  width: 120px;
+  height: 40px;
   position: relative;
-  right: -75%;
+  right: -77%;
+  bottom: 5%;
 }
 @media (max-width: 768px) {
   .related-card__content button {
-    position: relative;
-    right: -50%;
+    right: -65%;
+    bottom: -10%;
+  }
+}
+@media (max-width: 600px) {
+  .related-card__content button {
+    right: -5%;
+    bottom: 0%;
+    width: 100px;
+    height: 30px;
+    font-size: 0.8rem;
   }
 }
 
@@ -1820,7 +1920,8 @@ select option {
   text-align: left;
   font-weight: 700;
 }
-.location-form-container form .location-form-group .location-form-input, .location-form-container form .location-form-group .form-textarea {
+.location-form-container form .location-form-group .location-form-input,
+.location-form-container form .location-form-group .form-textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -1829,7 +1930,8 @@ select option {
   color: #333333;
   transition: border 0.3s ease-in-out;
 }
-.location-form-container form .location-form-group .location-form-input:focus, .location-form-container form .location-form-group .form-textarea:focus {
+.location-form-container form .location-form-group .location-form-input:focus,
+.location-form-container form .location-form-group .form-textarea:focus {
   outline: none;
   border-color: #54A2C0;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
@@ -2391,7 +2493,7 @@ th.quantity-header, td.quantity-cell {
 .activity-detail-page__search-bar-wrapper {
   margin-top: 120px;
 }
-.activity-detail-page__button {
+wo q .activity-detail-page__button {
   margin-top: 20px;
 }
 .activity-detail-page .activity-detail-introduction {
@@ -2541,7 +2643,6 @@ th.quantity-header, td.quantity-cell {
 .manage-product-page h1 {
   text-align: center;
   font-size: 24px;
-  color: #ffffff;
   margin: 50px auto 0;
 }
 
@@ -2759,17 +2860,69 @@ h2 svg {
   border-radius: 8px;
   margin: 0 auto;
 }
+.homepage-card-item .card-item__button button {
+  margin-left: 15px;
+}
+.homepage-card-item .card-item__button .favorite-button {
+  display: none;
+}
 .homepage-card-item img {
   margin: 0 auto;
   border-radius: 8px;
 }
 
+.error-page__image {
+  max-width: 300px;
+  max-height: 400px;
+  margin: 0 auto;
+}
+.error-page__image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+@media (min-width: 480px) {
+  .error-page__image {
+    max-width: 400px;
+    max-height: 500px;
+  }
+}
+@media (min-width: 1024px) {
+  .error-page__image {
+    max-width: 800px;
+    max-height: 600px;
+  }
+}
+/* ✅ 小螢幕時按鈕滿版 */
+@media (max-width: 480px) {
+  .error-page-btn {
+    width: 90%;
+    font-size: 14px;
+  }
+}
+/* ✅ 平板 (768px) */
+@media (min-width: 768px) {
+  .error-page-btn {
+    width: 180px;
+    font-size: 16px;
+  }
+}
+/* ✅ 桌面 (1024px) */
+@media (min-width: 1024px) {
+  .error-page-btn {
+    width: 200px;
+    margin-top: -80px;
+  }
+}
 .error-page-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 180px;
   margin-top: -80px;
+  margin-bottom: 5rem;
   z-index: 1000;
   text-align: center;
   text-decoration: none;
@@ -2780,4 +2933,23 @@ h2 svg {
 
 .error-page-btn:hover {
   background-color: #0056b3;
+}
+
+@media (max-width: 480px) {
+  .error-page-btn {
+    width: 90%;
+    font-size: 14px;
+  }
+}
+@media (min-width: 768px) {
+  .error-page-btn {
+    width: 180px;
+    font-size: 16px;
+  }
+}
+@media (min-width: 1024px) {
+  .error-page-btn {
+    width: 200px;
+    margin-top: -80px;
+  }
 }/*# sourceMappingURL=style.css.map */
