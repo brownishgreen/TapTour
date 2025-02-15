@@ -75,7 +75,7 @@ const SearchBar = () => {
               新增
               {location.pathname === '/activities' && '活動'}
               {location.pathname === '/products' && '商品'}
-              {location.pathname === '/locations' && '地點'}
+              {location.pathname === '/locations' && '景點'}
             </Button>
           )}
         </InputGroup>
