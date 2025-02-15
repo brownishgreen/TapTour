@@ -1,4 +1,4 @@
-require('dotenv').config()
+import 'dotenv/config' 
 
 const express = require('express')
 const { swaggerUi, swaggerSpec } = require('./swagger')
@@ -44,6 +44,5 @@ app.get('/', (req, res) => {
 app.use(errorHandler)
 
 app.listen(port, '0.0.0.0', () => {
-  console.log(`伺服器正運行在http://localhost:${port}`)
-  console.log(`API 文件在http://localhost:${port}/api-docs`)
-})
+  console.log(`伺服器運行在 http://0.0.0.0:${port}`);
+})  

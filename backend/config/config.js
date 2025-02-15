@@ -9,7 +9,7 @@ const config = {
     port: process.env.DATABASE_PORT,
     dialect: 'mysql',
     dialectOptions: {
-      socketPath: process.env.DATABASE_HOST, // Cloud SQL 需要 socketPath
+      socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
     },
     define: {
       underscored: true,
