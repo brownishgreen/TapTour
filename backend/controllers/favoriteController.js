@@ -51,7 +51,6 @@ const favoriteController = {
   },
   checkFavorite: async (req, res) => {
     const { userId, itemId, itemType } = req.query
-    console.log("🔍 檢查收藏", { userId, itemId, itemType }); // 🔍 顯示檢查收藏的參數
     if (!userId || !itemId || !itemType) {
       return res.status(400).json({ message: '缺少必要參數' })
     }

@@ -18,7 +18,6 @@ const CardItem = ({ buttonText, image, title, subtitle, cardLink, itemId, userId
     })
       .then(res => res.data)
       .then(data => {
-        console.log("🔍 收藏狀態", data); // 🔍 顯示收藏狀態
         if(data.isFavorited) {
           setIsFavorited(true)
           setFavoriteId(data.favoriteId)
@@ -50,7 +49,6 @@ const CardItem = ({ buttonText, image, title, subtitle, cardLink, itemId, userId
         item_type: itemType,
         user_id: userId
       }
-      console.log("🔍 新增收藏", favoriteData); // 🔍 顯示新增收藏的資料
       apiClient.post('/api/favorites', favoriteData)
         .then(res => res.data)
         .then(data => {
