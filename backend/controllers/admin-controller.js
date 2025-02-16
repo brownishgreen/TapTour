@@ -5,9 +5,9 @@ const adminController = {
     try {
       const users = await adminService.getAllUsers()
       res.status(200).json(users)
-    } catch (err) {
-      err.statusCode = 500
-      next(err)
+    } catch (error) {
+      res.status(500).json({ message: '無法取得用戶' })
+      next(error)
     }
   },
   updateUserRole: async (req, res, next) => {
@@ -18,9 +18,9 @@ const adminController = {
     try {
       const user = await adminService.updateUserRole(userId, is_admin, currentUserId)
       res.status(200).json({ message: '角色更新成功', user })
-    } catch (err) {
-      res.status(500)
-      next(err)
+    } catch (error) {
+      res.status(500).json({ message: '無法更新角色' })
+      next(error)
     }
   },
   deleteUser: async (req, res, next) => {
@@ -30,8 +30,9 @@ const adminController = {
     try {
       const message = await adminService.deleteUser(userId, currentUserId)
       res.status(200).json({ message })
-    } catch (err) {
-      next(err)
+    } catch (error) {
+      res.status(500).json({ message: '無法刪除用戶' })
+      next(error)
     }
   }
 }
