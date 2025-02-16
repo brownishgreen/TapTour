@@ -14,7 +14,7 @@ const CardItem = ({ buttonText, image, title, subtitle, cardLink, itemId, userId
 
   useEffect(() => {
     apiClient.get(`/api/favorites/check`, {
-      params: { userId, itemId, itemType }
+      params: { user_id: userId, item_id: itemId, item_type: itemType }
     })
       .then(res => res.data)
       .then(data => {
