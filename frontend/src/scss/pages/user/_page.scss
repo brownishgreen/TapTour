@@ -13,7 +13,6 @@
     left: 0;
     width: 100%;
     background-color: white; // ✅ 確保 header 可見
-    z-index: 100;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
@@ -28,7 +27,6 @@
 // }
 
 main {
-  flex: 1;
   display: flex;
   justify-content: center; // ✅ 讓表單水平置中
   align-items: center; // ✅ 讓表單垂直置中

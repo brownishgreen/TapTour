@@ -645,7 +645,7 @@ router.delete('/:id', verifyToken, isAdmin, locationController.deleteLocation)
  *                   example: 獲取圖片失敗
  */
 
-router.get('/:id/images', locationController.getLocationAllImage)
+router.get('/:id/images', locationController.getLocationAllImages)
 
 
 // 設置主要圖片

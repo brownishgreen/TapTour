@@ -33,11 +33,17 @@ const ProductsTable = () => {
   }, [])
 
   const openConfirmModal = (productId) => {
-    setSelectedProductId(productId)
+    setSelectedProductId(Number(productId))
     setShowConfirm(true)
   }
 
   const deleteProduct = () => {
+    console.log('即將刪除的 productId:', selectedProductId) // 確保 ID 正確
+    if (!selectedProductId) {
+      console.error('selectedProductId 無效')
+      setShowError(true)
+      return
+    }
     apiClient
       .delete(`api/products/${selectedProductId}`)
       .then(() => {

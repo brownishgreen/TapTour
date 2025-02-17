@@ -1,4 +1,4 @@
-const apiKey = import.meta.env.VITE_GOOGLE_API_KEY
+const apiKey = 'AIzaSyAKr3ey9b7CDDw9ZlolHw4Q2ag_S8D37LU' //temporary
 
 const LocationMap = ({ latitude, longitude }) => {
 
