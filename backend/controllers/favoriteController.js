@@ -4,7 +4,10 @@ const favoriteController = {
   getFavoritesActivity: async (req, res, next) => {
     try {
       const { userId } = req.params
-      const favorites = await favoriteService.getFavoritesByType(userId, 'activity')
+      const favorites = await favoriteService.getFavoritesByType(
+        userId,
+        'activity'
+      )
       res.status(200).json(favorites)
     } catch (error) {
       res.status(400).json({ message: error.message || '無法取得收藏' })
@@ -14,7 +17,10 @@ const favoriteController = {
   getFavoritesProduct: async (req, res, next) => {
     try {
       const { userId } = req.params
-      const favorites = await favoriteService.getFavoritesByType(userId, 'product')
+      const favorites = await favoriteService.getFavoritesByType(
+        userId,
+        'product'
+      )
       res.status(200).json(favorites)
     } catch (error) {
       res.status(400).json({ message: error.message || '無法取得收藏' })
@@ -26,7 +32,11 @@ const favoriteController = {
       return res.status(400).json({ message: '缺少必要參數' })
     }
     try {
-      const favorite = await favoriteService.createFavorite(user_id, item_id, item_type)
+      const favorite = await favoriteService.createFavorite(
+        user_id,
+        item_id,
+        item_type
+      )
       res.status(201).json(favorite)
     } catch (error) {
       res.status(500).json({ message: '無法新增收藏' })
@@ -50,12 +60,25 @@ const favoriteController = {
       return res.status(400).json({ message: '缺少必要參數' })
     }
     try {
-      const favorite = await favoriteService.checkFavorite(user_id, item_id, item_type)
+      const favorite = await favoriteService.checkFavorite(
+        user_id,
+        item_id,
+        item_type
+      )
       res.status(200).json(favorite)
     } catch (error) {
       res.status(500).json({ message: '無法檢查收藏' })
     }
-  }
+  },
+  getUserFavorites: async (req, res) => {
+    try {
+      const { userId } = req.params
+      const favorites = await favoriteService.getUserFavorites(userId)
+      res.status(200).json(favorites)
+    } catch (error) {
+      res.status(500).json({ message: '無法獲取收藏' })
+    }
+  },
 }
 
 export default favoriteController

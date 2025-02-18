@@ -22,10 +22,21 @@
     gap: 2rem;
   }
 
+  .profile-info-content {
+    display: flex;
+    flex-direction: column; // ✅ 讓子元素直向排列
+    align-items: center; // ✅ 讓內容水平置中
+    width: 100%;
+    max-width: 600px; // ✅ 控制最大寬度
+    margin: 0 auto; // ✅ 讓 `.profile-info-content` 置中
+    gap: 1.5rem; // ✅ 增加區塊間的間距
+  }
+
+
   // 📌 個人資訊區塊
   .profile-info {
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     padding: 2rem;
     border-radius: 10px;
     text-align: center; // ✅ 手機版內容置中
@@ -86,73 +97,29 @@
     }
   }
 
-    .profile-content {
-      margin: 0 auto;
-      padding: 0;
-      max-width: 1200px;
-    }
-
-    .profile-content__comments,
-    .profile-content__activities,
-    .profile-content__followers {
-      width: 100%;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      padding: 1.5rem;
-      border-radius: 10px;
-      background-color: white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-    }
-
-    .profile-content__followers,
-    .profile-content__activities-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center; // ✅ 讓內容置中，避免 flex 空隙
-      align-items: flex-start; // ✅ 避免子元素影響間距
-    }
-
-    .profile-content__followers{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-items: flex-start; // ✅ 避免子元素影響間距
-    }
-
-    .profile-content__follower-box {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem; // ✅ 保持間距，不使用 margin-left
-  justify-content: center; // ✅ 確保內容水平置中
-  align-items: center;
-
-  .profile-content__follower-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-
-    img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ddd; // ✅ 增加邊框讓 avatar 看起來更清晰
-      transition: transform 0.2s ease-in-out; // ✅ 增加 hover 效果
-    }
-
-    img:hover {
-      transform: scale(1.1); // ✅ 滑鼠懸停時放大
-    }
-
-    p {
-      font-size: 0.9rem;
-      color: #555;
-      margin-top: 0.5rem;
-    }
+  .profile-content {
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1200px;
   }
-}
 
+  .profile-content__comments,
+  .profile-content__activities{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 1.5rem;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .profile-content__activities-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start; // ✅ 避免子元素影響間距
+    padding: 1rem;
+  }
 }
 
 
@@ -195,3 +162,55 @@
     }
   }
 }
+
+
+.profile-content__followers {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+
+  .profile-content-title {
+    padding-top: 1rem;
+  }
+
+  .profile-content__follower-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: flex-start; // ✅ 確保內容水平置中
+    align-items: center;
+
+  .profile-content__follower-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ddd; // ✅ 增加邊框讓 avatar 看起來更清晰
+      transition: transform 0.2s ease-in-out; // ✅ 增加 hover 效果
+      margin-top: 1rem;
+    }
+
+    img:hover {
+      transform: scale(1.1); // ✅ 滑鼠懸停時放大
+    }
+
+    p {
+      font-size: 0.6rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+}
+
+

@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faHeart as solidHeart,
   faPen,
-  faStreetView,
+  faFire,
+  faMapLocationDot,
 } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'
 import { Card, Button } from 'react-bootstrap'
@@ -22,6 +23,8 @@ const ProfileInfo = ({ userId }) => {
   const [following, setFollowing] = useState([]) // 我正在追蹤的人-列表
   const [isFollowing, setIsFollowing] = useState(false)
   const [followLoading, setFollowLoading] = useState(false)
+  const [favoriteActivities, setFavoriteActivities] = useState([])
+  const [favoriteProducts, setFavoriteProducts] = useState([])
 
   useEffect(() => {
     const userData = async () => {
@@ -40,6 +43,21 @@ const ProfileInfo = ({ userId }) => {
       }
     }
     userData()
+  }, [userId])
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const response = await apiClient.get(`/api/favorites/users/${userId}`)
+        console.log('收到的收藏活動資料:', response.data.activities) // ✅ 檢查 API 回傳
+
+        setFavoriteActivities(response.data.activities)
+        setFavoriteProducts(response.data.products)
+      } catch (err) {
+        console.error('無法獲取收藏清單', err)
+      }
+    }
+    fetchFavorites()
   }, [userId])
 
   if (loading) {
@@ -101,125 +119,63 @@ const ProfileInfo = ({ userId }) => {
   }
   return (
     <div className="profile-wrapper">
-      <div className="profile-info">
-        <div className="profile-avatar">
-          <img
-            src={
-              user.image ||
-              '../../public/assets/images/others/default-avatar.jpg'
-            }
-            alt="預設大頭貼"
-            className="default-avatar"
-          />
-        </div>
-        <div className="profile-details">
-          <p>姓名: {user.name}</p>
-          <p>信箱: {user.email}</p>
-          <p>註冊日期: {user.createdAt.split('T')[0]}</p>
-          <p>個人簡介: </p>
-          <p className="profile-bio">
-            {user.bio || '請至編輯頁面輸入您的個人簡介...'}
-          </p>
-        </div>
-        <div>
+      <div className="profile-info-content">
+        <div className="profile-info">
+          <div className="profile-avatar">
+            <img
+              src={
+                user.image ||
+                '../../public/assets/images/others/default-avatar.jpg'
+              }
+              alt="預設大頭貼"
+              className="default-avatar"
+            />
+          </div>
+          <div className="profile-details">
+            <p>姓名: {user.name}</p>
+            <p>信箱: {user.email}</p>
+            <p>註冊日期: {user.createdAt.split('T')[0]}</p>
+            <p>個人簡介: </p>
+            <p className="profile-bio">
+              {user.bio || '請至編輯頁面輸入您的個人簡介...'}
+            </p>
+          </div>
           <div>
-            {currentUserId !== user.id &&
-              (isFollowing ? (
-                <button
-                  type="button"
-                  className="follow-btn following"
-                  onClick={handleUnfollow}
-                  disabled={followLoading}
-                  style={{ backgroundColor: '#54A2C0', color: '#fff' }}
-                >
-                  {followLoading ? '處理中...' : '已追蹤'}
-                  <FontAwesomeIcon className="icon" icon={solidHeart} />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="follow-btn"
-                  onClick={handleFollow}
-                  disabled={followLoading}
-                >
-                  {followLoading ? '處理中...' : '追蹤我'}
-                  <FontAwesomeIcon icon={regularHeart} className="icon" />
-                </button>
-              ))}
+            <div>
+              {currentUserId !== user.id &&
+                (isFollowing ? (
+                  <button
+                    type="button"
+                    className="follow-btn following"
+                    onClick={handleUnfollow}
+                    disabled={followLoading}
+                    style={{ backgroundColor: '#54A2C0', color: '#fff' }}
+                  >
+                    {followLoading ? '處理中...' : '已追蹤'}
+                    <FontAwesomeIcon className="icon" icon={solidHeart} />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="follow-btn"
+                    onClick={handleFollow}
+                    disabled={followLoading}
+                  >
+                    {followLoading ? '處理中...' : '追蹤我'}
+                    <FontAwesomeIcon icon={regularHeart} className="icon" />
+                  </button>
+                ))}
 
-            {currentUserId === user.id && (
-              <button className="profile-btn" onClick={handleEditProfile}>
-                編輯個人檔案
-              </button>
-            )}
+              {currentUserId === user.id && (
+                <button className="profile-btn" onClick={handleEditProfile}>
+                  編輯個人檔案
+                </button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="profile-content">
-        <div className="profile-content__comments">
-          <h5 className="profile-content-title">
-            最新評論
-            <FontAwesomeIcon icon={faPen} className="icon" />
-          </h5>
-          <div className="profile-content__comment-box">
-            {/* 範例評論 */}
-            <div className="profile-content__comment-item">
-              <p className="profile-content__comment-text">
-                這個活動真的很棒！非常推薦給大家！
-              </p>
-              <p className="profile-content__comment-author">
-                - by User123, 2025-01-15
-              </p>
-            </div>
-            <div className="profile-content__comment-item">
-              <p className="profile-content__comment-text">
-                地點很漂亮，但安排稍微有點緊湊。
-              </p>
-              <p className="profile-content__comment-author">
-                - by JaneDoe, 2025-01-10
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="profile-content__activities">
-          <h5 className="profile-content-title">
-            參與過的活動
-            <FontAwesomeIcon icon={faStreetView} className="icon" />
-          </h5>
-          <div className="profile-content__activities-box">
-            <div className="profile-content__activities-list">
-              <Card style={{ width: '230px', height: '320px' }}>
-                <Card.Img
-                  variant="top"
-                  src="../../assets/images/backgrounds/taipei.jpg"
-                  style={{ width: '228px', height: '150px' }}
-                />
-                <Card.Body>
-                  <Card.Title>台北一日遊</Card.Title>
-                  <Card.Text>
-                    101觀景台→兒童新樂園→士林官邸or故宮博物院...
-                  </Card.Text>
-                  <Button variant="secondary">查看更多</Button>
-                </Card.Body>
-              </Card>
-              <Card style={{ width: '230px', height: '320px' }}>
-                <Card.Img
-                  variant="top"
-                  src="../../assets/images/others/korea.jpg"
-                  style={{ width: '228px', height: '150px' }}
-                />
-                <Card.Body>
-                  <Card.Title>花漾釜山５日</Card.Title>
-                  <Card.Text>
-                    鎮海、慶州古都賞櫻、黑白大廚、彩色甘川洞文化村...
-                  </Card.Text>
-                  <Button variant="secondary">查看更多</Button>
-                </Card.Body>
-              </Card>
-            </div>
-          </div>
-        </div>
+        {/* follow */}
         <div className="profile-content__followers">
           <div className="profile-content__follow">
             <h5 className="profile-content-title">
@@ -230,10 +186,7 @@ const ProfileInfo = ({ userId }) => {
                 <p>尚無追蹤者</p>
               ) : (
                 followers.map((f) => (
-                  <div
-                    key={f.id}
-                    className="profile-content__follower-item"
-                  >
+                  <div key={f.id} className="profile-content__follower-item">
                     <Link to={`/users/${f.id}/profile`}>
                       <img
                         src={f.image || '/default-avatar.jpg'}
@@ -269,6 +222,120 @@ const ProfileInfo = ({ userId }) => {
                 ))
               )}
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="profile-content">
+        <div className="profile-content__comments">
+          <h5 className="profile-content-title">
+            最新評論
+            <FontAwesomeIcon icon={faPen} className="icon" />
+          </h5>
+          <div className="profile-content__comment-box">
+            {/* 範例評論 */}
+            <div className="profile-content__comment-item">
+              <p className="profile-content__comment-text">
+                這個活動真的很棒！非常推薦給大家！
+              </p>
+              <p className="profile-content__comment-author">
+                - by User123, 2025-01-15
+              </p>
+            </div>
+            <div className="profile-content__comment-item">
+              <p className="profile-content__comment-text">
+                地點很漂亮，但安排稍微有點緊湊。
+              </p>
+              <p className="profile-content__comment-author">
+                - by JaneDoe, 2025-01-10
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="profile-content__activities">
+          <h5 className="profile-content-title">
+            旅行許願池
+            <FontAwesomeIcon icon={faMapLocationDot} className="icon" />
+          </h5>
+          <div className="profile-content__activities-box">
+            {favoriteActivities.length === 0 ? (
+              <p>目前沒有收藏的活動</p>
+            ) : (
+              <div className="profile-content__activities-list">
+                {favoriteActivities.map((activity) => (
+                  <Card
+                    key={activity.id}
+                    style={{ width: '230px', height: '250px' }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={
+                        activity.image
+                          ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.image}`
+                          : '/default-activity.jpg'
+                      }
+                    />
+                    <Card.Body>
+                      <Card.Title>
+                        {activity.name.length > 20
+                          ? activity.name.substring(0, 20) + '...'
+                          : activity.name}
+                      </Card.Title>
+                      <Button
+                        as={Link}
+                        to={`/activities/${activity.id}`}
+                        variant="secondary"
+                      >
+                        查看更多
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="profile-content__activities">
+          <h5 className="profile-content-title">
+            心頭好物
+            <FontAwesomeIcon icon={faFire} className="icon" />
+          </h5>
+          <div className="profile-content__activities-box">
+            {favoriteProducts.length === 0 ? (
+              <p>目前沒有收藏的商品</p>
+            ) : (
+              <div className="profile-content__activities-list">
+                {favoriteProducts.map((product) => (
+                  <Card
+                    key={product.id}
+                    style={{ width: '230px', height: '250px' }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={
+                        product.image
+                          ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${product.image}`
+                          : '/default-product.jpg'
+                      }
+                    />
+                    <Card.Body>
+                      <Card.Title>
+                        {product.name.length > 15
+                          ? product.name.substring(0, 15) + '...'
+                          : product.name}
+                      </Card.Title>
+                      <Button
+                        as={Link}
+                        to={`/products/${product.id}`}
+                        variant="secondary"
+                      >
+                        查看更多
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
