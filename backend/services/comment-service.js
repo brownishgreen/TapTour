@@ -1,4 +1,4 @@
-import { Comment, User } from '../models/index.js'
+import { Comment, User, Activity, Product } from '../models/index.js'
 
 const commentService = {
   getAllComments: async () => {
@@ -30,8 +30,29 @@ const commentService = {
   },
 
   getCommentsByUserId: async (userId) => {
-    return await Comment.findAll({ where: { user_id: userId } })
-  },
+  return await Comment.findAll({
+    where: { user_id: userId },
+    order: [['createdAt', 'DESC']], // 讓最新的留言在最前面
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['name', 'image'],
+      },
+      {
+        model: Activity, // 關聯活動
+        as: 'activity',
+        attributes: ['id', 'name'], // 只取必要欄位
+      },
+      {
+        model: Product, // 關聯商品
+        as: 'product',
+        attributes: ['id', 'name'], // 只取必要欄位
+      },
+    ],
+  })
+},
+
 
   getCommentsByActivityId: async (activityId) => {
     return await Comment.findAll({

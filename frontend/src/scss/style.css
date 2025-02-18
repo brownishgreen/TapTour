@@ -1132,9 +1132,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  gap: 2rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 2200px;
   margin: 0 auto;
 }
 @media (min-width: 1024px) {
@@ -1225,6 +1224,78 @@ body {
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  min-width: 280px;
+  min-height: 180px;
+}
+@media ((min-width: 400px) and (max-width: 779px)) {
+  .profile-wrapper .profile-content__comments,
+  .profile-wrapper .profile-content__activities {
+    min-width: 320px;
+  }
+}
+@media (min-width: 780px) {
+  .profile-wrapper .profile-content__comments,
+  .profile-wrapper .profile-content__activities {
+    min-width: 700px;
+  }
+}
+.profile-wrapper .profile-content__comments {
+  padding: 1.5rem;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.3s ease-in-out;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.profile-wrapper .profile-content__comments:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.profile-wrapper .profile-content__comments .profile-content-title {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+.profile-wrapper .profile-content__comments .profile-content-title .icon {
+  margin-left: 0.5rem;
+  color: #666;
+}
+.profile-wrapper .profile-content__comments .profile-content__comment-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.profile-wrapper .profile-content__comments .profile-content__comment-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.8rem;
+  font-size: 1rem;
+}
+.profile-wrapper .profile-content__comments .profile-content__comment-item:last-child {
+  border-bottom: none;
+}
+.profile-wrapper .profile-content__comments .profile-content__comment-item .profile-content__comment-text {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+.profile-wrapper .profile-content__comments .profile-content__comment-item .profile-content__comment-author {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  color: #777;
+}
+.profile-wrapper .profile-content__comments .profile-content__comment-item .profile-content__comment-author a {
+  font-weight: bold;
+  color: #0056b3;
+  text-decoration: none;
+}
+.profile-wrapper .profile-content__comments .profile-content__comment-item .profile-content__comment-author a:hover {
+  color: #ff7b00;
 }
 .profile-wrapper .profile-content__activities-list {
   display: flex;
@@ -1232,6 +1303,24 @@ body {
   justify-content: flex-start;
   align-items: flex-start;
   padding: 1rem;
+}
+.profile-wrapper .profile-content__activities-list .card {
+  width: 200px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+}
+.profile-wrapper .profile-content__activities-list .card-body {
+  flex-grow: 1; /* ✅ 讓 Card.Body 撐滿高度 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.profile-wrapper .profile-content__activities-list .card-img-top {
+  width: 100%;
+  height: 120px; /* ✅ 統一圖片高度 */
+  -o-object-fit: cover;
+     object-fit: cover; /* ✅ 避免圖片變形 */
 }
 
 .profile-edit-form-container .profile-edit-avatar {
@@ -1306,10 +1395,11 @@ body {
   margin-top: 1rem;
 }
 .profile-content__followers .profile-content__follower-box .profile-content__follower-item img:hover {
+  border: #54A2C0 5px solid;
   transform: scale(1.1);
 }
 .profile-content__followers .profile-content__follower-box .profile-content__follower-item p {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   color: #555;
   margin-top: 0.5rem;
 }

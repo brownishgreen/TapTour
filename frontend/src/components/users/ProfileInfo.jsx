@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faHeart as solidHeart,
-  faPen,
+  faBullhorn,
   faFire,
   faMapLocationDot,
 } from '@fortawesome/free-solid-svg-icons'
@@ -25,6 +25,7 @@ const ProfileInfo = ({ userId }) => {
   const [followLoading, setFollowLoading] = useState(false)
   const [favoriteActivities, setFavoriteActivities] = useState([])
   const [favoriteProducts, setFavoriteProducts] = useState([])
+  const [comments, setCommemts] = useState([])
 
   useEffect(() => {
     const userData = async () => {
@@ -58,6 +59,18 @@ const ProfileInfo = ({ userId }) => {
       }
     }
     fetchFavorites()
+  }, [userId])
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await apiClient.get(`/api/comments/users/${userId}`)
+        setCommemts(response.data)
+      } catch (err) {
+        console.error('無法獲取留言', err)
+      }
+    }
+    fetchComments()
   }, [userId])
 
   if (loading) {
@@ -229,27 +242,38 @@ const ProfileInfo = ({ userId }) => {
       <div className="profile-content">
         <div className="profile-content__comments">
           <h5 className="profile-content-title">
-            最新評論
-            <FontAwesomeIcon icon={faPen} className="icon" />
+            我的評論牆
+            <FontAwesomeIcon icon={faBullhorn} className="icon" />
           </h5>
           <div className="profile-content__comment-box">
-            {/* 範例評論 */}
-            <div className="profile-content__comment-item">
-              <p className="profile-content__comment-text">
-                這個活動真的很棒！非常推薦給大家！
-              </p>
-              <p className="profile-content__comment-author">
-                - by User123, 2025-01-15
-              </p>
-            </div>
-            <div className="profile-content__comment-item">
-              <p className="profile-content__comment-text">
-                地點很漂亮，但安排稍微有點緊湊。
-              </p>
-              <p className="profile-content__comment-author">
-                - by JaneDoe, 2025-01-10
-              </p>
-            </div>
+            {comments.length === 0 ? (
+              <p>目前暫無評論</p>
+            ) : (
+              comments.map((comment) => (
+                <div key={comment.id} className="profile-content__comment-item">
+                  <p className="profile-content__comment-text">
+                    「{comment.content}」
+                  </p>
+                  <p className="profile-content__comment-author">
+                    -針對
+                    {comment.activity ? (
+                      <Link to={`/activities/${comment.activity.id}`}>
+                        {comment.activity.name.length > 10
+                          ? comment.activity.name.substring(0, 10) + '...'
+                          : comment.activity.name}
+                      </Link>
+                    ) : (
+                      <Link to={`/products/${comment.product.id}`}>
+                        {comment.product.name.length > 10
+                          ? comment.product.name.substring(0, 10) + '...'
+                          : comment.product.name}
+                      </Link>
+                    )}{' '}
+                    ，{comment.createdAt.split('T')[0]}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         </div>
         <div className="profile-content__activities">
@@ -263,12 +287,10 @@ const ProfileInfo = ({ userId }) => {
             ) : (
               <div className="profile-content__activities-list">
                 {favoriteActivities.map((activity) => (
-                  <Card
-                    key={activity.id}
-                    style={{ width: '230px', height: '250px' }}
-                  >
+                  <Card key={activity.id}>
                     <Card.Img
                       variant="top"
+                      className="card-img-top"
                       src={
                         activity.image
                           ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.image}`
@@ -277,8 +299,8 @@ const ProfileInfo = ({ userId }) => {
                     />
                     <Card.Body>
                       <Card.Title>
-                        {activity.name.length > 20
-                          ? activity.name.substring(0, 20) + '...'
+                        {activity.name.length > 15
+                          ? activity.name.substring(0, 15) + '...'
                           : activity.name}
                       </Card.Title>
                       <Button
@@ -306,11 +328,9 @@ const ProfileInfo = ({ userId }) => {
             ) : (
               <div className="profile-content__activities-list">
                 {favoriteProducts.map((product) => (
-                  <Card
-                    key={product.id}
-                    style={{ width: '230px', height: '250px' }}
-                  >
+                  <Card key={product.id}>
                     <Card.Img
+                      className="card-img-top"
                       variant="top"
                       src={
                         product.image
