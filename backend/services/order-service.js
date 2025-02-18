@@ -1,10 +1,11 @@
 import { Order, OrderedItem, Product, Activity, User } from '../models/index.js'
+import CustomError from '../utils/CustomError.js'
 
 const ordersService = {
   createOrder: async (orderData) => {
     const { userId, productIds = [], activityIds = [], total_amount, chosen_date, quantities = [] } = orderData
     if (!Array.isArray(productIds) && !Array.isArray(activityIds)) {
-      throw new Error('請至少選擇一個產品或活動')
+      throw new CustomError(400, '請至少選擇一個產品或活動')
     }
 
     const newOrder = await Order.create({
@@ -56,7 +57,7 @@ const ordersService = {
     })
 
     if (!orders.length) {
-      throw new Error('沒有找到相關訂單')
+      throw new CustomError(404, '沒有找到相關訂單')
     }
 
     return orders.map((order) => ({
@@ -93,12 +94,12 @@ const ordersService = {
     })
 
     if (!order) {
-      throw new Error('沒有找到相關訂單')
+      throw new CustomError(404, '沒有找到相關訂單')
     }
 
     const item = order.orderedItems[0]
     if (!item) {
-      throw new Error('該訂單中沒有任何產品或活動')
+      throw new CustomError(400, '該訂單中沒有任何產品或活動')
     }
 
     return {

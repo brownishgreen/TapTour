@@ -3,6 +3,7 @@ import { handleImageUpload } from '../utils/upload-handler.js'
 import { Op } from 'sequelize'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import CustomError from '../utils/CustomError.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -29,7 +30,7 @@ const productService = {
     }
 
     const products = await Product.findAll(queryOptions)
-    if (!products.length) throw new Error('沒有符合的產品')
+    if (!products.length) throw new CustomError(404, '沒有符合的產品')
 
     return products
   },
@@ -41,13 +42,13 @@ const productService = {
         { model: Category, as: 'category', attributes: ['name'] },
       ],
     })
-    if (!product) throw new Error('商品不存在')
+    if (!product) throw new CustomError(404, '商品不存在')
     return product
   },
 
   editProduct: async (id, { name, description, location_id, price, category_id }) => {
     const product = await Product.findByPk(Number(id))
-    if (!product) throw new Error('商品不存在')
+    if (!product) throw new CustomError(404, '商品不存在')
 
     await product.update({ name, description, location_id, price, category_id })
     return { message: '商品更新成功' }
@@ -55,7 +56,7 @@ const productService = {
 
   createProduct: async ({ name, description, price, category_id, location_id }, files) => {
     if (!name || !description || !price || !category_id || !location_id) {
-      throw new Error('必須提供商品名稱、描述、價格、類別')
+      throw new CustomError(400, '必須提供商品名稱、描述、價格、類別')
     }
 
     const product = await Product.create({ name, description, price, category_id, location_id })
@@ -73,15 +74,15 @@ const productService = {
   deleteProduct: async (productId) => {
     console.log('productId', productId)
     if (isNaN(productId)) {
-      throw new Error('商品ID不存在')
+      throw new CustomError(400, '商品ID不存在')
     }
     const product = await Product.findByPk(productId)
-    if (!product) throw new Error('商品不存在')
+    if (!product) throw new CustomError(404, '商品不存在')
     try {
       await product.destroy()
       return { message: '商品刪除成功' }
     } catch (err) {
-      throw new Error('商品刪除失敗')
+      throw new CustomError(500, '商品刪除失敗')
     }
   },
 
@@ -89,7 +90,7 @@ const productService = {
     page = parseInt(page, 10)
     limit = parseInt(limit, 10)
     if (isNaN(page) || isNaN(limit) || page <= 0 || limit <= 0) {
-      throw new Error('Page 和 limit 必須是正數')
+      throw new CustomError(400, 'Page 和 limit 必須是正數')
     }
 
     const offset = (page - 1) * limit

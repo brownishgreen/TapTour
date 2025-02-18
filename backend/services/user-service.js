@@ -4,6 +4,7 @@ import { User, Follower } from '../models/index.js'
 import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url'
+import CustomError from '../utils/CustomError.js' 
 
 const SECRET = process.env.JWT_SECRET
 const EXPIRES = process.env.JWT_EXPIRES
@@ -16,13 +17,13 @@ const userService = {
     const { name, email, password } = userData
     // 檢查必填欄位
     if (!name || !email || !password) {
-      throw new Error('請您必須填寫所有欄位')
+      throw new CustomError(400, '請您必須填寫所有欄位')
     }
 
     // 檢查 email 是否已存在
     const existingUser = await User.findOne({ where: { email } })
     if (existingUser) {
-      throw new Error('此 email 已經註冊過')
+      throw new CustomError(409, '此 email 已經註冊過')
     }
 
     // 密碼加密
@@ -33,12 +34,12 @@ const userService = {
 
   login: async (email, password) => {
     if (!email || !password) {
-      throw new Error('請輸入帳號密碼')
+      throw new CustomError(400, '請輸入帳號密碼')
     }
     
     const user = await User.findOne({ where: { email } })
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new Error('帳號或密碼錯誤')
+      throw new CustomError(401, '帳號或密碼錯誤')
     }
 
     const token = jwt.sign(
@@ -54,7 +55,7 @@ const userService = {
     const user = await User.findByPk(targetUserId, {
       attributes: ['id', 'image', 'name', 'email', 'bio', 'createdAt'],
     })
-    if (!user) throw new Error('用戶不存在')
+    if (!user) throw new CustomError(404, '用戶不存在')
 
     const isFollowing = !!(await Follower.findOne({
       where: { follower_id: currentUserId, following_id: targetUserId },
@@ -86,14 +87,14 @@ const userService = {
   },
 
   verifyUser: async (user) => {
-    if (!user) throw new Error('未登入')
+    if (!user) throw new CustomError(401, '未登入')
 
     const userData = await User.findOne({
       where: { id: user.id },
       attributes: ['id', 'name', 'email', 'is_admin'],
     })
 
-    if (!userData) throw new Error('用戶不存在')
+    if (!userData) throw new CustomError(404, '用戶不存在')
 
     return {
       message: '已登入',
@@ -106,7 +107,7 @@ const userService = {
 
   updateProfile: async (userId, { name, password, bio, image }) => {
     const user = await User.findByPk(userId)
-    if (!user) throw new Error('用戶不存在')
+    if (!user) throw new CustomError(404, '用戶不存在')
 
     if (name) user.name = name
     if (password) user.password = await bcrypt.hash(password, 10)
