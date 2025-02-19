@@ -1,7 +1,8 @@
 import favoriteService from '../services/favorite-service.js'
+import { handleError } from '../utils/handleError.js'
 
 const favoriteController = {
-  getFavoritesActivity: async (req, res, next) => {
+  getFavoritesActivity: async (req, res) => {
     try {
       const { userId } = req.params
       const favorites = await favoriteService.getFavoritesByType(
@@ -9,12 +10,12 @@ const favoriteController = {
         'activity'
       )
       res.status(200).json(favorites)
-    } catch (error) {
-      res.status(400).json({ message: error.message || '無法取得收藏' })
+    } catch (err) {
+      handleError(res, err)
     }
   },
 
-  getFavoritesProduct: async (req, res, next) => {
+  getFavoritesProduct: async (req, res) => {
     try {
       const { userId } = req.params
       const favorites = await favoriteService.getFavoritesByType(
@@ -22,16 +23,13 @@ const favoriteController = {
         'product'
       )
       res.status(200).json(favorites)
-    } catch (error) {
-      res.status(400).json({ message: error.message || '無法取得收藏' })
+    } catch (err) {
+      handleError(res, err)
     }
   },
   createFavorite: async (req, res) => {
-    const { user_id, item_id, item_type } = req.body
-    if (!user_id || !item_id || !item_type) {
-      return res.status(400).json({ message: '缺少必要參數' })
-    }
     try {
+      const { user_id, item_id, item_type } = req.body
       const favorite = await favoriteService.createFavorite(
         user_id,
         item_id,
@@ -39,27 +37,21 @@ const favoriteController = {
       )
       res.status(201).json(favorite)
     } catch (error) {
-      res.status(500).json({ message: '無法新增收藏' })
+      handleError(res, err)
     }
   },
   deleteFavorite: async (req, res) => {
-    const { id } = req.params
-    if (!id) {
-      return res.status(400).json({ message: '缺少必要參數' })
-    }
     try {
-      await favoriteService.deleteFavorite(id)
-      res.status(200).json({ message: '收藏已刪除' })
+      const { id } = req.params
+      const result = await favoriteService.deleteFavorite(id)
+      res.status(200).json(result)
     } catch (error) {
-      res.status(500).json({ message: '無法刪除收藏' })
+      handleError(res, err)
     }
   },
   checkFavorite: async (req, res) => {
-    const { user_id, item_id, item_type } = req.query
-    if (!user_id || !item_id || !item_type) {
-      return res.status(400).json({ message: '缺少必要參數' })
-    }
     try {
+      const { user_id, item_id, item_type } = req.query
       const favorite = await favoriteService.checkFavorite(
         user_id,
         item_id,
@@ -67,7 +59,7 @@ const favoriteController = {
       )
       res.status(200).json(favorite)
     } catch (error) {
-      res.status(500).json({ message: '無法檢查收藏' })
+      handleError(res, error)
     }
   },
   getUserFavorites: async (req, res) => {
@@ -76,7 +68,7 @@ const favoriteController = {
       const favorites = await favoriteService.getUserFavorites(userId)
       res.status(200).json(favorites)
     } catch (error) {
-      res.status(500).json({ message: '無法獲取收藏' })
+      handleError(res, error)
     }
   },
 }

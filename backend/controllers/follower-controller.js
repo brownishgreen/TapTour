@@ -1,14 +1,16 @@
 import followerService from '../services/follower-service.js'
+import { handleError } from '../utils/handleError.js'
 
 const followerController = {
-  followUser: async (req, res, next) => {
-    const followerId = req.user.id
-    const { followingId } = req.body
-
+  followUser: async (req, res) => {
     try {
-      // created 是 Sequelize 的 findOrCreate 方法 的固定返回值名稱之一
-      // created 是布林值，表示這次操作是否創建了新的記錄（created）
-      const [follow, created] = await followerService.followUser(followerId, followingId)
+      const followerId = req.user.id
+      const { followingId } = req.body
+
+      const { follow, created } = await followerService.followUser(
+        followerId,
+        followingId
+      )
 
       if (!created) {
         return res.status(200).json({
@@ -16,28 +18,24 @@ const followerController = {
           alreadyFollowing: true,
         })
       }
-      res.status(201).json({ message: 'Followed successfully.', follow })
+
+      res.status(201).json({ message: '追蹤成功', follow })
     } catch (error) {
-      error.statusCode = 500
-      next(error)
+      handleError(res, error)
     }
   },
 
-  unfollowUser: async (req, res, next) => {
-    const followerId = req.user.id
-    const { followingId } = req.body
-
-
-    if (!followerId || !followingId) {
-      throw new Error('FollowerId 或 FollowingId 缺失')
-    }
-
+  unfollowUser: async (req, res) => {
     try {
+      const followerId = req.user.id
+      const { followingId } = req.body
+
       const result = await followerService.unfollowUser(followerId, followingId)
       res.status(200).json(result)
     } catch (error) {
-      next(error)
+      handleError(res, error)
     }
   },
 }
+
 export default followerController

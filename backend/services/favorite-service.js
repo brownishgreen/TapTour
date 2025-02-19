@@ -1,8 +1,9 @@
 import { Activity, Favorite, Product, Image } from '../models/index.js'
+import CustomError from '../utils/CustomError.js'
 
 const favoriteService = {
   getFavoritesByType: async (userId, itemType) => {
-    if (!userId) throw new Error('使用者ID為必填')
+    if (!userId) throw new CustomError(400, '使用者ID為必填')
 
     return await Favorite.findAll({
       where: { user_id: userId, item_type: itemType },
@@ -10,23 +11,33 @@ const favoriteService = {
   },
 
   createFavorite: async (user_id, item_id, item_type) => {
-    if (!user_id || !item_id || !item_type) throw new Error('缺少必要參數')
+    if (!user_id || !item_id || !item_type)
+      throw new CustomError(400, '缺少必要參數')
 
-    return await Favorite.create({
-      user_id: user_id,
-      item_id: item_id,
-      item_type: item_type,
+    const [favorite, created] = await Favorite.findOrCreate({
+      where: { user_id, item_id, item_type },
     })
+
+    if (!created) {
+      return { message: '該項目已加入收藏', alreadyFavorited: true }
+    }
+
+    return { message: '成功加入收藏', favorite }
   },
 
   deleteFavorite: async (id) => {
-    if (!id) throw new Error('缺少必要參數')
+    if (!id) throw new CustomError(400, '缺少必要參數')
 
-    return await Favorite.destroy({ where: { id } })
+    const favorite = await Favorite.findByPk(id)
+    if (!favorite) throw new CustomError(404, '找不到該收藏紀錄')
+
+    await favorite.destroy()
+    return { message: '收藏已移除' }
   },
 
   checkFavorite: async (user_id, item_id, item_type) => {
-    if (!user_id || !item_id || !item_type) throw new Error('缺少必要參數')
+    if (!user_id || !item_id || !item_type)
+      throw new CustomError(400, '缺少必要參數')
 
     const favorite = await Favorite.findOne({
       where: { user_id: user_id, item_id: item_id, item_type: item_type },
@@ -36,7 +47,7 @@ const favoriteService = {
       : { isFavorited: false, favoriteId: null }
   },
   getUserFavorites: async (userId) => {
-    if (!userId) throw new Error('缺少必要參數')
+    if (!userId) throw new CustomError(400, '缺少必要參數')
     const favoriteActivities = await Favorite.findAll({
       where: { user_id: userId, item_type: 'activity' },
       include: [
@@ -85,7 +96,7 @@ const favoriteService = {
         id: f.Product.id,
         name: f.Product.name,
         description: f.Product.description,
-        image: f.Product.images?.[0]?.image_url || '/default-activity.jpg', 
+        image: f.Product.images?.[0]?.image_url || '/default-activity.jpg',
       })),
     }
   },

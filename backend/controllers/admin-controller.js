@@ -1,40 +1,42 @@
 import adminService from '../services/admin-service.js'
+import { handleError } from '../utils/handleError.js'
 
 const adminController = {
-  getAllUsers: async (req, res, next) => {
+  getAllUsers: async (req, res) => {
     try {
       const users = await adminService.getAllUsers()
       res.status(200).json(users)
     } catch (err) {
-      res.status(500).json({ message: '無法取得用戶' })
-      next(err)
+      handleError(res, err)
     }
   },
-  updateUserRole: async (req, res, next) => {
-    const { userId } = req.params
-    const { is_admin } = req.body
-    const currentUserId = req.user.id
-
+  updateUserRole: async (req, res) => {
     try {
-      const updateUserRoleResult = await adminService.updateUserRole(userId, is_admin, currentUserId)
+      const { userId } = req.params
+      const { is_admin } = req.body
+      const currentUserId = req.user.id
+
+      const updateUserRoleResult = await adminService.updateUserRole(
+        userId,
+        is_admin,
+        currentUserId
+      )
       res.status(200).json({ message: '角色更新成功', updateUserRoleResult })
     } catch (err) {
-      res.status(500).json({ message: '無法更新角色' })
-      next(err)
+      handleError(res, err)
     }
   },
-  deleteUser: async (req, res, next) => {
-    const { userId } = req.params
-    const currentUserId = req.user.id
-
+  deleteUser: async (req, res) => {
     try {
+      const { userId } = req.params
+      const currentUserId = req.user.id
+
       const message = await adminService.deleteUser(userId, currentUserId)
       res.status(200).json({ message })
     } catch (err) {
-      res.status(500).json({ message: '無法刪除用戶' })
-      next(err)
+      handleError(res, err)
     }
-  }
+  },
 }
 
 export default adminController
