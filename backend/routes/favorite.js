@@ -9,6 +9,7 @@ router.post('/', favoriteController.createFavorite)
 router.delete('/:id', favoriteController.deleteFavorite)
 
 // 取得收藏
+router.get('/users/:userId', favoriteController.getUserFavorites)
 router.get('/activity/:userId', favoriteController.getFavoritesActivity)
 router.get('/product/:userId', favoriteController.getFavoritesProduct)
 

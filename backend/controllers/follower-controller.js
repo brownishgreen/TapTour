@@ -1,28 +1,16 @@
-import { Follower } from '../models/index.js'
+import followerService from '../services/follower-service.js'
+import { handleError } from '../utils/handleError.js'
 
 const followerController = {
-  followUser: async (req, res, next) => {
-    const followerId = req.user.id
-    const { followingId } = req.body
-
-    console.log('req.userId:', req.user.id) // 檢查用戶 ID 是否存在
-    console.log('req.body:', req.body) // 確認請求中是否有 followingId
-
-    if (followerId === followingId) {
-      const err = new Error('您不能追蹤自己')
-      err.statusCode = 400
-      throw err
-    }
-
+  followUser: async (req, res) => {
     try {
-      // created 是 Sequelize 的 findOrCreate 方法 的固定返回值名稱之一
-      // created 是布林值，表示這次操作是否創建了新的記錄（created）
-      const [follow, created] = await Follower.findOrCreate({
-        where: { follower_id: followerId, following_id: followingId },
-      })
+      const followerId = req.user.id
+      const { followingId } = req.body
 
-      console.log('FollowerId:', followerId) // 檢查後端接收到的值
-      console.log('FollowingId:', followingId)
+      const { follow, created } = await followerService.followUser(
+        followerId,
+        followingId
+      )
 
       if (!created) {
         return res.status(200).json({
@@ -31,38 +19,23 @@ const followerController = {
         })
       }
 
-      if (!followerId || !followingId) {
-        throw new Error('FollowerId 或 FollowingId 缺失')
-      }
-
-      res.status(201).json({ message: 'Followed successfully.', follow })
-    } catch (err) {
-      err.statusCode = 500
-      next(err)
+      res.status(201).json({ message: '追蹤成功', follow })
+    } catch (error) {
+      handleError(res, error)
     }
   },
 
-  unfollowUser: async (req, res, next) => {
-    const followerId = req.user.id
-    const { followingId } = req.body
-
+  unfollowUser: async (req, res) => {
     try {
-      const follow = await Follower.findOne({
-        where: { follower_id: followerId, following_id: followingId },
-      })
+      const followerId = req.user.id
+      const { followingId } = req.body
 
-      if (!follow) {
-        return res.status(200).json({
-          message: '您尚未追蹤該用戶',
-          alreadyUnfollowed: true,
-        })
-      }
-
-      await follow.destroy()
-      res.status(200).json({ message: '取消追蹤成功' })
+      const result = await followerService.unfollowUser(followerId, followingId)
+      res.status(200).json(result)
     } catch (error) {
-      next(error)
+      handleError(res, error)
     }
   },
 }
+
 export default followerController

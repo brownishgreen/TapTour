@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: 'https://taptour-backend.yuanologue.com',
+  baseURL: 'http://localhost:3000/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -9,6 +9,3 @@ const apiClient = axios.create({
 })
 
 export default apiClient
-
-
-

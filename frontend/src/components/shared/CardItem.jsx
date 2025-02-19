@@ -13,31 +13,32 @@ const CardItem = ({ buttonText, image, title, subtitle, cardLink, itemId, userId
   const [favoriteId, setFavoriteId] = useState(null)
 
   useEffect(() => {
+    // 初次載入檢查是否已收藏
     apiClient.get(`/api/favorites/check`, {
-      params: { userId, itemId, itemType }
+      params: { user_id: userId, item_id: itemId, item_type: itemType }
     })
       .then(res => res.data)
-      .then(data => {
-        console.log("🔍 收藏狀態", data); // 🔍 顯示收藏狀態
-        if(data.isFavorited) {
-          setIsFavorited(true)
-          setFavoriteId(data.favoriteId)
-        }
+      .then(data => { 
+          setIsFavorited(data.isFavorited)
+          setFavoriteId(data.favoriteId || null)
       })
       .catch(err => {
         console.error('Error fetching favorites:', err)
       })
   }, [itemId, itemType, userId])
-  
+
+  // 點擊收藏按鈕
   const handleFavoriteClick = () => {
     if(!userId) {
       alert('請先登入')
       return
     }
+
+    // 如果已收藏，則取消收藏
     if(isFavorited) {
-      apiClient.delete(`/api/favorites/${favoriteId}`)
-        .then(res => res.data)
-        .then(data => {
+      apiClient
+        .delete(`/api/favorites/${favoriteId}`)
+        .then(() => {
           setIsFavorited(false)
           setFavoriteId(null)
         })
@@ -45,17 +46,16 @@ const CardItem = ({ buttonText, image, title, subtitle, cardLink, itemId, userId
           console.error('Error deleting favorite:', err)
         })
     } else {
-      const favoriteData = {
+      // 如果未收藏，則新增收藏
+      apiClient.post('/api/favorites', {
         item_id: itemId,
         item_type: itemType,
         user_id: userId
-      }
-      console.log("🔍 新增收藏", favoriteData); // 🔍 顯示新增收藏的資料
-      apiClient.post('/api/favorites', favoriteData)
+      })
         .then(res => res.data)
         .then(data => {
           setIsFavorited(true)
-          setFavoriteId(data.favorite.id || null)
+          setFavoriteId(data.favorite.id)
         })
         .catch(err => {
           console.error('Error adding favorite:', err)
