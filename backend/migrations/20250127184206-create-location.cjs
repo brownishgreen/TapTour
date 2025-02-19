@@ -1,4 +1,5 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,9 +11,6 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
-      },
-      image: {
         type: Sequelize.STRING
       },
       description: {
@@ -27,6 +25,18 @@ module.exports = {
       google_place_id: {
         type: Sequelize.STRING
       },
+      opening_hours: { // ✅ 直接加入新欄位
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      address: { // ✅ 直接加入新欄位
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      google_url: { // ✅ 直接加入新欄位
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
@@ -37,6 +47,7 @@ module.exports = {
       }
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Locations');
   }

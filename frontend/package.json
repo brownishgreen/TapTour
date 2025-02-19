@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+     "start": "vite preview --host",
     "lint": "eslint .",
     "preview": "vite preview",
     "scss:watch": "npx sass src/scss/style.scss public/assets/css/style.css --watch",
@@ -24,7 +25,8 @@
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.7",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.1"
+    "react-router-dom": "^7.1.1",
+    "swiper": "^11.2.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.18",

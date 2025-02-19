@@ -1,21 +1,16 @@
-# 建立前端
-FROM node:18 AS frontend
-WORKDIR /app
-COPY frontend ./
-RUN npm install && npm run build
-
-# 建立後端
 FROM node:18
+
 WORKDIR /app
-COPY backend ./
-COPY --from=frontend /app/dist ./frontend/dist
+
+# 複製 package.json
+COPY package.json package-lock.json ./
 RUN npm install
 
-# 設定環境變數
-ENV PORT=8080
+# 複製整個專案
+COPY . .
 
-# 確保 8080 端口開放
 EXPOSE 8080
+EXPOSE 5173
 
-# 啟動應用
-CMD ["node", "app.js"]
+# 啟動前後端
+CMD ["npm", "start"]
