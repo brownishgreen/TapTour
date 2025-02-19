@@ -7,9 +7,7 @@ import path from 'path'
 import { Op } from 'sequelize' // 引入 Sequelize 的操作符
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
-
-
+import CustomError from '../utils/CustomError.js'
 
 const locationService = {
   getAllLocations: async (search) => {
@@ -34,7 +32,7 @@ const locationService = {
       const locations = await Location.findAll(queryOptions)
 
       if (locations.length === 0) {
-        throw new Error('沒有符合條件的景點')
+        throw new CustomError(404, '沒有符合條件的景點')
       }
 
       // 處理主要圖片的邏輯
@@ -49,31 +47,34 @@ const locationService = {
       })
 
       return locationsWithMainImage
-    } catch (error) {
-      console.error('取得景點失敗:', error)
-      throw error
+    } catch (err) {
+      console.error('❌ 取得景點失敗:', err)
+      throw new CustomError(500, '伺服器錯誤，無法取得景點資料')
     }
   },
   autocompleteLocation: async (input) => {
-    const apiKey = process.env.GOOGLE_API_KEY
-    console.log(apiKey)
-
+    if (!input) {
+      throw new CustomError(400, '請提供地點名稱')
+    }
     try {
+      const apiKey = process.env.GOOGLE_API_KEY
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=${apiKey}&language=zh-TW`
       )
 
-      if (response.data.predictions) {
-        return response.data.predictions // 回傳地點建議
-      } else {
-        throw new Error('無法獲取地點建議')
+      if (!response.data.predictions) {
+        throw new CustomError(404, '無法獲取地點建議')
       }
-    } catch (error) {
-      console.error('Google Autocomplete API 錯誤:', error)
-      throw new Error('Google Autocomplete API 請求失敗')
+      return response.data.predictions
+    } catch (err) {
+      console.error('❌ Google Autocomplete API 錯誤:', err)
+      throw new CustomError(500, 'Google Autocomplete API 請求失敗')
     }
   },
   getLocationDetails: async (place_id) => {
+    if (!place_id) {
+      throw new CustomError(400, '請提供 place_id')
+    }
     const apiKey = process.env.GOOGLE_API_KEY
 
     try {
@@ -82,7 +83,7 @@ const locationService = {
       )
 
       if (!response.data.result) {
-        throw new Error('無法獲取地點詳細資訊')
+        throw new CustomError(404, '無法獲取地點詳細資訊')
       }
 
       const place = response.data.result
@@ -107,12 +108,16 @@ const locationService = {
         url: place.url || null,
         opening_hours: place.opening_hours?.weekday_text || [],
       }
-    } catch (error) {
-      console.error('Google Place Details API 錯誤:', error)
-      throw new Error('Google Place Details API 請求失敗')
+    } catch (err) {
+      console.error('Google Place Details API 錯誤:', err)
+      throw new CustomError(500, 'Google Place Details API 請求失敗')
     }
   },
   createLocation: async ({ name, googlePlaceId, description }) => {
+    if (!name) {
+      throw new CustomError(400, '景點名稱為必填')
+    }
+
     const apiKey = process.env.GOOGLE_API_KEY
     let latitude, longitude, address, openingHours, googleUrl
     let googlePhotos = []
@@ -142,7 +147,7 @@ const locationService = {
             }))
           }
         } else {
-          throw new Error('無效的 Google Place ID')
+          throw new CustomError(400, '無效的 Google Place ID')
         }
       }
 
@@ -174,12 +179,15 @@ const locationService = {
         location,
         images: imageUrls,
       }
-    } catch (error) {
-      console.error('新增景點失敗:', error)
-      throw new Error('無法創建景點，請稍後再試')
+    } catch (err) {
+      console.error('新增景點失敗:', err)
+      throw new CustomError(500, '無法創建景點，請稍後再試')
     }
   },
   getLocationById: async (id) => {
+    if (!id) {
+      throw new CustomError(400, '請提供景點 ID')
+    }
     try {
       const location = await Location.findByPk(id, {
         include: [
@@ -203,67 +211,77 @@ const locationService = {
       })
 
       if (!location) {
-        throw new Error('景點不存在')
+        throw new CustomError(404, '景點不存在')
       }
 
       return location
-    } catch (error) {
-      console.error('獲取景點詳細資訊失敗:', error)
-      throw new Error('伺服器錯誤，無法獲取景點資料')
+    } catch (err) {
+      console.error('獲取景點詳細資訊失敗:', err)
+      throw new CustomError(500, '伺服器錯誤，無法獲取景點資料')
     }
   },
   deleteLocation: async (id) => {
+    if (!id) {
+      throw new CustomError(400, '請提供景點 ID')
+    }
     try {
       const location = await Location.findByPk(id)
 
       if (!location) {
-        throw new Error('景點不存在')
+        throw new CustomError(404, '景點不存在')
       }
 
       await location.destroy()
-
       return { message: '景點刪除成功' }
-    } catch (error) {
-      console.error('刪除景點失敗:', error)
-      throw new Error('伺服器錯誤，無法刪除景點')
+    } catch (err) {
+      console.error('刪除景點失敗:', err)
+      throw new CustomError(500, '伺服器錯誤，無法刪除景點')
     }
   },
   getLocationForEdit: async (id) => {
+    if (!id) {
+      throw new CustomError(400, '請提供景點 ID')
+    }
     try {
       const location = await Location.findByPk(id)
 
       if (!location) {
-        throw new Error('景點不存在')
+        throw new CustomError(404, '景點不存在')
       }
 
       return location
-    } catch (error) {
-      console.error('獲取景點編輯頁面失敗:', error)
-      throw new Error('伺服器錯誤，無法獲取景點資訊')
+    } catch (err) {
+      console.error('獲取景點編輯頁面失敗:', err)
+      throw new CustomError(500, '伺服器錯誤，無法獲取景點資訊')
     }
   },
   updateLocation: async (id, updateData) => {
+    if (!id) {
+      throw new CustomError(400, '請提供景點 ID')
+    }
     try {
       const location = await Location.findByPk(id)
 
       if (!location) {
-        throw new Error('景點不存在')
+        throw new CustomError(404, '景點不存在')
       }
 
       await location.update(updateData)
-
       return { message: '景點更新成功' }
-    } catch (error) {
-      console.error('更新景點失敗:', error)
-      throw new Error('伺服器錯誤，無法更新景點')
+    } catch (err) {
+      console.error('更新景點失敗:', err)
+      throw new CustomError(500, '伺服器錯誤，無法更新景點')
     }
   },
   getLocationAllImages: async (id) => {
+    if (!id) {
+      throw new CustomError(400, '請提供景點 ID')
+    }
     try {
       const location = await Location.findByPk(id)
 
       if (!location) {
-        throw new Error('景點不存在')
+        throw new CustomError(404, '景點不存在')
       }
 
       const images = await Image.findAll({
@@ -271,17 +289,20 @@ const locationService = {
       })
 
       return images
-    } catch (error) {
-      console.error('獲取景點圖片失敗:', error)
-      throw new Error('伺服器錯誤，無法獲取景點圖片')
+    } catch (err) {
+      console.error('獲取景點圖片失敗:', err)
+      throw new CustomError(500, '伺服器錯誤，無法獲取景點圖片')
     }
   },
   setLocationMainImage: async (locationId, mainImageId) => {
+    if (!locationId || !mainImageId) {
+      throw new CustomError(400, '請提供地點 ID 和主要圖片 ID') 
+    }
     try {
       // 確認地點是否存在
       const location = await Location.findByPk(locationId)
       if (!location) {
-        throw new Error('地點不存在')
+        throw new CustomError(404, '地點不存在')
       }
 
       // 確認圖片是否存在且屬於該地點
@@ -292,16 +313,16 @@ const locationService = {
         },
       })
       if (!image) {
-        throw new Error('圖片不存在或不屬於該地點')
+        throw new CustomError(400, '圖片不存在或不屬於該地點')
       }
 
       // 更新主要圖片
       await location.update({ main_image_id: mainImageId })
 
       return { message: '主要圖片已更新', main_image_id: mainImageId }
-    } catch (error) {
-      console.error('更新主要圖片失敗:', error)
-      throw new Error('伺服器錯誤，無法更新主要圖片')
+    } catch (err) {
+      console.error('更新主要圖片失敗:', err)
+      throw new CustomError(500, '伺服器錯誤，無法更新主要圖片')
     }
   },
   getPaginatedLocations: async (page = 1, limit = 6) => {
@@ -356,7 +377,7 @@ const locationService = {
       }
     } catch (error) {
       console.error('獲取分頁景點失敗:', error)
-      throw new Error('伺服器錯誤，無法獲取景點資料')
+      throw new CustomError(500, '伺服器錯誤，無法獲取景點資料')
     }
   }
 }
