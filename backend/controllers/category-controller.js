@@ -1,15 +1,13 @@
-import { Category } from '../models/index.js'
+import categoryService from '../services/category-service.js'
+import { handleError } from '../utils/handleError.js'
 
 const categoryController = {
-  getAllCategories: async (req, res, next) => {
+  getAllCategories: async (req, res) => {
     try {
-      const categories = await Category.findAll({
-        attributes: ['id', 'name'] // 只回傳 id 和 name
-      })
+      const categories = await categoryService.getAllCategories()
       res.status(200).json(categories)
     } catch (err) {
-      console.error('獲取分類失敗:', err)
-      res.status(500).json({ message: '伺服器錯誤' })
+      handleError(res, err)
     }
   }
 }

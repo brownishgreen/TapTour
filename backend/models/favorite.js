@@ -27,21 +27,27 @@ export default (sequelize, DataTypes) => {
       },
     },
     {
+      sequelize,
+      modelName: 'Favorite',
       tableName: 'favorites',
+      timestamps: true,
+      underscored: true,
       timestamps: true,
     }
   )
 
   // 設定關聯
   Favorite.associate = (models) => {
-    Favorite.belongsTo(models.User, { foreignKey: 'userId', as: 'user' })
+    Favorite.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' })
     Favorite.belongsTo(models.Activity, {
-      foreignKey: 'itemId',
+      foreignKey: 'item_id',
       constraints: false,
+      as: 'Activity',
     })
     Favorite.belongsTo(models.Product, {
-      foreignKey: 'itemId',
+      foreignKey: 'item_id',
       constraints: false,
+      as: 'Product',
     })
   }
 

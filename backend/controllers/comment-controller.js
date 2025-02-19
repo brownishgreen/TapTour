@@ -1,112 +1,98 @@
-import { Comment, User, Activity, Product, Location } from '../models/index.js'
+import commentService from '../services/comment-service.js'
+import { handleError } from '../utils/handleError.js'
 
 const commentController = {
   // 取得所有評論
-  getAllComments: async (req, res, next) => {
+  getAllComments: async (req, res) => {
     try {
-      const comments = await Comment.findAll()
+      const comments = await commentService.getAllComments()
       res.json(comments)
     } catch (err) {
-      next(err)
+      handleError(res, err)
     }
   },
   // 新增評論
-  createComment: async (req, res, next) => {
+  createComment: async (req, res) => {
     try {
       const { content, activity_id, product_id } = req.body
-      const comment = await Comment.create({
+      const comment = await commentService.createComment(
         content,
-        user_id: req.user.id,
+        req.user.id,
         activity_id,
         product_id
-      })
+      )
       res.json(comment)
     } catch (err) {
-      next(err)
+      handleError(res, err)
     }
   },
   // 更新評論
-  updateComment: async (req, res, next) => {
+  updateComment: async (req, res) => {
     try {
       const { id } = req.params
       const { content, user_id, activity_id, product_id } = req.body
-      const comment = await Comment.update({ content, user_id, activity_id, product_id }, { where: { id } })
+      const comment = await commentService.updateComment(
+        id,
+        content,
+        user_id,
+        activity_id,
+        product_id
+      )
       res.json(comment)
     } catch (err) {
-      next(err)
+      handleError(res, err)
     }
   },
   // 刪除評論
-  deleteComment: async (req, res, next) => {
+  deleteComment: async (req, res) => {
     try {
       const { id } = req.params
-      await Comment.destroy({ where: { id } })
+      await commentService.deleteComment(id)
       res.json({ message: '評論已刪除' })
     } catch (err) {
-      next(err)
+      handleError(res, err)
     }
   },
   // 取得特定景點的所有評論
-  getCommentsByLocationId: async (req, res, next) => {
+  getCommentsByLocationId: async (req, res) => {
     try {
       const { locationId } = req.params
-      const comments = await Comment.findAll({ where: { location_id: locationId } })
+      const comments = await commentService.getCommentsByLocationId(locationId)
       res.json(comments)
     } catch (err) {
-      next(err)
+      handleError(res, err)
     }
   },
   // 取得特定用戶的所有評論
-  getCommentsByUserId: async (req, res, next) => {
+  getCommentsByUserId: async (req, res) => {
     try {
       const { userId } = req.params
-      const comments = await Comment.findAll({ where: { user_id: userId } })
+      const comments = await commentService.getCommentsByUserId(userId)
       res.json(comments)
-    } catch (err) {
-      next(err)
+    } catch (error) {
+      handleError(res, err)
     }
   },
   // 取得特定活動的所有評論
-  getCommentsByActivityId: async (req, res, next) => {
+  getCommentsByActivityId: async (req, res) => {
     try {
       const { activityId } = req.params
-      const comments = await Comment.findAll({
-        where: { activity_id: activityId },
-        order: [['createdAt', 'DESC']],
-        include: [
-          {
-            model: User,
-            as: 'user', // 確保和模型中的別名一致
-            attributes: ['name', 'image'], // 只取所需的欄位
-          },
-        ],
-      })
-      res.json(comments)
-      console.log(comments)
-  } catch(err) {
-    next(err)
-  }
-},
-  // 取得特定商品的所有評論
-  getCommentsByProductId: async (req, res, next) => {
-    try {
-      const { productId } = req.params
-      const comments = await Comment.findAll({
-        where: { product_id: productId },
-        order: [['createdAt', 'DESC' ]],
-        include: [
-          {
-            model: User,
-            as: 'user',
-            attributes: ['name', 'image'],
-          },
-        ],
-      })
+      const comments = await commentService.getCommentsByActivityId(activityId)
       res.json(comments)
     } catch (err) {
-      next(err)
+      handleError(res, err)
     }
-  }
+  },
+  // 取得特定商品的所有評論
+  getCommentsByProductId: async (req, res) => {
+    try {
+      const { productId } = req.params
+      const comments = await commentService.getCommentsByProductId(productId)
+      res.json(comments)
+    } catch (err) {
+      handleError(res, err)
+    }
+  },
 }
 
 export default commentController
