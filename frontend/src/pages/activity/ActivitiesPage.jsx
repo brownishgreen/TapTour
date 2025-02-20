@@ -94,7 +94,7 @@ const ActivitiesPage = () => {
                 buttonText="深入瞭解"
                 image={
                   activity.images?.length > 0
-                    ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[1]?.image_url}`
+                    ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[0]?.image_url}`
                     : '/default-image.jpg'
                 }
                 title={activity?.name || '無標題'}

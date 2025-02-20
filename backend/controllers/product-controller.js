@@ -54,7 +54,11 @@ const productController = {
   createProduct: async (req, res) => {
     try {
       const productData = req.body
-      const files = req.files?.images || []
+      let files = req.files.images || []
+      // 確保 images 是陣列
+      if (!Array.isArray(files)) {
+        files = [files]; // 如果是單張圖片，轉成陣列
+      }
       const createProductResult = await productService.createProduct(productData, files)
       res.status(201).json(createProductResult)
     } catch (err) {

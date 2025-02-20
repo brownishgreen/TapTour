@@ -1,10 +1,12 @@
 import { Activity, Image, Category } from '../models/index.js'
 import { handleImageUpload } from '../utils/upload-handler.js'
-import { fileURLToPath } from 'url'
+import { Op } from 'sequelize'
 import path from 'path'
-import { Op } from 'sequelize' // 引入 Sequelize 的操作符
+import { fileURLToPath } from 'url'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+
 
 const activityController = {
   getAllActivities: async (req, res, next) => {
@@ -125,19 +127,20 @@ const activityController = {
       // 圖片上傳處理
       let imageUrls = []
       const basePath = path.join(__dirname, '../uploads/activities')
+      console.log('basePath', basePath)
 
       if (req.files && req.files.images) {
         const images = Array.isArray(req.files.images)
           ? req.files.images
           : [req.files.images]
 
-          imageUrls = handleImageUpload(
-            images,
-            basePath,
-            activity.id,
-            name,
-            'activities',
-            'activity_id'
+        imageUrls = handleImageUpload(
+          images,
+          basePath,
+          activity.id,
+          name,
+          'activities',
+          'activity_id'
         )
         res.status(201).json({
           message: '活動已創建',

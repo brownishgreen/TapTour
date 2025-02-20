@@ -258,42 +258,6 @@ router.get('/paginated', activityController.getPaginatedActivities)
 
 router.get('/:id/edit', verifyToken, isAdmin, activityController.editActivityPage)
 
-// 取得活動創建頁面
-/**
- * @swagger
- * /activities/create:
- *   get:
- *     tags:
- *       - Activities
- *     summary: 取得活動創建頁面的資訊
- *     description: 返回創建活動所需的基本資訊，僅限管理員存取。
- *     security:
- *       - bearerAuth: []  # 需要 JWT 驗證
- *     responses:
- *       200:
- *         description: 成功返回創建活動頁面的資訊
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: 這是創建活動頁面的json
- *       500:
- *         description: 伺服器錯誤
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: 伺服器錯誤
- */
-
-router.get('/create', verifyToken, isAdmin, activityController.createActivityPage)
-
 // 創建活動
 /**
  * @swagger

@@ -69,7 +69,6 @@ const locationController = {
       res.status(201).json(newLocation)
     } catch (err) {
       console.error('創建景點失敗:', err)
-      res.status(500).json({ error: '伺服器錯誤，無法創建景點' })
       next(err)
     }
   },

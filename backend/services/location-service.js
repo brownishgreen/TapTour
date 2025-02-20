@@ -124,8 +124,11 @@ const locationService = {
           `https://maps.googleapis.com/maps/api/place/details/json?place_id=${googlePlaceId}&key=${apiKey}&language=zh-TW`
         )
 
-        if (response.data.result) {
-          const place = response.data.result
+        if (!response.data.result || response.data.result.status === 'NOT_FOUND') {
+          throw new Error('無效的 Google Place ID')
+        } 
+
+        const place = response.data.result
 
           // 提取所需的資訊
           latitude = place.geometry.location.lat
@@ -143,9 +146,8 @@ const locationService = {
           }
         } else {
           throw new Error('無效的 Google Place ID')
-        }
       }
-
+      
       //將資料存入資料庫
       const location = await Location.create({
         name,
