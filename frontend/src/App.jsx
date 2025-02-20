@@ -40,31 +40,56 @@ function App() {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredAdmin={true}>
                 <AdminPage />
               </ProtectedRoute>
             }
           />
+
           <Route path="/activities" element={<ActivitiesPage />} />
           <Route path="/activities/:id" element={<ActivityDetailPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/locations/:id" element={<LocationDetailPage />} />
+          <Route path="/locations" element={<LocationsPage />} />
 
-          <Route path="/payment/:orderId" element={<PaymentPage />} />
-          <Route path="/orders/:userId" element={<HistoryOrdersPage />} />
+          <Route
+            path="/payment/:orderId"
+            element={
+              <ProtectedRoute>
+                <PaymentPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/orders/:userId"
+            element={
+              <ProtectedRoute>
+                <HistoryOrdersPage />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Product 傳入 mode='create' */}
           <Route
             path="/products/create"
-            element={<ManageProductPage mode="create" />}
+            element={
+              <ProtectedRoute requiredAdmin={true}>
+                <ManageProductPage mode="create" />
+              </ProtectedRoute>
+            }
           />
           {/* Product 傳入 mode='edit' */}
           <Route
             path="/products/:id/edit"
-            element={<ManageProductPage mode="edit" />}
+            element={
+              <ProtectedRoute requiredAdmin={true}>
+                <ManageProductPage mode="edit" />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/locations/:id" element={<LocationDetailPage />} />
-          <Route path="/locations" element={<LocationsPage />} />
+
           <Route
             path="/users/:userId/profile"
             element={
@@ -84,17 +109,25 @@ function App() {
           {/* 傳入 mode='create' */}
           <Route
             path="/activities/create"
-            element={<ManageActivityPage mode="create" />}
+            element={
+              <ProtectedRoute requiredAdmin={true}>
+                <ManageActivityPage mode="create" />
+              </ProtectedRoute>
+            }
           />
           {/* 傳入 mode='edit' */}
           <Route
             path="/activities/:id/edit"
-            element={<ManageActivityPage mode="edit" />}
+            element={
+              <ProtectedRoute requiredAdmin={true}>
+                <ManageActivityPage mode="edit" />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/locations/create"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredAdmin={true}>
                 <CreateLocation />
               </ProtectedRoute>
             }
@@ -102,7 +135,7 @@ function App() {
           <Route
             path="/locations/:id/edit"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredAdmin={true}>
                 <EditLocation />
               </ProtectedRoute>
             }

@@ -1,27 +1,49 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import apiClient from '../../api/apiClient'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const Payment = () => {
-  const { orderId } = useParams() // 從 URL 獲取orderId
+  const navigate = useNavigate()
+  const { userId: currentUserId } = useAuth()
+  const { orderId } = useParams() // 從 URL 獲取 orderId
   const [orderDetails, setOrderDetails] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
+    if (!currentUserId) return // 確保已經獲取當前登入用戶 ID
+
     const fetchOrderDetails = async () => {
       try {
         const response = await apiClient.get(`api/orders/${orderId}`)
-        setOrderDetails(response.data)
-      } catch (error) {
-        console.error('無法獲取訂單詳細資料:', error)
+        const orderData = response.data
+
+        if (!orderData?.userId) {
+          throw new Error('訂單數據異常，缺少 userId')
+        }
+
+        if (String(orderData.userId) !== String(currentUserId)) {
+          setError('❌ 你無權查看此訂單')
+          setTimeout(() => navigate('/'), 1500) // 1.5 秒後導回首頁
+          return
+        }
+
+        setOrderDetails(orderData)
+      } catch (err) {
+        console.error('❌ 無法獲取訂單詳細資料:', err)
+        setError('❌ 查無此訂單，請聯繫客服')
+        setTimeout(() => navigate('/'), 1500)
+      } finally {
+        setLoading(false) // 加載完成
       }
     }
 
     fetchOrderDetails()
-  }, [orderId])
+  }, [orderId, currentUserId, navigate])
 
-  if (!orderDetails) {
-    return <p>載入中...</p>
-  }
+  if (loading) return <p>🔄 載入中...</p>
+  if (error) return <p>{error}</p>
 
   const { userName, userEmail, uuid, chosenDate, totalAmount, item } =
     orderDetails

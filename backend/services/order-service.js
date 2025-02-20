@@ -88,7 +88,7 @@ const ordersService = {
         {
           model: User,
           as: 'user',
-          attributes: ['name', 'email'],
+          attributes: ['id', 'name', 'email'],
         },
       ],
     })
@@ -103,6 +103,7 @@ const ordersService = {
     }
 
     return {
+      userId: order.user.id,
       userName: order.user.name,
       userEmail: order.user.email,
       uuid: order.uuid,
