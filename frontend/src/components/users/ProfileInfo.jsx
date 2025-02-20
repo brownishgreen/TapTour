@@ -50,7 +50,6 @@ const ProfileInfo = ({ userId }) => {
     const fetchFavorites = async () => {
       try {
         const response = await apiClient.get(`/api/favorites/users/${userId}`)
-        console.log('收到的收藏活動資料:', response.data.activities) // ✅ 檢查 API 回傳
 
         setFavoriteActivities(response.data.activities)
         setFavoriteProducts(response.data.products)
@@ -81,52 +80,66 @@ const ProfileInfo = ({ userId }) => {
     return <div>{error}</div>
   }
 
+  // new
+
+  const fetchFollowers = async () => {
+    try {
+      const response = await apiClient.get(`/api/users/${userId}/profile`, {
+        withCredentials: true,
+      })
+      setFollowers(response.data.followers) // ✅ 更新 `followers`
+    } catch (error) {
+      console.error('無法獲取追蹤者清單', error)
+    }
+  }
+
   const handleFollow = async (e) => {
     e.preventDefault()
-
     if (followLoading) return
     setFollowLoading(true)
 
     try {
-      const response = await apiClient.post('api/followers/follow', {
-        followerId: currentUserId, // 確保 userId 是當前用戶的 ID
-        followingId: user.id, // 目標用戶 ID
+      await apiClient.post('/api/followers/follow', {
+        followerId: currentUserId,
+        followingId: user.id,
       })
-      if (response.data.alreadyFollowing) {
-        console.log('已追蹤該用戶')
-        setIsFollowing(true) // 確保按鈕切換到「已追蹤」
-      } else {
-        setIsFollowing(true) // 新增成功
-      }
+
+      setIsFollowing(true)
+
+      // **強制刷新 `followers`，確保 UI 立即更新**
+      await fetchFollowers()
     } catch (error) {
-      console.error('追蹤失敗:', error.message)
+      console.error('追蹤失敗:', error?.message || error)
     } finally {
       setFollowLoading(false)
     }
   }
 
   const handleUnfollow = async (e) => {
-    e.preventDefault() // 防止跳轉
+    e.preventDefault()
 
     if (followLoading) return
     setFollowLoading(true)
 
     try {
-      await apiClient.post(
-        'api/followers/unfollow', // 假設你有後端的取消追蹤 API
-        {
-          followerId: currentUserId, // 當前用戶 ID
-          followingId: user.id, // 目標用戶 ID
-        },
-        { withCredentials: true }
+      await apiClient.post('/api/followers/unfollow', {
+        followerId: currentUserId,
+        followingId: user.id,
+      })
+
+      setIsFollowing(false)
+
+      // **從 followers 陣列中移除當前用戶**
+      setFollowers((prevFollowers) =>
+        prevFollowers.filter((follower) => follower.id !== currentUserId)
       )
-      setIsFollowing(false) // 更新為未追蹤
     } catch (error) {
       console.error('取消追蹤失敗:', error.message)
     } finally {
       setFollowLoading(false)
     }
   }
+
   const handleEditProfile = () => {
     navigate(`/users/${userId}/profile/edit`)
   }
@@ -136,10 +149,7 @@ const ProfileInfo = ({ userId }) => {
         <div className="profile-info">
           <div className="profile-avatar">
             <img
-              src={
-                user.image ||
-                '../../public/assets/images/others/default-avatar.jpg'
-              }
+              src={user.image || '/assets/images/others/default-avatar.jpg'}
               alt="預設大頭貼"
               className="default-avatar"
             />
@@ -202,7 +212,9 @@ const ProfileInfo = ({ userId }) => {
                   <div key={f.id} className="profile-content__follower-item">
                     <Link to={`/users/${f.id}/profile`}>
                       <img
-                        src={f.image || '/default-avatar.jpg'}
+                        src={
+                          f.image || '/assets/images/others/default-avatar.jpg'
+                        }
                         alt={f.name}
                       />
                     </Link>
@@ -225,7 +237,9 @@ const ProfileInfo = ({ userId }) => {
                   <div key={f.id} className="profile-content__follower-item">
                     <Link to={`/users/${f.id}/profile`}>
                       <img
-                        src={f.image || '/default-avatar.jpg'}
+                        src={
+                          f.image || '/assets/images/others/default-avatar.jpg'
+                        }
                         alt={f.name}
                       />
                     </Link>
