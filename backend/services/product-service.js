@@ -46,26 +46,34 @@ const productService = {
     return product
   },
 
-  editProduct: async (id, { name, description, location_id, price, category_id }) => {
+  editProduct: async (id, value) => {
     const product = await Product.findByPk(Number(id))
     if (!product) throw new CustomError(404, '商品不存在')
 
-    await product.update({ name, description, location_id, price, category_id })
+    await product.update({
+      name: value.name,
+      description: value.description,
+      location_id: value.location_id,
+      price: value.price,
+      category_id: value.category_id
+    })
     return { message: '商品更新成功' }
   },
 
-  createProduct: async ({ name, description, price, category_id, location_id }, files) => {
-    if (!name || !description || !price || !category_id || !location_id) {
-      throw new CustomError(400, '必須提供商品名稱、描述、價格、類別')
-    }
-
-    const product = await Product.create({ name, description, price, category_id, location_id })
+  createProduct: async (value, files) => {
+    const product = await Product.create({
+      name: value.name,
+      description: value.description,
+      price: value.price,
+      category_id: value.category_id,
+      location_id: value.location_id
+    })
 
     let imageUrls = []
     const basePath = path.join(__dirname, '../uploads/products')
 
     if (files.length) {
-      imageUrls = handleImageUpload(files, basePath, product.id, name, 'products', 'product_id')
+      imageUrls = handleImageUpload(files, basePath, product.id, value.name, 'products', 'product_id')
     }
 
     return { message: '商品已創建', product, images: imageUrls }

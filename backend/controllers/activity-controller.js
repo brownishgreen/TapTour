@@ -3,7 +3,7 @@ import { handleImageUpload } from '../utils/upload-handler.js'
 import { Op } from 'sequelize'
 import path from 'path'
 import { fileURLToPath } from 'url'
-
+import { activitySchema } from '../validations/activity-validation.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -87,12 +87,17 @@ const activityController = {
       if (isNaN(activityId)) {
         return res.status(400).json({ message: '活動 ID 無效' })
       }
-      const { name, description, location_id, category_id, time_duration, price } = req.body
+      // 驗證活動資料
+      const { error, value } = activitySchema.validate(req.body)
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message })
+      }
+      // 查詢活動
       const activity = await Activity.findByPk(Number(activityId))
       if (!activity) {
         return res.status(404).json({ message: '活動不存在' })
       }
-      await activity.update({ name, description, location_id, category_id, time_duration, price })
+      await activity.update(value)
       res.status(200).json({ message: '活動更新成功' })
     } catch (err) {
       next(err)
@@ -107,27 +112,18 @@ const activityController = {
   },
   createActivity: async (req, res, next) => {
     try {
-      const { name, description, time_duration, price, location_id, category_id } = req.body
-
-      // 確保所有必填欄位都已提供
-      if (!name || !description || !time_duration || !price || !location_id || !category_id) {
-        return res.status(400).json({ message: '必須提供活動名稱、描述、時間、價格、地點、類別' })
+      // 驗證活動資料
+      const { error, value } = activitySchema.validate(req.body)
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message })
       }
-
       // 建立活動
-      const activity = await Activity.create({
-        name,
-        description,
-        time_duration,
-        price,
-        location_id,
-        category_id,
-      })
+      const activity = await Activity.create(value)
 
       // 圖片上傳處理
       let imageUrls = []
       const basePath = path.join(__dirname, '../uploads/activities')
-      console.log('basePath', basePath)
+      
 
       if (req.files && req.files.images) {
         const images = Array.isArray(req.files.images)
@@ -138,7 +134,7 @@ const activityController = {
           images,
           basePath,
           activity.id,
-          name,
+          value.name,
           'activities',
           'activity_id'
         )

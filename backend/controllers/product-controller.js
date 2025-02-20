@@ -1,6 +1,6 @@
 import productService from '../services/product-service.js'
 import { handleError } from '../utils/handleError.js'
-
+import { productSchema } from '../validations/product-validation.js'
 const productController = {
   getAllProducts: async (req, res) => {
     try {
@@ -36,7 +36,11 @@ const productController = {
     try {
       const { id } = req.params
       const productData = req.body
-      const editProductResult = await productService.editProduct(id, productData)
+      const { error, value } = productSchema.validate(productData)
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message })
+      }
+      const editProductResult = await productService.editProduct(id, value)
       res.status(200).json(editProductResult)
     } catch (err) {
       handleError(res, err)
@@ -53,13 +57,16 @@ const productController = {
 
   createProduct: async (req, res) => {
     try {
-      const productData = req.body
+      const { error, value } = productSchema.validate(req.body)
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message })
+      }
       let files = req.files.images || []
       // 確保 images 是陣列
       if (!Array.isArray(files)) {
         files = [files]; // 如果是單張圖片，轉成陣列
       }
-      const createProductResult = await productService.createProduct(productData, files)
+      const createProductResult = await productService.createProduct(value, files)
       res.status(201).json(createProductResult)
     } catch (err) {
       handleError(res, err)
