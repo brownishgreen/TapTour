@@ -80,7 +80,7 @@ const ActivitiesTable = () => {
               <td className="text-left">
                 {activity.description.length > 30
                   ? `${activity.description.substring(0, 30)}   ...`
-                  : activity.description.length}
+                  : activity.description}
               </td>
               <td>
                 <Link to={`/activities/${activity.id}/edit`}>

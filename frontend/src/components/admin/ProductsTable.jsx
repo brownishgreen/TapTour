@@ -84,7 +84,7 @@ const ProductsTable = () => {
               <td className="text-left">
                 {product.description.length > 30
                   ? `${product.description.substring(0, 30)}   ...`
-                  : product.description.length}
+                  : product.description}
               </td>
               <td>
                 <Link to={`/products/${product.id}/edit`}>

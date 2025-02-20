@@ -82,9 +82,9 @@ const LocationsTable = () => {
               <td>{location.id}</td>
               <td className="text-left">{location.name}</td>
               <td className="text-left">
-                {location.description.length > 35
-                  ? `${location.description.substring(0, 35)}   ...`
-                  : location.description.length}
+                {location.description.length > 30
+                  ? `${location.description.substring(0, 30)}   ...`
+                  : location.description}
               </td>
               <td>
                 <Link to={`/locations/${location.id}/edit`}>
