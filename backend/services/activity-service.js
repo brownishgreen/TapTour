@@ -2,8 +2,13 @@ import { Activity, Image, Category } from '../models/index.js'
 import { handleImageUpload } from '../utils/upload-handler.js'
 import { Op } from 'sequelize'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import CustomError from '../utils/CustomError.js'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+
 
 const activityService = {
   getAllActivities: async (search) => {
@@ -60,61 +65,33 @@ const activityService = {
       throw new CustomError(500, '伺服器錯誤，無法獲取活動編輯頁面')
     }
   },
-  updateActivity: async (
-    id,
-    { name, description, location_id, category_id, time_duration, price }
-  ) => {
+  updateActivity: async (activityId, value) => {
     try {
-      const activity = await Activity.findByPk(id)
-      if (!activity) throw new CustomError(404, '活動不存在')
-      await activity.update({
-        name,
-        description,
-        location_id,
-        category_id,
-        time_duration,
-        price,
-      })
+      if (isNaN(activityId)) {
+        throw new CustomError(400, '活動 ID 無效')
+      }
+      const activity = await Activity.findByPk(Number(activityId))
+      if (!activity) {
+        throw new CustomError(404, '活動不存在')
+      }
+      await activity.update(value)
       return { message: '活動更新成功' }
     } catch (err) {
       console.error('活動更新失敗:', err)
       throw new CustomError(500, '伺服器錯誤，活動更新失敗')
     }
   },
-  createActivity: async (data, files) => {
+  createActivity: async (value, files) => {
     try {
-      const {
-        name,
-        description,
-        time_duration,
-        price,
-        location_id,
-        category_id,
-      } = data
-
-      // 確保所有必填欄位都有提供
-      if (
-        !name ||
-        !description ||
-        !time_duration ||
-        !price ||
-        !location_id ||
-        !category_id
-      ) {
-        throw new CustomError(
-          400,
-          '必須提供活動名稱、描述、時間、價格、地點、類別'
-        )
-      }
 
       // 創建活動
       const activity = await Activity.create({
-        name,
-        description,
-        time_duration,
-        price,
-        location_id,
-        category_id,
+        name: value.name,
+        description: value.description,
+        time_duration: value.time_duration,
+        price: value.price,
+        location_id: value.location_id,
+        category_id: value.category_id,
       })
 
       if (!activity) {
@@ -134,7 +111,7 @@ const activityService = {
           images,
           basePath,
           activity.id,
-          name,
+          value.name,
           'activities',
           'activity_id'
         )
@@ -147,9 +124,9 @@ const activityService = {
     }
   },
 
-  deleteActivity: async (id) => {
+  deleteActivity: async (activityId) => {
     try {
-      const activityIdNumber = Number(id)
+      const activityIdNumber = Number(activityId)
 
       if (isNaN(activityIdNumber)) {
         throw new CustomError(400, '活動 ID 無效')
@@ -169,15 +146,8 @@ const activityService = {
     }
   },
 
-  getPaginatedActivities: async (page, limit) => {
+  getPaginatedActivities: async (page, limit, offset) => {
     try {
-      // 驗證 page 和 limit 是否有效
-      if (isNaN(page) || isNaN(limit) || page <= 0 || limit <= 0) {
-        throw new CustomError(400, 'Page and limit must be positive numbers')
-      }
-
-      const offset = (page - 1) * limit // 計算偏移量，分頁查詢時決定從第幾筆資料開始
-
       const activities = await Activity.findAll({
         limit,
         offset,
@@ -190,6 +160,7 @@ const activityService = {
       const totalItems = await Activity.count()
       return {
         activities,
+        currentPage: page,
         totalPages: Math.ceil(totalItems / limit),
         totalItems,
       }
