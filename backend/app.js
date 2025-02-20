@@ -1,7 +1,7 @@
 import 'dotenv/config'
+import path from 'path'
 import express from 'express'
 import { swaggerUi, swaggerSpec } from './swagger.js'
-import path from 'path'
 import { fileURLToPath } from 'url'
 import routes from './routes/index.js'
 import errorHandler from './middlewares/error-handler.js'

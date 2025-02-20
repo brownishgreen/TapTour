@@ -2,11 +2,11 @@ import multer from 'multer'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-// ✅ 取得 `__dirname` 替代方案
+//取得 __dirname
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// ✅ 設定 Multer 存儲配置
+// 設定 Multer 儲存配置
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, '../uploads/avatars')) // 儲存到 `uploads/avatars` 目錄
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
   },
 })
 
-// ✅ 設定 Multer 參數
+// 設定 Multer 參數
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
@@ -27,8 +27,8 @@ const upload = multer({
       cb(new Error('只接受圖片檔案')) // 拒絕上傳
     }
   },
-  limits: { fileSize: 5 * 1024 * 1024 }, // 限制檔案大小為 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }, // 限制檔案大小為 10MB
 })
 
-// ✅ 轉換為 ES 模組的 `export`
+// 轉換為 ES 模組的 export
 export default upload
