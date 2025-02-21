@@ -5,42 +5,55 @@
   margin-top: 3rem;
 
   &__container {
-    width: 100%;
-    display: flex;
-    flex-direction: column; // 預設手機版單欄
-    gap: 5px;
+    display: grid;
+    grid-template-columns: 2fr 1fr; // 左邊大圖 2/3，右邊 1/3
+    gap: 10px;
 
-    @media (min-width: 768px) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr); // 平板維持 2 欄
-      gap: 10px;
-    }
-
-    @media (min-width: 1024px) {
-      grid-template-columns: 1fr 1fr; // 桌機讓左側圖片大一點
-      gap: 15px;
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr; // 平板改單欄
     }
   }
 
-  &__item {
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-
+  &__main {
     img {
-      width: 100%; // ✅ 讓圖片自適應
-      max-width: 150px;
-      height: auto;
+      width: 100%;
+      height: 500px; // **固定大圖高度**
       object-fit: cover;
       border-radius: 12px;
-      transition: all 0.3s;
+    }
+  }
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &-top,
+    &-bottom {
+      display: flex;
+      gap: 10px;
     }
 
-    @media (max-width: 768px) {
+    img {
+      width: 200px; // **固定寬度**
+      height: 240px; // **固定高度**
+      object-fit: cover; // 保持圖片不變形
+      border-radius: 12px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__container {
+      grid-template-columns: 1fr; // **手機版單欄**
+    }
+
+    &__grid {
+      flex-direction: row; // **讓小圖變橫向排列**
+      flex-wrap: wrap;
+
       img {
-        max-width: 100px;
-        height: auto;
+        width: 150px; // **縮小小圖的寬度**
+        height: 180px; // **縮小小圖的高度**
       }
     }
   }

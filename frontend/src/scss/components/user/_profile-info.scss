@@ -5,31 +5,29 @@
 @use '../../abstracts/_variables' as *;
 
 .profile-wrapper {
-  display: flex;
-  flex-direction: column; // ✅ 預設手機版為單欄排列
-  align-items: center;
-  justify-content: center; // ✅ 確保所有內容置中
-  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 3fr 7fr; // 📌 設定 3:7 的比例
+  gap: 2rem; // 📌 設定間距
+  align-items: start;
   width: 100%;
-  max-width: 2200px; // ✅ 避免內容過寬
-  margin: 0 auto; // ✅ 讓 `.profile-wrapper` 水平置中
+  max-width: 2200px;
+  margin: 0 auto;
+  padding: 1.5rem;
 
-  @media (min-width: 1024px) {
-    display: grid;
-    grid-template-columns: 1fr 2fr; // ✅ 桌機版左右佈局
-    align-items: start;
-    gap: 2rem;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr; // 📌 平板以下變回單欄
   }
 
   .profile-info-content {
-    display: flex;
-    flex-direction: column; // ✅ 讓子元素直向排列
-    align-items: center; // ✅ 讓內容水平置中
-    width: 100%;
-    max-width: 600px; // ✅ 控制最大寬度
-    margin: 0 auto; // ✅ 讓 `.profile-info-content` 置中
-    gap: 1.5rem; // ✅ 增加區塊間的間距
-  }
+  width: 100%;
+  max-width: none;
+  min-height: 100%; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  border-radius: 10px;
+}
 
 
   // 📌 個人資訊區塊
@@ -90,22 +88,35 @@
       padding: 0.8rem;
       border-radius: 5px;
       font-size: 1rem;
-      margin-top: 1rem;
+      margin: 2rem auto 0; 
       font-weight: bold;
+      border: none;
       cursor: pointer;
+      background-color: $primary-color;
+      color: #fff;
+      transition: all 0.5s ease-in;
+      display: block; // ✅ 讓按鈕獨占一行
+
+      &:hover {
+        background-color: #4483b7;
+      }
     }
+
   }
 
   .profile-content {
-    margin: 0 auto;
-    padding: 0;
-    max-width: 1200px;
-  }
+  width: 100%;
+  max-width: none; // 📌 取消最大寬度限制，讓它填滿
+  min-height: 100%; // 📌 讓它不會因為內容少而縮小
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-  .profile-content__comments,
+
+
   .profile-content__activities{
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    margin-top: 2rem;
     padding: 1.5rem;
     border-radius: 10px;
     background-color: white;
@@ -123,6 +134,18 @@
     }
   }
 
+  .profile-content-title {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    
+    .icon {
+      margin-left: 0.5rem;
+      color: #666;
+    }
+  }
+
   .profile-content__comments {
     padding: 1.5rem;
     border-radius: 10px;
@@ -135,18 +158,6 @@
     &:hover {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-
-  .profile-content-title {
-    font-weight: bold;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    
-    .icon {
-      margin-left: 0.5rem;
-      color: #666;
-    }
-  }
 
   .profile-content__comment-box {
     display: flex;
@@ -197,6 +208,7 @@
     justify-content: flex-start;
     align-items:flex-start;
     padding: 1rem;
+    gap: 2rem;
 
     .card {
       width: 200px; 
@@ -222,6 +234,8 @@
 
 
 .profile-edit-form-container {
+  margin: 2rem auto;
+  margin-top: 4rem;
   .profile-edit-avatar {
       position: relative;
 
