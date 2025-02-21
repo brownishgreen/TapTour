@@ -8,11 +8,10 @@
   width: 90%; // 手機版
   max-width: 500px;
   min-width: 320px;
-  padding: 2rem 3rem;
+  padding: 3rem 3rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 3;
-  margin-top: 0 !important;
 
    // 📲 平板 (768px 以上)
   @media (min-width: 768px) {
@@ -40,7 +39,7 @@
   width: 100%;
   max-width: 500px;
   min-width: 320px;
-  padding: 0 2rem;
+  padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 3;
@@ -98,7 +97,7 @@
 }
 
 .form-label {
-  flex: 0 0 80px;
+  flex: 0 0 100px;
   text-align: center; // 預設手機版置中
   font-size: $font-size-large;
   font-weight: $font-weight-bold;

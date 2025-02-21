@@ -174,7 +174,7 @@ const ProfileInfo = ({ userId }) => {
                     disabled={followLoading}
                     style={{ backgroundColor: '#54A2C0', color: '#fff' }}
                   >
-                    {followLoading ? '處理中...' : '已追蹤'}
+                    {followLoading ? '處理中...' : '已追蹤 '}
                     <FontAwesomeIcon className="icon" icon={solidHeart} />
                   </button>
                 ) : (
@@ -184,7 +184,7 @@ const ProfileInfo = ({ userId }) => {
                     onClick={handleFollow}
                     disabled={followLoading}
                   >
-                    {followLoading ? '處理中...' : '追蹤我'}
+                    {followLoading ? '處理中...' : '追蹤我 '}
                     <FontAwesomeIcon icon={regularHeart} className="icon" />
                   </button>
                 ))}

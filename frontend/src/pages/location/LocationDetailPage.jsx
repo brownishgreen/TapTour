@@ -92,41 +92,24 @@ const LocationDetailPage = () => {
               相關活動
             </h3>
             <div className="location-detail-page__related-cards">
-              {location.activities.map((activity) => (
-                <RelatedCard
-                  activityId={activity.id}
-                  title={activity.name}
-                  description={activity.description.slice(0, 35) + '...'}
-                  image={
-                    activity.images && activity.images.length > 0
-                      ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images[0].image_url}`
-                      : '/default-image.jpg'
-                  }
-                />
-              ))}
+              {location.activities.length === 0 ? (
+                <p style={{marginTop:'1rem'}}>目前暫無相關活動</p>
+              ) : (
+                location.activities.map((activity) => (
+                  <RelatedCard
+                    activityId={activity.id}
+                    title={activity.name}
+                    description={activity.description.slice(0, 35) + '...'}
+                    image={
+                      activity.images && activity.images.length > 0
+                        ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images[0].image_url}`
+                        : '/default-image.jpg'
+                    }
+                  />
+                ))
+              )}
             </div>
           </div>
-          {/* <div className="location-detail-page__comments-wrapper">
-            <h3 className="location-detail-page__comments-title">評論</h3>
-            <CommentsBlock
-              name="Julia"
-              comment="Osaka is a great city! I love the food and the people are friendly."
-              avatar="https://i.pravatar.cc/150?img=27"
-              timestamp="2024-01-01"
-            />
-            <CommentsBlock
-              name="John"
-              comment="Amazing city with great transportation!"
-              avatar="https://i.pravatar.cc/150?img=14"
-              timestamp="2024-01-02"
-            />
-            <CommentsBlock
-              name="Jackal"
-              comment="How to get to the aquarium?"
-              avatar="https://i.pravatar.cc/150?img=12"
-              timestamp="2024-01-03"
-            />
-          </div> */}
         </div>
       )}
       <Footer />
