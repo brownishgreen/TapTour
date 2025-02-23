@@ -14,7 +14,7 @@ const config = configFile[env];
 
 console.log(`🚀 Sequelize 啟動中，環境: ${env}`);
 
-// ✅ 根據環境選擇資料庫連線方式
+// 根據環境選擇資料庫連線方式
 const sequelize = env === 'production'
   ? new Sequelize(process.env.DATABASE_URL, {
     dialect: 'mysql',
@@ -40,13 +40,11 @@ const sequelize = env === 'production'
 
 console.log('✅ Sequelize 連線初始化完成');
 
-// **✅ 讀取 models 目錄下的所有 `.js` 檔案**
 const db = {};
 const modelFiles = fs
   .readdirSync(__dirname)
   .filter((file) => file.indexOf('.') !== 0 && file !== basename && file.endsWith('.js'));
 
-// **✅ 載入所有 Models**
 await Promise.all(
   modelFiles.map(async (file) => {
     const modelModule = await import(`file://${path.join(__dirname, file)}`);
@@ -54,8 +52,6 @@ await Promise.all(
     db[model.name] = model;
   })
 );
-
-// **✅ 建立模型關聯**
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

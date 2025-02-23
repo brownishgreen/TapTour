@@ -1,5 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const isProduction = process.env.NODE_ENV === 'production'
     await queryInterface.createTable('Favorites', {
       id: {
         type: Sequelize.INTEGER,
@@ -10,10 +11,12 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Users', 
-          key: 'id'
-        },
+        ...(isProduction ? {} : {
+          references: {
+            model: 'Users', 
+            key: 'id'
+          },
+        }),
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
