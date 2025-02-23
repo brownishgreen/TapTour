@@ -34,7 +34,7 @@ const config = {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: true, // ✅ PlanetScale 需要 SSL
+        rejectUnauthorized: false, 
       },
     },
     migrationStorageTableName: 'SequelizeMeta',

@@ -2,6 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const isProduction = process.env.NODE_ENV === 'production'
     await queryInterface.createTable('Followers', {
       id: {
         allowNull: false,
@@ -12,19 +13,23 @@ module.exports = {
       follower_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Users', // 關聯到 Users 表
-          key: 'id',
-        },
+        ...(isProduction ? {} : {
+          references: {
+            model: 'Users', // 關聯到 Users 表
+            key: 'id',
+          },
+        }),
         onDelete: 'CASCADE',
       },
       following_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Users', // 關聯到 Users 表
-          key: 'id',
-        },
+        ...(isProduction ? {} : {
+          references: {
+            model: 'Users', // 關聯到 Users 表
+            key: 'id',
+          },
+        }),
         onDelete: 'CASCADE',
       },
       created_at: {

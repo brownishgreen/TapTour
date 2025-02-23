@@ -3,7 +3,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('OrderedItems', { // ✅ 直接用新名稱
+    const isProduction = process.env.NODE_ENV === 'production'
+    await queryInterface.createTable('OrderedItems', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,34 +14,40 @@ module.exports = {
       order_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Orders', // 假設有 Orders 表
-          key: 'id',
-        },
+        ...(isProduction ? {} : {
+          references: {
+            model: 'Orders',
+            key: 'id',
+          }
+        }),
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
       product_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: {
-          model: 'Products', // 假設有 Products 表
-          key: 'id',
-        },
+        ...(isProduction ? {} : {
+          references: {
+            model: 'Products',
+            key: 'id',
+          },
+        }),
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      activity_id: { // ✅ 直接加入新欄位
+      activity_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: {
-          model: 'Activities', // 假設有 Activities 表
-          key: 'id',
-        },
+        ...(isProduction ? {} : {
+          references: {
+            model: 'Activities',
+            key: 'id',
+          },
+        }),
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      quantity: { // ✅ 直接加入新欄位
+      quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 1,
@@ -57,6 +64,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('OrderedItems'); // 直接刪除表
+    await queryInterface.dropTable('OrderedItems')
   }
 };
