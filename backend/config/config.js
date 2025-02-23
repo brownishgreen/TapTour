@@ -34,7 +34,7 @@ const config = {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false, 
+        rejectUnauthorized: false
       },
     },
     migrationStorageTableName: 'SequelizeMeta',
