@@ -6,55 +6,52 @@
 
   &__container {
     display: grid;
-    grid-template-columns: 2fr 1fr; // 左邊大圖 2/3，右邊 1/3
-    gap: 10px;
-
+    grid-template-columns: 2fr 1fr; 
+    gap: 5px;
     @media (max-width: 1024px) {
-      grid-template-columns: 1fr; // 平板改單欄
+      grid-template-columns: 1fr; 
     }
   }
 
   &__main {
     img {
       width: 100%;
-      height: 500px; // **固定大圖高度**
+      height: 340px;
       object-fit: cover;
       border-radius: 12px;
+
+      @media screen and (max-width: 768px) {
+        width: 560px;
+      }
     }
   }
 
   &__grid {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 
     &-top,
     &-bottom {
       display: flex;
-      gap: 10px;
-    }
-
-    img {
-      width: 200px; // **固定寬度**
-      height: 240px; // **固定高度**
-      object-fit: cover; // 保持圖片不變形
-      border-radius: 12px;
+      gap: 5px;
+      img {
+        width: 280px; 
+        height: 170px;
+        object-fit: cover; 
+        border-radius: 12px;
+      }
     }
   }
 
   @media (max-width: 768px) {
     &__container {
-      grid-template-columns: 1fr; // **手機版單欄**
+      grid-template-columns: 1fr; 
     }
 
     &__grid {
-      flex-direction: row; // **讓小圖變橫向排列**
+      flex-direction: row; 
       flex-wrap: wrap;
-
-      img {
-        width: 150px; // **縮小小圖的寬度**
-        height: 180px; // **縮小小圖的高度**
-      }
     }
   }
 }

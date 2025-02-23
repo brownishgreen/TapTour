@@ -1,6 +1,9 @@
 @use '../abstracts/_variables' as*;
 
 .comment-card {
+  @media (max-width: 992px) {
+    margin-left: -35px;
+  }
 
   &__container {
     display: flex;
@@ -73,5 +76,3 @@
     }
   }
 }
-
-

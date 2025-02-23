@@ -16,6 +16,10 @@
   max-width: 1200px; 
   margin: 0 auto;
 
+  button {
+    margin-left: 35px;
+  }
+
   @media (min-width: 700px) {
     grid-template-columns: repeat(2, 1fr); // ✅ iPad Mini (768px) 變 2 列
   }

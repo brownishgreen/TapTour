@@ -14,6 +14,24 @@
   border-bottom: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
+  &__link {
+    padding-left: 15px;
+  }
+
+  .dropdown-toggle {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 25px;
+      height: 25px;
+      color: $secondary-color;
+    }
+  }
+
   &__logo {
     display: flex;
     align-items: center;
@@ -23,6 +41,7 @@
       font-size: 2rem;
       display: flex;
       align-items: center;
+      margin-right: 1rem;
       // gap: 10px;
     }
 
@@ -31,12 +50,12 @@
     }
 
     img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
     }
   }
 
-  // 🔹 漢堡排按鈕 (RWD 顯示)
+  //漢堡排按鈕 (RWD 顯示)
   &__menu-btn {
     display: none;
     background: none;
@@ -45,7 +64,7 @@
     cursor: pointer;
   }
 
-  // 🔹 導覽選單
+  //導覽選單
   &__nav {
     display: flex;
     gap: 1.5rem;
@@ -75,7 +94,7 @@
       font-weight: $font-weight-bold;
       text-decoration: none;
       background-color: transparent;
-
+      color: $primary-color;
       &--primary {
         background-color: $primary-color;
         color: white;
@@ -87,7 +106,7 @@
     }
   }
 
-  // 🔹 行動版 (Ipad and below) 
+  //行動版 (Ipad and below) 
   @media (max-width: 1200px) {
     &__menu-btn {
       display: block;
@@ -105,8 +124,8 @@
       display: none;
       flex-direction: column;
       position: absolute;
-      top: 95px;
-      left: -20px;
+      top: 90px;
+      left: 0;
       width: 100%;
       background-color: $background-color;
       box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
@@ -133,6 +152,7 @@
 
     .header__logo span {
       font-size: 1.2rem;
+
     }
   }
 }

@@ -55,8 +55,8 @@
     margin-right: 60px;
 
     @media (max-width: 768px) {
-      max-width: 100%; // ✅ 小螢幕時地圖寬度佔滿
-      margin: 30px 0; // ✅ 增加間距
+      max-width: 100%;
+      margin: 30px 0;
     }
   }
 
@@ -96,9 +96,9 @@
 
     h3 {
       text-align: left;
-
+      font-size: 1.5rem;
       @media (max-width: 768px) {
-        text-align: center; // ✅ 小螢幕標題置中
+        text-align: center;
       }
     }
   }
@@ -107,11 +107,13 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: flex-start; // ✅ 預設靠左對齊
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: flex-start;
 
     @media (max-width: 768px) {
-      flex-direction: column; // ✅ 小螢幕改成單欄排列
-      align-items: center; // ✅ 內容置中
+      flex-direction: column;
+      align-items: center;
     }
   }
 
@@ -119,7 +121,7 @@
     margin-left: 15px;
 
     @media (max-width: 768px) {
-      margin-left: 0; // ✅ 小螢幕居中
+      margin-left: 0;
       text-align: center;
     }
   }

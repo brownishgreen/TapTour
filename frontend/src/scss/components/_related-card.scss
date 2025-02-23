@@ -2,6 +2,7 @@
 @use './shared/_buttons' as *;
 
 .related-card {
+  position: relative;
   background-color: $background-color;
   max-width: 750px;
   min-width: 300px;
@@ -10,7 +11,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   display: flex;
   margin: 40px 0;
-  
+
   &__image-wrapper {
     flex: 1;
 
@@ -31,13 +32,13 @@
   &__content {
     flex: 3;
     display: flex;
-    margin-right: 20px;
+    margin: 20px;
+    flex-direction: column;
 
     h3 {
       font-size: 1.8rem;
       font-weight: $font-weight-bold;
-      margin: 20px 0 10px 0;
-
+      margin: 10px 0 0;
 
       @media (max-width: 768px) {
         font-size: 1.2rem;
@@ -74,6 +75,4 @@
       }
     }
   }
-
-
 }
