@@ -13,7 +13,7 @@ const ImageGallery = ({ images }) => {
           <img
             src={
               images[0]?.image_url
-                ? `http://localhost:3000${images[0].image_url}`
+                ? images[0].image_url
                 : underBuildImage
             }
             alt="Main gallery"
@@ -24,7 +24,7 @@ const ImageGallery = ({ images }) => {
             <img
               src={
                 images[1]?.image_url
-                  ? `http://localhost:3000${images[1].image_url}`
+                  ? images[1].image_url
                   : underBuildImage
               }
               alt="Gallery 1"
@@ -32,7 +32,7 @@ const ImageGallery = ({ images }) => {
             <img
               src={
                 images[2]?.image_url
-                  ? `http://localhost:3000${images[2].image_url}`
+                  ? images[2].image_url
                   : underBuildImage
               }
               alt="Gallery 2"
@@ -42,7 +42,7 @@ const ImageGallery = ({ images }) => {
             <img
               src={
                 images[3]?.image_url
-                  ? `http://localhost:3000${images[3].image_url}`
+                  ? images[3].image_url
                   : underBuildImage
               }
               alt="Gallery 3"
@@ -50,7 +50,7 @@ const ImageGallery = ({ images }) => {
             <img
               src={
                 images[4]?.image_url
-                  ? `http://localhost:3000${images[4].image_url}`
+                  ? images[4].image_url
                   : underBuildImage
               }
               alt="Gallery 4"

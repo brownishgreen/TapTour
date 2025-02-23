@@ -88,7 +88,7 @@ const ProductsPage = () => {
                 key={index}
                 buttonText="立刻購買"
                 image={
-                  `${apiClient.defaults.baseURL.replace(/\/$/, '')}${product?.images?.[0]?.image_url}` ||
+                  product?.images?.[0]?.image_url ||
                   '/default-image.jpg'
                 }
                 title={product?.name}
