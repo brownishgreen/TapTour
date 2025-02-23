@@ -87,7 +87,7 @@ const ProfileInfo = ({ userId }) => {
       const response = await apiClient.get(`/api/users/${userId}/profile`, {
         withCredentials: true,
       })
-      setFollowers(response.data.followers) // ✅ 更新 `followers`
+      setFollowers(response.data.followers) 
     } catch (error) {
       console.error('無法獲取追蹤者清單', error)
     }

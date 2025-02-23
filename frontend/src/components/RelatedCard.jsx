@@ -10,7 +10,7 @@ const RelatedCard = ({ activityId, image, title, description }) => {
       </div>
       <div className="related-card__content">
         <h3>{title}</h3>
-        <p>{description}</p>
+        <p className="related-card__description">{description}</p>
         <button className="small-button" onClick={() => navigate(`/activities/${activityId}`)}>了解更多</button>
       </div>
     </div>

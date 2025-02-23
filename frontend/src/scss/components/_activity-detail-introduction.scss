@@ -1,5 +1,12 @@
 @use '../abstracts/variables' as*;
 
 .activity-detail-introduction {
-  margin-left: 15px;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 60px;
+
+  @media (max-width: 992px) {
+    margin-left: 30px;
+  }
+
 }
