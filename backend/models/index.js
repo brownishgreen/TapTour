@@ -21,7 +21,7 @@ const sequelize = env === 'production'
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: true, // ✅ PlanetScale 需要 SSL
+        rejectUnauthorized: false, // ✅ PlanetScale 需要 SSL
       },
     },
   })

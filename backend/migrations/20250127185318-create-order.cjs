@@ -10,12 +10,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      uuid: { // ✅ 直接加入新欄位
+      uuid: { 
         type: Sequelize.UUID,
         allowNull: false,
         unique: true,
       },
-      chosen_date: { // ✅ 直接加入新欄位
+      chosen_date: { 
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
