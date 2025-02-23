@@ -23,6 +23,8 @@ const userController = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body
+      console.log('email', email)
+      console.log('password', password)
       const loginResult = await userService.login(email, password)
       res.cookie('token', loginResult.token, {
         httpOnly: true,
