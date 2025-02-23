@@ -23,6 +23,7 @@ app.use(cookieParser())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ limit: '10mb', extended: true }))
+app.options('*', cors()); // ✅ 允許所有路由的 `OPTIONS` 預檢請求
 
 const allowedOrigins = [
   'http://localhost:4173',
@@ -40,7 +41,8 @@ app.use(
       }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'], 
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Set-Cookie'], 
+    exposedHeaders: ['Set-Cookie'],
     credentials: true,
   })
 )
