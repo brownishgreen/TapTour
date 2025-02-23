@@ -28,8 +28,8 @@ const userController = {
       const loginResult = await userService.login(email, password)
       res.cookie('token', loginResult.token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+        secure: true,
+        sameSite: 'none',
         maxAge: 3600000,
       })
       res.status(200).json(loginResult)
