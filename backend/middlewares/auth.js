@@ -5,12 +5,15 @@ const SECRET = process.env.JWT_SECRET // 從 .env 讀取密鑰
 const verifyToken = async (req, res, next) => {
   try {
     const token = req.cookies.token
+    console.log('token', token)
+    console.log('req.cookies', req.cookies)
 
     if (!token) {
       return res.status(401).json({ message: '未授權的訪問(未提供 token)' })
     }
 
     const decoded = jwt.verify(token, SECRET)
+    console.log('decoded', decoded)
     const user = await User.findByPk(decoded.id)
   
     // 確保用戶存在
