@@ -15,7 +15,7 @@ export default (sequelize, DataTypes) => {
   Image.init(
     {
       image_url: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false, // 圖片 URL 為必填
         validate: {
           notEmpty: true, // 確保不為空
