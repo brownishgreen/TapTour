@@ -106,7 +106,7 @@ const Header = () => {
                 </ul>
               </div>
             ) : (
-              <div>
+              <div className="header__actions-buttons">
                 <Link to="/register" className="header__button">
                   註冊
                 </Link>
