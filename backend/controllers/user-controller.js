@@ -26,12 +26,14 @@ const userController = {
       console.log('email', email)
       console.log('password', password)
       const loginResult = await userService.login(email, password)
+      console.log('loginResult', loginResult)
       res.cookie('token', loginResult.token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+        secure: true,
+        sameSite: 'none',
         maxAge: 3600000,
       })
+      console.log('res.cookie', res.cookie)
       res.status(200).json(loginResult)
     } catch (err) {
       handleError(res, err)
