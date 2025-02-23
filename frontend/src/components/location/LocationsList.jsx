@@ -11,10 +11,9 @@ const LocationsList = ({ locations }) => {
             buttonText="查看更多"
             image={
               location.images?.length
-                ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${location.images.find(
+                ? location.images.find(
                   (img) => Number(img.id) === Number(location.main_image_id) // 確保 ID 類型匹配
-                )?.image_url || location.images[0].image_url
-                }`
+                )?.image_url || location.images[0].image_url                
                 : '/default-image.jpg'
             }
             title={location.name}
