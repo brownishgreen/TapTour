@@ -29,8 +29,8 @@ const userController = {
       console.log('loginResult', loginResult)
       res.cookie('token', loginResult.token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+        secure: true,
+        sameSite: 'None',
         maxAge: 3600000,
       })
       console.log('res.cookie', res.cookie)
