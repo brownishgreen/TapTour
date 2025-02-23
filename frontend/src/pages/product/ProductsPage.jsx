@@ -66,7 +66,7 @@ const ProductsPage = () => {
       <Header />
       <div className="products-page__hero-banner">
         <HeroBanner
-          imageURL="../src/assets/images/product-page-hero-banner.jpg"
+          imageURL="https://images.unsplash.com/photo-1740141340584-a749ceac44a1?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           title="TapTour 特搜精選票券"
           description="高速 eSim 卡、機場接送、租車、旅遊保險、旅遊行程！"
         />

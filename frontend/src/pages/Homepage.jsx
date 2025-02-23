@@ -191,7 +191,7 @@ const Homepage = () => {
                   <CardItem
                     buttonText="深入瞭解"
                     image={
-                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images?.[2]?.image_url}` ||
+                      activity.images?.[2]?.image_url ||
                       '/default-image.jpg'
                     }
                     title={activity.name}
@@ -239,7 +239,7 @@ const Homepage = () => {
                   <CardItem
                     buttonText="深入瞭解"
                     image={
-                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${product.images?.[0]?.image_url}` ||
+                      product.images?.[0]?.image_url ||
                       '/default-image.jpg'
                     }
                     title={product.name}
@@ -289,7 +289,7 @@ const Homepage = () => {
                   <LocationCardItem
                     buttonText="探索景點"
                     image={
-                      `${apiClient.defaults.baseURL.replace(/\/$/, '')}${location.images?.[1]?.image_url}` ||
+                      location.images?.[1]?.image_url ||
                       '/default-image.jpg'
                     }
                     title={location.name}
