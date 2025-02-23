@@ -72,7 +72,7 @@ const ActivitiesPage = () => {
       <Header />
       <div className="activities-page__hero-banner">
         <HeroBanner
-          imageURL="../src/assets/images/hero-banner-image.jpg"
+          imageURL="https://images.unsplash.com/photo-1739993655680-4b7050ed2896?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           title="TapTour 提供各式行程"
           description="豐富你的生活體驗，發現各地的精彩活動。"
         />
