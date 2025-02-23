@@ -36,6 +36,9 @@ const userService = {
     if (!email || !password) {
       throw new CustomError(400, '請輸入帳號密碼')
     }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+    console.log('📌 密碼比對結果:', isMatch)
     
     const user = await User.findOne({ where: { email } })
     if (!user || !(await bcrypt.compare(password, user.password))) {
