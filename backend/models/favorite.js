@@ -10,12 +10,6 @@ export default (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Users', // 確保這是你的 Users 表名稱
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
       item_id: {
         type: DataTypes.INTEGER,
