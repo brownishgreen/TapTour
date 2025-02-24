@@ -14,29 +14,18 @@ const config = configFile[env];
 
 console.log(`🚀 Sequelize 啟動中，環境: ${env}`);
 
-// 根據環境選擇資料庫連線方式
-const sequelize = env === 'production'
-  ? new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  {
+    host: config.host,
+    port: config.port || 3306,
     dialect: 'mysql',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      },
-    },
-  })
-  : new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    {
-      host: config.host,
-      port: config.port || 3306,
-      dialect: 'mysql',
-      define: config.define,
-      dialectOptions: config.dialectOptions,
-    }
-  );
+    define: config.define,
+    dialectOptions: config.dialectOptions,
+  }
+);
 
 console.log('✅ Sequelize 連線初始化完成');
 

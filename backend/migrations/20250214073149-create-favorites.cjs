@@ -19,6 +19,7 @@ module.exports = {
         }),
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
+        
       },
       item_id: {
         type: Sequelize.INTEGER,
