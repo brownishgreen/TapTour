@@ -23,7 +23,7 @@ export default (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Favorite',
-      tableName: 'favorites',
+      tableName: 'Favorites',
       timestamps: true,
       underscored: true,
       timestamps: true,
