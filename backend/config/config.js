@@ -26,14 +26,18 @@ const config = {
     migrationStorageExtension: 'cjs',
   },
   production: {
-    use_env_variable: 'DATABASE_URL',
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
     dialect: 'mysql',
     define: {
       underscored: true,
     },
     dialectOptions: {
       ssl: {
-        require: true,
+        require: false, // 如果你的 GCP Cloud SQL 沒有強制使用 SSL，這裡設為 false
         rejectUnauthorized: false
       },
     },
@@ -43,11 +47,11 @@ const config = {
 }
 
 console.log('Database Config:', {
-  user: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
-  host: process.env.DATABASE_HOST,
-  port: process.env.DATABASE_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
 })
 
 export default config
