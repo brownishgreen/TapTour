@@ -143,9 +143,10 @@ const RegisterForm = () => {
           </div>
           <button className="google-login-button">
             <img
-              src="../public/assets/images/icons/google-icon.svg"
+              src="https://img.icons8.com/?size=512&id=17949&format=png"
               alt="Google Logo"
               className="google-icon"
+              style={{ width: '30px', height: '30px' }}
             />
             使用 Google 帳號登入
           </button>

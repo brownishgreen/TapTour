@@ -7,33 +7,23 @@
 
   header {
     flex-shrink: 0;
-    height: 60px; // ✅ 確保 header 固定高度
-    position: fixed; // ✅ 讓 header 固定在最上方
+    height: 60px; 
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
-    background-color: white; // ✅ 確保 header 可見
+    background-color: white; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
-//   main {
-//   flex: 1;
-//   display: flex;
-//   justify-content: center; // ✅ 讓表單置中
-//   align-items: flex-start; // ✅ 避免表單完全置中，從上往下排列
-//   padding-top: 80px;
-//   width: 100%;
-//   overflow: hidden; // ✅ 避免 `main` 自己有 scrollbar
-// }
-
 main {
   display: flex;
-  justify-content: center; // ✅ 讓表單水平置中
-  align-items: center; // ✅ 讓表單垂直置中
-  padding: 80px 20px; // ✅ 避免內容緊貼邊緣
+  justify-content: center; 
+  align-items: center; 
+  padding: 80px 20px; 
   width: 100%;
-  min-height: calc(100vh - 80px); // ✅ 確保 `main` 佔滿可用高度
-  overflow: hidden; // ✅ 避免 `main` 自己有 scrollbar
+  min-height: calc(100vh - 80px); 
+  overflow: hidden; 
 }
 
   footer {
