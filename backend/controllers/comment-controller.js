@@ -47,7 +47,7 @@ const commentController = {
   deleteComment: async (req, res) => {
     try {
       const { id } = req.params
-      await commentService.deleteComment(id)
+      await commentService.deleteComment(id, req.user.id)
       res.json({ message: '評論已刪除' })
     } catch (err) {
       handleError(res, err)

@@ -106,6 +106,13 @@ const userService = {
     })
 
     if (!userData) throw new CustomError(404, '用戶不存在')
+    
+    // 簽發新的 JWT Token
+    const token = jwt.sign(
+      { id: userData.id, isAdmin: userData.is_admin },
+      process.env.JWT_SECRET,
+      { expiresIn: '3h' } // Token 有效時間 3 小時
+    )
 
     return {
       message: '已登入',
@@ -113,6 +120,7 @@ const userService = {
       name: userData.name,
       email: userData.email,
       isAdmin: userData.is_admin,
+      token: token,
     }
   },
 

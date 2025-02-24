@@ -24,9 +24,8 @@ const CommentCard = ({ name, comment, image, timestamp, isAuthor, isAdmin, onDel
               <div className="comment-card__comment-header-right-date">
                 <p>寫於  {timestamp}</p>
               </div>
-
               <div className="comment-card__comment-header-right-delete">
-                {isAuthor || isAdmin && (
+                {(isAuthor || isAdmin) && (
                   <button onClick={onDelete}>
                     <FontAwesomeIcon icon={faTrashAlt} /> 刪除
                   </button>

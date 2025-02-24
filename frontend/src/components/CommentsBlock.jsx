@@ -6,7 +6,7 @@ import ConfirmModal from './modal/ConfirmModal'
 import SuccessModal from './modal/SuccessModal'
 import ErrorModal from './modal/ErrorModal'
 
-const CommentsBlock = ({ comments, onCommentDeleted }) => {
+const CommentsBlock = ({ comments = [], onCommentDeleted }) => {
   const { user, isAdmin } = useAuth()
   const [selectedCommentId, setSelectedCommentId] = useState(null) // 記錄要刪除的留言 ID
 
@@ -25,14 +25,20 @@ const CommentsBlock = ({ comments, onCommentDeleted }) => {
 
   const handleDelete = async () => {
     if (!selectedCommentId) return // 防止錯誤執行
+    console.log(user.token)
+    console.log(user)
     try {
-      await apiClient.delete(`/api/comments/${selectedCommentId}`)
+      await apiClient.delete(`/api/comments/${selectedCommentId}`, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       onCommentDeleted(selectedCommentId)
       setSuccessMessage('您已成功刪除評論')
       setShowSuccess(true)
     } catch (error) {
       setErrorMessage('刪除評論失敗')
-      showError(true)
+      setShowError(true)
       console.error('刪除評論失敗:', error)
     } finally {
       setShowConfirm(false) // 關閉確認 Modal
@@ -52,26 +58,27 @@ const CommentsBlock = ({ comments, onCommentDeleted }) => {
         <p>目前沒有評論</p>
       ) : (
         <div className="comments-section__comments">
-          {comments.map((comment) => {
-            if (!comment || !comment.user_id || !comment.user) {
-              console.error('發現不完整的評論資料：', comment)
-              return null
-            }
-            return (
-              <CommentCard
-                key={comment.id}
-                name={comment.user.name}
-                comment={comment.content}
-                image={comment.user.image}
-                timestamp={comment.createdAt.toLocaleString().split('T')[0]}
-                isAuthor={comment.user_id === user.id}
-                isAdmin={isAdmin}
-                onDelete={() => confirmDelete(comment.id)}
-                userId={comment.user_id}
-              />
-            )
-          })}
-
+            {comments
+              ?.filter(comment => comment && comment.user_id && comment.user)
+              .map((comment) => {
+                if (!comment?.id) {
+                  console.error('無效的評論資料:', comment);
+                  return null; // 確保不會渲染錯誤資料
+                }
+                return (
+                  <CommentCard
+                    key={comment.id}
+                    name={comment.user.name}
+                    comment={comment.content}
+                    image={comment.user.image}
+                    timestamp={comment.createdAt ? new Date(comment.createdAt).toLocaleString().split('T')[0] : '未知時間'}
+                    isAuthor={comment.user_id === user?.id}
+                    isAdmin={isAdmin}
+                    onDelete={() => confirmDelete(comment.id)}
+                    userId={comment.user_id}
+                  />
+                );
+              })}
           <ConfirmModal
             show={showConfirm}
             title="確認刪除活動"
