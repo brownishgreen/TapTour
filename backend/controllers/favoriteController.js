@@ -37,7 +37,7 @@ const favoriteController = {
       )
       res.status(201).json(favorite)
     } catch (error) {
-      handleError(res, err)
+      handleError(res, error)
     }
   },
   deleteFavorite: async (req, res) => {
