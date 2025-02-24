@@ -141,7 +141,7 @@ module.exports = {
       },
       {
         id: 20,
-        image_url: '/uploads/activities/tai-guo-man-gu--man-gu-yi-ri-you--wo-fo-si--zheng-wang-miao--da-huang-gong--yu-fo-si--bao-tuan-4/4-tai-guo-man-gu--man-gu-yi-ri-you--wo-fo-si--zheng-wang-miao--da-huang-gong--yu-fo-si--bao-tuan-005.png',
+        image_url: 'https://storage.googleapis.com/taptour/uploads/activities/tai-guo-man-gu--man-gu-yi-ri-you--wo-fo-si--zheng-wang-miao--da-huang-gong--yu-fo-si--bao-tuan-4/4-tai-guo-man-gu--man-gu-yi-ri-you--wo-fo-si--zheng-wang-miao--da-huang-gong--yu-fo-si--bao-tuan-005.png',
         activity_id: 4,
         created_at: new Date(),
         updated_at: new Date(),

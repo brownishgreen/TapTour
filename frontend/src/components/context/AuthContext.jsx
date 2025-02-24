@@ -37,13 +37,14 @@ export const AuthProvider = ({ children }) => {
       const response = await apiClient.get('api/users/verify', {
         withCredentials: true,
       }) // 調用後端驗證 API
-      const { userId, isAdmin, name, email} = response.data
+      const { userId, isAdmin, name, email, token} = response.data
 
-      // 保存用戶完整資料
+      // 保存用戶完整資料 
       setUser({
         id: userId,
         name: name || '未知用戶',
         email: email || '未知郵箱',
+        token: token || null,
       })
       handleAuthSuccess(true, userId, isAdmin) // 更新登錄狀態
     } catch (error) {
