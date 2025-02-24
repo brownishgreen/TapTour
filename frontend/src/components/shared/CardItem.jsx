@@ -52,7 +52,7 @@ const CardItem = ({ buttonText, image, title, subtitle, cardLink, itemId, userId
         item_id: itemId,
         item_type: itemType,
         user_id: userId
-      }, w)
+      })
         .then(res => res.data)
         .then(data => {
           setIsFavorited(true)

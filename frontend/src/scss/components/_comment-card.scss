@@ -1,9 +1,6 @@
 @use '../abstracts/_variables' as*;
 
 .comment-card {
-  @media (max-width: 992px) {
-    margin-left: -35px;
-  }
 
   &__container {
     display: flex;
@@ -20,6 +17,7 @@
     display: flex;
     position: relative;
   }
+
   &__comment-header {
     display: flex;
     justify-content: space-between;
@@ -51,14 +49,15 @@
     flex-direction: column;
     justify-content: center;
     left: 110px;
+    top: -5px;
     font-size: 1rem;
   }
 
   &__comment-header-right-date {
-    width: 130px;
+    width: 200px;
     position: absolute;
-    right: 6px;
-    top: 60px;
+    right: 1.2rem;
+    bottom: -5px;
     display: flex;
     justify-content: flex-end;
     font-size: 0.8rem;
@@ -67,6 +66,9 @@
 
   &__comment-header-right-delete {
     button {
+      position: absolute;
+      right: 1rem;
+      top: 5px;
       background-color: transparent;
       border: none;
       cursor: pointer;
@@ -74,5 +76,13 @@
       font-size: 1rem;
       font-weight: 400;
     }
+  }
+
+  @media (max-width: 992px) {
+    margin-left: -35px;
+  }
+
+  @media (max-width: 768px) {
+    width: 400px;
   }
 }

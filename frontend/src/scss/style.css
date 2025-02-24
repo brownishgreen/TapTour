@@ -1461,11 +1461,6 @@ body {
   }
 }
 
-@media (max-width: 992px) {
-  .comment-card {
-    margin-left: -35px;
-  }
-}
 .comment-card__container {
   display: flex;
   width: 100%;
@@ -1508,25 +1503,39 @@ body {
   flex-direction: column;
   justify-content: center;
   left: 110px;
+  top: -5px;
   font-size: 1rem;
 }
 .comment-card__comment-header-right-date {
-  width: 130px;
+  width: 200px;
   position: absolute;
-  right: 6px;
-  top: 60px;
+  right: 1.2rem;
+  bottom: -5px;
   display: flex;
   justify-content: flex-end;
   font-size: 0.8rem;
   color: #575757;
 }
 .comment-card__comment-header-right-delete button {
+  position: absolute;
+  right: 1rem;
+  top: 5px;
   background-color: transparent;
   border: none;
   cursor: pointer;
   color: #54A2C0;
   font-size: 1rem;
   font-weight: 400;
+}
+@media (max-width: 992px) {
+  .comment-card {
+    margin-left: -35px;
+  }
+}
+@media (max-width: 768px) {
+  .comment-card {
+    width: 400px;
+  }
 }
 
 .comments-section {
@@ -1548,6 +1557,11 @@ body {
 @media (max-width: 992px) {
   .create-comment-form {
     margin-left: 0px;
+  }
+}
+@media (max-width: 768px) {
+  .create-comment-form {
+    width: 400px;
   }
 }
 

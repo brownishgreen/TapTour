@@ -9,6 +9,10 @@
   @media (max-width: 992px) {
     margin-left: 0px;
   }
+
+  @media (max-width: 768px) {
+    width: 400px;
+  }
 }
 
 .create-comment-form__title {
