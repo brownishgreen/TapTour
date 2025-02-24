@@ -102,7 +102,7 @@ const LocationDetailPage = () => {
                     description={activity.description.slice(0, 35) + '...'}
                     image={
                       activity.images && activity.images.length > 0
-                        ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.images[0].image_url}`
+                        ? activity.images[0].image_url
                         : '/default-image.jpg'
                     }
                   />

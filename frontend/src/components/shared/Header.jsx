@@ -37,7 +37,7 @@ const Header = () => {
         <header className="header">
           <div className="header__logo">
             <Link to="/">
-              <img src="https://storage.cloud.google.com/taptour/assets/images/500.png" alt="TapTour Logo" />
+              <img src={logo} alt="TapTour Logo" />
               <span>TapTour</span>
             </Link>
             {/* 漢堡排按鈕 (手機版) */}
