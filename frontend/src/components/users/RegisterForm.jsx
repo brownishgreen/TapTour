@@ -143,7 +143,7 @@ const RegisterForm = () => {
           </div>
           <button className="google-login-button">
             <img
-              src="https://img.icons8.com/?size=512&id=17949&format=png"
+              src="https://storage.googleapis.com/taptour/assets/images/Google%20Icon.webp"
               alt="Google Logo"
               className="google-icon"
               style={{ width: '30px', height: '30px' }}
