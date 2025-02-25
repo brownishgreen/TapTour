@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Google Cloud Service Account Key
+backend/rational-moon-450914-k2-83078cc9a0a1.json
