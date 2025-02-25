@@ -1,4 +1,3 @@
-import logo from '../../assets/images/500.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faCrosshairs, faShoppingCart, faLocationDot, faPeopleGroup, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -37,7 +36,7 @@ const Header = () => {
         <header className="header">
           <div className="header__logo">
             <Link to="/">
-              <img src={logo} alt="TapTour Logo" />
+              <img src="https://storage.googleapis.com/taptour/assets/images/500.png" alt="TapTour Logo" />
               <span>TapTour</span>
             </Link>
             {/* 漢堡排按鈕 (手機版) */}
