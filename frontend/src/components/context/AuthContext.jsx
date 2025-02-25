@@ -4,6 +4,7 @@ import {
   useContext,
   useCallback,
   useEffect,
+  useRef,
 } from 'react'
 import apiClient from '../../api/apiClient'
 
@@ -24,10 +25,14 @@ export const AuthProvider = ({ children }) => {
     setIsAdmin(adminStatus || false)
     setIsLoading(false)
   }, [])
+  const isMounted = useRef(false)
 
   // 應用程式啟動時自動調用 verifyLogin 進行身份驗證
   useEffect(() => {
-    verifyLogin() // 頁面加載時檢查登錄狀態
+    if (!isMounted.current) {
+      isMounted.current = true
+      verifyLogin() // 頁面加載時檢查登錄狀態
+    }
   }, [userId]) // 只在首次加載時執行
 
   // 驗證用戶是否已登入的函數
