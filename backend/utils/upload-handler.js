@@ -3,6 +3,8 @@ import path from 'path'
 import { Image } from '../models/index.js'
 import pinyin from 'pinyin'
 import axios from 'axios'
+import { Storage } from '@google-cloud/storage'
+import { v4 as uuidv4 } from 'uuid'
 
 /**
  * 這是一個通用圖片上傳處理器
@@ -16,11 +18,14 @@ import axios from 'axios'
  *  @returns {Array} imageUrls - 成功下載的圖片 URL 陣列
  */
 
-const handleImageUpload = async (images, basePath, entityId, name, entityType, dbColumn) => {
-  if (!fs.existsSync(basePath)) {
-    fs.mkdirSync(basePath, { recursive: true })
-  }
+const storage = new Storage({
+  keyFilename: process.env.GOOGLE_CLOUD_FILE
+})
 
+const bucketName = process.env.GOOGLE_CLOUD_BUCKET
+const bucket = storage.bucket(bucketName)
+
+const handleImageUpload = async (images, entityId, name, entityType, dbColumn) => {
   if (!images) throw new Error('未提供任何圖片')
 
   // 將 images 轉換成陣列
@@ -36,28 +41,26 @@ const handleImageUpload = async (images, basePath, entityId, name, entityType, d
     .replace(/[^a-zA-Z0-9-]/g, '')
     .toLowerCase();
 
-  const uploadPath = path.join(basePath, `${sanitizedName}-${entityId}`)
-  console.log('uploadPath', uploadPath)
-
-  if (!fs.existsSync(uploadPath)) {
-    fs.mkdirSync(uploadPath, { recursive: true })
-  }
-
   //處理所有圖片上傳
   const imageUrls = await Promise.all(imageArray.map(async (image, index) => {
-    const fileExtension = path.extname(image.name)
+    const fileExtension = path.extname(image.name) || '.jpg'
 
-    const fileName = `${entityId}-${sanitizedName}-${String(index + 1).padStart(3, '0')}${fileExtension}`
-    const filePath = path.join(uploadPath, fileName)
-
-    console.log(`上傳圖片: ${image.name} 到 ${filePath}`)
+    const fileName = `${entityType}-${sanitizedName}-${entityId}-${String(index + 1).padStart(3, '0')}-${uuidv4()}${fileExtension}`
+    const file = bucket.file(fileName)
 
     try {
-      await image.mv(filePath)  // 待每個 mv 操作完成
-      const imageUrl = `/uploads/${entityType}/${sanitizedName}-${entityId}/${fileName}`
-      console.log(`上傳成功: ${imageUrl}`)
+      await file.save(image.data, {
+        metadata: {
+          contentType: image.mimetype
+        }
+      })
 
-      // 將上傳的圖片資料存入資料庫
+      // 生成公開 URL
+      await file.makePublic()
+      const imageUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`
+      console.log(`${entityType} ${entityId} 的圖片 ${image.name} 上傳成功:`, imageUrl)
+
+      // 存入資料庫
       await Image.create({
         [dbColumn]: entityId,
         image_url: imageUrl
