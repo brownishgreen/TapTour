@@ -104,9 +104,10 @@ const LoginForm = () => {
           </div>
           <button className="google-login-button">
             <img
-              src="../public/assets/images/icons/google-icon.svg"
+              src="https://storage.googleapis.com/taptour/assets/images/Google%20Icon.webp"
               alt="Google Logo"
               className="google-icon"
+              style={{ width: '30px', height: '30px' }}
             />
             使用 Google 帳號登入
           </button>
