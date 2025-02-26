@@ -306,9 +306,9 @@ const ProfileInfo = ({ userId }) => {
                       variant="top"
                       className="card-img-top"
                       src={
-                        activity.image
-                          ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${activity.image}`
-                          : '/default-activity.jpg'
+                        activity.image.startsWith('http')
+                          ? activity.image
+                          : `${apiClient.defaults.baseURL.replace(/\/$/, '')}/${activity.image.replace(/^\//, '')}`
                       }
                     />
                     <Card.Body>
@@ -346,10 +346,11 @@ const ProfileInfo = ({ userId }) => {
                     <Card.Img
                       className="card-img-top"
                       variant="top"
+                      
                       src={
-                        product.image
-                          ? `${apiClient.defaults.baseURL.replace(/\/$/, '')}${product.image}`
-                          : '/default-product.jpg'
+                        product.image.startsWith('http')
+                          ? product.image
+                          : `${apiClient.defaults.baseURL.replace(/\/$/, '')}/${product.image.replace(/^\//, '')}`
                       }
                     />
                     <Card.Body>
