@@ -176,7 +176,7 @@ main {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 3;
-  margin: 0 auto;
+  margin: 50px auto;
   max-height: calc(100vh - 150px);
   overflow-y: auto;
   /* ✅ 讓 scrollbar 貼近表單 */
@@ -1029,11 +1029,28 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 3rem;
+  padding: 1rem;
 }
 .error-container .error-image {
-  width: 400px;
+  max-width: 100%;
+  height: auto;
 }
 
+@media (max-width: 768px) {
+  .error-container {
+    max-width: 90%;
+    margin-bottom: 2rem;
+  }
+}
+@media (max-width: 480px) {
+  .error-container {
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+}
 /* ✅ 確保整個輪播區域不超出視窗 */
 .carousel-wrapper {
   width: 100vw; /* 讓整個輪播區塊填滿視窗寬度 */
@@ -2497,7 +2514,7 @@ select option {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 80px 20px;
+  padding: 80px 20px 20px;
   width: 100%;
   min-height: calc(100vh - 80px);
   overflow: hidden;
