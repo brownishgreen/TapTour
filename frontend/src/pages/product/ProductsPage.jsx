@@ -76,7 +76,7 @@ const ProductsPage = () => {
         {error ? (
           <div className="error-container">
             <img
-              src="../src/assets/images/error-search.jpg"
+              src="https://storage.googleapis.com/taptour/assets/images/S__24428606.jpg"
               alt="搜尋失敗"
               className="error-image"
             />
@@ -87,10 +87,7 @@ const ProductsPage = () => {
               <CardItem
                 key={index}
                 buttonText="立刻購買"
-                image={
-                  product?.images?.[0]?.image_url ||
-                  '/default-image.jpg'
-                }
+                image={product?.images?.[0]?.image_url || '/default-image.jpg'}
                 title={product?.name}
                 subtitle={product?.category?.name}
                 description={product?.description}

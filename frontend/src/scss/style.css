@@ -473,17 +473,54 @@ main {
 .header__link {
   padding-left: 15px;
 }
-.header .dropdown-toggle {
+.header .dropdown {
+  position: relative;
+}
+.header .dropdown .dropdown-toggle {
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
 }
-.header .dropdown-toggle svg {
+.header .dropdown .dropdown-toggle svg {
   width: 25px;
   height: 25px;
   color: #575757;
+}
+.header .dropdown .dropdown-toggle svg:hover, .header .dropdown .dropdown-toggle svg:focus, .header .dropdown .dropdown-toggle svg:active {
+  color: #54A2C0;
+}
+.header .dropdown .dropdown-menu {
+  min-width: 200px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #54A2C0;
+  border: none;
+  padding: 0;
+}
+.header .dropdown .dropdown-menu .dropdown-item {
+  font-size: 1rem;
+  padding: 10px 15px;
+  color: #ffffff;
+  background-color: #54A2C0;
+  transition: all 0.3s ease-in-out;
+}
+.header .dropdown .dropdown-menu .dropdown-item:hover {
+  color: #54A2C0;
+  background-color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.header .dropdown .account-icon-btn {
+  border: none;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 30px;
 }
 .header__logo {
   display: flex;

@@ -92,11 +92,10 @@ const LocationsPage = () => {
         {error && (
           <div className="error-container">
             <img
-              src="../src/assets/images/error-search.jpg"
+              src="https://storage.googleapis.com/taptour/assets/images/S__24428606.jpg"
               alt="搜尋失敗"
               className="error-image"
             />
-
           </div>
         )}
         {!loading && !error && <LocationsList locations={locations} />}
