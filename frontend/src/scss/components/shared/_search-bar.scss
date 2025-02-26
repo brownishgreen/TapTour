@@ -70,7 +70,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  .error-image { 
-  width: 400px;
+  width: 100%;   // 讓容器可以適應小螢幕
+  max-width: 500px;  // 限制最大寬度
+  margin: 0 auto 3rem; // 確保置中（上 0、左右 auto、下 3rem）
+  padding: 1rem;  // 避免內容貼邊
+
+  .error-image {
+    max-width: 100%;  // 讓圖片不超過容器
+    height: auto;  // 維持圖片比例
+  }
 }
+
+// 🔹 RWD 設計
+@media (max-width: 768px) { 
+  .error-container {
+    max-width: 90%; // 在小螢幕上縮小容器
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) { 
+  .error-container {
+    max-width: 100%; // 在手機上讓容器全寬
+    margin-bottom: 1.5rem;
+  }
 }
