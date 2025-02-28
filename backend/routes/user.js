@@ -1,7 +1,9 @@
 import express from 'express'
 import userController from '../controllers/user-controller.js'
 import verifyToken from '../middlewares/auth.js'
-import { upload } from '../utils/multer-config.js'
+import multerConfig from '../utils/multer-config.js'
+const { upload } = multerConfig
+
 const router = express.Router()
 
 
