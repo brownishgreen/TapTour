@@ -1,7 +1,7 @@
 import express from 'express'
 import userController from '../controllers/user-controller.js'
 import verifyToken from '../middlewares/auth.js'
-
+import { upload } from '../utils/multer-config.js'
 const router = express.Router()
 
 
@@ -339,7 +339,7 @@ router.get('/:userId/profile', verifyToken, userController.profile);
  *       500:
  *         description: 伺服器錯誤
  */
-router.put('/:userId/update-profile', userController.updateProfile);
+router.put('/:userId/update-profile', verifyToken, upload.single('image'), userController.updateProfile);
 
 
 export default router

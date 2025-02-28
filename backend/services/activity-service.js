@@ -1,4 +1,4 @@
-import { uploadToGCS } from '../utils/multer-config.js'
+import { upload, uploadToGCS } from '../utils/multer-config.js'
 import { Activity, Image, Category } from '../models/index.js'
 import { Op } from 'sequelize'
 import CustomError from '../utils/CustomError.js'
