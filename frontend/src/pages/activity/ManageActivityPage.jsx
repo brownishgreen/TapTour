@@ -5,11 +5,11 @@ import ActivityForm from '../../components/activity/ActivityForm.jsx'
 import { useAuth } from '../../components/context/AuthContext.jsx'
 
 const ManageActivityPage = ({ mode }) => {
-  const { verifyLogin } = useAuth()
+  // const { verifyLogin } = useAuth()
 
-  useEffect(() => {
-    verifyLogin() // 在頁面加載時檢查登入狀態
-  }, [verifyLogin])
+  // useEffect(() => {
+  //   verifyLogin() // 在頁面加載時檢查登入狀態
+  // }, [verifyLogin])
 
   return (
     <div className="manage-activity-page">
