@@ -25,6 +25,7 @@ import HistoryOrdersPage from './pages/order/HistoryOrdersPage'
 import ScrollToTop from './components/ScrollToTop'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './components/context/AuthContext'
+import AuthLayout from './components/layout/AuthLayout'
 
 import axios from 'axios'
 axios.defaults.withCredentials = true //設定 Axios 預設攜帶 Cookie
@@ -37,109 +38,112 @@ function App() {
         <Routes>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute requiredAdmin={true}>
-                <AdminPage />
-              </ProtectedRoute>
-            }
-          />
+          <Route element={<AuthLayout />}>
+            <Route path="/activities" element={<ActivitiesPage />} />
 
-          <Route path="/activities" element={<ActivitiesPage />} />
-          <Route path="/activities/:id" element={<ActivityDetailPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:id" element={<ProductDetailPage />} />
-          <Route path="/locations/:id" element={<LocationDetailPage />} />
-          <Route path="/locations" element={<LocationsPage />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute requiredAdmin={true}>
+                  <AdminPage />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/payment/:orderId"
-            element={
-              <ProtectedRoute>
-                <PaymentPage />
-              </ProtectedRoute>
-            }
-          />
+            <Route path="/activities/:id" element={<ActivityDetailPage />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/products/:id" element={<ProductDetailPage />} />
+            <Route path="/locations/:id" element={<LocationDetailPage />} />
+            <Route path="/locations" element={<LocationsPage />} />
 
-          <Route
-            path="/orders/:userId"
-            element={
-              <ProtectedRoute>
-                <HistoryOrdersPage />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/payment/:orderId"
+              element={
+                <ProtectedRoute>
+                  <PaymentPage />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Product 傳入 mode='create' */}
-          <Route
-            path="/products/create"
-            element={
-              <ProtectedRoute requiredAdmin={true}>
-                <ManageProductPage mode="create" />
-              </ProtectedRoute>
-            }
-          />
-          {/* Product 傳入 mode='edit' */}
-          <Route
-            path="/products/:id/edit"
-            element={
-              <ProtectedRoute requiredAdmin={true}>
-                <ManageProductPage mode="edit" />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/orders/:userId"
+              element={
+                <ProtectedRoute>
+                  <HistoryOrdersPage />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/users/:userId/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/users/:userId/profile/edit"
-            element={
-              <ProtectedRoute>
-                <ProfileEditPage />
-              </ProtectedRoute>
-            }
-          />
-          {/* 傳入 mode='create' */}
-          <Route
-            path="/activities/create"
-            element={
-              <ProtectedRoute requiredAdmin={true}>
-                <ManageActivityPage mode="create" />
-              </ProtectedRoute>
-            }
-          />
-          {/* 傳入 mode='edit' */}
-          <Route
-            path="/activities/:id/edit"
-            element={
-              <ProtectedRoute requiredAdmin={true}>
-                <ManageActivityPage mode="edit" />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/locations/create"
-            element={
-              <ProtectedRoute requiredAdmin={true}>
-                <CreateLocation />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/locations/:id/edit"
-            element={
-              <ProtectedRoute requiredAdmin={true}>
-                <EditLocation />
-              </ProtectedRoute>
-            }
-          />
+            {/* Product 傳入 mode='create' */}
+            <Route
+              path="/products/create"
+              element={
+                <ProtectedRoute requiredAdmin={true}>
+                  <ManageProductPage mode="create" />
+                </ProtectedRoute>
+              }
+            />
+            {/* Product 傳入 mode='edit' */}
+            <Route
+              path="/products/:id/edit"
+              element={
+                <ProtectedRoute requiredAdmin={true}>
+                  <ManageProductPage mode="edit" />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/users/:userId/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users/:userId/profile/edit"
+              element={
+                <ProtectedRoute>
+                  <ProfileEditPage />
+                </ProtectedRoute>
+              }
+            />
+            {/* 傳入 mode='create' */}
+            <Route
+              path="/activities/create"
+              element={
+                <ProtectedRoute requiredAdmin={true}>
+                  <ManageActivityPage mode="create" />
+                </ProtectedRoute>
+              }
+            />
+            {/* 傳入 mode='edit' */}
+            <Route
+              path="/activities/:id/edit"
+              element={
+                <ProtectedRoute requiredAdmin={true}>
+                  <ManageActivityPage mode="edit" />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/locations/create"
+              element={
+                <ProtectedRoute requiredAdmin={true}>
+                  <CreateLocation />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/locations/:id/edit"
+              element={
+                <ProtectedRoute requiredAdmin={true}>
+                  <EditLocation />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
           <Route path="/about" element={<AboutPage />} />
           <Route path="/" element={<Homepage />} />
           <Route path="*" element={<NotFound />} />
