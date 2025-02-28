@@ -79,6 +79,12 @@ const productService = {
       )
     }
 
+    // 創建圖片
+    await Promise.all(
+      imageUrls.map(url => Image.create({ image_url: url, product_id: product.id }))
+    )
+
+
     return { message: '商品已創建', product, images: imageUrls }
   },
 
