@@ -3,7 +3,6 @@ import productController from '../controllers/product-controller.js'
 import verifyToken from '../middlewares/auth.js'
 import isAdmin from '../middlewares/isAdmin.js'
 import multerConfig from '../utils/multer-config.js'
-import multerConfig from '../utils/multer-config.js'
 
 const router = express.Router()
 
