@@ -26,6 +26,7 @@ const ActivityForm = ({ mode }) => {
   const [successMessage, setSuccessMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
+
   // 如果 mode 是 edit，則從後端獲取活動資料
   useEffect(() => {
     if (isEditMode && activityId) {
@@ -82,6 +83,9 @@ const ActivityForm = ({ mode }) => {
       ...prev,
       images: [...prev.images, ...newFiles], // 更新圖片到 formData
     }))
+    console.log('上傳檔案:', formData.images)
+    console.log('newFiles:', newFiles)
+
   }
 
   const validationForm = () => {
@@ -125,8 +129,12 @@ const ActivityForm = ({ mode }) => {
     formPayload.append('category_id', formData.category_id)
     formPayload.append('location_id', formData.location_id)
 
-    formData.images.forEach((file) => {
-      formPayload.append('images', file)
+    formData.images.forEach((file, index) => {
+      if (file instanceof File && file.type.startsWith('image/')) {
+        formPayload.append('images', file)
+      } else {
+        console.warn(`忽略非圖片檔案，index ${index}`, file)
+      }
     })
 
 

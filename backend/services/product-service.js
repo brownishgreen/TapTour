@@ -4,6 +4,7 @@ import { Op } from 'sequelize'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import CustomError from '../utils/CustomError.js'
+import multerConfig from '../utils/multer-config.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -60,20 +61,22 @@ const productService = {
     return { message: '商品更新成功' }
   },
 
-  createProduct: async (value, files) => {
+  createProduct: async (productData, files) => {
+    console.log('files:', files)
     const product = await Product.create({
-      name: value.name,
-      description: value.description,
-      price: value.price,
-      category_id: value.category_id,
-      location_id: value.location_id
+      name: productData.name,
+      description: productData.description,
+      price: productData.price,
+      category_id: productData.category_id,
+      location_id: productData.location_id
     })
 
     let imageUrls = []
-    const basePath = path.join(__dirname, '../uploads/products')
 
-    if (files.length) {
-      imageUrls = handleImageUpload(files, basePath, product.id, value.name, 'products', 'product_id')
+    if (files && files.length > 0) {
+      imageUrls = await Promise.all(
+        files.map(file => multerConfig.uploadToGCS(file, 'products', product.id))
+      )
     }
 
     return { message: '商品已創建', product, images: imageUrls }
