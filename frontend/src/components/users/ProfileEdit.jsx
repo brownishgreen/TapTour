@@ -69,28 +69,20 @@ const ProfileEdit = () => {
       setShowError(true)
       return
     }
-
-    let base64Image = ''
-    // 附加圖片到 FormData
+    
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('password', password)
+    formData.append('bio', bio)
+    
     if (imageFile) {
-      base64Image = await toBase64(imageFile)
+      formData.append('avatar', imageFile)
     }
 
-    const payload = {
-      name,
-      password,
-      bio,
-      image: base64Image,
-    }
-
-    console.log('payload', payload)
+    console.log('formData', formData)
     try {
       // 不需要手動設置 Content-Type，Axios 會自動處理
-      await apiClient.put(`api/users/${userId}/update-profile`, payload, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      await apiClient.put(`api/users/${userId}/update-profile`, formData)
 
       setSuccessMessage('更新成功，即將跳轉...')
       setShowSuccess(true)

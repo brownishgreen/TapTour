@@ -121,8 +121,8 @@ const ActivityForm = ({ mode }) => {
     Object.keys(formData).forEach((key) => {
       if (key === 'images') {
         //逐一上傳圖片
-        formData.images.forEach((image) => {
-          data.append(`images`, image)
+        formData.images.forEach((image, index) => {
+          data.append('images', image)
         })
       } else if (formData[key] !== null && formData[key] !== undefined) {
         data.append(key, formData[key])

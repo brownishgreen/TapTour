@@ -96,9 +96,9 @@ const activityService = {
       // 圖片上傳處理
       let imageUrls = []
 
-      if (req.files && req.files.length > 0) {
+      if (files && files.length > 0) {
         imageUrls = await Promise.all(
-          req.files.map(file => uploadToGCS(file, 'activities', activity.id))
+          files.map(file => uploadToGCS(file, 'activities', activity.id))
         )
       }
 

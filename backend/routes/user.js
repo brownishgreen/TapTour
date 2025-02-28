@@ -341,7 +341,7 @@ router.get('/:userId/profile', verifyToken, userController.profile);
  *       500:
  *         description: 伺服器錯誤
  */
-router.put('/:userId/update-profile', verifyToken, upload.single('image'), userController.updateProfile);
+router.put('/:userId/update-profile', verifyToken, upload.single('avatar'), userController.updateProfile);
 
 
 export default router

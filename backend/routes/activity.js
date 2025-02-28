@@ -370,7 +370,7 @@ router.get('/:id/edit', verifyToken, isAdmin, activityController.editActivityPag
  *                   example: 活動創建失敗
  */
 
-router.post('/', verifyToken, isAdmin, upload.array('images'), activityController.createActivity)
+router.post('/', verifyToken, isAdmin, upload.array('images', 5), activityController.createActivity)
 
 
 // 編輯活動

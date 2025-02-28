@@ -1,5 +1,7 @@
 import userService from '../services/user-service.js'
 import { handleError } from '../utils/handleError.js'
+import multerConfig from '../utils/multer-config.js'
+const { uploadToGCS } = multerConfig
 
 const userController = {
   registerPage: (req, res) => {
@@ -76,7 +78,8 @@ const userController = {
     try {
       const { userId } = req.params
       const userData = req.body
-      const updateProfileResult = await userService.updateProfile(userId, userData)
+      const avatar = req.file
+      const updateProfileResult = await userService.updateProfile(userId, userData, avatar)
       res.status(200).json(updateProfileResult)
     } catch (err) {
       handleError(res, err)
