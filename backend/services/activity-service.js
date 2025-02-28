@@ -100,7 +100,6 @@ const activityService = {
 
       // 圖片上傳處理
       let imageUrls = []
-      const basePath = path.join(__dirname, '../uploads/activities')
 
       if (files && files.images) {
         const images = Array.isArray(files.images)
@@ -109,12 +108,18 @@ const activityService = {
 
         imageUrls = handleImageUpload(
           images,
-          basePath,
           activity.id,
           value.name,
           'activities',
           'activity_id'
         )
+      }
+
+      for (const url of imageUrls) {
+        await Image.create({
+          image_url: url,
+          activity_id: activity.id,
+        })
       }
 
       return { message: '活動已創建', activity, images: imageUrls }

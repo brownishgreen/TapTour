@@ -5,6 +5,7 @@ import pinyin from 'pinyin'
 import axios from 'axios'
 import { Storage } from '@google-cloud/storage'
 import { v4 as uuidv4 } from 'uuid'
+import multer from 'multer'
 
 /**
  * 這是一個通用圖片上傳處理器
