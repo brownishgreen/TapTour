@@ -68,4 +68,5 @@ const uploadToGCS = async (file, entityType, entityId) => {
   }
 }
 
-export default { upload, uploadToGCS }
+export { upload, uploadToGCS }
+
