@@ -2,10 +2,13 @@ import 'dotenv/config'
 import path from 'path'
 import express from 'express'
 import { swaggerUi, swaggerSpec } from './swagger.js'
+import { fileURLToPath } from 'url'
 import routes from './routes/index.js'
 import errorHandler from './middlewares/error-handler.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 const port = process.env.PORT || 8080
