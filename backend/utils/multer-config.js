@@ -68,5 +68,6 @@ const uploadToGCS = async (file, entityType, entityId) => {
   }
 }
 
-export default { upload, uploadToGCS }
+export default multerConfig
+
 
