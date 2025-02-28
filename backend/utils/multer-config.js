@@ -6,12 +6,12 @@ import { v4 as uuidv4 } from 'uuid'
 
 dotenv.config()
 
-const storage = new Storage({
+const gcsStorage = new Storage({
   keyFilename: process.env.GOOGLE_CLOUD_FILE,
 })
 
 const bucketName = process.env.GOOGLE_CLOUD_BUCKET
-const bucket = storage.bucket(bucketName)
+const bucket = gcsStorage.bucket(bucketName)
 
 //記憶體
 const memoryStorage = multer.memoryStorage()
