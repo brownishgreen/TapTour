@@ -67,16 +67,7 @@ const activityController = {
       next(err)
     }
   }
-
-
-      // 建立活動
-      const activity = await activityService.createActivity(req.body, req.files)
-
-      res.status(201).json({ message: '活動已創建', activity })
-    } catch (err) {
-      next(err)
-    }
-  },
+,
   deleteActivity: async (req, res, next) => {
     try {
       const activityId = Number(req.params.activityId || req.params.id)
