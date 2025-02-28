@@ -153,10 +153,7 @@ const ActivityForm = ({ mode }) => {
       const response = await apiClient({
         method,
         url,
-        data,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        data
       })
       console.log('Server Response:', response.data)
       setSuccessMessage(`${isEditMode ? '活動更新' : '建立活動'}成功`)
