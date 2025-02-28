@@ -76,17 +76,17 @@ const activityService = {
       throw new CustomError(500, '伺服器錯誤，活動更新失敗')
     }
   },
-  createActivity: async (value, files) => {
+  createActivity: async (activityData, files) => {
     try {
 
       // 創建活動
       const activity = await Activity.create({
-        name: value.name,
-        description: value.description,
-        time_duration: value.time_duration,
-        price: value.price,
-        location_id: value.location_id,
-        category_id: value.category_id,
+        name: activityData.name,
+        description: activityData.description,
+        time_duration: activityData.time_duration,
+        price: activityData.price,
+        location_id: activityData.location_id,
+        category_id: activityData.category_id,
       })
 
       if (!activity) {

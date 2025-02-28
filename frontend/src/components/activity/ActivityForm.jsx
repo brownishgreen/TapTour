@@ -103,7 +103,7 @@ const ActivityForm = ({ mode }) => {
     if (formData.images.length === 0) {
       setErrorMessage('請至少傳一張照片')
       setShowError(true)
-      return 
+      return
     }
     return true
   }
@@ -120,13 +120,24 @@ const ActivityForm = ({ mode }) => {
     const data = new FormData()
     Object.keys(formData).forEach((key) => {
       if (key === 'images') {
-        Array.from(formData.images).forEach(image => {
-          data.append('images', image)
+        // 確保 images 是陣列格式，並逐一 append
+        if (!Array.isArray(formData.images)) {
+          console.error('images 不是陣列:', formData.images)
+          return
+        }
+
+        formData.images.forEach((image, index) => {
+          if (image instanceof File) {
+            data.append('images', image)  
+          } else {
+            console.warn(`忽略無效圖片：index ${index}`, image)
+          }
         })
       } else if (formData[key] !== null && formData[key] !== undefined) {
         data.append(key, formData[key])
       }
     })
+
 
     for (let pair of data.entries()) {
       console.log(pair[0], pair[1])
@@ -143,10 +154,7 @@ const ActivityForm = ({ mode }) => {
       const response = await apiClient({
         method,
         url,
-        data,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        data
       })
       console.log('Server Response:', response.data)
       setSuccessMessage(`${isEditMode ? '活動更新' : '建立活動'}成功`)
