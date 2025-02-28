@@ -2,7 +2,7 @@ import express from 'express'
 import productController from '../controllers/product-controller.js'
 import verifyToken from '../middlewares/auth.js'
 import isAdmin from '../middlewares/isAdmin.js'
-import { handleImageUpload } from '../utils/upload-handler.js'
+import multerConfig from '../utils/multer-config.js'
 import multerConfig from '../utils/multer-config.js'
 
 const router = express.Router()
@@ -352,7 +352,7 @@ router.post(
   '/',
   verifyToken,
   isAdmin,
-  handleImageUpload,
+  multerConfig.upload.array('images', 5),
   productController.createProduct
 )
 
@@ -442,7 +442,7 @@ router.put(
   '/:id',
   verifyToken,
   isAdmin,
-  handleImageUpload,
+  multerConfig.upload.array('images', 5),
   productController.editProduct
 )
 
