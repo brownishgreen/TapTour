@@ -120,14 +120,18 @@ const ActivityForm = ({ mode }) => {
     const data = new FormData()
     Object.keys(formData).forEach((key) => {
       if (key === 'images') {
-        //逐一上傳圖片
-        formData.images.forEach((image) => {
+        Array.from(formData.images).forEach(image => {
           data.append('images', image)
         })
       } else if (formData[key] !== null && formData[key] !== undefined) {
         data.append(key, formData[key])
       }
     })
+
+    for (let pair of data.entries()) {
+      console.log(pair[0], pair[1])
+    }
+
 
     console.log(' Submitting FormData', Array.from(data.entries()))
 
@@ -139,7 +143,10 @@ const ActivityForm = ({ mode }) => {
       const response = await apiClient({
         method,
         url,
-        data
+        data,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
       console.log('Server Response:', response.data)
       setSuccessMessage(`${isEditMode ? '活動更新' : '建立活動'}成功`)
