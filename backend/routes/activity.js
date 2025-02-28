@@ -3,7 +3,6 @@ import activityController from '../controllers/activity-controller.js'
 import verifyToken from '../middlewares/auth.js'
 import isAdmin from '../middlewares/isAdmin.js'
 import multerConfig from '../utils/multer-config.js'
-const { upload } = multerConfig
 
 
 const router = express.Router()
@@ -370,7 +369,7 @@ router.get('/:id/edit', verifyToken, isAdmin, activityController.editActivityPag
  *                   example: 活動創建失敗
  */
 
-router.post('/', verifyToken, isAdmin, upload.array('images', 5), activityController.createActivity)
+router.post('/', verifyToken, isAdmin, multerConfig.upload.array('images', 5), activityController.createActivity)
 
 
 // 編輯活動
