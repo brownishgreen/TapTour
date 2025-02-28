@@ -117,43 +117,30 @@ const ActivityForm = ({ mode }) => {
       return
     }
 
-    const data = new FormData()
-    Object.keys(formData).forEach((key) => {
-      if (key === 'images') {
-        // 確保 images 是陣列格式，並逐一 append
-        if (!Array.isArray(formData.images)) {
-          formData.images = [formData.images]
-        }
+    const formPayload = new FormData()
+    formPayload.append('name', formData.name)
+    formPayload.append('price', formData.price)
+    formPayload.append('description', formData.description)
+    formPayload.append('time_duration', formData.time_duration)
+    formPayload.append('category_id', formData.category_id)
+    formPayload.append('location_id', formData.location_id)
 
-        formData.images.forEach((image, index) => {
-          if (image instanceof File) {
-            data.append('images', image)
-          } else {
-            console.warn(`忽略無效圖片：index ${index}`, image)
-          }
-        })
-      } else if (formData[key] !== null && formData[key] !== undefined) {
-        data.append(key, formData[key])
-      }
+    formData.images.forEach((file) => {
+      formPayload.append('images', file)
     })
 
 
-    for (let pair of data.entries()) {
-      console.log(pair[0], pair[1])
-    }
-
-
-    console.log(' Submitting FormData', Array.from(data.entries()))
+    console.log(' Submitting FormData', Array.from(formPayload.entries()))
 
     try {
       const url = isEditMode
         ? `${apiClient.defaults.baseURL}/api/activities/${activityId}`
         : `${apiClient.defaults.baseURL}/api/activities`
       const method = isEditMode ? 'put' : 'post'
-      const response = await apiClient({
+    const response = await apiClient({
         method,
         url,
-        data
+        data: formPayload
       })
       console.log('Server Response:', response.data)
       setSuccessMessage(`${isEditMode ? '活動更新' : '建立活動'}成功`)
