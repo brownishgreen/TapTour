@@ -20,13 +20,6 @@ const memoryStorage = multer.memoryStorage()
 // 設定 Multer 儲存配置
 const upload = multer({
   storage: memoryStorage,
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true) // 允許上傳
-    } else {
-      cb(new Error('只接受圖片檔案')) // 拒絕上傳
-    }
-  },
   limits: { fileSize: 5 * 1024 * 1024 }, // 限制檔案大小
 })
 /**
