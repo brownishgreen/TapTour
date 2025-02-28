@@ -126,7 +126,7 @@ const userService = {
     }
   },
 
-  updateProfile: async (userId, { name, password, bio, image }) => {
+  updateProfile: async (userId, { name, password, bio }, avatar) => {
     const user = await User.findByPk(userId)
     if (!user) throw new CustomError(404, '用戶不存在')
 

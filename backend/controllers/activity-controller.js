@@ -53,12 +53,13 @@ const activityController = {
   createActivity: async (req, res, next) => {
     try {
       // 驗證活動資料
-      const { error, value } = activitySchema.validate(req.body)
+      const activityData = req.body
+      const files = req.files
       if (error) {
         return res.status(400).json({ message: error.details[0].message })
       }
       // 建立活動
-      const activity = await activityService.createActivity(value, req.files)
+      const activity = await activityService.createActivity(activityData, files)
 
       res.status(201).json({ message: '活動已創建', activity })
     } catch (err) {
