@@ -2,7 +2,9 @@ import express from 'express'
 import activityController from '../controllers/activity-controller.js'
 import verifyToken from '../middlewares/auth.js'
 import isAdmin from '../middlewares/isAdmin.js'
-import { upload, uploadToGCS } from '../utils/multer-config.js'
+import multerConfig from '../utils/multer-config.js'
+const { upload } = multerConfig
+
 
 const router = express.Router()
 
