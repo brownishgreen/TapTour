@@ -1,7 +1,9 @@
-import { upload, uploadToGCS } from '../utils/multer-config.js'
+import multerConfig from '../utils/multer-config.js'
 import { Activity, Image, Category } from '../models/index.js'
 import { Op } from 'sequelize'
 import CustomError from '../utils/CustomError.js'
+
+const { uploadToGCS } = multerConfig
 
 const activityService = {
   getAllActivities: async (search) => {

@@ -1,4 +1,4 @@
-import { upload, uploadToGCS } from '../utils/multer-config.js'
+import multerConfig from '../utils/multer-config.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { User, Follower } from '../models/index.js'
@@ -7,6 +7,7 @@ import fs from 'fs'
 import { fileURLToPath } from 'url'
 import CustomError from '../utils/CustomError.js' 
 
+const { uploadToGCS } = multerConfig
 const SECRET = process.env.JWT_SECRET
 const EXPIRES = process.env.JWT_EXPIRES
 
