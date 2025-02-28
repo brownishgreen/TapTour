@@ -91,6 +91,7 @@ const ActivitiesPage = () => {
           <div className="activities-page__card-container">
             {activities.map((activity) => (
               <CardItem
+                key={activity?.id}
                 buttonText="深入瞭解"
                 image={
                   activity.images?.length > 0
