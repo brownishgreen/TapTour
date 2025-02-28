@@ -122,13 +122,12 @@ const ActivityForm = ({ mode }) => {
       if (key === 'images') {
         // 確保 images 是陣列格式，並逐一 append
         if (!Array.isArray(formData.images)) {
-          console.error('images 不是陣列:', formData.images)
-          return
+          formData.images = [formData.images]
         }
 
         formData.images.forEach((image, index) => {
           if (image instanceof File) {
-            data.append('images', image)  
+            data.append('images', image)
           } else {
             console.warn(`忽略無效圖片：index ${index}`, image)
           }
@@ -154,7 +153,10 @@ const ActivityForm = ({ mode }) => {
       const response = await apiClient({
         method,
         url,
-        data
+        data,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
       console.log('Server Response:', response.data)
       setSuccessMessage(`${isEditMode ? '活動更新' : '建立活動'}成功`)
