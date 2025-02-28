@@ -1,3 +1,4 @@
+import { uploadToGCS } from '../utils/multer-config.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { User, Follower } from '../models/index.js'
@@ -133,10 +134,10 @@ const userService = {
     if (bio) user.bio = bio
 
     if (image) {
-      const base64Data = image.replace(/^data:image\/\w+;base64,/, '')
-      const imagePath = path.join(__dirname, `../uploads/avatars/avatar-${Date.now()}.png`)
-      fs.writeFileSync(imagePath, base64Data, 'base64')
-      user.image = `http://localhost:3000/uploads/avatars/${path.basename(imagePath)}`
+      const imageUrl = await uploadToGCS(image, 'avatars', userId)
+      if (imageUrl) {
+        user.image = imageUrl
+      }
     }
 
     await user.save()

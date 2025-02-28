@@ -1,14 +1,7 @@
+import { uploadToGCS } from '../utils/multer-config.js'
 import { Activity, Image, Category } from '../models/index.js'
-import { handleImageUpload } from '../utils/upload-handler.js'
 import { Op } from 'sequelize'
-import path from 'path'
 import CustomError from '../utils/CustomError.js'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-
 
 const activityService = {
   getAllActivities: async (search) => {
@@ -100,22 +93,17 @@ const activityService = {
 
       // 圖片上傳處理
       let imageUrls = []
-      const basePath = path.join(__dirname, '../uploads/activities')
 
-      if (files && files.images) {
-        const images = Array.isArray(files.images)
-          ? files.images
-          : [files.images]
-
-        imageUrls = handleImageUpload(
-          images,
-          basePath,
-          activity.id,
-          value.name,
-          'activities',
-          'activity_id'
+      if (req.files && req.files.length > 0) {
+        imageUrls = await Promise.all(
+          req.files.map(file => uploadToGCS(file, 'activities', activity.id))
         )
       }
+
+      // 創建圖片
+      await Promise.all(
+        imageUrls.map(url => Image.create({ image_url: url, activity_id: activity.id }))
+      )
 
       return { message: '活動已創建', activity, images: imageUrls }
     } catch (err) {

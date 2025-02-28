@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       isMounted.current = true
       verifyLogin() // 頁面加載時檢查登錄狀態
     }
-  }, [userId]) // 只在首次加載時執行
+  }, []) 
 
   // 驗證用戶是否已登入的函數
   const verifyLogin = useCallback(async () => {
@@ -53,13 +53,32 @@ export const AuthProvider = ({ children }) => {
       })
       handleAuthSuccess(true, userId, isAdmin) // 更新登錄狀態
     } catch (error) {
-      console.error('驗證失敗:', error)
+      if (error.response.status === 401) {
+        handleAuthSuccess(false, null, false) // 更新為未登錄狀態
+      }
+      console.warn('未授權，清除登入狀態')
       setUser(null) // 清空用戶資料
-      handleAuthSuccess(false, null, false) // 更新為未登錄狀態
+
     } finally {
       setIsLoading(false) // 結束加載狀態
     }
   }, [handleAuthSuccess])
+
+  const logout = async () => {
+    try {
+      await apiClient.post('/api/users/logout', {}, { withCredentials: true }) // 確保請求後端登出 API
+      localStorage.removeItem('token') // 如果你使用 JWT token
+      setUser(null)
+      setIsLoggedIn(false)
+      setUserId(null)
+      setIsAdmin(false)
+      window.location.href = '/login' // 確保登出後跳轉
+    } catch (error) {
+      console.error('登出失敗:', error)
+    }
+  }
+
+  
 
   // 提供 Context 給子組件使用
   return (
@@ -72,6 +91,7 @@ export const AuthProvider = ({ children }) => {
         isLoading,
         handleAuthSuccess,
         verifyLogin,
+        logout,
       }}
     >
       {children}

@@ -133,8 +133,8 @@ const ActivityForm = ({ mode }) => {
 
     try {
       const url = isEditMode
-        ? `${apiClient.defaults.baseURL}api/activities/${activityId}`
-        : `${apiClient.defaults.baseURL}api/activities`
+        ? `${apiClient.defaults.baseURL}/api/activities/${activityId}`
+        : `${apiClient.defaults.baseURL}/api/activities`
       const method = isEditMode ? 'put' : 'post'
       const response = await apiClient({
         method,

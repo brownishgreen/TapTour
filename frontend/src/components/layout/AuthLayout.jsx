@@ -3,10 +3,11 @@ import { useAuth } from '../context/AuthContext'
 import { useEffect } from 'react'
 
 function AuthLayout() {
-  const { verifyLogin } = useAuth()
+  const { verifyLogin, isLoggedIn } = useAuth()
   useEffect(() => {
-    verifyLogin()
-    console.log('verifyLogin')
+    if (isLoggedIn) {
+      verifyLogin()
+    }
   }, [])
   return (
     <>
