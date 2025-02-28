@@ -1,4 +1,4 @@
-import { uploadToGCS } from '../utils/multer-config.js'
+import { upload, uploadToGCS } from '../utils/multer-config.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { User, Follower } from '../models/index.js'
