@@ -52,16 +52,22 @@ const activityController = {
   },
   createActivity: async (req, res, next) => {
     try {
-      console.log('req.body', req.body)
-      console.log('req.files', req.files)
+      const activityData = req.body
+      const files = req.files 
 
-      if (!req.body.name || !req.body.price) {
-        return res.status(400).json({ message: '請填寫完整活動資訊' })
-      }
-
-      if (!req.files || req.files.length === 0) {
+      if (!files || files.length === 0) {
         return res.status(400).json({ message: '請至少上傳一張圖片' })
       }
+
+      // 建立活動
+      const activity = await activityService.createActivity(activityData, files)
+
+      res.status(201).json({ message: '活動已創建', activity })
+    } catch (err) {
+      next(err)
+    }
+  }
+
 
       // 建立活動
       const activity = await activityService.createActivity(req.body, req.files)
