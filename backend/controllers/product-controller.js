@@ -55,23 +55,23 @@ const productController = {
     }
   },
 
-  createProduct: async (req, res) => {
-    try {
-      const { error, value } = productSchema.validate(req.body)
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message })
+  createProduct: async (req, res, next) => {
+      try {
+        const productData = req.body
+        const files = req.files || []
+
+        if (!files || files.length === 0) {
+          return res.status(400).json({ message: '請至少上傳一張圖片' })
+        }
+
+        // 建立商品
+        const product = await productService.createProduct(productData, files)
+
+        res.status(201).json({ message: '商品已創建', product })
+      } catch (err) {
+        next(err)
       }
-      let files = req.files.images || []
-      // 確保 images 是陣列
-      if (!Array.isArray(files)) {
-        files = [files]; // 如果是單張圖片，轉成陣列
-      }
-      const createProductResult = await productService.createProduct(value, files)
-      res.status(201).json(createProductResult)
-    } catch (err) {
-      handleError(res, err)
-    }
-  },
+    },
 
   deleteProduct: async (req, res) => {
     try {

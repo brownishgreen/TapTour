@@ -3,6 +3,7 @@ import productController from '../controllers/product-controller.js'
 import verifyToken from '../middlewares/auth.js'
 import isAdmin from '../middlewares/isAdmin.js'
 import { handleImageUpload } from '../utils/upload-handler.js'
+import multerConfig from '../utils/multer-config.js'
 
 const router = express.Router()
 
@@ -261,7 +262,7 @@ router.get('/:id/edit', verifyToken, isAdmin, productController.editProductPage)
  *         description: 伺服器錯誤
  */
 
-router.get('/create', verifyToken, isAdmin, productController.createProductPage)
+router.get('/create', verifyToken, multerConfig.upload.array('images', 5), isAdmin, productController.createProductPage)
 
 
 /**

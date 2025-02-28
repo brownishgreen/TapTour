@@ -53,12 +53,7 @@ const activityController = {
   createActivity: async (req, res, next) => {
     try {
       const activityData = req.body
-      const files = req.files 
-
-      console.log('解析到文件了嗎？', files)
-      console.log('解析到活動資料了嗎？', activityData)
-      console.log('解析到活動資料了嗎？', req.body)
-      console.log('解析到活動資料了嗎？', req.files)
+      const files = req.files || []
 
       if (!files || files.length === 0) {
         return res.status(400).json({ message: '請至少上傳一張圖片' })
