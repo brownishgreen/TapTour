@@ -126,16 +126,16 @@ const userService = {
     }
   },
 
-  updateProfile: async (userId, { name, password, bio }, avatar) => {
+  updateProfile: async (userId, userData, avatar) => {
     const user = await User.findByPk(userId)
     if (!user) throw new CustomError(404, '用戶不存在')
 
-    if (name) user.name = name
-    if (password) user.password = await bcrypt.hash(password, 10)
-    if (bio) user.bio = bio
+    if (userData.name) user.name = userData.name
+    if (userData.password) user.password = await bcrypt.hash(userData.password, 10)
+    if (userData.bio) user.bio = userData.bio
 
-    if (image) {
-      const imageUrl = await uploadToGCS(image, 'avatars', userId)
+    if (avatar) {
+      const imageUrl = await uploadToGCS(avatar, 'avatars', userId)
       if (imageUrl) {
         user.image = imageUrl
       }
