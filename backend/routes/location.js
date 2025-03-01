@@ -1,4 +1,4 @@
-
+import express from 'express'
 import locationController from '../controllers/location-controller.js'
 import multerConfig from '../utils/multer-config.js'
 import isAdmin from '../middlewares/isAdmin.js'
