@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { User, Follower } from '../models/index.js'
 import path from 'path'
-import fs from 'fs'
 import { fileURLToPath } from 'url'
 import CustomError from '../utils/CustomError.js' 
 
