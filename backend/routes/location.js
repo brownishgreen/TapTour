@@ -1,9 +1,8 @@
-
+import express from 'express'
 import locationController from '../controllers/location-controller.js'
 import multerConfig from '../utils/multer-config.js'
 import isAdmin from '../middlewares/isAdmin.js'
 import verifyToken from '../middlewares/auth.js'
-
 const router = express.Router()
 const downloadGoogleImages = multerConfig.downloadGoogleImages
 
