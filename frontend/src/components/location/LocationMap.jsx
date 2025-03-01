@@ -1,12 +1,12 @@
-const apiKey = 'AIzaSyAKr3ey9b7CDDw9ZlolHw4Q2ag_S8D37LU' //temporary
+const apiKey = import.meta.env.VITE_GOOGLE_API_KEY
 
 const LocationMap = ({ latitude, longitude }) => {
-
   if (!latitude || !longitude) {
     return <p>無法顯示地圖，缺少地理位置資訊。</p>
   }
 
   const mapURL = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${latitude},${longitude}`
+  console.log(mapURL)
 
   return (
     <div className="location-map">
