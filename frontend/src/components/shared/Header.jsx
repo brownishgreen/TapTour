@@ -15,7 +15,7 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await apiClient.post(
-        `api/users/logout`,
+        `/api/users/logout`,
         {},
         {
           withCredentials: true,

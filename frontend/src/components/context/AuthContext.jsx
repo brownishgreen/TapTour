@@ -67,12 +67,11 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await apiClient.post('/api/users/logout', {}, { withCredentials: true }) // 確保請求後端登出 API
-      localStorage.removeItem('token') // 如果你使用 JWT token
       setUser(null)
       setIsLoggedIn(false)
       setUserId(null)
       setIsAdmin(false)
-      window.location.href = '/login' // 確保登出後跳轉
+      navigate('/login')
     } catch (error) {
       console.error('登出失敗:', error)
     }

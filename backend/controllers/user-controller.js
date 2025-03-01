@@ -45,9 +45,7 @@ const userController = {
   logout: async (req, res) => {
     try {
       res.clearCookie('token')
-      req.session.destroy(() => {
-        res.status(200).json({ message: '已成功登出' })
-      })
+      res.status(200).json({ message: '已成功登出' })
     } catch (err) {
       handleError(res, err)
     }
