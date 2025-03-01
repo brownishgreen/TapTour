@@ -1,13 +1,14 @@
 import 'dotenv/config' // 載入環境變數
 import { Location, Image, Activity } from '../models/index.js'
 import axios from 'axios'
-import { downloadGoogleImages } from '../utils/upload-handler.js'
 import { fileURLToPath } from 'url'
 import path from 'path'
 import { Op } from 'sequelize' // 引入 Sequelize 的操作符
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 import CustomError from '../utils/CustomError.js'
+import multerConfig from '../utils/multer-config.js'
+const { downloadGoogleImages } = multerConfig
 
 const locationService = {
   getAllLocations: async (search) => {
@@ -164,10 +165,8 @@ const locationService = {
       })
 
       //下載 Google Maps 圖片
-      const basePath = path.join(__dirname, '../uploads/locations')
       const imageUrls = await downloadGoogleImages(
         googlePhotos,
-        basePath,
         location.id,
         name,
         'locations',

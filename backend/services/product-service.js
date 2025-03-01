@@ -1,5 +1,4 @@
 import { Product, Image, Category } from '../models/index.js'
-import { handleImageUpload } from '../utils/upload-handler.js'
 import { Op } from 'sequelize'
 import path from 'path'
 import { fileURLToPath } from 'url'
