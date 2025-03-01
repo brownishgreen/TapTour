@@ -188,10 +188,7 @@ const EditLocationForm = () => {
                 }`}
                 onClick={() => handleSetMainImage(image.id)}
               >
-                <img
-                  src={`${apiClient.defaults.baseURL.replace(/\/$/, '')}${image.image_url}`}
-                  alt="圖片"
-                />
+                <img src={image.image_url} alt="圖片" />
                 {image.id === mainImageId && (
                   <span>
                     <FontAwesomeIcon icon={faCheck} />
