@@ -177,7 +177,7 @@ main {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 3;
   margin: 50px auto;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 300px);
   overflow-y: auto;
   /* ✅ 讓 scrollbar 貼近表單 */
 }
@@ -2539,7 +2539,6 @@ select option {
 }
 .page header {
   flex-shrink: 0;
-  height: 60px;
   position: fixed;
   top: 0;
   left: 0;

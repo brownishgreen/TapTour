@@ -44,7 +44,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 3;
   margin: 50px auto;
-  max-height: calc(100vh - 150px); // ✅ 確保表單不會過長，觸發滾動
+  max-height: calc(100vh - 300px); // ✅ 確保表單不會過長，觸發滾動
   overflow-y: auto; // ✅ 讓 `scrollbar` 出現在表單內
 
   /* ✅ 讓 scrollbar 貼近表單 */
