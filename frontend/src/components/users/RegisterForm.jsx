@@ -23,6 +23,8 @@ const RegisterForm = () => {
     setFormData({ ...formData, [name]: value })
   }
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     //驗證必填欄位
@@ -141,7 +143,12 @@ const RegisterForm = () => {
           <div className="divider">
             <span>或</span>
           </div>
-          <button className="google-login-button">
+          <button
+            className="google-login-button"
+            onClick={() => {
+              window.location.href = 'http://taptour-backend.yuanologue.com/api/users/auth/google'
+            }}
+          >
             <img
               src="https://storage.googleapis.com/taptour/assets/images/Google%20Icon.webp"
               alt="Google Logo"

@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import Header from '../../components/shared/Header.jsx'
 import Footer from '../../components/shared/Footer.jsx'
 import ProductForm from '../../components/product/ProductForm.jsx'
-import { useAuth } from '../../components/context/AuthContext.jsx'
 
 const ManageProductPage = ({ mode }) => {
   // const { verifyLogin } = useAuth()
