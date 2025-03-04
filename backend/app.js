@@ -1,13 +1,13 @@
 import 'dotenv/config'
 import path from 'path'
 import express from 'express'
-import passport from 'passport'
 import { swaggerUi, swaggerSpec } from './swagger.js'
 import { fileURLToPath } from 'url'
 import routes from './routes/index.js'
 import errorHandler from './middlewares/error-handler.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import passport from './config/passport.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 

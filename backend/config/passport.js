@@ -22,3 +22,5 @@ passport.use(new GoogleStrategy({
     done(error)
   }
 }))
+
+export default passport
