@@ -146,7 +146,7 @@ const RegisterForm = () => {
           <button
             className="google-login-button"
             onClick={() => {
-              window.location.href = 'http://taptour-backend.yuanologue.com/api/users/auth/google'
+              window.location.href = 'https://taptour-backend.yuanologue.com/api/users/auth/google'
             }}
           >
             <img
