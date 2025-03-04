@@ -20,7 +20,7 @@ const ActivityDetailPage = () => {
   const { isLoggedIn, setIsLoggedIn, verifyLogin, user } = useAuth()
 
   useEffect(() => {
-    verifyLogin()
+    // verifyLogin()
     const fetchActivityAndComments = async () => {
       try {
         const [activityResponse, commentsResponse] = await Promise.all([

@@ -37,7 +37,7 @@ const config = {
     },
     dialectOptions: {
       ssl: {
-        require: false, // 如果你的 GCP Cloud SQL 沒有強制使用 SSL，這裡設為 false
+        require: true,
         rejectUnauthorized: false
       },
     },
