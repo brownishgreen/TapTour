@@ -102,7 +102,7 @@ const LoginForm = () => {
           <div className="divider">
             <span>或</span>
           </div>
-          <button className="google-login-button">
+          <a href="/auth/google" className="google-login-button">
             <img
               src="https://storage.googleapis.com/taptour/assets/images/Google%20Icon.webp"
               alt="Google Logo"
@@ -110,7 +110,7 @@ const LoginForm = () => {
               style={{ width: '30px', height: '30px' }}
             />
             使用 Google 帳號登入
-          </button>
+          </a>
         </div>
       </form>
 

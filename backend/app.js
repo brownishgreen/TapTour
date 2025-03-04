@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import path from 'path'
 import express from 'express'
+import passport from 'passport'
 import { swaggerUi, swaggerSpec } from './swagger.js'
 import { fileURLToPath } from 'url'
 import routes from './routes/index.js'
@@ -11,6 +12,9 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = express()
+
+app.use(passport.initialize())
+
 const port = process.env.PORT || 8080
 
 // Swagger 文件設定
