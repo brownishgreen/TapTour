@@ -109,51 +109,6 @@ router.get('/login', userController.loginPage);
 
 /**
  * @swagger
- * /api/user/auth/google:
- *   get:
- *     summary: 使用 Google 登入
- *     description: 重定向到 Google 登入頁面
- */
-router.get('/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    prompt: 'select_account'
-  })
-)
-
-/**
- * @swagger
- * /api/user/auth/google/callback:
- *   get:
- *     summary: Google 登入回調
- *     description: 處理 Google 登入回調
- */
-router.get('/auth/google/callback',
-  passport.authenticate('google', {
-    session:false,
-    failureRedirect: '/login',
-  }),
-  (req, res) => {
-    const user = req.user
-    const token = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        avatar: user.avatar
-      },
-      process.env.JWT_SECRET, { expiresIn: '1h' })
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-    })
-    res.redirect('/')
-  }
-)
-
-/**
- * @swagger
  * /api/user/login:
  *   post:
  *     summary: 用戶登入
