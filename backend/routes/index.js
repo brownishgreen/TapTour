@@ -9,6 +9,8 @@ import categoryRoutes from './category.js'
 import commentRoutes from './comment.js'
 import orderRoutes from './orders.js'
 import favoriteRoutes from './favorite.js'
+import passport from '../config/passport.js'
+import jwt from 'jsonwebtoken'
 
 const router = express.Router()
 
