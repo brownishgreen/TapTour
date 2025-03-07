@@ -347,7 +347,7 @@ router.put('/:userId/update-profile', verifyToken, upload.single('avatar'), user
 
 router.get('/auth/google',
   passport.authenticate('google', {
-    scope: ['profile', 'email'],
+    scope: ['openid', 'profile', 'email'],
     prompt: 'select_account'
   })
 )
