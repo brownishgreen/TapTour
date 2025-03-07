@@ -19,10 +19,9 @@ passport.use(new GoogleStrategy({
     })
     if (!user) {
       user = await User.create({
-        id: profile.id,
         email: profile.emails[0].value,
         name: profile.displayName,
-        avatar: profile.photos[0].value,
+        image: profile.photos[0].value,
         auth_type: 'google',
         google_id: profile.id
       })
