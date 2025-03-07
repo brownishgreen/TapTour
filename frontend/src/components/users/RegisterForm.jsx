@@ -23,14 +23,6 @@ const RegisterForm = () => {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleGoogleSubmit = async () => {
-    try {
-      const response = await apiClient.get('/api/users/auth/google')
-      console.log(response)
-    } catch (error) {
-      console.error('註冊失敗', error)
-    }
-  }
   const handleSubmit = async (e) => {
     e.preventDefault()
     //驗證必填欄位
@@ -151,7 +143,9 @@ const RegisterForm = () => {
           </div>
           <button
             className="google-login-button"
-            onClick={handleGoogleSubmit}
+            onClick={() => {
+              window.location.href = 'https://taptour-backend.yuanologue.com/api/users/auth/google'
+            }}
           >
             <img
               src="https://storage.googleapis.com/taptour/assets/images/Google%20Icon.webp"
