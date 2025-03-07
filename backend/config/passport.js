@@ -8,7 +8,7 @@ console.log('Passport 已載入')
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'https://taptour-backend.yuanologue.com/auth/google/callback'
+  callbackURL: 'https://taptour-backend.yuanologue.com/api/users/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({
