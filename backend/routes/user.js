@@ -354,13 +354,13 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
   passport.authenticate('google', {
     session: false,
-    failureRedirect: 'https://taptour.yuanologue.com/login',
+    failureRedirect: 'https://taptour.yuanologue.com',
   }),
   (req, res) => {
     console.log('登入成功', req.user) //check if user is logged in
     if (!req.user) {
       console.log('Google Auth Failed, user is undefined')
-      return res.redirect('https://taptour.yuanologue.com/login')
+      return res.redirect('https://taptour.yuanologue.com')
     }
     try {
       const token = jwt.sign(
@@ -379,7 +379,7 @@ router.get('/auth/google/callback',
       res.redirect('https://taptour.yuanologue.com')
     } catch (error) {
       console.error('Google Auth Error:', error)
-      return res.redirect('https://tap-tour.vercel.app/login')
+      return res.redirect('https://taptour.yuanologue.com')
     }
   })
 
