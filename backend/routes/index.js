@@ -26,43 +26,6 @@ router.use('/comments', commentRoutes) // route for comments
 router.use('/orders', orderRoutes) // route for orders
 router.use('/favorites', favoriteRoutes) // route for favorites
 
-router.get('/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    prompt: 'select_account'
-  })
-)
-router.get('/auth/google/callback',
-  passport.authenticate('google', {
-    session: false,
-    failureRedirect: '/login',
-  }),
-  (req, res) => {
-    console.log('登入成功', req.user) //check if user is logged in
-    if (!req.user) {
-      console.log('Google Auth Failed, user is undefined')
-      return res.redirect('/login')
-    }
-    try {
-      const token = jwt.sign(
-        {
-          id: req.user.id,
-          email: req.user.email,
-          name: req.user.name,
-        },
-        process.env.JWT_SECRET, { expiresIn: '1h' })
-    
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-    })
-    res.redirect('/')
-  } catch (error) {
-    console.error('Google Auth Error:', error)
-    res.redirect('/login')
-  }
-})
 
 // create a route to upload images
 router.post('/upload', async (req, res) => {
