@@ -26,7 +26,7 @@ module.exports = {
       google_id: {
         type: Sequelize.STRING
       },
-      avatar: {
+      image: {
         type: Sequelize.STRING
       },
       bio: {
