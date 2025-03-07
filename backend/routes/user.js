@@ -2,6 +2,7 @@ import express from 'express'
 import userController from '../controllers/user-controller.js'
 import verifyToken from '../middlewares/auth.js'
 import multerConfig from '../utils/multer-config.js'
+import passport from '../config/passport.js'
 const { upload } = multerConfig
 
 const router = express.Router()
@@ -342,6 +343,45 @@ router.get('/:userId/profile', verifyToken, userController.profile);
  *         description: 伺服器錯誤
  */
 router.put('/:userId/update-profile', verifyToken, upload.single('avatar'), userController.updateProfile);
+
+
+router.get('/auth/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    prompt: 'select_account'
+  })
+)
+router.get('/auth/google/callback',
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: '/login',
+  }),
+  (req, res) => {
+    console.log('登入成功', req.user) //check if user is logged in
+    if (!req.user) {
+      console.log('Google Auth Failed, user is undefined')
+      return res.redirect('/login')
+    }
+    try {
+      const token = jwt.sign(
+        {
+          id: req.user.id,
+          email: req.user.email,
+          name: req.user.name,
+        },
+        process.env.JWT_SECRET, { expiresIn: '1h' })
+
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+      })
+      res.redirect('/')
+    } catch (error) {
+      console.error('Google Auth Error:', error)
+      res.redirect('/login')
+    }
+  })
 
 
 export default router
