@@ -1,6 +1,7 @@
 import passport from 'passport'
 import GoogleStrategy from 'passport-google-oauth20'
-import User from '../models/user.js'
+import db from '../models/index.js'
+const { User } = db
 import jwt from 'jsonwebtoken'
 
 console.log('Passport 已載入')
