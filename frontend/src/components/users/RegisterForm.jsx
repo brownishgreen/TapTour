@@ -151,11 +151,7 @@ const RegisterForm = () => {
           </div>
           <button
             className="google-login-button"
-            type="button"
-            onClick={() => {
-              window.location.href =
-                'https://taptour-backend.yuanologue.com/api/users/auth/google'
-            }}
+            onClick={handleGoogleSubmit}
           >
             <img
               src="https://storage.googleapis.com/taptour/assets/images/Google%20Icon.webp"

@@ -25,8 +25,9 @@ passport.use(new GoogleStrategy({
         auth_type: 'google',
         google_id: profile.id
       })
+
+      done(null, user)
     }
-    done(null, user)
   } catch (error) {
     done(error)
   }

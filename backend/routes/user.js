@@ -363,13 +363,10 @@ router.get('/auth/google/callback',
       return res.redirect('https://taptour.yuanologue.com')
     }
     try {
-      const token = jwt.sign(
-        {
-          id: req.user.id,
-          email: req.user.email,
-          name: req.user.name,
-        },
-        process.env.JWT_SECRET, { expiresIn: '1h' })
+      const token = jwt.sign({
+        id: req.user.id,
+        email: req.user.email,
+      }, process.env.JWT_SECRET, { expiresIn: '1h' })
 
       res.cookie('token', token, {
         httpOnly: true,
