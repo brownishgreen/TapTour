@@ -24,21 +24,7 @@ const validateUserId = (req, res, next) => {
  *   description: 用戶相關的路由
  */
 
-/**
- * @swagger
- * /api/user/verify:
- *   get:
- *     summary: 檢查用戶的登入狀態
- *     tags: 
- *      - Users
- *     responses:
- *       200:
- *         description: 用戶已登入
- *       401:
- *         description: 未授權或未登入
- */
 
-router.get('/verify', verifyToken, userController.verify);
 
 /**
  * @swagger
@@ -354,7 +340,7 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
   passport.authenticate('google', {
     session: false,
-    failureRedirect: 'https://taptour.yuanologue.com',
+    failureRedirect: 'https://tap-tour.vercel.app/register',
   }),
   (req, res) => {
     console.log('登入成功', req.user) //check if user is logged in
@@ -375,6 +361,7 @@ router.get('/auth/google/callback',
         httpOnly: true,
         secure: true,
         sameSite: 'None',
+        domain: 'taptour.yuanologue.com'
       })
       res.redirect('https://taptour.yuanologue.com')
     } catch (error) {
@@ -382,6 +369,22 @@ router.get('/auth/google/callback',
       return res.redirect('https://taptour.yuanologue.com')
     }
   })
+
+/**
+* @swagger
+* /api/user/verify:
+*   get:
+*     summary: 檢查用戶的登入狀態
+*     tags: 
+*      - Users
+*     responses:
+*       200:
+*         description: 用戶已登入
+*       401:
+*         description: 未授權或未登入
+*/
+
+router.get('/verify', verifyToken, userController.verify);
 
 
 export default router
