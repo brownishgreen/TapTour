@@ -143,9 +143,10 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/" element={<Homepage />} />
           </Route>
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/" element={<Homepage />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
