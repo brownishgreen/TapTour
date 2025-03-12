@@ -24,21 +24,7 @@ const validateUserId = (req, res, next) => {
  *   description: 用戶相關的路由
  */
 
-/**
- * @swagger
- * /api/user/verify:
- *   get:
- *     summary: 檢查用戶的登入狀態
- *     tags: 
- *      - Users
- *     responses:
- *       200:
- *         description: 用戶已登入
- *       401:
- *         description: 未授權或未登入
- */
 
-router.get('/verify', verifyToken, userController.verify);
 
 /**
  * @swagger
@@ -106,51 +92,6 @@ router.post('/register', userController.register)
  */
 
 router.get('/login', userController.loginPage);
-
-/**
- * @swagger
- * /api/user/auth/google:
- *   get:
- *     summary: 使用 Google 登入
- *     description: 重定向到 Google 登入頁面
- */
-router.get('/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    prompt: 'select_account'
-  })
-)
-
-/**
- * @swagger
- * /api/user/auth/google/callback:
- *   get:
- *     summary: Google 登入回調
- *     description: 處理 Google 登入回調
- */
-router.get('/auth/google/callback',
-  passport.authenticate('google', {
-    session:false,
-    failureRedirect: '/login',
-  }),
-  (req, res) => {
-    const user = req.user
-    const token = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        avatar: user.avatar
-      },
-      process.env.JWT_SECRET, { expiresIn: '1h' })
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-    })
-    res.redirect('/')
-  }
-)
 
 /**
  * @swagger
@@ -388,6 +329,62 @@ router.get('/:userId/profile', verifyToken, userController.profile);
  *         description: 伺服器錯誤
  */
 router.put('/:userId/update-profile', verifyToken, upload.single('avatar'), userController.updateProfile);
+
+
+router.get('/auth/google',
+  passport.authenticate('google', {
+    scope: ['openid', 'profile', 'email'],
+    prompt: 'select_account'
+  })
+)
+router.get('/auth/google/callback',
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: 'https://tap-tour.vercel.app/register',
+  }),
+  (req, res) => {
+    console.log('登入成功', req.user) //check if user is logged in
+    if (!req.user) {
+      console.log('Google Auth Failed, user is undefined')
+      return res.redirect('https://taptour.yuanologue.com')
+    }
+    try {
+      const token = jwt.sign(
+        {
+          id: req.user.id,
+          email: req.user.email,
+          name: req.user.name,
+        },
+        process.env.JWT_SECRET, { expiresIn: '1h' })
+
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+        domain: 'taptour.yuanologue.com'
+      })
+      res.redirect('https://taptour.yuanologue.com')
+    } catch (error) {
+      console.error('Google Auth Error:', error)
+      return res.redirect('https://taptour.yuanologue.com')
+    }
+  })
+
+/**
+* @swagger
+* /api/user/verify:
+*   get:
+*     summary: 檢查用戶的登入狀態
+*     tags: 
+*      - Users
+*     responses:
+*       200:
+*         description: 用戶已登入
+*       401:
+*         description: 未授權或未登入
+*/
+
+router.get('/verify', verifyToken, userController.verify);
 
 
 export default router

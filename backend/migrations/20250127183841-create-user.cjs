@@ -15,7 +15,15 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
+      auth_type: {
+        type: Sequelize.ENUM('local', 'google'),
+        allowNull: false,
+        defaultValue: 'local',
+      },
       password: {
+        type: Sequelize.STRING
+      },
+      google_id: {
         type: Sequelize.STRING
       },
       image: {

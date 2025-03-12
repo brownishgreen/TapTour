@@ -23,8 +23,6 @@ const RegisterForm = () => {
     setFormData({ ...formData, [name]: value })
   }
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     //驗證必填欄位

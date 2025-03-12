@@ -9,13 +9,13 @@ export default (sequelize, DataTypes) => {
 
       User.belongsToMany(models.User, {
         through: models.Follower,
-        as: 'Followers', // 被追蹤者
+        as: 'Followers', 
         foreignKey: 'following_id',
         otherKey: 'follower_id',
       })
       User.belongsToMany(models.User, {
         through: models.Follower,
-        as: 'Followings', // 追蹤者
+        as: 'Followings', 
         foreignKey: 'follower_id',
         otherKey: 'following_id',
       })
@@ -27,27 +27,36 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notEmpty: true, // 名稱不能為空
+          notEmpty: true, 
         },
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true, // Email 必須唯一
+        unique: true, 
         validate: {
-          isEmail: true, // 驗證是否為有效 Email
+          isEmail: true, 
         },
+      },
+      auth_type: {
+        type: DataTypes.ENUM('local', 'google'),
+        allowNull: false,
+        defaultValue: 'local',
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           len: [6, 100],
         },
       },
+      google_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       image: {
         type: DataTypes.STRING,
-        allowNull: true, // 圖片為可選欄位
+        allowNull: true, 
       },
       bio: {
         type: DataTypes.STRING,
@@ -56,14 +65,14 @@ export default (sequelize, DataTypes) => {
       is_admin: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: false, // 預設值為 false
+        defaultValue: false, 
       },
     },
     {
       sequelize,
       modelName: 'User',
       tableName: 'Users',
-      underscored: true, // 使欄位名稱使用 snake_case（例如 created_at）
+      underscored: true, 
     }
   );
   return User;

@@ -1,14 +1,14 @@
 import passport from 'passport'
 import GoogleStrategy from 'passport-google-oauth20'
-import User from '../models/user.js'
-import jwt from 'jsonwebtoken'
+import db from '../models/index.js'
+const { User } = db
 
-console.log('Passport 已載入')
+console.log('Passport is loaded')
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/callback'
+  callbackURL: 'https://taptour-backend.yuanologue.com/api/users/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({
@@ -18,15 +18,16 @@ passport.use(new GoogleStrategy({
     })
     if (!user) {
       user = await User.create({
-        id: profile.id,
         email: profile.emails[0].value,
         name: profile.displayName,
-        avatar: profile.photos[0].value
+        image: profile.photos[0].value,
+        auth_type: 'google',
+        google_id: profile.id
       })
     }
-    done(null, user)
+    return done(null, user)
   } catch (error) {
-    done(error)
+    return done(error, null)
   }
 }))
 

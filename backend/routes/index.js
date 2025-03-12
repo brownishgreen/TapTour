@@ -9,22 +9,25 @@ import categoryRoutes from './category.js'
 import commentRoutes from './comment.js'
 import orderRoutes from './orders.js'
 import favoriteRoutes from './favorite.js'
+import passport from '../config/passport.js'
+import jwt from 'jsonwebtoken'
 
 const router = express.Router()
 
 // 掛載路由模組
-router.use('/users', userRoutes) // 路徑 /api/users
-router.use('/admin', adminRoutes) // 路徑 /api/admin
-router.use('/activities', activityRoutes) // 路徑 /api/activities
-router.use('/products', productRoutes) // 路徑 /api/products
-router.use('/followers', followerRoutes) // 路徑 /api/followers
-router.use('/locations', LocationRoutes) // 路徑 /api/locations
-router.use('/categories', categoryRoutes) // 路徑 /api/categories
-router.use('/comments', commentRoutes) // 路徑 /api/comments
-router.use('/orders', orderRoutes) // 路徑 /api/orders
-router.use('/favorites', favoriteRoutes) // 路徑 /api/favorites
+router.use('/users', userRoutes) // route for users
+router.use('/admin', adminRoutes) // route for admin
+router.use('/activities', activityRoutes) // route for activities
+router.use('/products', productRoutes) // route for products
+router.use('/followers', followerRoutes) // route for followers
+router.use('/locations', LocationRoutes) // route for locations
+router.use('/categories', categoryRoutes) // route for categories
+router.use('/comments', commentRoutes) // route for comments
+router.use('/orders', orderRoutes) // route for orders
+router.use('/favorites', favoriteRoutes) // route for favorites
 
-// 📌 新增上傳圖片 API
+
+// create a route to upload images
 router.post('/upload', async (req, res) => {
   if (!req.files || !req.files.image) {
     return res.status(400).json({ error: '請提供圖片' })

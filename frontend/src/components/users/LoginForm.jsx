@@ -102,7 +102,12 @@ const LoginForm = () => {
           <div className="divider">
             <span>或</span>
           </div>
-          <a href="/auth/google" className="google-login-button">
+          <button
+            className="google-login-button"
+            onClick={() => {
+              window.location.href = 'https://taptour-backend.yuanologue.com/api/users/auth/google'
+            }}
+          >
             <img
               src="https://storage.googleapis.com/taptour/assets/images/Google%20Icon.webp"
               alt="Google Logo"
@@ -110,7 +115,7 @@ const LoginForm = () => {
               style={{ width: '30px', height: '30px' }}
             />
             使用 Google 帳號登入
-          </a>
+          </button>
         </div>
       </form>
 

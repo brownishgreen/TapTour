@@ -12,23 +12,34 @@ import ImageCarousel from '../components/shared/ImageCarousel'
 import CardItem from '../components/shared/CardItem'
 import LocationCardItem from '../components/location/LocationCardItem'
 import Footer from '../components/shared/Footer'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faShoppingCart, faCrosshairs } from '@fortawesome/free-solid-svg-icons'
 
 const Homepage = () => {
 
-  // 取得活動資料
   const [activities, setActivities] = useState([])
   const [products, setProducts] = useState([])
   const [locations, setLocations] = useState([])
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    fetchActivities() // 請求活動資料
-    fetchProducts() // 請求商品資料
-    fetchLocations() // 請求目的地資料
+    fetchActivities() // request activities data
+    fetchProducts() // request products data
+    fetchLocations() // request locations data
+    
+    const checkLogin = async () => {
+      try {
+        const { data } = await apiClient.get('api/user/verify')
+        setUser(data.user)
+      } catch (error) {
+        console.error('取得用戶資料失敗', error)
+      }
+    }
+    checkLogin()
   }, [])
 
-  // 請求活動資料
+  // request activities data
   const fetchActivities = async () => {
     try {
       const response = await apiClient.get('api/activities')
@@ -38,17 +49,17 @@ const Homepage = () => {
     }
   }
 
-  // 請求商品資料
+  // request products data
   const fetchProducts = async () => {
     try {
       const response = await apiClient.get('api/products')
-      setProducts(response.data)  
+      setProducts(response.data)
     } catch (error) {
       console.error('取得商品資料失敗', error)
     }
   }
 
-  // 請求目的地資料
+  // request locations data
   const fetchLocations = async () => {
     try {
       const response = await apiClient.get('api/locations')
@@ -83,44 +94,44 @@ const Homepage = () => {
       alt: 'Third Slide',
       caption: '紫禁城故宮，中國古代皇宮，建築宏偉，歷史文化遺產瑰寶。',
     },
-    
+
   ]
 
   const campaigns = [
     {
       id: 1,
       image: '/assets/images/campaign/campaign-1.png',
-      name: 'First Slide',    
+      name: 'First Slide',
     },
     {
       id: 2,
       image: '/assets/images/campaign/campaign-2.png',
-      name: 'Second Slide',    
+      name: 'Second Slide',
     },
     {
       id: 3,
       image: '/assets/images/campaign/campaign-3.png',
-      name: 'Third Slide',    
+      name: 'Third Slide',
     },
     {
       id: 4,
       image: '/assets/images/campaign/campaign-5.png',
-      name: 'Fourth Slide',    
+      name: 'Fourth Slide',
     },
     {
       id: 5,
       image: '/assets/images/campaign/campaign-4.png',
-      name: 'Fifth Slide',    
+      name: 'Fifth Slide',
     },
     {
       id: 6,
       image: '/assets/images/campaign/campaign-6.png',
-      name: 'Sixth Slide',    
+      name: 'Sixth Slide',
     },
-    
+
   ]
-    
-  
+
+
 
   return (
     <div className="home-page-container">
@@ -295,8 +306,8 @@ const Homepage = () => {
                     title={location.name}
                     subtitle={
                       location.description
-                    ?`${location.description.slice(0, 70)}...`
-                    :'無描述'
+                        ? `${location.description.slice(0, 70)}...`
+                        : '無描述'
                     }
                     id={location.id}
                     cardLink={`/locations/${location.id}`}
