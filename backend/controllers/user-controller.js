@@ -32,7 +32,7 @@ const userController = {
       res.cookie('token', loginResult.token, {
         httpOnly: true,
         secure: true,
-        sameSite: 'Lax',
+        sameSite: 'None',
         maxAge: 3600000,
       })
       console.log('res.cookie', res.cookie)
