@@ -2,9 +2,8 @@ import passport from 'passport'
 import GoogleStrategy from 'passport-google-oauth20'
 import db from '../models/index.js'
 const { User } = db
-import jwt from 'jsonwebtoken'
 
-console.log('Passport 已載入')
+console.log('Passport is loaded')
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -28,8 +27,9 @@ passport.use(new GoogleStrategy({
 
       done(null, user)
     }
+    return done(null, user)
   } catch (error) {
-    done(error)
+    return done(error, null)
   }
 }))
 
