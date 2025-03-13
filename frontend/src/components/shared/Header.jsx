@@ -21,6 +21,8 @@ const Header = () => {
           withCredentials: true,
         }
       )
+      
+      localStorage.removeItem('token')
       handleAuthSuccess(false, null, false)
       navigate('/login')
     } catch (err) {
