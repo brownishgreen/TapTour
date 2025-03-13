@@ -28,15 +28,15 @@ const Homepage = () => {
     fetchProducts() // request products data
     fetchLocations() // request locations data
     
-    const checkLogin = async () => {
-      try {
-        const { data } = await apiClient.get('api/user/verify')
-        setUser(data.user)
-      } catch (error) {
-        console.error('取得用戶資料失敗', error)
-      }
-    }
-    checkLogin()
+    // const checkLogin = async () => {
+    //   try {
+    //     const { data } = await apiClient.get('api/user/verify')
+    //     setUser(data.user)
+    //   } catch (error) {
+    //     console.error('取得用戶資料失敗', error)
+    //   }
+    // }
+    // checkLogin()
   }, [])
 
   // request activities data
