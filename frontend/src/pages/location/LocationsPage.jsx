@@ -10,24 +10,24 @@ import apiClient from '../../api/apiClient'
 
 const LocationsPage = () => {
   const [searchParams] = useSearchParams()
-  const searchTerm = searchParams.get('search') || '' // 提取搜尋參數
+  const searchTerm = searchParams.get('search') || '' // extract search parameter
 
-  // 分頁和數據狀態
-  const [locations, setLocations] = useState([]) // 當前頁的地點數據
-  const [currentPage, setCurrentPage] = useState(1) // 當前頁碼
-  const [totalPages, setTotalPages] = useState(1) // 總頁數
-  const [loading, setLoading] = useState(true) // 加載狀態
-  const [error, setError] = useState('') // 錯誤訊息
+  // pagination and data state
+  const [locations, setLocations] = useState([]) // current page locations data
+  const [currentPage, setCurrentPage] = useState(1) // current page number
+  const [totalPages, setTotalPages] = useState(1) // total pages
+  const [loading, setLoading] = useState(true) // loading state
+  const [error, setError] = useState('') // error message
 
   useEffect(() => {
     if (searchTerm) {
-      fetchSearchedLocations() // 若有搜尋條件，使用搜索 API
+      fetchSearchedLocations() // if there is a search condition, use the search API
     } else {
-      fetchPaginatedLocations() // 否則使用分頁 API
+      fetchPaginatedLocations() // otherwise, use the pagination API
     }
   }, [searchTerm, currentPage])
 
-  // 搜索 API
+  // search API
   const fetchSearchedLocations = async () => {
     setLoading(true)
     setError('')
@@ -35,8 +35,8 @@ const LocationsPage = () => {
       const response = await apiClient.get(
         `/api/locations?search=${encodeURIComponent(searchTerm)}`
       )
-      setLocations(response.data.locations) // 設置搜索結果
-      setTotalPages(1) // 搜索結果不需要分頁，總頁數設為 1
+      setLocations(response.data.locations) // set the search result
+      setTotalPages(1) // the search result does not need pagination, set the total pages to 1
     } catch (error) {
       console.error('無法取得搜索結果:', error)
       setError('無法取得搜索結果，請稍後再試。')
@@ -45,7 +45,7 @@ const LocationsPage = () => {
     }
   }
 
-  // 分頁 API
+  // pagination API
   const fetchPaginatedLocations = async () => {
     setLoading(true)
     setError('')
@@ -54,8 +54,8 @@ const LocationsPage = () => {
         `/api/locations/paginated?page=${currentPage}&limit=6`
       )
       const { locations, totalPages } = response.data
-      setLocations(locations) // 設置分頁數據
-      setTotalPages(totalPages) // 設置總頁數
+      setLocations(locations) // set the pagination data
+      setTotalPages(totalPages) // set the total pages
     } catch (error) {
       console.error('無法取得地點數據:', error)
       setError('無法取得地點數據，請稍後再試。')
@@ -99,7 +99,7 @@ const LocationsPage = () => {
           </div>
         )}
         {!loading && !error && <LocationsList locations={locations} />}
-        {!searchTerm && ( // 只有在沒有搜索時顯示分頁
+        {!searchTerm && ( // only show pagination when there is no search
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

@@ -16,7 +16,7 @@ const locationController = {
     }
   },
 
-  // 自動補全地點
+  //autocompleteLocation
   autocompleteLocation: async (req, res) => {
     try {
       const { input } = req.query
@@ -31,7 +31,7 @@ const locationController = {
     }
   },
 
-  // 獲取地點詳細資訊
+  //detailsLocation
   detailsLocation: async (req, res) => {
     try {
       const { place_id } = req.query
