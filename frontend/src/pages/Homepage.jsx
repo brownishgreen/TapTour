@@ -176,7 +176,7 @@ const Homepage = () => {
             <FontAwesomeIcon icon={faCrosshairs} /> 全球人氣旅遊體驗
           </h2>
           <p>踏旅嚴選全球熱門旅遊體驗，讓你輕鬆探索世界，享受精彩旅程。</p>
-          <div className="activities-page__card-container">
+          <div className="activities-homepage__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={5}
@@ -222,7 +222,7 @@ const Homepage = () => {
             <FontAwesomeIcon icon={faShoppingCart} /> 踏旅熱門推薦商品
           </h2>
           <p>藝文票券、都市探索，各種熱門票券滿足你的渴望，迎接難忘旅程。</p>
-          <div className="products-page__card-container">
+          <div className="products-homepage__card-container">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={5}

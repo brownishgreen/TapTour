@@ -8,12 +8,8 @@
 .activities-page__card-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 4rem; // control the gap
+  gap: 4rem;
   justify-content: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-top: 3rem;
 
   @media (min-width: 700px) {
     grid-template-columns: repeat(2, 1fr);
@@ -22,4 +18,5 @@
   @media (min-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
+
 }
