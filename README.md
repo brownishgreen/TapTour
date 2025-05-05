@@ -63,7 +63,7 @@ npm start
 
 ## Author
 
-👤 **Cen(Ryan5381) and Jim(brownishgreen)**
+👤 **Jim(brownishgreen) and Cen(Ryan5381)**
 
 * Github: [@Ryan5381 \/ @brownishgreen]( https://github.com/Ryan5381 / https://github.com/brownishgreen )
 
