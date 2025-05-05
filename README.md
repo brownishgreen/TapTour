@@ -10,12 +10,6 @@
 You can also review activities and products, sharing your experiences and insights with other travel enthusiasts, making every trip unique and enjoyable.
 As an admin, you can access the admin dashboard to create, edit, and delete activities, products, and attractions. You can also assign other users as admins, delete user reviews, and maintain everything on the platform!
 
-
->這個專案是 Cen and Jim 於一年的時間自學後，兩人一起合作的專案，是我們驕傲的心血結晶。
->在專案開始前，我們會的技術能力並不多，隨著專案的推進，原先專注在後端開發能力的我們開始接觸 React 應用於前端開發，並在過程持續的優化程式碼，使其更簡潔。
->在求職的期間以及未來，學習到更深的技術時，我們會回來持續改進這個專案，也歡迎瀏覽到這個專案的你有任何想法，讓我們知道，謝謝。
-
-
 ## Install
 
 ```sh
