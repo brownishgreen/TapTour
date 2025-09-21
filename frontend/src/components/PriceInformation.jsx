@@ -49,7 +49,7 @@ const PriceInformation = ({ price, productId, activityId, user }) => {
     }
 
     try {
-      const response = await apiClient.post('api/orders/create', {
+      const response = await apiClient.post('orders/create', {
         userId: user.id,
         productIds,
         activityIds,

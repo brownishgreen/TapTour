@@ -8,6 +8,8 @@ import CardItem from '../../components/shared/CardItem'
 import HeroBanner from '../../components/shared/HeroBanner'
 import Pagination from '../../components/shared/Pagination'
 import { useAuth } from '../../components/context/AuthContext'
+import { getImageUrl } from '../../utils/imageHelper'
+
 
 
 const ActivitiesPage = () => {
@@ -37,7 +39,7 @@ const ActivitiesPage = () => {
       if (searchTerm) {
         // 如果有搜尋條件，執行搜尋 API
         response = await apiClient.get(
-          `api/activities?search=${encodeURIComponent(searchTerm)}`
+          `activities?search=${encodeURIComponent(searchTerm)}`
         )
 
         if (response.data.length === 0) {
@@ -52,7 +54,7 @@ const ActivitiesPage = () => {
       } else {
         // 如果沒有搜尋條件，執行分頁 API
         const response = await apiClient.get(
-          `api/activities/paginated?page=${currentPage}&limit=6`
+          `activities/paginated?page=${currentPage}&limit=6`
         )
 
 
@@ -82,7 +84,7 @@ const ActivitiesPage = () => {
         {error ? (
           <div className="error-container">
             <img
-              src="https://storage.googleapis.com/taptour/assets/images/S__24428606.jpg"
+              src="../../../src/assets/images/error-search.jpg"
               alt="搜尋失敗"
               className="error-image"
             />
@@ -95,7 +97,7 @@ const ActivitiesPage = () => {
                 buttonText="深入瞭解"
                 image={
                   activity.images?.length > 0
-                    ? activity.images?.[0]?.image_url
+                    ? getImageUrl(activity.images?.[2]?.image_url)
                     : '/default-image.jpg'
                 }
                 title={activity?.name || '無標題'}

@@ -12,7 +12,7 @@ import CommentsBlock from '../../components/CommentsBlock'
 import PriceInformation from '../../components/PriceInformation'
 import Footer from '../../components/shared/Footer'
 import { useAuth } from '../../components/context/AuthContext'
-
+import { getImageUrl } from '../../utils/imageHelper'
 const ActivityDetailPage = () => {
   const { id } = useParams()
   const [activity, setActivity] = useState(null)
@@ -24,8 +24,8 @@ const ActivityDetailPage = () => {
     const fetchActivityAndComments = async () => {
       try {
         const [activityResponse, commentsResponse] = await Promise.all([
-          apiClient.get(`api/activities/${id}`),
-          apiClient.get(`api/comments/activities/${id}`)
+          apiClient.get(`activities/${id}`),
+          apiClient.get(`comments/activities/${id}`)
         ])
         setActivity(activityResponse.data)
         setComments(commentsResponse.data)
@@ -40,7 +40,7 @@ const ActivityDetailPage = () => {
     setComments((prevComments) => [newComment, ...prevComments])
 
     apiClient
-      .get(`api/comments/activities/${id}`)
+      .get(`comments/activities/${id}`)
       .then((response) => setComments(response.data))
       .catch((err) => console.error('取得更新後的評論失敗', err))
   }

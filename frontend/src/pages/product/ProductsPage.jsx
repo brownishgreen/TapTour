@@ -8,6 +8,7 @@ import SearchBar from '../../components/shared/SearchBar'
 import CardItem from '../../components/shared/CardItem'
 import Pagination from '../../components/shared/Pagination'
 import { useAuth } from '../../components/context/AuthContext'
+import { getImageUrl } from '../../utils/imageHelper'
 const ProductsPage = () => {
   const { user } = useAuth()
   const userId = user?.id
@@ -32,7 +33,7 @@ const ProductsPage = () => {
       if (searchTerm) {
         // 如果有搜尋條件，執行搜尋 API
         const response = await apiClient.get(
-          `api/products?search=${encodeURIComponent(searchTerm)}`
+          `products?search=${encodeURIComponent(searchTerm)}`
         )
 
         if (response.data.length === 0) {
@@ -47,7 +48,7 @@ const ProductsPage = () => {
       } else {
         // 如果沒有搜尋條件，執行分頁 API
         const response = await apiClient.get(
-          `api/products/paginated?page=${currentPage}&limit=6`
+          `products/paginated?page=${currentPage}&limit=6`
         )
         const { products, totalPages, totalItems } = response.data
 
@@ -66,7 +67,7 @@ const ProductsPage = () => {
       <Header />
       <div className="products-page__hero-banner">
         <HeroBanner
-          imageURL="https://storage.googleapis.com/taptour/assets/images/photo-1604928141064-207cea6f571f.avif"
+          imageURL="/src/assets/images/product-page-hero-banner.jpg"
           title="TapTour 特搜精選票券"
           description="高速 eSim 卡、機場接送、租車、旅遊保險、旅遊行程！"
         />
@@ -76,7 +77,7 @@ const ProductsPage = () => {
         {error ? (
           <div className="error-container">
             <img
-              src="https://storage.googleapis.com/taptour/assets/images/S__24428606.jpg"
+              src="/assets/images/S__24428606.jpg"
               alt="搜尋失敗"
               className="error-image"
             />
@@ -87,7 +88,7 @@ const ProductsPage = () => {
               <CardItem
                 key={index}
                 buttonText="立刻購買"
-                image={product?.images?.[0]?.image_url || '/default-image.jpg'}
+                image={getImageUrl(product?.images?.[0]?.image_url) || '/default-image.jpg'}
                 title={product?.name}
                 subtitle={product?.category?.name}
                 description={product?.description}

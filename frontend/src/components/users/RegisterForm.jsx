@@ -49,7 +49,7 @@ const RegisterForm = () => {
       return
     }
     try {
-      await apiClient.post('api/users/register', formData)
+      await apiClient.post('users/register', formData)
       setSuccessMessage('您已註冊成功，即將跳轉畫面')
       setShowSuccess(true)
       setTimeout(() => {

@@ -74,7 +74,7 @@ const productService = {
 
     if (files && files.length > 0) {
       imageUrls = await Promise.all(
-        files.map(file => multerConfig.uploadToGCS(file, 'products', product.id))
+        files.map(file => multerConfig.saveImage(file, 'products', product.id))
       )
     }
 

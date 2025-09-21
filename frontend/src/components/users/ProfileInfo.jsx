@@ -12,6 +12,7 @@ import apiClient from '../../api/apiClient'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
+import { getImageUrl } from '../../utils/imageHelper'
 
 const ProfileInfo = ({ userId }) => {
   const { userId: currentUserId } = useAuth() // 從上下文獲取當前用戶的 ID
@@ -30,7 +31,7 @@ const ProfileInfo = ({ userId }) => {
   useEffect(() => {
     const userData = async () => {
       try {
-        const response = await apiClient.get(`api/users/${userId}/profile`, {
+        const response = await apiClient.get(`users/${userId}/profile`, {
           withCredentials: true,
         })
         setUser(response.data.user)
@@ -49,7 +50,7 @@ const ProfileInfo = ({ userId }) => {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const response = await apiClient.get(`/api/favorites/users/${userId}`)
+        const response = await apiClient.get(`favorites/users/${userId}`)
 
         setFavoriteActivities(response.data.activities)
         setFavoriteProducts(response.data.products)
@@ -63,7 +64,7 @@ const ProfileInfo = ({ userId }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await apiClient.get(`/api/comments/users/${userId}`)
+        const response = await apiClient.get(`comments/users/${userId}`)
         setCommemts(response.data)
       } catch (err) {
         console.error('無法獲取留言', err)
@@ -84,7 +85,7 @@ const ProfileInfo = ({ userId }) => {
 
   const fetchFollowers = async () => {
     try {
-      const response = await apiClient.get(`/api/users/${userId}/profile`, {
+      const response = await apiClient.get(`users/${userId}/profile`, {
         withCredentials: true,
       })
       setFollowers(response.data.followers) 
@@ -99,14 +100,14 @@ const ProfileInfo = ({ userId }) => {
     setFollowLoading(true)
 
     try {
-      await apiClient.post('/api/followers/follow', {
+      await apiClient.post('followers/follow', {
         followerId: currentUserId,
         followingId: user.id,
       })
 
       setIsFollowing(true)
 
-      // **強制刷新 `followers`，確保 UI 立即更新**
+      // 強制刷新 followers，確保 UI 立即更新
       await fetchFollowers()
     } catch (error) {
       console.error('追蹤失敗:', error?.message || error)
@@ -122,7 +123,7 @@ const ProfileInfo = ({ userId }) => {
     setFollowLoading(true)
 
     try {
-      await apiClient.post('/api/followers/unfollow', {
+      await apiClient.post('followers/unfollow', {
         followerId: currentUserId,
         followingId: user.id,
       })
@@ -149,7 +150,7 @@ const ProfileInfo = ({ userId }) => {
         <div className="profile-info">
           <div className="profile-avatar">
             <img
-              src={user.image || '/assets/images/others/default-avatar.jpg'}
+              src={getImageUrl(user?.image, 'default-avatar.jpg')}
               alt="預設大頭貼"
               className="default-avatar"
             />
@@ -213,7 +214,7 @@ const ProfileInfo = ({ userId }) => {
                     <Link to={`/users/${f.id}/profile`}>
                       <img
                         src={
-                          f.image || '/assets/images/others/default-avatar.jpg'
+                          getImageUrl(f?.image, 'default-avatar.jpg')
                         }
                         alt={f.name}
                       />
@@ -238,7 +239,7 @@ const ProfileInfo = ({ userId }) => {
                     <Link to={`/users/${f.id}/profile`}>
                       <img
                         src={
-                          f.image || '/assets/images/others/default-avatar.jpg'
+                          getImageUrl(f?.image, 'default-avatar.jpg')
                         }
                         alt={f.name}
                       />
@@ -306,9 +307,7 @@ const ProfileInfo = ({ userId }) => {
                       variant="top"
                       className="card-img-top"
                       src={
-                        activity.image.startsWith('http')
-                          ? activity.image
-                          : `${apiClient.defaults.baseURL.replace(/\/$/, '')}/${activity.image.replace(/^\//, '')}`
+                        getImageUrl(activity.image, 'default-activity.jpg')
                       }
                     />
                     <Card.Body>
@@ -348,9 +347,7 @@ const ProfileInfo = ({ userId }) => {
                       variant="top"
                       
                       src={
-                        product.image.startsWith('http')
-                          ? product.image
-                          : `${apiClient.defaults.baseURL.replace(/\/$/, '')}/${product.image.replace(/^\//, '')}`
+                        getImageUrl(product.image, 'default-activity.jpg')
                       }
                     />
                     <Card.Body>

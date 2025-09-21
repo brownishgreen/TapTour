@@ -6,6 +6,8 @@ import apiClient from '../../api/apiClient'
 import { useAuth } from '../context/AuthContext'
 import SuccessModal from '../modal/SuccessModal'
 import ErrorModal from '../modal/ErrorModal'
+import { getImageUrl } from '../../utils/imageHelper'
+
 
 const ProfileEdit = () => {
   const navigate = useNavigate()
@@ -32,11 +34,11 @@ const ProfileEdit = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await apiClient.get(`api/users/${userId}/profile`)
+        const response = await apiClient.get(`users/${userId}/profile`)
         const { name, bio, image } = response.data.user
         setName(name)
         setBio(bio || '')
-        setImage(image || '/assets/images/others/default-avatar.jpg')
+        setImage(getImageUrl(image, 'default-avatar.jpg'))
       } catch (err) {
         const message = err.response?.data?.message || '無法載入用戶資料'
         setErrorMessage(message)
@@ -82,7 +84,7 @@ const ProfileEdit = () => {
     console.log('formData', formData)
     try {
       // 不需要手動設置 Content-Type，Axios 會自動處理
-      await apiClient.put(`api/users/${userId}/update-profile`, formData)
+      await apiClient.put(`users/${userId}/update-profile`, formData)
 
       setSuccessMessage('更新成功，即將跳轉...')
       setShowSuccess(true)

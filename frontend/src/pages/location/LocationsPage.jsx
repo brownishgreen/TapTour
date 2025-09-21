@@ -7,7 +7,7 @@ import Pagination from '../../components/shared/Pagination'
 import LocationsList from '../../components/location/LocationsList'
 import Footer from '../../components/shared/Footer'
 import apiClient from '../../api/apiClient'
-
+import { getImageUrl } from '../../utils/imageHelper'
 const LocationsPage = () => {
   const [searchParams] = useSearchParams()
   const searchTerm = searchParams.get('search') || '' // extract search parameter
@@ -33,7 +33,7 @@ const LocationsPage = () => {
     setError('')
     try {
       const response = await apiClient.get(
-        `/api/locations?search=${encodeURIComponent(searchTerm)}`
+        `locations?search=${encodeURIComponent(searchTerm)}`
       )
       setLocations(response.data.locations) // set the search result
       setTotalPages(1) // the search result does not need pagination, set the total pages to 1
@@ -51,7 +51,7 @@ const LocationsPage = () => {
     setError('')
     try {
       const response = await apiClient.get(
-        `/api/locations/paginated?page=${currentPage}&limit=6`
+        `locations/paginated?page=${currentPage}&limit=6`
       )
       const { locations, totalPages } = response.data
       setLocations(locations) // set the pagination data
@@ -92,7 +92,7 @@ const LocationsPage = () => {
         {error && (
           <div className="error-container">
             <img
-              src="https://storage.googleapis.com/taptour/assets/images/S__24428606.jpg"
+              src="/assets/images/S__24428606.jpg"
               alt="搜尋失敗"
               className="error-image"
             />

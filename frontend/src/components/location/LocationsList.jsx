@@ -1,5 +1,4 @@
 import LocationCardItem from './LocationCardItem'
-import apiClient from '../../api/apiClient'
 
 const LocationsList = ({ locations }) => {
   return (

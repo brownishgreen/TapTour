@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import apiClient from '../../api/apiClient'
-import { useAuth } from '../context/AuthContext' // ✅ 使用 useAuth 來確保狀態同步
+import { useAuth } from '../context/AuthContext' 
+import { getImageUrl } from '../../utils/imageHelper'
 const CardItem = ({
   buttonText,
   image,
@@ -31,7 +32,7 @@ const CardItem = ({
       return
     }
     apiClient
-      .get(`/api/favorites/check`, {
+      .get(`favorites/check`, {
         params: { user_id: userId, item_id: itemId, item_type: itemType },
       })
       .then((res) => res.data)
@@ -54,7 +55,7 @@ const CardItem = ({
     // 如果已收藏，則取消收藏
     if (isFavorited) {
       apiClient
-        .delete(`/api/favorites/${favoriteId}`)
+        .delete(`favorites/${favoriteId}`)
         .then(() => {
           setIsFavorited(false)
           setFavoriteId(null)
@@ -65,7 +66,7 @@ const CardItem = ({
     } else {
       // 如果未收藏，則新增收藏
       apiClient
-        .post('/api/favorites', {
+          .post('favorites', {
           item_id: itemId,
           item_type: itemType,
           user_id: userId,
@@ -85,7 +86,7 @@ const CardItem = ({
     <Card className={`card-item ${isHomepage ? 'homepage-card-item' : ''}`}>
       <Card.Img
         variant="top"
-        src={image}
+        src={getImageUrl(image, 'default-activity.jpg')}
         alt={title}
         className="card-item__top"
       />

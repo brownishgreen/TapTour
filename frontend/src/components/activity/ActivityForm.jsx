@@ -32,7 +32,7 @@ const ActivityForm = ({ mode }) => {
     if (isEditMode && activityId) {
       console.log('Fetching data for edit mode with id:', activityId)
       apiClient
-        .get(`api/activities/${activityId}`)
+        .get(`activities/${activityId}`)
         .then((response) => setFormData(response.data))
         .catch((error) => console.error('獲取活動資料失敗', error))
     }
@@ -41,7 +41,7 @@ const ActivityForm = ({ mode }) => {
   // 獲取所有分類
   useEffect(() => {
     apiClient
-      .get('api/categories')
+      .get('categories')
       .then((response) => setCategories(response.data))
       .catch((error) => console.error('獲取分類資料失敗', error))
   }, [])
@@ -49,7 +49,7 @@ const ActivityForm = ({ mode }) => {
   // 獲取所有景點
   useEffect(() => {
     apiClient
-      .get('api/locations')
+      .get('locations')
       .then((response) => setLocations(response.data.locations))
       .catch((error) => console.error('獲取景點資料失敗', error))
   }, [])
@@ -141,15 +141,10 @@ const ActivityForm = ({ mode }) => {
     console.log(' Submitting FormData', Array.from(formPayload.entries()))
 
     try {
-      const url = isEditMode
-        ? `${apiClient.defaults.baseURL}/api/activities/${activityId}`
-        : `${apiClient.defaults.baseURL}/api/activities`
+      const endpoint = isEditMode ? `activities/${activityId}` : 'activities'
       const method = isEditMode ? 'put' : 'post'
-    const response = await apiClient({
-        method,
-        url,
-        data: formPayload
-      })
+      const response = await apiClient[method](endpoint, formPayload)
+
       console.log('Server Response:', response.data)
       setSuccessMessage(`${isEditMode ? '活動更新' : '建立活動'}成功`)
       setShowSuccess(true)

@@ -29,10 +29,11 @@ const userController = {
       console.log('password', password)
       const loginResult = await userService.login(email, password)
       console.log('loginResult', loginResult)
+      const isProduction = process.env.NODE_ENV === 'production'
       res.cookie('token', loginResult.token, {
         httpOnly: true,
-        secure: true,
-        sameSite: 'None',
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
         maxAge: 3600000,
       })
       console.log('res.cookie', res.cookie)
@@ -44,10 +45,11 @@ const userController = {
 
   logout: async (req, res) => {
     try {
+      const isProduction = process.env.NODE_ENV === 'production'
       res.clearCookie('token', {
         httpOnly: true,
-        secure: true,
-        sameSite: 'None',
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
       })
       res.status(200).json({ message: '已成功登出' })
     } catch (err) {
@@ -70,6 +72,13 @@ const userController = {
     try {
       const user = req.user
       const verifyResult = await userService.verifyUser(user)
+      const isProduction = process.env.NODE_ENV === 'production'
+      res.cookie('token', verifyResult.token, {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
+        maxAge: 3600000,
+      })
       res.status(200).json(verifyResult)
     } catch (err) {
       handleError(res, err)

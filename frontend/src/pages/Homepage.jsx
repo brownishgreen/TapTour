@@ -12,6 +12,7 @@ import ImageCarousel from '../components/shared/ImageCarousel'
 import CardItem from '../components/shared/CardItem'
 import LocationCardItem from '../components/location/LocationCardItem'
 import Footer from '../components/shared/Footer'
+import { getImageUrl } from '../utils/imageHelper'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faShoppingCart, faCrosshairs } from '@fortawesome/free-solid-svg-icons'
@@ -30,7 +31,7 @@ const Homepage = () => {
     
     // const checkLogin = async () => {
     //   try {
-    //     const { data } = await apiClient.get('api/user/verify')
+    //     const { data } = await apiClient.get('user/verify')
     //     setUser(data.user)
     //   } catch (error) {
     //     console.error('取得用戶資料失敗', error)
@@ -42,7 +43,7 @@ const Homepage = () => {
   // request activities data
   const fetchActivities = async () => {
     try {
-      const response = await apiClient.get('api/activities')
+      const response = await apiClient.get('activities')
       setActivities(response.data)
     } catch (error) {
       console.error('取得活動資料失敗', error)
@@ -52,7 +53,7 @@ const Homepage = () => {
   // request products data
   const fetchProducts = async () => {
     try {
-      const response = await apiClient.get('api/products')
+      const response = await apiClient.get('products')
       setProducts(response.data)
     } catch (error) {
       console.error('取得商品資料失敗', error)
@@ -62,7 +63,7 @@ const Homepage = () => {
   // request locations data
   const fetchLocations = async () => {
     try {
-      const response = await apiClient.get('api/locations')
+      const response = await apiClient.get('locations')
       setLocations(response.data.locations)
     } catch (error) {
       console.error('取得目的地資料失敗', error)
@@ -202,7 +203,7 @@ const Homepage = () => {
                   <CardItem
                     buttonText="深入瞭解"
                     image={
-                      activity.images?.[2]?.image_url ||
+                      getImageUrl(activity.images?.[2]?.image_url) ||
                       '/default-image.jpg'
                     }
                     title={activity.name}
@@ -250,7 +251,7 @@ const Homepage = () => {
                   <CardItem
                     buttonText="深入瞭解"
                     image={
-                      product.images?.[0]?.image_url ||
+                      getImageUrl(product.images?.[0]?.image_url) ||
                       '/default-image.jpg'
                     }
                     title={product.name}
@@ -300,8 +301,11 @@ const Homepage = () => {
                   <LocationCardItem
                     buttonText="探索景點"
                     image={
-                      location.images?.[1]?.image_url ||
-                      '/default-image.jpg'
+                      location.images?.length
+                        ? location.images.find(
+                          (img) => Number(img.id) === Number(location.main_image_id) // 確保 ID 類型匹配
+                        )?.image_url || location.images[0].image_url
+                        : '/default-image.jpg'
                     }
                     title={location.name}
                     subtitle={

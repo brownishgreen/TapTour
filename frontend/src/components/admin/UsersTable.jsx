@@ -18,7 +18,7 @@ const UsersTable = () => {
 
   useEffect(() => {
     apiClient
-      .get('api/admin/users')
+      .get('admin/users')
       .then((response) => setUsers(response.data))
       .catch((error) => console.log(error))
   }, []) // 管理員可以看到所有使用者
@@ -26,7 +26,7 @@ const UsersTable = () => {
   const toggleRole = (userId, role) => {
     const isAdmin = role === 'admin'
     apiClient
-      .put(`api/admin/users/${userId}`, { is_admin: isAdmin })
+      .put(`admin/users/${userId}`, { is_admin: isAdmin })
       .then(() => {
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
@@ -46,7 +46,7 @@ const UsersTable = () => {
 
   const deleteUser = () => {
     apiClient
-      .delete(`api/admin/users/${selectedUserId}`)
+      .delete(`admin/users/${selectedUserId}`)
       .then(() => {
         // 刪除成功後，更新前端狀態，prevUsers是用戶列表的數據
         setUsers((prevUsers) =>

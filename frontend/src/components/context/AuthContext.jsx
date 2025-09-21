@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   const verifyLogin = useCallback(async () => {
     setIsLoading(true) // 開始加載狀態
     try {
-      const response = await apiClient.get('api/users/verify', {
+      const response = await apiClient.get('users/verify', {
         withCredentials: true,
       }) // 調用後端驗證 API
       const { userId, isAdmin, name, email, token} = response.data
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await apiClient.post('/api/users/logout', {}, { withCredentials: true }) // 確保請求後端登出 API
+      await apiClient.post('users/logout', {}, { withCredentials: true }) // 確保請求後端登出 API
       setUser(null)
       setIsLoggedIn(false)
       setUserId(null)

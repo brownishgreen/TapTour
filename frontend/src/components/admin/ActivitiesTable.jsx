@@ -17,7 +17,7 @@ const ActivitiesTable = () => {
 
   useEffect(() => {
     apiClient
-      .get('api/activities')
+      .get('activities')
       .then((response) => {
         if (Array.isArray(response.data)) {
           setActivities(response.data)
@@ -39,7 +39,7 @@ const ActivitiesTable = () => {
 
   const deleteActivity = () => {
     apiClient
-      .delete(`api/activities/${selectedActivityId}`)
+      .delete(`activities/${selectedActivityId}`)
       .then(() => {
         setActivities((prevActivities) =>
           prevActivities.filter(

@@ -14,7 +14,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: true,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/admin-tank.webp',
+        image: '/uploads/avatars/admin-tank.jpeg',
         bio: '吾乃冰熊熊覃克，管理員是也，魚與熊掌不可兼得，閣下選魚吧。',
       },
       {
@@ -25,7 +25,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: false,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/user-igrit.webp',
+        image: '/uploads/avatars/user-igrit.webp',
         bio: '在下伊格利特，生前乃闇影軍團騎士統領，現如今只是一個普通使用者，生性害羞但劍術了得。',
       },
       {
@@ -36,7 +36,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: true,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/avatar-1739247810377.png',
+        image: '/uploads/avatars/avatar-1739247810377.png',
         bio: '白天寫程式，晚上探索星空，夢想是在火星上寫第一行 JavaScript。',
       },
       {
@@ -47,7 +47,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: false,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/avatar-1739248094308.png',
+        image: '/uploads/avatars/avatar-1739248094308.png',
         bio: '三杯咖啡後，我能解決任何 Bug；三天沒咖啡，我可能變成 Bug。',
       },
       {
@@ -58,7 +58,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: false,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/avatar-1739248342880.png',
+        image: '/uploads/avatars/avatar-1739248342880.png',
         bio: '曾經嘗試用攝影捕捉時間的流動，後來發現，其實是時間捕捉了我。',
       },
       {
@@ -69,7 +69,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: false,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/avatar-1739248557050.png',
+        image: '/uploads/avatars/avatar-1739248557050.png',
         bio: '人生沒有 GPS，唯一能做的就是享受迷路的過程。',
       },
       {
@@ -80,7 +80,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: false,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/avatar-1739248782841.png',
+        image: '/uploads/avatars/avatar-1739248782841.png',
         bio: '人工智慧可能會改變世界，但我更希望它能幫我決定今晚吃什麼。',
       },
       {
@@ -91,7 +91,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: false,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/avatar-1739249118988.png',
+        image: '/uploads/avatars/avatar-1739249118988.png',
         bio: '植物用靜默生長，提醒我們最深刻的改變，往往來自無聲的堅持。',
       },
       {
@@ -102,7 +102,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: false,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/avatar-1739249426293.png',
+        image: '/uploads/avatars/avatar-1739249426293.png',
         bio: '一邊環遊世界，一邊尋找最好吃的街頭小吃，胃比護照蓋的章還多。',
       },
       {
@@ -113,7 +113,7 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
         is_admin: false,
-        image: 'https://storage.googleapis.com/taptour/uploads/avatars/avatar-1739249675693.png',
+        image: '/uploads/avatars/avatar-1739249675693.png',
         bio: '夢境是一座未曾抵達的城市，而我總是在黎明前迷失在它的街道裡。',
       }
     ])
