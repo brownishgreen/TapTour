@@ -7,7 +7,7 @@ import Pagination from '../../components/shared/Pagination'
 import LocationsList from '../../components/location/LocationsList'
 import Footer from '../../components/shared/Footer'
 import apiClient from '../../api/apiClient'
-
+import { getImageUrl } from '../../utils/imageHelper'
 const LocationsPage = () => {
   const [searchParams] = useSearchParams()
   const searchTerm = searchParams.get('search') || '' // extract search parameter
@@ -92,7 +92,7 @@ const LocationsPage = () => {
         {error && (
           <div className="error-container">
             <img
-              src="https://storage.googleapis.com/taptour/assets/images/S__24428606.jpg"
+              src="/assets/images/S__24428606.jpg"
               alt="搜尋失敗"
               className="error-image"
             />
