@@ -17,7 +17,7 @@ const ProductsTable = () => {
 
   useEffect(() => {
     apiClient
-      .get('api/products')
+      .get('products')
       .then((response) => {
         if (Array.isArray(response.data)) {
           setProducts(response.data)
@@ -45,7 +45,7 @@ const ProductsTable = () => {
       return
     }
     apiClient
-      .delete(`api/products/${selectedProductId}`)
+      .delete(`products/${selectedProductId}`)
       .then(() => {
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product.id !== selectedProductId)

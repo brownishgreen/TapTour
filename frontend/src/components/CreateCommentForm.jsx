@@ -23,7 +23,7 @@ const CreateCommentForm = ({ entityId, entityType, onCommentAdded }) => {
 
     try {
       // 發送請求到後端
-      const response = await apiClient.post('api/comments', {
+      const response = await apiClient.post('comments', {
         content: commentContent,
         [`${entityType}_id`]: entityId, // 動態選擇實體 ID，例如 activity_id, product_id
       })

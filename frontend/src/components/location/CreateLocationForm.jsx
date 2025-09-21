@@ -38,7 +38,7 @@ const CreateLocationForm = () => {
   const fetchPlaceDetails = async (placeId) => {
     try {
       const response = await apiClient.get(
-        'api/locations/google/details',
+        'locations/google/details',
         { params: { place_id: placeId } } // 根據 placeId 獲取詳細資訊
       )
       const place = response.data
@@ -77,7 +77,7 @@ const CreateLocationForm = () => {
     setLoading(true)
 
     try {
-      await apiClient.post('api/locations/create', {
+      await apiClient.post('locations/create', {
         name: placeDetails.name,
         googlePlaceId: selectedPlace.place_id,
         description,

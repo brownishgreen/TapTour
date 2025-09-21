@@ -23,8 +23,8 @@ const ProductDetailPage = () => {
     const fetchProductAndComments = async () => {
       try {
         const [productResponse, commentsResponse] = await Promise.all([
-          apiClient.get(`api/products/${id}`),
-          apiClient.get(`api/comments/products/${id}`)
+          apiClient.get(`products/${id}`),
+          apiClient.get(`comments/products/${id}`)
         ])
         setProduct(productResponse.data)
         setComments(commentsResponse.data)
@@ -39,7 +39,7 @@ const ProductDetailPage = () => {
     setComments((prevComments) => [newComment, ...prevComments])
 
     apiClient
-      .get(`api/comments/products/${id}`)
+      .get(`comments/products/${id}`)
       .then((response) => setComments(response.data))
       .catch((err) => console.error('取得更新後的評論失敗', err))
   }

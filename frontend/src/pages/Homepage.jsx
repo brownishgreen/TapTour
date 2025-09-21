@@ -31,7 +31,7 @@ const Homepage = () => {
     
     // const checkLogin = async () => {
     //   try {
-    //     const { data } = await apiClient.get('api/user/verify')
+    //     const { data } = await apiClient.get('user/verify')
     //     setUser(data.user)
     //   } catch (error) {
     //     console.error('取得用戶資料失敗', error)
@@ -43,7 +43,7 @@ const Homepage = () => {
   // request activities data
   const fetchActivities = async () => {
     try {
-      const response = await apiClient.get('api/activities')
+      const response = await apiClient.get('activities')
       setActivities(response.data)
     } catch (error) {
       console.error('取得活動資料失敗', error)
@@ -53,7 +53,7 @@ const Homepage = () => {
   // request products data
   const fetchProducts = async () => {
     try {
-      const response = await apiClient.get('api/products')
+      const response = await apiClient.get('products')
       setProducts(response.data)
     } catch (error) {
       console.error('取得商品資料失敗', error)
@@ -63,7 +63,7 @@ const Homepage = () => {
   // request locations data
   const fetchLocations = async () => {
     try {
-      const response = await apiClient.get('api/locations')
+      const response = await apiClient.get('locations')
       setLocations(response.data.locations)
     } catch (error) {
       console.error('取得目的地資料失敗', error)

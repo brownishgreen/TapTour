@@ -59,8 +59,7 @@ const userService = {
       SECRET,
       { expiresIn: EXPIRES }
     )
-    console.log('📌 已經生成的token:', token)
-    return { message: '登入成功', userId: user.id, token }
+    return { message: '登入成功', userId: user.id, isAdmin: user.is_admin, token }
   },
 
   getUserProfile: async (targetUserId, currentUserId) => {
@@ -111,8 +110,8 @@ const userService = {
     // 簽發新的 JWT Token
     const token = jwt.sign(
       { id: userData.id, isAdmin: userData.is_admin },
-      process.env.JWT_SECRET,
-      { expiresIn: '3h' } // Token 有效時間 3 小時
+      SECRET,
+      { expiresIn: EXPIRES || '3h' } 
     )
 
     return {
@@ -121,7 +120,7 @@ const userService = {
       name: userData.name,
       email: userData.email,
       isAdmin: userData.is_admin,
-      token: token,
+      token,
     }
   },
 
@@ -134,10 +133,20 @@ const userService = {
     if (userData.bio) user.bio = userData.bio
 
     if (avatar) {
-      const imageUrl = await uploadToGCS(avatar, 'avatars', userId)
-      if (imageUrl) {
-        user.image = imageUrl
+      let imageUrl
+      if (process.env.NODE_ENV === 'production') {
+        // 雲端：走 GCS
+        imageUrl = await uploadToGCS(avatar, 'avatars', userId)
+      } else {
+        const fs = await import('fs')
+        const filename = `${userId}-${Date.now()}-${avatar.originalname}`
+        const localDir = path.join(process.cwd(), 'uploads', 'avatars')
+        const localPath = path.join(localDir, filename)
+        if (!fs.existsSync(localDir)) fs.mkdirSync(localDir, { recursive: true })
+        fs.writeFileSync(localPath, avatar.buffer)
+        imageUrl = `/uploads/avatars/${filename}`
       }
+      if (imageUrl) user.image = imageUrl
     }
 
     await user.save()

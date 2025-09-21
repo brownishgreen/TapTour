@@ -31,7 +31,7 @@ const ProductForm = ({ mode }) => {
     if (isEditMode && productId) {
       console.log('Fetching data for edit mode with id:', productId)
       apiClient
-        .get(`api/products/${productId}`)
+        .get(`products/${productId}`)
         .then((response) => setFormData(response.data))
         .catch((error) => console.error('獲取商品資料失敗', error))
     }
@@ -40,7 +40,7 @@ const ProductForm = ({ mode }) => {
   // 獲取所有分類
   useEffect(() => {
     apiClient
-      .get('api/categories')
+      .get('categories')
       .then((response) => setCategories(response.data))
       .catch((error) => console.error('獲取分類資料失敗', error))
   }, [])
@@ -49,7 +49,7 @@ const ProductForm = ({ mode }) => {
   //獲取所有景點
   useEffect(() => {
     apiClient
-      .get('api/locations')
+      .get('locations')
       .then((response) => setLocations(response.data.locations))
       .catch((error) => console.error('獲取景點資料失敗', error))
   }, [])
@@ -132,18 +132,9 @@ const ProductForm = ({ mode }) => {
     console.log(' Submitting FormData', Array.from(data.entries()))
 
     try {
-      const url = isEditMode
-        ? `${apiClient.defaults.baseURL}/api/products/${productId}`
-        : `${apiClient.defaults.baseURL}/api/products`
+      const endpoint = isEditMode ? `products/${productId}` : 'products'
       const method = isEditMode ? 'put' : 'post'
-      const response = await apiClient({
-        method,
-        url,
-        data,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      const response = await apiClient[method](endpoint, data)
 
       console.log('Server Response:', response.data)
       setSuccessMessage(`${isEditMode ? '商品更新' : '建立商品'}成功`)

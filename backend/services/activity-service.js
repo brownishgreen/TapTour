@@ -98,7 +98,7 @@ const activityService = {
 
       if (files && files.length > 0) {
         imageUrls = await Promise.all(
-          files.map(file => uploadToGCS(file, 'activities', activity.id))
+          files.map(file => multerConfig.saveImage(file, 'activities', activity.id))
         )
       }
 

@@ -39,7 +39,7 @@ const ActivitiesPage = () => {
       if (searchTerm) {
         // 如果有搜尋條件，執行搜尋 API
         response = await apiClient.get(
-          `api/activities?search=${encodeURIComponent(searchTerm)}`
+          `activities?search=${encodeURIComponent(searchTerm)}`
         )
 
         if (response.data.length === 0) {
@@ -54,7 +54,7 @@ const ActivitiesPage = () => {
       } else {
         // 如果沒有搜尋條件，執行分頁 API
         const response = await apiClient.get(
-          `api/activities/paginated?page=${currentPage}&limit=6`
+          `activities/paginated?page=${currentPage}&limit=6`
         )
 
 
@@ -84,7 +84,7 @@ const ActivitiesPage = () => {
         {error ? (
           <div className="error-container">
             <img
-              src="/assets/images/S__24428606.jpg"
+              src="../../../src/assets/images/error-search.jpg"
               alt="搜尋失敗"
               className="error-image"
             />

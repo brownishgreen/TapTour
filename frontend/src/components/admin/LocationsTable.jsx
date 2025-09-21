@@ -17,7 +17,7 @@ const LocationsTable = () => {
 
   useEffect(() => {
     apiClient
-      .get('api/locations')
+      .get('locations')
       .then((response) => {
         if (Array.isArray(response.data.locations)) {
           setLocations(response.data.locations)
@@ -42,7 +42,7 @@ const LocationsTable = () => {
 
   const deleteLocation = () => {
     apiClient
-      .delete(`api/locations/${selectedLocationId}`, {
+      .delete(`locations/${selectedLocationId}`, {
         withCredentials: true,
       })
       .then(() => {

@@ -33,7 +33,7 @@ const LocationsPage = () => {
     setError('')
     try {
       const response = await apiClient.get(
-        `/api/locations?search=${encodeURIComponent(searchTerm)}`
+        `locations?search=${encodeURIComponent(searchTerm)}`
       )
       setLocations(response.data.locations) // set the search result
       setTotalPages(1) // the search result does not need pagination, set the total pages to 1
@@ -51,7 +51,7 @@ const LocationsPage = () => {
     setError('')
     try {
       const response = await apiClient.get(
-        `/api/locations/paginated?page=${currentPage}&limit=6`
+        `locations/paginated?page=${currentPage}&limit=6`
       )
       const { locations, totalPages } = response.data
       setLocations(locations) // set the pagination data

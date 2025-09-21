@@ -16,7 +16,7 @@ const Payment = () => {
 
     const fetchOrderDetails = async () => {
       try {
-        const response = await apiClient.get(`api/orders/${orderId}`)
+        const response = await apiClient.get(`orders/${orderId}`)
         const orderData = response.data
 
         if (!orderData?.userId) {

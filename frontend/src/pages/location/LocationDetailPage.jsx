@@ -19,7 +19,7 @@ const LocationDetailPage = () => {
   useEffect(() => {
     const fetchLocation = async () => {
       try {
-        const response = await apiClient.get(`api/locations/${id}`)
+        const response = await apiClient.get(`locations/${id}`)
         setLocation(response.data.location)
       } catch (error) {
         console.error('取得活動資料失敗', error)

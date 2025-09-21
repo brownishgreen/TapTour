@@ -28,7 +28,7 @@ const CommentsBlock = ({ comments = [], onCommentDeleted }) => {
     console.log(user.token)
     console.log(user)
     try {
-      await apiClient.delete(`/api/comments/${selectedCommentId}`, {
+      await apiClient.delete(`comments/${selectedCommentId}`, {
         headers: {
           'Authorization': `Bearer ${user.token}`
         }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import apiClient from '../../api/apiClient'
 import { useAuth } from '../context/AuthContext'
+import { getImageUrl } from '../../utils/imageHelper'
 
 const HistoryOrdersPage = () => {
   const { user } = useAuth() // 取得當前登入使用者
@@ -22,7 +23,7 @@ const HistoryOrdersPage = () => {
 
     const fetchOrders = async () => {
       try {
-        const response = await apiClient.get(`/api/orders/user/${user.id}`) // 使用 user.id
+        const response = await apiClient.get(`orders/user/${user.id}`) // 使用 user.id
         setOrders(response.data)
       } catch (error) {
         console.error('無法獲取歷史訂單資料:', error)

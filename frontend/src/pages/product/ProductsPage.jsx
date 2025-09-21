@@ -33,7 +33,7 @@ const ProductsPage = () => {
       if (searchTerm) {
         // 如果有搜尋條件，執行搜尋 API
         const response = await apiClient.get(
-          `api/products?search=${encodeURIComponent(searchTerm)}`
+          `products?search=${encodeURIComponent(searchTerm)}`
         )
 
         if (response.data.length === 0) {
@@ -48,7 +48,7 @@ const ProductsPage = () => {
       } else {
         // 如果沒有搜尋條件，執行分頁 API
         const response = await apiClient.get(
-          `api/products/paginated?page=${currentPage}&limit=6`
+          `products/paginated?page=${currentPage}&limit=6`
         )
         const { products, totalPages, totalItems } = response.data
 
