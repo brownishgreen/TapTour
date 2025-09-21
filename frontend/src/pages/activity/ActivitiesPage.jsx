@@ -8,6 +8,8 @@ import CardItem from '../../components/shared/CardItem'
 import HeroBanner from '../../components/shared/HeroBanner'
 import Pagination from '../../components/shared/Pagination'
 import { useAuth } from '../../components/context/AuthContext'
+import { getImageUrl } from '../../utils/imageHelper'
+
 
 
 const ActivitiesPage = () => {
@@ -82,7 +84,7 @@ const ActivitiesPage = () => {
         {error ? (
           <div className="error-container">
             <img
-              src="https://storage.googleapis.com/taptour/assets/images/S__24428606.jpg"
+              src="/assets/images/S__24428606.jpg"
               alt="搜尋失敗"
               className="error-image"
             />
@@ -95,7 +97,7 @@ const ActivitiesPage = () => {
                 buttonText="深入瞭解"
                 image={
                   activity.images?.length > 0
-                    ? activity.images?.[0]?.image_url
+                    ? getImageUrl(activity.images?.[2]?.image_url)
                     : '/default-image.jpg'
                 }
                 title={activity?.name || '無標題'}

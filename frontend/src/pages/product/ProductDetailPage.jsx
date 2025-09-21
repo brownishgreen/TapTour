@@ -12,7 +12,6 @@ import { useAuth } from '../../components/context/AuthContext'
 import CreateCommentForm from '../../components/CreateCommentForm'
 import CommentsBlock from '../../components/CommentsBlock'
 
-
 const ProductDetailPage = () => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)

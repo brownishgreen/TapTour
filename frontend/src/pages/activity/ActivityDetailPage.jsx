@@ -12,7 +12,7 @@ import CommentsBlock from '../../components/CommentsBlock'
 import PriceInformation from '../../components/PriceInformation'
 import Footer from '../../components/shared/Footer'
 import { useAuth } from '../../components/context/AuthContext'
-
+import { getImageUrl } from '../../utils/imageHelper'
 const ActivityDetailPage = () => {
   const { id } = useParams()
   const [activity, setActivity] = useState(null)

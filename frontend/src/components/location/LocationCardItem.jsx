@@ -2,13 +2,13 @@ import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-
+import { getImageUrl } from '../../utils/imageHelper'
 const LocationCardItem = ({ buttonText, image, title, subtitle, cardLink }) => {
   const location = useLocation()
   const isHomepage = location.pathname === '/'
   return (
     <Card className={`card-item ${isHomepage ? 'homepage-card-item' : ''}`}>
-      <Card.Img variant="top" src={image} alt={title} className="card-item__top" />
+      <Card.Img variant="top" src={getImageUrl(image)} alt={title} className="card-item__top" />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Subtitle className="

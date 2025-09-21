@@ -7,7 +7,7 @@ import LocationMap from '../../components/location/LocationMap'
 import RelatedCard from '../../components/RelatedCard'
 import CommentsBlock from '../../components/CommentsBlock'
 import SearchBar from '../../components/shared/SearchBar'
-
+import { getImageUrl } from '../../utils/imageHelper'
 import Footer from '../../components/shared/Footer'
 import { useParams } from 'react-router-dom'
 import apiClient from '../../api/apiClient'
@@ -102,7 +102,7 @@ const LocationDetailPage = () => {
                     description={activity.description.slice(0, 35) + '...'}
                     image={
                       activity.images && activity.images.length > 0
-                        ? activity.images[0].image_url
+                        ? getImageUrl(activity.images[0].image_url)
                         : '/default-image.jpg'
                     }
                   />

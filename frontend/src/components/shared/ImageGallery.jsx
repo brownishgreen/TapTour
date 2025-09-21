@@ -1,9 +1,11 @@
-import apiClient from '../../api/apiClient'
+import { getImageUrl } from '../../utils/imageHelper'
 
 const ImageGallery = ({ images }) => {
   if (!images || images.length === 0) {
     return null
   }
+
+  console.log('拼接後的圖片網址:', getImageUrl(images[0]?.image_url))
 
   const underBuildImage = '/assets/images/others/under-build.png'
   return (
@@ -13,7 +15,7 @@ const ImageGallery = ({ images }) => {
           <img
             src={
               images[0]?.image_url
-                ? images[0].image_url
+                ? getImageUrl(images[0]?.image_url)
                 : underBuildImage
             }
             alt="Main gallery"
@@ -24,7 +26,7 @@ const ImageGallery = ({ images }) => {
             <img
               src={
                 images[1]?.image_url
-                  ? images[1].image_url
+                  ? getImageUrl(images[1]?.image_url)
                   : underBuildImage
               }
               alt="Gallery 1"
@@ -32,7 +34,7 @@ const ImageGallery = ({ images }) => {
             <img
               src={
                 images[2]?.image_url
-                  ? images[2].image_url
+                  ? getImageUrl(images[2]?.image_url)
                   : underBuildImage
               }
               alt="Gallery 2"
@@ -42,7 +44,7 @@ const ImageGallery = ({ images }) => {
             <img
               src={
                 images[3]?.image_url
-                  ? images[3].image_url
+                  ? getImageUrl(images[3]?.image_url)
                   : underBuildImage
               }
               alt="Gallery 3"
@@ -50,7 +52,7 @@ const ImageGallery = ({ images }) => {
             <img
               src={
                 images[4]?.image_url
-                  ? images[4].image_url
+                  ? getImageUrl(images[4].image_url)
                   : underBuildImage
               }
               alt="Gallery 4"
