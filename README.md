@@ -68,6 +68,7 @@ npm install
 npm run dev
 
 #### Sequelize migration / seed
+```
 
 ```bash
 # 確認 config 與 .env 設定正確後
@@ -83,10 +84,11 @@ npm install
 
 # 開發（Vite）
 npm run dev
+```
 
 ---
 
-## Author
+### Author
 
 👤 **Jim(brownishgreen) and Cen(Ryan5381)**
 
