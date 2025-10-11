@@ -105,6 +105,7 @@ const LoginForm = () => {
           <button
             type="button"
             className="google-login-button"
+            type="button"
             onClick={() => {
               window.location.href = 'http://localhost:3000/api/users/auth/google'
             }}
